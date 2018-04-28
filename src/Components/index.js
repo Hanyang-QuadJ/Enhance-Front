@@ -3,4 +3,5 @@
 * Email: nayunhwan.dev@mgail.com
 */
 
-export DefaultComponent from './_DefaultComponent/DefaultComponent.react';
+export DefaultComponent from "./_DefaultComponent/DefaultComponent.react";
+export NavBar from "./NavBar/NavBar";

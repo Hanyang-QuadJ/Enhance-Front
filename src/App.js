@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom"; // Mate
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 
 // Own Modules
-import { DefaultPage, DefaultReduxPage } from "./Pages/";
+import { DefaultPage, DefaultReduxPage, HomePage } from "./Pages/";
 
 class App extends Component {
   constructor(props) {
@@ -17,7 +17,7 @@ class App extends Component {
       <MuiThemeProvider>
         <Router>
           <div>
-            <Route exact path="/" component={DefaultPage} />
+            <Route exact path="/" component={HomePage} />
           </div>
         </Router>
       </MuiThemeProvider>

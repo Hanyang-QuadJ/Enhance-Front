@@ -9,4 +9,36 @@
 
 body {
   margin: 0 auto;
+  p {
+    margin: 0;
+  }
+  hr {
+    background-color: white;
+  }
+
+  .cTypeTabActive {
+    background: $sub-color !important;
+  }
+  .chartTypeTabLinks {
+    background: transparent;
+  }
+  text {
+    fill: white;
+  }
+  .ccc-widget {
+    > div {
+      background-color: transparent !important;
+      color: white !important;
+      border: 1px solid white !important;
+      border-top: 0 !important;
+    }
+  }
+  .cccCustomRadioContainer {
+    > label {
+      color: white !important;
+    }
+  }
+  .tabperiods {
+    background: transparent !important;
+  }
 }
