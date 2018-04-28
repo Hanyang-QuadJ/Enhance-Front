@@ -5,6 +5,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { NavBar } from "../../Components";
 import Script from "react-load-script";
+import {
+  ButtonDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from "reactstrap";
 
 const defaultProps = {};
 const propTypes = {};
@@ -19,8 +25,10 @@ class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      url: ""
+      url: "",
+      dropdownOpen: false
     };
+    this.toggle = this.toggle.bind(this);
   }
 
   componentDidMount() {
@@ -44,9 +52,14 @@ class HomePage extends Component {
       appName +
       "cccTheme=" +
       cccTheme;
-    console.log(s);
     this.setState({ url: s.src });
     this.instance.appendChild(s);
+  }
+
+  toggle() {
+    this.setState(prevState => ({
+      dropdownOpen: !prevState.dropdownOpen
+    }));
   }
 
   render() {
@@ -70,8 +83,20 @@ class HomePage extends Component {
                 </div>
               </div>
               <div className="homePage__content__news__search__second">
+                <hr />
                 <div className="homePage__content__news__search__second__content">
-                  <p>필터</p>
+                  <ButtonDropdown
+                    isOpen={this.state.dropdownOpen}
+                    style={{ marginRight: 10, backgroundColor: "transparent" }}
+                    toggle={this.toggle}
+                    size="sm"
+                    direction="down"
+                  >
+                    <DropdownToggle caret>최신 순</DropdownToggle>
+                    <DropdownMenu>
+                      <DropdownItem>인기 순</DropdownItem>
+                    </DropdownMenu>
+                  </ButtonDropdown>
                 </div>
               </div>
             </div>
