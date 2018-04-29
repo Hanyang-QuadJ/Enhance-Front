@@ -66,6 +66,11 @@ class SideBar extends Component {
                   </div>
                 );
               })}
+            <div className="sideBar__content__items__item">
+              <span className="sideBar__content__items__item-plus">
+                <i className="xi-plus" />
+              </span>
+            </div>
           </div>
         </div>
       </div>

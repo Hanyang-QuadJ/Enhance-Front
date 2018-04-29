@@ -152,7 +152,7 @@ class HomePage extends Component {
                       key={index}
                       title={data.title}
                       createdAt={data.pubDate}
-                      type="BTC"
+                      type={coinType}
                       link={data.link}
                     />
                   );
