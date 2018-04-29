@@ -3,6 +3,7 @@ import React, { Component } from "react";
 // React Router
 import { BrowserRouter as Router, Route, Link } from "react-router-dom"; // Material UI Provider for React
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import moment from "moment";
 
 // Own Modules
 import { DefaultPage, DefaultReduxPage, HomePage } from "./Pages/";

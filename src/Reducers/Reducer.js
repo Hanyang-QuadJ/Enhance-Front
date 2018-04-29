@@ -6,9 +6,13 @@
 import { combineReducers } from "redux";
 
 import DefaultAction from "../Actions/DefaultAction";
+import { SUCCEED_TO_GET_NEWS } from "../ActionCreators/NewsAction";
+import { SUCCEED_TO_GET_PRICE } from "../ActionCreators/PriceAction";
 
 const initialState = {
-  data: null
+  data: null,
+  news: [],
+  prices: null
 };
 
 const reducer = (state = initialState, action) => {
@@ -16,6 +20,14 @@ const reducer = (state = initialState, action) => {
     case DefaultAction.SUCCEED_TO_DEFAULT_ACTION:
       return Object.assign({}, state, {
         data: action.data
+      });
+    case SUCCEED_TO_GET_NEWS:
+      return Object.assign({}, state, {
+        news: action.payload
+      });
+    case SUCCEED_TO_GET_PRICE:
+      return Object.assign({}, state, {
+        prices: action.payload
       });
     default:
       return state;

@@ -4,7 +4,6 @@
 */
 .homePage {
   background: #536976;
-  overflow-y: hidden;
   /* fallback for old browsers */
 
   background: -webkit-linear-gradient(to right, #292e49, #536976);
@@ -14,25 +13,31 @@
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
   &__content {
-    margin-left: 85px;
-    display: flex;
-    flex-direction: row;
+    margin-left: 100px;
+    height: 100vh;
+    overflow-y: hidden;
 
     &__news {
-      flex: 1;
+      box-sizing: border-box;
+      float: left;
+      height: 100vh;
+      width: calc(50vw - 100px);
+      border-right: 1px white solid;
 
       &__search {
         display: flex;
         flex-direction: column;
         position: fixed;
+        width: calc(50vw - 100px);
         padding-top: 1.5rem;
-        padding-left: 2rem;
+        height: 145px;
+        border-bottom: 1px white solid;
 
         &__first {
           display: flex;
           flex-direction: row;
-
           &__iconArea {
+            padding-left: 1rem;
             display: flex;
             justify-content: center;
             margin-right: 1rem;
@@ -58,21 +63,38 @@
 
         &__second {
           &__content {
+            padding-left: 1rem;
           }
         }
+      }
+
+      &__lists {
+        height: calc(100vh - 145px);
+        margin-top: 145px;
+        overflow-y: scroll;
       }
     }
 
     &__chart {
-      flex: 1;
+      height: 100vh;
+      width: calc(50vw-100px);
+      margin-right: 100px;
+      overflow-y: scroll;
+
       &__wrapper {
         background: transparent;
-        width: 50vw;
         overflow-y: scroll;
 
         & > div {
           background-color: transparent !important;
         }
+      }
+
+      &__loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
       }
     }
   }

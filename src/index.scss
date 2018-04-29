@@ -41,4 +41,7 @@ body {
   .tabperiods {
     background: transparent !important;
   }
+  .active {
+    border-color: $active-color !important;
+  }
 }

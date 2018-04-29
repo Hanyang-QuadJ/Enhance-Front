@@ -28,7 +28,11 @@ class NavBar extends Component {
       <div className="navBar">
         <div className="navBar__content">
           <div className="navBar__content__brand">
-            <p>ENHANCE</p>
+            <img
+              className="navBar__content__brand__logo"
+              src={require("../../Assests/Imgs/enhance_logo.png")}
+            />
+            <p className="navBar__content__brand__logo__text">ENHANCE</p>
           </div>
           <div className="navBar__content__items">
             <div
