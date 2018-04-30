@@ -7,13 +7,15 @@ import { withRouter } from "react-router-dom";
 import cx from "classnames";
 
 import * as DefaultActionCreator from "../../ActionCreators/_DefaultActionCreator";
+import * as AuthAction from "../../ActionCreators/AuthAction";
 
 const defaultProps = {};
 const propTypes = {};
 
 const mapStateToProps = state => {
   return {
-    isLogin: state.reducer.isLogin
+    isLogin: state.reducer.isLogin,
+    me: state.reducer.me
   };
 };
 
@@ -23,9 +25,18 @@ class NavBar extends Component {
   }
 
   handleAuth = () => {
-    this.props.history.push({
-      pathname: "/auth"
-    });
+    const { isLogin } = this.props;
+    if (isLogin === true) {
+      this.props.dispatch(AuthAction.signOut()).then(value => {
+        this.props.history.replace({
+          pathname: "/auth"
+        });
+      });
+    } else {
+      this.props.history.push({
+        pathname: "/auth"
+      });
+    }
   };
 
   handleNews = () => {
@@ -35,7 +46,7 @@ class NavBar extends Component {
   };
 
   render() {
-    const { type, isLogin } = this.props;
+    const { type, isLogin, me } = this.props;
     return (
       <div className="navBar">
         <div className="navBar__content">
@@ -64,6 +75,14 @@ class NavBar extends Component {
               </span>
               <p>포럼</p>
             </div>
+            {isLogin === true ? (
+              <div className="navBar__content__items__item">
+                <span className="navBar__content__items__item-icon">
+                  <i className="xi-user-o" />
+                </span>
+                <p>{me && me[0].username}</p>
+              </div>
+            ) : null}
             <div
               className={cx("navBar__content__items__item", {
                 "navBar__content__items__item-active": type === "auth"

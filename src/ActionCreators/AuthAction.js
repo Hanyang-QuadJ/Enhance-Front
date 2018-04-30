@@ -1,5 +1,8 @@
 import { ServerEndPoint } from "../Configs/Server";
 
+export const SUCCEED_TO_GET_ME = "SUCCEED_TO_GET_ME";
+export const FAILED_TO_GET_ME = "FAILED_TO_GET_ME";
+
 export const SUCCEED_TO_SIGNIN = "SUCCEED_TO_SIGNIN";
 export const FAILED_TO_SIGNIN = "FAILED_TO_SIGNIN";
 
@@ -7,6 +10,32 @@ export const SUCCEED_TO_SIGNUP = "SUCCEED_TO_SIGNUP";
 export const FAILED_TO_SIGNUP = "FAILED_TO_SIGNUP";
 
 export const SUCCEED_TO_SIGNOUT = "SUCCEED_TO_SIGNOUT";
+
+export const getMe = params => {
+  return async dispatch => {
+    try {
+      let response = await fetch(ServerEndPoint + "api/auth/me", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "x-access-token": params
+        }
+      });
+      let responseJson = await response.json();
+      await dispatch({
+        type: SUCCEED_TO_GET_ME,
+        payload: responseJson.me
+      });
+      return responseJson.me;
+    } catch (error) {
+      dispatch({
+        type: FAILED_TO_GET_ME,
+        payload: { data: "NETWORK_ERROR" }
+      });
+    }
+  };
+};
 
 export const postSignUp = params => {
   return async dispatch => {

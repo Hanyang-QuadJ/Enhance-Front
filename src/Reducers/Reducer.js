@@ -14,6 +14,8 @@ import {
 import {
   SUCCEED_TO_SIGNUP,
   SUCCEED_TO_SIGNIN,
+  SUCCEED_TO_GET_ME,
+  SUCCEED_TO_SIGNOUT,
   FAILED_TO_SIGNIN
 } from "../ActionCreators/AuthAction";
 
@@ -22,6 +24,7 @@ const initialState = {
   news: [],
   prices: null,
   coins: null,
+  me: null,
   token: localStorage.getItem("token"),
   isLogin: !!localStorage.getItem("token")
 };
@@ -49,16 +52,20 @@ const reducer = (state = initialState, action) => {
         token: "",
         isLogin: false
       });
-    // case SUCCEED_TO_SIGNOUT:
-    //   localStorage.removeItem("token");
-    //   return Object.assign({}, state, {
-    //     isLogin: false,
-    //     token: null,
-    //     user: []
-    // });
+    case SUCCEED_TO_SIGNOUT:
+      localStorage.removeItem("token");
+      return Object.assign({}, state, {
+        isLogin: false,
+        token: null,
+        user: []
+      });
     case SUCCEED_TO_GET_NEWS:
       return Object.assign({}, state, {
         news: action.payload
+      });
+    case SUCCEED_TO_GET_ME:
+      return Object.assign({}, state, {
+        me: action.payload
       });
     case SUCCEED_TO_GET_PRICE:
       return Object.assign({}, state, {

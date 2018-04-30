@@ -6,6 +6,7 @@ import thunkMiddleware from "redux-thunk";
 import createLogger from "redux-logger";
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Reducer from "./Reducers/Reducer";
 
@@ -26,7 +27,9 @@ import App from "./App";
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>,
   document.getElementById("root")
 );

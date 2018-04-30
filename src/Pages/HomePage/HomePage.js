@@ -21,8 +21,9 @@ const propTypes = {};
 
 const mapStateToProps = state => {
   return {
-    actionResult: state.reducer.actionResult,
-    news: state.reducer.news
+    news: state.reducer.news,
+    me: state.reducer.me,
+    token: state.reducer.token
   };
 };
 
@@ -67,38 +68,74 @@ class HomePage extends Component {
     //즐겨찾기 가져올 부분
 
     this.props.dispatch(PriceAction.getCoins()).then(coins => {
-      const coin = coins;
-      let result = coin.map(function(el) {
-        let o = Object.assign({}, el);
-        o.clicked = false;
-        o.loading = false;
-        return o;
+      this.props.dispatch(PriceAction.getFavs(this.props.token)).then(favs => {
+        //즐겨찾기 없을 경우
+        if (
+          favs.length === 0 ||
+          favs === [] ||
+          favs === null ||
+          favs === undefined
+        ) {
+          let result = coins.map(function(el) {
+            let o = Object.assign({}, el);
+            o.clicked = false;
+            o.loading = false;
+            return o;
+          });
+          this.setState({ favorite: result, loadGraph: true });
+          this.props.dispatch(NewsAction.getNews()).then(news => {
+            this.setState({ loadGraph: false, isFavEmpty: true });
+          });
+        } else {
+          //즐겨찾기 있을 경우
+          let result = coins.map(function(el) {
+            let o = Object.assign({}, el);
+            o.clicked = false;
+            o.loading = false;
+            return o;
+          });
+          for (let i = 0; i < result.length; i++) {
+            for (let j = 0; j < favs.length; j++) {
+              if (result[i].abbr === favs[j].abbr) {
+                result[i].clicked = true;
+              }
+            }
+          }
+          this.setState({
+            favorite: result,
+            loadGraph: true,
+            isFavEmpty: false
+          });
+          const abbrArray = [];
+          for (let i = 0; i < result.length; i++) {
+            if (result[i].clicked === true) {
+              abbrArray.push(result[i].abbr);
+            }
+          }
+          console.log(abbrArray);
+
+          let final = result.map(function(el) {
+            let o = Object.assign({}, el);
+            o.price = 0;
+            o.percent = "";
+            return o;
+          });
+
+          this.props.dispatch(PriceAction.getPrice(abbrArray)).then(value => {
+            for (let i = 0; i < final.length; i++) {
+              for (let j = 0; j < abbrArray.length; j++) {
+                if (final[i].abbr === abbrArray[j]) {
+                  final[i].price = value[abbrArray[j]].KRW.PRICE;
+                  final[i].percent = value[abbrArray[j]].KRW.CHANGEPCT24HOUR;
+                }
+              }
+            }
+            this.setState({ favorite: final, coinType: abbrArray[0] });
+            this.renderChart(abbrArray[0]);
+            this.props.dispatch(NewsAction.getNews());
+          });
+        }
       });
-      this.setState({ favorite: result, loadGraph: true });
-
-      //즐겨찾기 있을 경우
-      // this.setState({ isFavEmpty: false });
-      // const abbrArray = [];
-      // for (let i = 0; i < result.length; i++) {
-      //   abbrArray[i] = result[i].abbr;
-      // }
-      // let typeArray = [];
-      // for (let i = 0; i < abbrArray.length; i++) {
-      //   typeArray.push({ name: abbrArray[i], price: 0, percent: "" });
-      // }
-      // this.props.dispatch(PriceAction.getPrice(abbrArray)).then(value => {
-      //   for (let i = 0; i < abbrArray.length; i++) {
-      //     typeArray[i].price = value[abbrArray[i]].KRW.PRICE;
-      //     typeArray[i].percent = value[abbrArray[i]].KRW.CHANGEPCT24HOUR;
-      //   }
-      //   this.setState({ coins: typeArray });
-      //   this.renderChart(this.state.coinType);
-      //   this.props.dispatch(NewsAction.getNews());
-      // });
-
-      //즐겨찾기 없을 경우
-      this.props.dispatch(NewsAction.getNews());
-      this.setState({ loadGraph: false, isFavEmpty: true });
     });
   }
 
@@ -132,6 +169,12 @@ class HomePage extends Component {
 
   handleFavorite = async(index, data) => {
     const coin = this.state.favorite.slice();
+    const { me, token } = this.props;
+    const params = {
+      token: token,
+      user_id: me[0].id,
+      coin_id: coin[index].id
+    };
     if (coin[index].clicked === true) {
       coin[index].clicked = false;
       let leftOver = [];
@@ -168,20 +211,22 @@ class HomePage extends Component {
       for (let i = 0; i < result.length; i++) {
         abbrArray[i] = result[i].abbr;
       }
-      this.props.dispatch(PriceAction.getPrice(abbrArray)).then(value => {
-        for (let i = 0; i < abbrArray.length; i++) {
-          result[i].price = value[abbrArray[i]].KRW.PRICE;
-          result[i].percent = value[abbrArray[i]].KRW.CHANGEPCT24HOUR;
-        }
-        result[index].loading = false;
-        this.setState(state => ({ favorite: result }));
+      this.props.dispatch(PriceAction.addFav(params)).then(value => {
+        this.props.dispatch(PriceAction.getPrice(abbrArray)).then(value => {
+          for (let i = 0; i < abbrArray.length; i++) {
+            result[i].price = value[abbrArray[i]].KRW.PRICE;
+            result[i].percent = value[abbrArray[i]].KRW.CHANGEPCT24HOUR;
+          }
+          result[index].loading = false;
+          this.setState(state => ({ favorite: result }));
+        });
       });
     }
   };
 
   render() {
     const { loadGraph, coinType, coins, favorite, isFavEmpty } = this.state;
-    const { news } = this.props;
+    const { news, me } = this.props;
     return (
       <div className="homePage">
         <NavBar type="news" />
@@ -259,7 +304,10 @@ class HomePage extends Component {
                   </p>
                 </div>
                 <div className="homePage__content__chart__intro__welcome">
-                  <strong>환영합니다.</strong>
+                  <p>
+                    <strong>환영합니다. </strong>
+                    {me && me[0].username + " 님"}
+                  </p>
                   <p>
                     인핸스는 가상화폐와 블록체인 기술에 대한 정보를 실시간으로
                     모아서 한눈에 보기 쉽게 제공해 드리고 있습니다. 인핸스와

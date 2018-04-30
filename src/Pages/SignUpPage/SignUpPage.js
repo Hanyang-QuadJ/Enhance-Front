@@ -92,8 +92,10 @@ class SignUpPage extends Component {
     };
     console.log(params);
     this.props.dispatch(AuthAction.postSignUp(params)).then(value => {
-      this.props.history.replace({
-        pathname: "/"
+      this.props.dispatch(AuthAction.getMe(value.token)).then(value2 => {
+        this.props.history.replace({
+          pathname: "/"
+        });
       });
     });
   };

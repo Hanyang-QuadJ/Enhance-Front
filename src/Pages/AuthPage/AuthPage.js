@@ -113,7 +113,13 @@ class AuthPage extends Component {
       email,
       password
     };
-    this.props.dispatch(AuthAction.postSignIn(params));
+    this.props.dispatch(AuthAction.postSignIn(params)).then(value => {
+      this.props.dispatch(AuthAction.getMe(value)).then(value2 => {
+        this.props.history.replace({
+          pathname: "/"
+        });
+      });
+    });
   };
 
   render() {
