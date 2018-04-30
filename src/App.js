@@ -12,6 +12,7 @@ import getMuiTheme from "material-ui/styles/getMuiTheme";
 import { connect } from "react-redux";
 import { green500 } from "material-ui/styles/colors";
 import * as AuthAction from "./ActionCreators/AuthAction";
+import * as NewsAction from "./ActionCreators/NewsAction";
 
 // Own Modules
 import {
@@ -42,6 +43,7 @@ class App extends Component {
   }
 
   componentWillMount() {
+    this.props.dispatch(NewsAction.getNews());
     if (this.props.isLogin === true) {
       this.props.dispatch(AuthAction.getMe(this.props.token));
     }

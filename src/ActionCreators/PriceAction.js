@@ -12,6 +12,9 @@ export const FAILED_TO_GET_FAVS = "FAILED_TO_GET_FAVS";
 export const SUCCEED_TO_ADD_FAV = "SUCCEED_TO_ADD_FAV";
 export const FAILED_TO_ADD_FAV = "FAILED_TO_ADD_FAV";
 
+export const SUCCEED_TO_REMOVE_FAV = "SUCCEED_TO_REMOVE_FAV";
+export const FAILED_TO_REMOVE_FAV = "FAILED_TO_REMOVE_FAV";
+
 export const getCoins = () => {
   return async dispatch => {
     try {
@@ -93,7 +96,6 @@ export const getFavs = params => {
 };
 
 export const addFav = params => {
-  console.log(params);
   return async dispatch => {
     try {
       let response = await fetch(ServerEndPoint + "api/favorite/add", {
@@ -117,6 +119,36 @@ export const addFav = params => {
     } catch (error) {
       dispatch({
         type: FAILED_TO_ADD_FAV,
+        payload: { data: "NETWORK_ERROR" }
+      });
+    }
+  };
+};
+
+export const removeFav = params => {
+  return async dispatch => {
+    try {
+      let response = await fetch(ServerEndPoint + "api/favorite/remove", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "x-access-token": params.token
+        },
+        body: JSON.stringify({
+          user_id: 2,
+          coin_id: params.coin_id
+        })
+      });
+      let responseJson = await response.json();
+      await dispatch({
+        type: SUCCEED_TO_REMOVE_FAV,
+        payload: responseJson
+      });
+      return responseJson;
+    } catch (error) {
+      dispatch({
+        type: FAILED_TO_REMOVE_FAV,
         payload: { data: "NETWORK_ERROR" }
       });
     }

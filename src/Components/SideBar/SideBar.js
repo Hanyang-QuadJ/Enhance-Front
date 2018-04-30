@@ -16,7 +16,8 @@ const propTypes = {};
 
 const mapStateToProps = state => {
   return {
-    prices: state.reducer.prices
+    prices: state.reducer.prices,
+    isLogin: state.reducer.isLogin
   };
 };
 
@@ -26,20 +27,22 @@ class SideBar extends Component {
     this.state = {
       prices: null,
       showModal: false,
-      coins: [],
       selectedCoin: []
     };
-  }
-  componentWillMount() {
-    this.setState({ coins: this.props.coins });
   }
 
   componentDidMount() {}
 
   toggleModal = () => {
-    this.setState({
-      showModal: !this.state.showModal
-    });
+    if (this.props.isLogin === false) {
+      this.props.history.push({
+        pathname: "/auth"
+      });
+    } else {
+      this.setState({
+        showModal: !this.state.showModal
+      });
+    }
   };
 
   handleFavorite = () => {
@@ -48,7 +51,6 @@ class SideBar extends Component {
 
   render() {
     const { onClick, type, handleFavorite, favorite, loadGraph } = this.props;
-    // const { coins } = this.state;
     return (
       <div className="sideBar">
         <Modal

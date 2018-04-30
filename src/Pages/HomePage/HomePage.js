@@ -66,7 +66,6 @@ class HomePage extends Component {
 
   componentDidMount() {
     //즐겨찾기 가져올 부분
-
     this.props.dispatch(PriceAction.getCoins()).then(coins => {
       this.props.dispatch(PriceAction.getFavs(this.props.token)).then(favs => {
         //즐겨찾기 없을 경우
@@ -112,8 +111,6 @@ class HomePage extends Component {
               abbrArray.push(result[i].abbr);
             }
           }
-          console.log(abbrArray);
-
           let final = result.map(function(el) {
             let o = Object.assign({}, el);
             o.price = 0;
@@ -177,6 +174,7 @@ class HomePage extends Component {
     };
     if (coin[index].clicked === true) {
       coin[index].clicked = false;
+
       let leftOver = [];
       for (let i = 0; i < coin.length; i++) {
         if (coin[i].clicked === true) {
@@ -188,9 +186,11 @@ class HomePage extends Component {
         while (this.instance.firstChild) {
           this.instance.removeChild(this.instance.firstChild);
         }
+        this.props.dispatch(PriceAction.removeFav(params)).then(value => {});
       } else {
         this.setState({ favorite: coin, coinType: leftOver[0] });
         this.handleChart(leftOver[0]);
+        this.props.dispatch(PriceAction.removeFav(params)).then(value => {});
       }
     } else {
       coin[index].clicked = true;
@@ -322,9 +322,9 @@ class HomePage extends Component {
                   </p>
                   <br />
                   <p>
-                    해당 가상화폐 정보 창이 현재 페이지에 노출되고 별모양
-                    아이콘을 눌러 팔로우를 하시면 우측 즐겨찾기 목록에
-                    저장됩니다. ​
+                    원하는 가상화폐를 클릭하여 팔로우 하시면 우측 즐겨찾기
+                    목록에 저장되어 해당 가상 화폐의 정보를 계속 보실 수
+                    있습니다.
                   </p>
                   <br />
                   <p>
