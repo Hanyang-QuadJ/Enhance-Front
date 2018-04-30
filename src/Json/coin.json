@@ -1,0 +1,34 @@
+{
+  "coin": [
+    {
+      "abbr": "BTC",
+      "full": "Bitcoin",
+      "kor": "비트코인"
+    },
+    {
+      "abbr": "EOS",
+      "full": "EOS",
+      "kor": "이오스"
+    },
+    {
+      "abbr": "ETH",
+      "full": "Ethereum",
+      "kor": "이더리움"
+    },
+    {
+      "abbr": "XRP",
+      "full": "Ripple",
+      "kor": "리플"
+    },
+    {
+      "abbr": "BCH",
+      "full": "Bitcoin Cash",
+      "kor": "비트코인 캐시"
+    },
+    {
+      "abbr": "ADA",
+      "full": "Cardano",
+      "kor": "카르다노"
+    }
+  ]
+}

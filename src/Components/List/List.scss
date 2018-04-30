@@ -19,6 +19,7 @@
     &__date {
       flex: 1.5;
       display: flex;
+      font-size: 13px;
       align-items: center;
       justify-content: center;
     }
@@ -35,6 +36,7 @@
     }
     &__type {
       flex: 1;
+      font-size: 13px;
       padding-right: 10px;
       display: flex;
       justify-content: center;

@@ -11,6 +11,88 @@
   color: white;
   border-left: 1px rgba(255, 255, 255, 0.1) solid;
 
+  &__modal {
+    height: 60vh;
+    overflow-y: scroll;
+
+    &__header {
+      font-weight: 300 !important;
+    }
+
+    &__content {
+      display: flex;
+      justify-content: center;
+      color: white;
+
+      &__items {
+        width: 50vw;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+
+        &__wrapper {
+          display: flex;
+          width: 25%;
+          margin-top: 1.5rem;
+          flex-direction: column;
+          align-items: center;
+          margin-right: 1rem;
+
+          &:nth-child(3n) {
+            margin-right: 0;
+          }
+
+          &__item {
+            display: flex;
+            padding: 5px 1.5rem 5px 1.5rem;
+            flex-direction: column;
+            width: 100%;
+            border: 1px $border-color solid;
+            justify-content: center;
+            align-items: center;
+
+            &:hover {
+              border: 1px white solid;
+              cursor: pointer;
+            }
+
+            &-active {
+              border: 1px $active-color solid;
+
+              &:hover {
+                border: 1px $active-color solid;
+                cursor: pointer;
+              }
+            }
+
+            &__full {
+              width: 100%;
+              overflow: auto;
+              word-wrap: break-word;
+              text-align: center;
+            }
+
+            &__abbr {
+              text-align: center;
+
+              width: 100%;
+              overflow: auto;
+              word-wrap: break-word;
+            }
+
+            &__kor {
+              width: 100%;
+              text-align: center;
+              overflow: auto;
+              word-wrap: break-word;
+            }
+          }
+        }
+      }
+    }
+  }
+
   &__content {
     display: flex;
     flex-direction: column;
@@ -32,6 +114,10 @@
 
         &-plus {
           font-size: 2rem;
+        }
+
+        &:hover {
+          background-color: $sub-color;
         }
 
         &__price {

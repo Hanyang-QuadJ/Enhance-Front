@@ -9,6 +9,9 @@
 
 body {
   margin: 0 auto;
+  a:hover {
+    text-decoration: none;
+  }
   p {
     margin: 0;
   }
@@ -53,5 +56,23 @@ body {
   .tabperiods_active {
     font-weight: 900 !important;
     color: $active-color !important;
+  }
+  .chartTypeTabLinks:hover {
+    background: $sub-color;
+  }
+  .modal-content {
+    font-weight: 300 !important;
+    border-radius: 0px !important;
+    background: #536976;
+    margin: 0 !important;
+    color: white;
+    padding: 0 !important;
+    /* fallback for old browsers */
+
+    background: -webkit-linear-gradient(to bottom, #292e49, #536976);
+    /* Chrome 10-25, Safari 5.1-6 */
+
+    background: linear-gradient(to bottom, #292e49, #536976);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   }
 }

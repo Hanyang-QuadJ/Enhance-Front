@@ -7,9 +7,7 @@ export const getPrice = params => {
   return async dispatch => {
     try {
       let response = await fetch(
-        `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${
-          params.type
-        }&tsyms=KRW`,
+        `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${params}&tsyms=KRW`,
         {
           method: "GET",
           headers: {
