@@ -46,7 +46,7 @@ class SideBar extends Component {
   };
 
   render() {
-    const { onClick, type, handleFavorite, coins, favorite } = this.props;
+    const { onClick, type, handleFavorite, favorite } = this.props;
     // const { coins } = this.state;
     return (
       <div className="sideBar">
@@ -57,6 +57,7 @@ class SideBar extends Component {
           modalTransition={{ timeout: 20 }}
           backdropTransition={{ timeout: 10 }}
           centered={true}
+          // backdrop={false}
         >
           <ModalHeader>
             <div className="sideBar__modal__header">종목을 선택하세요</div>
@@ -98,7 +99,11 @@ class SideBar extends Component {
               </div>
             </div>
           </ModalBody>
-          <ModalFooter>등록</ModalFooter>
+          <ModalFooter>
+            <span className="sideBar__modal__close" onClick={this.toggleModal}>
+              닫기
+            </span>
+          </ModalFooter>
         </Modal>
         <div className="sideBar__content">
           <div className="sideBar__content__items">

@@ -1,0 +1,16 @@
+/*
+* Author: @nayunhwan (github.com/nayunhwan)
+* Email: nayunhwan.dev@mgail.com
+*/
+.roundInput {
+  &__content {
+    padding-left: 1rem;
+    width: 300px !important;
+    height: 60px !important;
+    border: 1px $border-color solid !important;
+    border-radius: 75px !important;
+    font-size: 1rem;
+    outline-width: 0 !important;
+    color: white;
+  }
+}

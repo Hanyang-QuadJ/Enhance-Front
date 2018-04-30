@@ -7,3 +7,5 @@ export DefaultComponent from "./_DefaultComponent/DefaultComponent.react";
 export NavBar from "./NavBar/NavBar";
 export List from "./List/List";
 export SideBar from "./SideBar/SideBar";
+export RoundInput from "./RoundInput/RoundInput";
+export Button from "./Button/Button";

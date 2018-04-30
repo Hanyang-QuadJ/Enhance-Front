@@ -12,15 +12,25 @@ const defaultProps = {};
 const propTypes = {};
 
 const mapStateToProps = state => {
-  return {
-    actionResult: state.reducer.actionResult
-  };
+  return {};
 };
 
 class NavBar extends Component {
   constructor(props) {
     super(props);
   }
+
+  handleAuth = () => {
+    this.props.history.push({
+      pathname: "/auth"
+    });
+  };
+
+  handleNews = () => {
+    this.props.history.push({
+      pathname: "/"
+    });
+  };
 
   render() {
     const { type } = this.props;
@@ -39,6 +49,7 @@ class NavBar extends Component {
               className={cx("navBar__content__items__item", {
                 "navBar__content__items__item-active": type === "news"
               })}
+              onClick={this.handleNews}
             >
               <span className="navBar__content__items__item-icon">
                 <i className="xi-library-books-o" />
@@ -51,7 +62,12 @@ class NavBar extends Component {
               </span>
               <p>포럼</p>
             </div>
-            <div className="navBar__content__items__item">
+            <div
+              className={cx("navBar__content__items__item", {
+                "navBar__content__items__item-active": type === "auth"
+              })}
+              onClick={this.handleAuth}
+            >
               <span className="navBar__content__items__item-icon">
                 <i className="xi-log-in" />
               </span>
