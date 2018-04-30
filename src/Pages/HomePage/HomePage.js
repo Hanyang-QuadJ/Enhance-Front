@@ -236,11 +236,30 @@ class HomePage extends Component {
                   </p>
                 </div>
                 <div className="homePage__content__chart__intro__welcome">
-                  <p>환영합니다.</p>
+                  <strong>환영합니다.</strong>
                   <p>
                     인핸스는 가상화폐와 블록체인 기술에 대한 정보를 실시간으로
                     모아서 한눈에 보기 쉽게 제공해 드리고 있습니다. 인핸스와
                     함께 가상화폐의 역사를 함께 하세요.
+                  </p>
+                </div>
+                <div className="homePage__content__chart__intro__desc">
+                  <strong>인핸스 뉴스</strong>
+                  <p>
+                    로그인 후 + 버튼을 누르거나 좌측 상단 돋보기 아이콘을 눌러
+                    원하는 가상화폐 종목을 검색하실 수 있습니다.
+                  </p>
+                  <br />
+                  <p>
+                    해당 가상화폐 정보 창이 현재 페이지에 노출되고 별모양
+                    아이콘을 눌러 팔로우를 하시면 우측 즐겨찾기 목록에
+                    저장됩니다. ​
+                  </p>
+                  <br />
+                  <p>
+                    우측 즐겨찾기 목록에 위치한 가상화폐 종목 박스를 클리하면
+                    좌측 파티션에 해당 가상화폐에 관련된 기사와 정보들이
+                    실시간으로 노출됩니다.
                   </p>
                 </div>
               </div>

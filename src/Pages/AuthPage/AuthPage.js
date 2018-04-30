@@ -167,7 +167,7 @@ class AuthPage extends Component {
                 </p>
               </div>
               <div className="authPage__content__chart__intro__welcome">
-                <p>환영합니다.</p>
+                <strong>환영합니다.</strong>
                 <p>
                   인핸스는 가상화폐와 블록체인 기술에 대한 정보를 실시간으로
                   모아서 한눈에 보기 쉽게 제공해 드리고 있습니다. 인핸스와 함께
@@ -184,6 +184,12 @@ class AuthPage extends Component {
               </div>
               <div className="authPage__content__chart__intro__signUp">
                 <p>아직 인핸스의 회원이 아니신가요?</p>
+                <p>
+                  <strong className="authPage__content__chart__intro__signUp__link">
+                    회원가입
+                  </strong>{" "}
+                  하시고 맞춤 정보를 받아가세요!
+                </p>
               </div>
             </div>
           </div>
