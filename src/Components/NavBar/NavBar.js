@@ -12,7 +12,9 @@ const defaultProps = {};
 const propTypes = {};
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    isLogin: state.reducer.isLogin
+  };
 };
 
 class NavBar extends Component {
@@ -33,11 +35,11 @@ class NavBar extends Component {
   };
 
   render() {
-    const { type } = this.props;
+    const { type, isLogin } = this.props;
     return (
       <div className="navBar">
         <div className="navBar__content">
-          <div className="navBar__content__brand">
+          <div className="navBar__content__brand" onClick={this.handleNews}>
             <img
               className="navBar__content__brand__logo"
               src={require("../../Assests/Imgs/enhance_logo.png")}
@@ -71,7 +73,7 @@ class NavBar extends Component {
               <span className="navBar__content__items__item-icon">
                 <i className="xi-log-in" />
               </span>
-              <p>로그인</p>
+              {isLogin === true ? <p>로그아웃</p> : <p>로그인</p>}
             </div>
           </div>
         </div>

@@ -7,7 +7,13 @@ import getMuiTheme from "material-ui/styles/getMuiTheme";
 import { green500 } from "material-ui/styles/colors";
 
 // Own Modules
-import { DefaultPage, DefaultReduxPage, HomePage, AuthPage } from "./Pages/";
+import {
+  DefaultPage,
+  DefaultReduxPage,
+  HomePage,
+  AuthPage,
+  SignUpPage
+} from "./Pages/";
 
 const muiTheme = getMuiTheme({
   palette: {
@@ -26,7 +32,8 @@ class App extends Component {
         <Router>
           <div>
             <Route exact path="/" component={HomePage} />
-            <Route path="/auth" component={AuthPage} />
+            <Route exact path="/auth" component={AuthPage} />
+            <Route path="/auth/signup" component={SignUpPage} />
           </div>
         </Router>
       </MuiThemeProvider>

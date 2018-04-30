@@ -26,7 +26,7 @@ const mapStateToProps = state => {
   };
 };
 
-class AuthPage extends Component {
+class SignUpPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,7 +35,8 @@ class AuthPage extends Component {
       favorite: [],
       coinType: "BTC",
       email: "",
-      password: ""
+      password: "",
+      username: ""
     };
     this.toggle = this.toggle.bind(this);
   }
@@ -58,40 +59,17 @@ class AuthPage extends Component {
     }
   };
 
+  handleBack = () => {
+    this.props.history.push({
+      pathname: "/auth"
+    });
+  };
+
   toggle() {
     this.setState(prevState => ({
       dropdownOpen: !prevState.dropdownOpen
     }));
   }
-
-  handleFavorite = async(index, data) => {
-    const coin = this.state.favorite.slice();
-    coin[index].clicked = true;
-    coin[index].loading = true;
-    this.setState({ favorite: coin });
-
-    //즐겨찾기 한 코인들에게, 가격, 증감표시 key 추가
-    let result = coin.map(function(el) {
-      let o = Object.assign({}, el);
-      o.price = 0;
-      o.percent = "";
-      return o;
-    });
-
-    //즐겨찾기한 코인, 이름만 모으기
-    let abbrArray = [];
-    for (let i = 0; i < result.length; i++) {
-      abbrArray[i] = result[i].abbr;
-    }
-    this.props.dispatch(PriceAction.getPrice(abbrArray)).then(value => {
-      for (let i = 0; i < abbrArray.length; i++) {
-        result[i].price = value[abbrArray[i]].KRW.PRICE;
-        result[i].percent = value[abbrArray[i]].KRW.CHANGEPCT24HOUR;
-      }
-      result[index].loading = false;
-      this.setState(state => ({ favorite: result }));
-    });
-  };
 
   handleEmail = e => {
     this.setState({ email: e.target.value });
@@ -101,26 +79,30 @@ class AuthPage extends Component {
     this.setState({ password: e.target.value });
   };
 
-  handleSignUp = () => {
-    this.props.history.push({
-      pathname: "/auth/signup"
-    });
+  handleName = e => {
+    this.setState({ username: e.target.value });
   };
 
-  handleSignIn = () => {
-    const { email, password } = this.state;
+  handleSignUp = () => {
+    const { email, password, username } = this.state;
     const params = {
       email,
-      password
+      password,
+      username
     };
-    this.props.dispatch(AuthAction.postSignIn(params));
+    console.log(params);
+    this.props.dispatch(AuthAction.postSignUp(params)).then(value => {
+      this.props.history.replace({
+        pathname: "/"
+      });
+    });
   };
 
   render() {
     const { coinType, coins, favorite } = this.state;
     const { news } = this.props;
     return (
-      <div className="authPage">
+      <div className="signUpPage">
         <NavBar type="auth" />
         <SideBar
           type={coinType}
@@ -128,25 +110,25 @@ class AuthPage extends Component {
           favorite={favorite}
           handleFavorite={this.handleFavorite}
         />
-        <div className="authPage__content">
-          <div className="authPage__content__news">
-            <div className="authPage__content__news__search">
-              <div className="authPage__content__news__search__first">
-                <div className="authPage__content__news__search__first__iconArea">
-                  <span className="authPage__content__news__search__first__iconArea__icon">
+        <div className="signUpPage__content">
+          <div className="signUpPage__content__news">
+            <div className="signUpPage__content__news__search">
+              <div className="signUpPage__content__news__search__first">
+                <div className="signUpPage__content__news__search__first__iconArea">
+                  <span className="signUpPage__content__news__search__first__iconArea__icon">
                     <i className="xi-search" />
                   </span>
                 </div>
-                <div className="authPage__content__news__search__first__inputArea">
+                <div className="signUpPage__content__news__search__first__inputArea">
                   <input
-                    className="authPage__content__news__search__first__inputArea__input"
+                    className="signUpPage__content__news__search__first__inputArea__input"
                     placeholder="무엇을 찾고싶으신가요?"
                   />
                 </div>
               </div>
-              <div className="authPage__content__news__search__second">
+              <div className="signUpPage__content__news__search__second">
                 <hr />
-                <div className="authPage__content__news__search__second__content">
+                <div className="signUpPage__content__news__search__second__content">
                   <ButtonDropdown
                     isOpen={this.state.dropdownOpen}
                     style={{ marginRight: 10, backgroundColor: "transparent" }}
@@ -164,7 +146,7 @@ class AuthPage extends Component {
             </div>
             <div
               ref={this.paneDidMount}
-              className="authPage__content__news__lists"
+              className="signUpPage__content__news__lists"
             >
               {news &&
                 news.map((data, index) => {
@@ -180,31 +162,29 @@ class AuthPage extends Component {
                 })}
             </div>
           </div>
-          <div className="authPage__content__chart">
-            <div className="authPage__content__chart__intro">
-              <div className="authPage__content__chart__intro__logo">
+          <div className="signUpPage__content__chart">
+            <div className="signUpPage__content__chart__intro">
+              <div className="signUpPage__content__chart__intro__logo">
                 <img
                   width={45}
                   height={45}
                   src={require("../../Assests/Imgs/enhance_logo.png")}
                 />
-                <p className="authPage__content__chart__intro__logo__text">
+                <p className="signUpPage__content__chart__intro__logo__text">
                   ENHANCE
                 </p>
               </div>
-              <div className="authPage__content__chart__intro__welcome">
-                <strong>환영합니다.</strong>
-                <p>
-                  인핸스는 가상화폐와 블록체인 기술에 대한 정보를 실시간으로
-                  모아서 한눈에 보기 쉽게 제공해 드리고 있습니다. 인핸스와 함께
-                  가상화폐의 역사를 함께 하세요.
-                </p>
-              </div>
-              <div className="authPage__content__chart__intro__login">
+              <div className="signUpPage__content__chart__intro__login">
                 <RoundInput
                   onChange={this.handleEmail}
                   placeholder="이메일"
                   type="email"
+                />
+                <br />
+                <RoundInput
+                  onChange={this.handleName}
+                  placeholder="닉네임"
+                  type="text"
                 />
                 <br />
                 <RoundInput
@@ -213,20 +193,12 @@ class AuthPage extends Component {
                   type="password"
                 />
                 <br />
+                <RoundInput placeholder="비밀번호 확인" type="password" />
                 <br />
-                <Button text="로그인" onClick={this.handleSignIn} />
-              </div>
-              <div className="authPage__content__chart__intro__signUp">
-                <p>아직 인핸스의 회원이 아니신가요?</p>
-                <p>
-                  <strong
-                    className="authPage__content__chart__intro__signUp__link"
-                    onClick={this.handleSignUp}
-                  >
-                    회원가입
-                  </strong>
-                  하시고 맞춤 정보를 받아가세요!
-                </p>
+                <br />
+                <Button text="이전으로" onClick={this.handleBack} />
+                <br />
+                <Button text="회원가입" onClick={this.handleSignUp} />
               </div>
             </div>
           </div>
@@ -236,7 +208,7 @@ class AuthPage extends Component {
   }
 }
 
-AuthPage.defaultProps = defaultProps;
-AuthPage.propTypes = propTypes;
+SignUpPage.defaultProps = defaultProps;
+SignUpPage.propTypes = propTypes;
 
-export default connect(mapStateToProps)(AuthPage);
+export default connect(mapStateToProps)(SignUpPage);

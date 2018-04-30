@@ -9,6 +9,7 @@ import cx from "classnames";
 import { Modal, ModalBody, ModalHeader, ModalFooter } from "reactstrap";
 import { Sentry } from "react-activity";
 import "react-activity/dist/react-activity.css";
+import Loadable from "react-loading-overlay";
 
 const defaultProps = {};
 const propTypes = {};
@@ -46,7 +47,7 @@ class SideBar extends Component {
   };
 
   render() {
-    const { onClick, type, handleFavorite, favorite } = this.props;
+    const { onClick, type, handleFavorite, favorite, loadGraph } = this.props;
     // const { coins } = this.state;
     return (
       <div className="sideBar">
@@ -62,43 +63,46 @@ class SideBar extends Component {
           <ModalHeader>
             <div className="sideBar__modal__header">종목을 선택하세요</div>
           </ModalHeader>
-          <ModalBody>
-            <div className="sideBar__modal">
-              <div className="sideBar__modal__content">
-                <div className="sideBar__modal__content__items">
-                  {favorite.map((data, index) => {
-                    return (
-                      <div
-                        key={index}
-                        className="sideBar__modal__content__items__wrapper"
-                      >
+          <Loadable active={loadGraph} spinner text="데이터 생성중 입니다">
+            <ModalBody>
+              <div className="sideBar__modal">
+                <div className="sideBar__modal__content">
+                  <div className="sideBar__modal__content__items">
+                    {favorite.map((data, index) => {
+                      return (
                         <div
-                          className={cx(
-                            "sideBar__modal__content__items__wrapper__item",
-                            {
-                              "sideBar__modal__content__items__wrapper__item-active":
-                                data.clicked === true
-                            }
-                          )}
-                          onClick={() => handleFavorite(index, data.abbr)}
+                          key={index}
+                          className="sideBar__modal__content__items__wrapper"
                         >
-                          <div className="sideBar__modal__content__items_wrapper__item__abbr">
-                            {data.abbr}
-                          </div>
-                          <div className="sideBar__modal__content__items__wrapper__item__full">
-                            {data.full}
-                          </div>
-                          <div className="sideBar__modal__content__items__wrapper__item__kor">
-                            <p>{data.kor}</p>
+                          <div
+                            className={cx(
+                              "sideBar__modal__content__items__wrapper__item",
+                              {
+                                "sideBar__modal__content__items__wrapper__item-active":
+                                  data.clicked === true
+                              }
+                            )}
+                            onClick={() => handleFavorite(index, data.abbr)}
+                          >
+                            <div className="sideBar__modal__content__items_wrapper__item__abbr">
+                              {data.abbr}
+                            </div>
+                            <div className="sideBar__modal__content__items__wrapper__item__full">
+                              {data.full}
+                            </div>
+                            <div className="sideBar__modal__content__items__wrapper__item__kor">
+                              <p>{data.kor}</p>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
-            </div>
-          </ModalBody>
+            </ModalBody>
+          </Loadable>
+
           <ModalFooter>
             <span className="sideBar__modal__close" onClick={this.toggleModal}>
               닫기
@@ -115,7 +119,10 @@ class SideBar extends Component {
                 .map((data, index) => {
                   if (data.loading === true) {
                     return (
-                      <div className="sideBar__content__items__item">
+                      <div
+                        key={index}
+                        className="sideBar__content__items__item"
+                      >
                         <Sentry color="#ffffff" />
                       </div>
                     );

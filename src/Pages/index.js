@@ -8,3 +8,4 @@ export DefaultPage from "./_DefaultPage/DefaultPage.react";
 export DefaultReduxPage from "./_DefaultReduxPage/DefaultReduxPage.react";
 export HomePage from "./HomePage/HomePage";
 export AuthPage from "./AuthPage/AuthPage";
+export SignUpPage from "./SignUpPage/SignUpPage";

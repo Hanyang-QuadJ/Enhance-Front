@@ -65,38 +65,41 @@ class HomePage extends Component {
 
   componentDidMount() {
     //즐겨찾기 가져올 부분
-    const coin = coinJson.coin;
-    let result = coin.map(function(el) {
-      let o = Object.assign({}, el);
-      o.clicked = false;
-      o.loading = false;
-      return o;
+
+    this.props.dispatch(PriceAction.getCoins()).then(coins => {
+      const coin = coins;
+      let result = coin.map(function(el) {
+        let o = Object.assign({}, el);
+        o.clicked = false;
+        o.loading = false;
+        return o;
+      });
+      this.setState({ favorite: result, loadGraph: true });
+
+      //즐겨찾기 있을 경우
+      // this.setState({ isFavEmpty: false });
+      // const abbrArray = [];
+      // for (let i = 0; i < result.length; i++) {
+      //   abbrArray[i] = result[i].abbr;
+      // }
+      // let typeArray = [];
+      // for (let i = 0; i < abbrArray.length; i++) {
+      //   typeArray.push({ name: abbrArray[i], price: 0, percent: "" });
+      // }
+      // this.props.dispatch(PriceAction.getPrice(abbrArray)).then(value => {
+      //   for (let i = 0; i < abbrArray.length; i++) {
+      //     typeArray[i].price = value[abbrArray[i]].KRW.PRICE;
+      //     typeArray[i].percent = value[abbrArray[i]].KRW.CHANGEPCT24HOUR;
+      //   }
+      //   this.setState({ coins: typeArray });
+      //   this.renderChart(this.state.coinType);
+      //   this.props.dispatch(NewsAction.getNews());
+      // });
+
+      //즐겨찾기 없을 경우
+      this.props.dispatch(NewsAction.getNews());
+      this.setState({ loadGraph: false, isFavEmpty: true });
     });
-    this.setState({ favorite: result, loadGraph: true });
-
-    //즐겨찾기 있을 경우
-    // this.setState({ isFavEmpty: false });
-    // const abbrArray = [];
-    // for (let i = 0; i < result.length; i++) {
-    //   abbrArray[i] = result[i].abbr;
-    // }
-    // let typeArray = [];
-    // for (let i = 0; i < abbrArray.length; i++) {
-    //   typeArray.push({ name: abbrArray[i], price: 0, percent: "" });
-    // }
-    // this.props.dispatch(PriceAction.getPrice(abbrArray)).then(value => {
-    //   for (let i = 0; i < abbrArray.length; i++) {
-    //     typeArray[i].price = value[abbrArray[i]].KRW.PRICE;
-    //     typeArray[i].percent = value[abbrArray[i]].KRW.CHANGEPCT24HOUR;
-    //   }
-    //   this.setState({ coins: typeArray });
-    //   this.renderChart(this.state.coinType);
-    //   this.props.dispatch(NewsAction.getNews());
-    // });
-
-    //즐겨찾기 없을 경우
-    this.props.dispatch(NewsAction.getNews());
-    this.setState({ loadGraph: false, isFavEmpty: true });
   }
 
   handleScroll = event => {
@@ -129,32 +132,51 @@ class HomePage extends Component {
 
   handleFavorite = async(index, data) => {
     const coin = this.state.favorite.slice();
-    coin[index].clicked = true;
-    coin[index].loading = true;
-    this.handleChart(data);
-    this.setState({ favorite: coin });
-
-    //즐겨찾기 한 코인들에게, 가격, 증감표시 key 추가
-    let result = coin.map(function(el) {
-      let o = Object.assign({}, el);
-      o.price = 0;
-      o.percent = "";
-      return o;
-    });
-
-    //즐겨찾기한 코인, 이름만 모으기
-    let abbrArray = [];
-    for (let i = 0; i < result.length; i++) {
-      abbrArray[i] = result[i].abbr;
-    }
-    this.props.dispatch(PriceAction.getPrice(abbrArray)).then(value => {
-      for (let i = 0; i < abbrArray.length; i++) {
-        result[i].price = value[abbrArray[i]].KRW.PRICE;
-        result[i].percent = value[abbrArray[i]].KRW.CHANGEPCT24HOUR;
+    if (coin[index].clicked === true) {
+      coin[index].clicked = false;
+      let leftOver = [];
+      for (let i = 0; i < coin.length; i++) {
+        if (coin[i].clicked === true) {
+          leftOver.push(coin[i].abbr);
+        }
       }
-      result[index].loading = false;
-      this.setState(state => ({ favorite: result }));
-    });
+      if (leftOver.length === 0) {
+        this.setState({ favorite: coin, isFavEmpty: true });
+        while (this.instance.firstChild) {
+          this.instance.removeChild(this.instance.firstChild);
+        }
+      } else {
+        this.setState({ favorite: coin, coinType: leftOver[0] });
+        this.handleChart(leftOver[0]);
+      }
+    } else {
+      coin[index].clicked = true;
+      coin[index].loading = true;
+      this.handleChart(data);
+      this.setState({ favorite: coin });
+
+      //즐겨찾기 한 코인들에게, 가격, 증감표시 key 추가
+      let result = coin.map(function(el) {
+        let o = Object.assign({}, el);
+        o.price = 0;
+        o.percent = "";
+        return o;
+      });
+
+      //즐겨찾기한 코인, 이름만 모으기
+      let abbrArray = [];
+      for (let i = 0; i < result.length; i++) {
+        abbrArray[i] = result[i].abbr;
+      }
+      this.props.dispatch(PriceAction.getPrice(abbrArray)).then(value => {
+        for (let i = 0; i < abbrArray.length; i++) {
+          result[i].price = value[abbrArray[i]].KRW.PRICE;
+          result[i].percent = value[abbrArray[i]].KRW.CHANGEPCT24HOUR;
+        }
+        result[index].loading = false;
+        this.setState(state => ({ favorite: result }));
+      });
+    }
   };
 
   render() {
@@ -169,6 +191,7 @@ class HomePage extends Component {
           coins={coins}
           favorite={favorite}
           handleFavorite={this.handleFavorite}
+          loadGraph={loadGraph}
         />
         <div className="homePage__content">
           <div className="homePage__content__news">

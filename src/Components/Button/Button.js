@@ -12,10 +12,11 @@ class DefaultComponent extends Component {
   }
 
   render() {
+    const { text, onClick } = this.props;
     return (
       <div className="button">
-        <div className="button__content">
-          <div className="button__content__text">로그인</div>
+        <div className="button__content" onClick={onClick}>
+          <div className="button__content__text">{text}</div>
         </div>
       </div>
     );
