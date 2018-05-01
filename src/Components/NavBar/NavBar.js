@@ -64,8 +64,7 @@ class NavBar extends Component {
   handleMe = () => {
     const { me } = this.props;
     this.props.history.push({
-      // pathname: "/@" + me[0].username
-      pathname: "/test"
+      pathname: "/@" + me[0].username
     });
   };
 

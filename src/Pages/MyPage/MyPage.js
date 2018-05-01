@@ -101,99 +101,12 @@ class MyPage extends Component {
     });
   };
 
-  handleEmail = e => {
-    this.setState({ email: e.target.value });
-  };
-
-  handlePassword = e => {
-    this.setState({ password: e.target.value });
-  };
-
-  handleSignUp = () => {
-    this.props.history.push({
-      pathname: "/auth/signup"
-    });
-  };
-
-  handleSignIn = () => {
-    const { email, password } = this.state;
-    const params = {
-      email,
-      password
-    };
-    this.props.dispatch(AuthAction.postSignIn(params)).then(value => {
-      this.props.dispatch(AuthAction.getMe(value)).then(value2 => {
-        this.props.history.replace({
-          pathname: "/"
-        });
-      });
-    });
-  };
-
   render() {
     const { coinType, coins, favorite } = this.state;
     const { news, me } = this.props;
     return (
       <div className="myPage">
-        <NavBar type="me" />
-        <SideBar
-          type={coinType}
-          coins={coins}
-          favorite={favorite}
-          handleFavorite={this.handleFavorite}
-        />
         <div className="myPage__content">
-          <div className="myPage__content__news">
-            <div className="myPage__content__news__search">
-              <div className="myPage__content__news__search__first">
-                <div className="myPage__content__news__search__first__iconArea">
-                  <span className="myPage__content__news__search__first__iconArea__icon">
-                    <i className="xi-search" />
-                  </span>
-                </div>
-                <div className="myPage__content__news__search__first__inputArea">
-                  <input
-                    className="myPage__content__news__search__first__inputArea__input"
-                    placeholder="무엇을 찾고싶으신가요?"
-                  />
-                </div>
-              </div>
-              <div className="myPage__content__news__search__second">
-                <hr />
-                <div className="myPage__content__news__search__second__content">
-                  <ButtonDropdown
-                    isOpen={this.state.dropdownOpen}
-                    style={{ marginRight: 10, backgroundColor: "transparent" }}
-                    toggle={this.toggle}
-                    size="sm"
-                    direction="down"
-                  >
-                    <DropdownToggle caret>최신 순</DropdownToggle>
-                    <DropdownMenu>
-                      <DropdownItem>인기 순</DropdownItem>
-                    </DropdownMenu>
-                  </ButtonDropdown>
-                </div>
-              </div>
-            </div>
-            <div
-              ref={this.paneDidMount}
-              className="myPage__content__news__lists"
-            >
-              {news &&
-                news.map((data, index) => {
-                  return (
-                    <List
-                      key={index}
-                      title={data.title}
-                      createdAt={data.pubDate}
-                      type={coinType}
-                      link={data.link}
-                    />
-                  );
-                })}
-            </div>
-          </div>
           <div className="myPage__content__chart">
             <div className="myPage__content__chart__intro">
               <div className="myPage__content__chart__intro__logo">

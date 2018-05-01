@@ -68,9 +68,8 @@ class App extends Component {
       <MuiThemeProvider muiTheme={muiTheme}>
         <Switch>
           <div>
-            <Route path="/news" component={HomePageRoute} />
-            <Route path="/forum" component={ForumPage} />
-            <Route path="/@:user_id" component={MyPage} />
+            <Route path="/" component={HomePage} />
+            <Route exact path="/forum" component={ForumPage} />
             <Route path="/auth" component={AuthPage} />
             <Route path="/auth/signup" component={SignUpPage} />
           </div>
