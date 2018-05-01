@@ -13,9 +13,11 @@
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
   &__modal {
-    height: 50vh;
+    height: 60vh;
     padding-left: 50px;
     padding-right: 50px;
+    display: flex;
+    flex-direction: column;
     &__mainInput {
       margin-right: 20px;
       margin-left: 20px;

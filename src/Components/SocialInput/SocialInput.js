@@ -72,7 +72,8 @@ class SocialInput extends Component {
       className,
       postText,
       onFocus,
-      isFocus
+      isFocus,
+      onChangeTitle
     } = this.props;
     return (
       <div className={cx("socialInput", className)}>
@@ -84,14 +85,16 @@ class SocialInput extends Component {
             <input
               className="socialInput__body__input-title"
               placeholder="제목"
+              onChange={onChangeTitle}
             />
             <Textarea
-              maxRows={4}
+              minRows={4}
+              maxRows={6}
               value={value}
               onChange={e => onChange(e)}
               onFocus={onFocus}
               onBlur={onFocus}
-              placeholder={isLogin === true ? placeholder : "Sign in to post!"}
+              placeholder={isLogin === true ? placeholder : "가입하세요"}
               className="socialInput__body__input"
             />
           </div>

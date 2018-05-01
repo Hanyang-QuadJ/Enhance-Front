@@ -42,7 +42,8 @@ const styles = {
 const mapStateToProps = state => {
   return {
     news: state.reducer.news,
-    me: state.reducer.me
+    me: state.reducer.me,
+    isLogin: state.reducer.isLogin
   };
 };
 
@@ -54,10 +55,9 @@ class ForumPage extends Component {
       posts: [],
       postLoading: false,
       favorite: [],
-      coinType: "BTC",
       isFocus: false,
-      email: "",
-      password: ""
+      title: "",
+      main: ""
     };
     this.toggle = this.toggle.bind(this);
   }
@@ -133,15 +133,28 @@ class ForumPage extends Component {
     });
   };
 
-  handleEmail = e => {
-    this.setState({ email: e.target.value });
+  handleTitle = e => {
+    this.setState({ title: e.target.value });
   };
 
-  handlePassword = e => {
-    this.setState({ password: e.target.value });
+  handleMain = e => {
+    this.setState({ main: e.target.value });
   };
 
-  handlePost = () => {};
+  handlePost = async() => {
+    const { main, title } = this.state;
+    let date = new Date();
+    let post = {
+      desc: main,
+      title,
+      createdAt: date,
+      type: "BTC"
+    };
+    const posts = this.state.posts.slice();
+    posts.push(post);
+    await this.setState({ posts: posts });
+    await this.toggleModal();
+  };
 
   render() {
     const { coinType, posts, favorite, postLoading, isFocus } = this.state;
@@ -169,9 +182,11 @@ class ForumPage extends Component {
                 <SocialInput
                   user={me}
                   showCamera
+                  showType
                   isLogin={isLogin}
                   onChange={this.handleMain}
-                  placeholder="Leave a comment"
+                  onChangeTitle={this.handleTitle}
+                  placeholder="본문을 입력하세요"
                   onClick={this.handlePost}
                   postText="등록"
                   onFocus={this.onFocus}
@@ -222,18 +237,17 @@ class ForumPage extends Component {
               ref={this.paneDidMount}
               className="forumPage__content__news__lists"
             >
-              {/* {news &&
-                news.map((data, index) => {
-                  return (
-                    <List
-                      key={index}
-                      title={data.title}
-                      createdAt={data.pubDate}
-                      type={coinType}
-                      link={data.link}
-                    />
-                  );
-                })} */}
+              {posts.map((data, index) => {
+                return (
+                  <List
+                    social
+                    key={index}
+                    title={data.title}
+                    createdAt={data.pubDate}
+                    type={data.type}
+                  />
+                );
+              })}
             </div>
           </div>
           <div className="forumPage__content__chart">

@@ -14,9 +14,9 @@ class List extends Component {
   }
 
   render() {
-    const { title, createdAt, type, link } = this.props;
+    const { title, createdAt, type, link, social } = this.props;
     return (
-      <a href={link} target="_blank">
+      <a href={link && link} target="_blank">
         <div className="list">
           <div className="list__content">
             <div className="list__content__date">
@@ -27,6 +27,11 @@ class List extends Component {
                 className="list__content__textArea__text"
                 dangerouslySetInnerHTML={{ __html: title }}
               />
+              {social ? (
+                <div className="list__content__textArea__text">
+                  <i className="xi-thumbs-up" />
+                </div>
+              ) : null}
             </div>
             <div className="list__content__type">
               <p>{type}</p>
