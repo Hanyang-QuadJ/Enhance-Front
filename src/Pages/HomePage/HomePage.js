@@ -29,11 +29,8 @@ const mapStateToProps = state => {
     isLogin: state.reducer.isLogin
   };
 };
-const Home = () => (
-  <div>
-    <h2>Home</h2>
-  </div>
-);
+
+const sourceFilter = [{ id: 0, name: "네이버" }, { id: 1, name: "다음" }];
 
 class HomePage extends Component {
   constructor(props) {
@@ -49,6 +46,7 @@ class HomePage extends Component {
       isFavEmpty: true,
       newsCount: 30,
       sourceId: 0,
+      sourceName: "네이버",
       footerLoading: false,
       newsLoading: false
     };
@@ -192,6 +190,19 @@ class HomePage extends Component {
     }));
   }
 
+  handleSource = (id, name) => {
+    const { sourceId, coinId } = this.state;
+    const newsParams = {
+      coinId,
+      sourceId: id,
+      newsCount: 30
+    };
+    this.setState({ sourceName: name, sourceId: id, newsLoading: true });
+    this.props.dispatch(NewsAction.getNews(newsParams)).then(news => {
+      this.setState({ news: news.result, newsLoading: false });
+    });
+  };
+
   handleChart = async(coin, id) => {
     const { sourceId } = this.state;
     const newsParams = {
@@ -285,6 +296,7 @@ class HomePage extends Component {
   };
 
   render() {
+    console.log(sourceFilter);
     const {
       loadGraph,
       coinType,
@@ -292,7 +304,8 @@ class HomePage extends Component {
       isFavEmpty,
       news,
       footerLoading,
-      newsLoading
+      newsLoading,
+      sourceName
     } = this.state;
     const { me, isLogin } = this.props;
     return (
@@ -331,9 +344,25 @@ class HomePage extends Component {
                     size="sm"
                     direction="down"
                   >
-                    <DropdownToggle caret>최신 순</DropdownToggle>
+                    <DropdownToggle caret>{sourceName}</DropdownToggle>
+
                     <DropdownMenu>
-                      <DropdownItem>인기 순</DropdownItem>
+                      {sourceFilter
+                        .filter(a => {
+                          return a.name !== sourceName;
+                        })
+                        .map((data, index) => {
+                          return (
+                            <DropdownItem
+                              key={index}
+                              onClick={() =>
+                                this.handleSource(data.id, data.name)
+                              }
+                            >
+                              {data.name}
+                            </DropdownItem>
+                          );
+                        })}
                     </DropdownMenu>
                   </ButtonDropdown>
                 </div>

@@ -78,4 +78,40 @@ body {
   .modal-backdrop.show {
     opacity: 0.1 !important;
   }
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 10rem;
+    padding: 0.5rem 0;
+    margin: 0.125rem 0 0;
+    font-size: 1rem;
+    color: white !important;
+    text-align: left;
+    list-style: none;
+    background-color: $main-color !important;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0px !important;
+  }
+  .dropdown-item {
+    display: block;
+    width: 100%;
+    cursor: pointer;
+    padding: 0.25rem 1.5rem;
+    clear: both;
+    font-weight: 400;
+    color: white !important;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+
+    &:hover {
+      background-color: transparent !important;
+    }
+  }
 }
