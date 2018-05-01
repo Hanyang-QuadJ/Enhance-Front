@@ -25,7 +25,8 @@ const mapStateToProps = state => {
   return {
     news: state.reducer.news,
     me: state.reducer.me,
-    token: state.reducer.token
+    token: state.reducer.token,
+    isLogin: state.reducer.isLogin
   };
 };
 const Home = () => (
@@ -246,7 +247,7 @@ class HomePage extends Component {
         this.props.dispatch(PriceAction.removeFav(params));
       } else {
         this.setState({ favorite: coin, coinType: leftOver[0] });
-        this.handleChart(leftOver[0]);
+        this.handleChart(leftOver[0], id);
         this.props.dispatch(PriceAction.removeFav(params));
       }
     }
@@ -254,7 +255,7 @@ class HomePage extends Component {
     else {
       coin[index].clicked = true;
       coin[index].loading = true;
-      // this.handleChart(data);
+      this.handleChart(data, id);
       this.setState({ favorite: coin });
 
       //즐겨찾기 한 코인들에게, 가격, 증감표시 key 추가
@@ -293,7 +294,7 @@ class HomePage extends Component {
       footerLoading,
       newsLoading
     } = this.state;
-    const { me } = this.props;
+    const { me, isLogin } = this.props;
     return (
       <div className="homePage">
         <NavBar type="news" />
@@ -418,7 +419,7 @@ class HomePage extends Component {
                       </div>
                     </div>
                   ) : null}
-                  {loadGraph === true ? (
+                  {loadGraph === true && isLogin === true ? (
                     <div
                       className="homePage__content__chart__loading"
                       ref={el => (this.instance = el)}
