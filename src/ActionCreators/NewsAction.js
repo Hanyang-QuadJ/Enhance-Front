@@ -6,12 +6,14 @@ export const FAILED_TO_GET_NEWS = "FAILED_TO_GET_NEWS";
 export const SUCCEED_TO_POST_NEWS = "SUCCEED_TO_POST_NEWS";
 export const FAILED_TO_POST_NEWS = "FAILED_TO_POST_NEWS";
 
-export const getNews = () => {
+export const getNews = params => {
   return async dispatch => {
     try {
       let response = await fetch(
         ServerEndPoint +
-          `api/naver/search/news?query=bitcoin 비트코인&display=${10}&start=${1}`,
+          `api/naver/search/news?coin_id=${params.coinId}&source=${
+            params.sourceId
+          }&index=${params.newsCount}`,
         {
           method: "GET",
           headers: {
@@ -23,9 +25,9 @@ export const getNews = () => {
       let responseJson = await response.json();
       await dispatch({
         type: SUCCEED_TO_GET_NEWS,
-        payload: responseJson.items
+        payload: responseJson.result
       });
-      return responseJson.items;
+      return responseJson;
     } catch (error) {
       dispatch({
         type: FAILED_TO_GET_NEWS,

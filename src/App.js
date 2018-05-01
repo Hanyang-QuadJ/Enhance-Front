@@ -5,7 +5,8 @@ import {
   BrowserRouter as Router,
   Route,
   Link,
-  withRouter
+  withRouter,
+  Switch
 } from "react-router-dom"; // Material UI Provider for React
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
@@ -25,6 +26,8 @@ import {
   ForumPage
 } from "./Pages/";
 
+import HomePageRoute from "./Pages/HomePage/HomePage";
+
 const muiTheme = getMuiTheme({
   palette: {
     primary1Color: green500
@@ -35,7 +38,10 @@ const mapStateToProps = state => {
   return {
     isLogin: state.reducer.isLogin,
     token: state.reducer.token,
-    me: state.reducer.me
+    me: state.reducer.me,
+    newsCount: state.reducer.newsCount,
+    coinId: state.reducer.coinId,
+    sourceId: state.reducer.sourceId
   };
 };
 
@@ -45,7 +51,13 @@ class App extends Component {
   }
 
   componentWillMount() {
-    this.props.dispatch(NewsAction.getNews());
+    const { token, newsCount, coinId, sourceId } = this.props;
+    const newsParams = {
+      newsCount,
+      coinId,
+      sourceId
+    };
+    this.props.dispatch(NewsAction.getNews(newsParams));
     if (this.props.isLogin === true) {
       this.props.dispatch(AuthAction.getMe(this.props.token));
     }
@@ -54,13 +66,15 @@ class App extends Component {
   render() {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <div>
-          <Route exact path="/" component={HomePage} />
-          <Route exact path="/forum" component={ForumPage} />
-          <Route exact path="/@:user_id" component={MyPage} />
-          <Route exact path="/auth" component={AuthPage} />
-          <Route path="/auth/signup" component={SignUpPage} />
-        </div>
+        <Switch>
+          <div>
+            <Route path="/news" component={HomePageRoute} />
+            <Route path="/forum" component={ForumPage} />
+            <Route path="/@:user_id" component={MyPage} />
+            <Route path="/auth" component={AuthPage} />
+            <Route path="/auth/signup" component={SignUpPage} />
+          </div>
+        </Switch>
       </MuiThemeProvider>
     );
   }

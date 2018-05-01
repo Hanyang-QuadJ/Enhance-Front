@@ -68,9 +68,7 @@ class ForumPage extends Component {
     }
   };
 
-  componentDidMount() {
-    this.props.dispatch(NewsAction.getNews());
-  }
+  componentDidMount() {}
 
   handleScroll = event => {
     var node = event.target;

@@ -34,7 +34,7 @@ const Home = () => (
   </div>
 );
 
-class HomePage extends Component {
+class NewsPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -273,7 +273,6 @@ class HomePage extends Component {
   };
 
   render() {
-    console.log(this.props);
     const {
       loadGraph,
       coinType,
@@ -285,7 +284,7 @@ class HomePage extends Component {
     } = this.state;
     const { me } = this.props;
     return (
-      <div className="homePage">
+      <div className="newsPage">
         <NavBar type="news" />
         <SideBar
           onClick={this.handleChart}
@@ -294,25 +293,25 @@ class HomePage extends Component {
           handleFavorite={this.handleFavorite}
           loadGraph={loadGraph}
         />
-        <div className="homePage__content">
-          <div className="homePage__content__news">
-            <div className="homePage__content__news__search">
-              <div className="homePage__content__news__search__first">
-                <div className="homePage__content__news__search__first__iconArea">
-                  <span className="homePage__content__news__search__first__iconArea__icon">
+        <div className="newsPage__content">
+          <div className="newsPage__content__news">
+            <div className="newsPage__content__news__search">
+              <div className="newsPage__content__news__search__first">
+                <div className="newsPage__content__news__search__first__iconArea">
+                  <span className="newsPage__content__news__search__first__iconArea__icon">
                     <i className="xi-search" />
                   </span>
                 </div>
-                <div className="homePage__content__news__search__first__inputArea">
+                <div className="newsPage__content__news__search__first__inputArea">
                   <input
-                    className="homePage__content__news__search__first__inputArea__input"
+                    className="newsPage__content__news__search__first__inputArea__input"
                     placeholder="무엇을 찾고싶으신가요?"
                   />
                 </div>
               </div>
-              <div className="homePage__content__news__search__second">
+              <div className="newsPage__content__news__search__second">
                 <hr />
-                <div className="homePage__content__news__search__second__content">
+                <div className="newsPage__content__news__search__second__content">
                   <ButtonDropdown
                     isOpen={this.state.dropdownOpen}
                     style={{ marginRight: 10, backgroundColor: "transparent" }}
@@ -332,14 +331,14 @@ class HomePage extends Component {
             {newsLoading ? (
               <div
                 ref={this.paneDidMount}
-                className="homePage__content__news__lists-loading"
+                className="newsPage__content__news__lists-loading"
               >
                 <Dots color="#ffffff" size={30} />
               </div>
             ) : (
               <div
                 ref={this.paneDidMount}
-                className="homePage__content__news__lists"
+                className="newsPage__content__news__lists"
               >
                 {news &&
                   news.map((data, index) => {
@@ -354,14 +353,14 @@ class HomePage extends Component {
                     );
                   })}
                 {footerLoading === true ? (
-                  <div className="homePage__content__news__lists__footer">
+                  <div className="newsPage__content__news__lists__footer">
                     <Dots color="#ffffff" size={20} />
                   </div>
                 ) : null}
               </div>
             )}
           </div>
-          <div className="homePage__content__chart">
+          <div className="newsPage__content__chart">
             <Route
               path={`${this.props.match.url}/:test`}
               render={() => <h3>!!!!</h3>}
@@ -373,18 +372,18 @@ class HomePage extends Component {
             />
 
             {isFavEmpty === true ? (
-              <div className="homePage__content__chart__intro">
-                <div className="homePage__content__chart__intro__logo">
+              <div className="newsPage__content__chart__intro">
+                <div className="newsPage__content__chart__intro__logo">
                   <img
                     width={45}
                     height={45}
                     src={require("../../Assests/Imgs/enhance_logo.png")}
                   />
-                  <p className="homePage__content__chart__intro__logo__text">
+                  <p className="newsPage__content__chart__intro__logo__text">
                     ENHANCE
                   </p>
                 </div>
-                <div className="homePage__content__chart__intro__welcome">
+                <div className="newsPage__content__chart__intro__welcome">
                   <p>
                     <strong>환영합니다. </strong>
                     {me && me[0].username + " 님"}
@@ -395,7 +394,7 @@ class HomePage extends Component {
                     함께 가상화폐의 역사를 함께 하세요.
                   </p>
                 </div>
-                <div className="homePage__content__chart__intro__desc">
+                <div className="newsPage__content__chart__intro__desc">
                   <strong>인핸스 뉴스</strong>
                   <p>
                     로그인 후 + 버튼을 누르거나 좌측 상단 돋보기 아이콘을 눌러
@@ -418,14 +417,14 @@ class HomePage extends Component {
             ) : null}
             {loadGraph === true ? (
               <div
-                className="homePage__content__chart__loading"
+                className="newsPage__content__chart__loading"
                 ref={el => (this.instance = el)}
               >
                 <Dots color="#ffffff" size={30} />
               </div>
             ) : (
               <div
-                className="homePage__content__chart__wrapper"
+                className="newsPage__content__chart__wrapper"
                 ref={el => (this.instance = el)}
               />
             )}
@@ -436,7 +435,7 @@ class HomePage extends Component {
   }
 }
 
-HomePage.defaultProps = defaultProps;
-HomePage.propTypes = propTypes;
+NewsPage.defaultProps = defaultProps;
+NewsPage.propTypes = propTypes;
 
-export default connect(mapStateToProps)(HomePage);
+export default connect(mapStateToProps)(NewsPage);

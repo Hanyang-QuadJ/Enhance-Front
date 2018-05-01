@@ -136,7 +136,7 @@ class SideBar extends Component {
                             type === data.abbr
                         })}
                         key={index}
-                        onClick={() => onClick(data.abbr)}
+                        onClick={() => onClick(data.abbr, data.id)}
                       >
                         <div className="sideBar__content__items__item__title">
                           {data.abbr}

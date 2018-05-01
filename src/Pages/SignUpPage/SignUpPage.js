@@ -22,7 +22,10 @@ const propTypes = {};
 
 const mapStateToProps = state => {
   return {
-    news: state.reducer.news
+    news: state.reducer.news,
+    newsCount: state.reducer.newsCount,
+    sourceId: state.reducer.sourceId,
+    coinId: state.reducer.coinId
   };
 };
 
@@ -47,8 +50,14 @@ class SignUpPage extends Component {
     }
   };
 
-  componentDidMount() {
-    this.props.dispatch(NewsAction.getNews());
+  componentWillMount() {
+    const { token, newsCount, coinId, sourceId } = this.props;
+    const newsParams = {
+      newsCount,
+      coinId,
+      sourceId
+    };
+    this.props.dispatch(NewsAction.getNews(newsParams));
   }
 
   handleScroll = event => {
