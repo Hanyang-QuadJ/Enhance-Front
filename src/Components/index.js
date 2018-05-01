@@ -9,3 +9,5 @@ export List from "./List/List";
 export SideBar from "./SideBar/SideBar";
 export RoundInput from "./RoundInput/RoundInput";
 export Button from "./Button/Button";
+export Thumb from "./Thumb/Thumb";
+export SocialInput from "./SocialInput/SocialInput";

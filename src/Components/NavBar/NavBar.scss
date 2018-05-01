@@ -10,6 +10,18 @@
   left: 0;
   color: white;
   border-right: 1px rgba(255, 255, 255, 0.1) solid;
+  &__signOut {
+    height: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    &__text {
+      margin-bottom: 10%;
+    }
+  }
+
   &__content {
     display: flex;
     flex-direction: column;

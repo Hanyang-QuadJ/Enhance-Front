@@ -3,7 +3,14 @@
 
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { NavBar, List, SideBar, RoundInput, Button } from "../../Components";
+import {
+  NavBar,
+  List,
+  SideBar,
+  RoundInput,
+  Button,
+  Thumb
+} from "../../Components";
 import { Dots } from "react-activity";
 import * as NewsAction from "../../ActionCreators/NewsAction";
 import * as PriceAction from "../../ActionCreators/PriceAction";
@@ -22,11 +29,12 @@ const propTypes = {};
 
 const mapStateToProps = state => {
   return {
-    news: state.reducer.news
+    news: state.reducer.news,
+    me: state.reducer.me
   };
 };
 
-class AuthPage extends Component {
+class MyPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -124,35 +132,35 @@ class AuthPage extends Component {
 
   render() {
     const { coinType, coins, favorite } = this.state;
-    const { news } = this.props;
+    const { news, me } = this.props;
     return (
-      <div className="authPage">
-        <NavBar type="auth" />
+      <div className="myPage">
+        <NavBar type="me" />
         <SideBar
           type={coinType}
           coins={coins}
           favorite={favorite}
           handleFavorite={this.handleFavorite}
         />
-        <div className="authPage__content">
-          <div className="authPage__content__news">
-            <div className="authPage__content__news__search">
-              <div className="authPage__content__news__search__first">
-                <div className="authPage__content__news__search__first__iconArea">
-                  <span className="authPage__content__news__search__first__iconArea__icon">
+        <div className="myPage__content">
+          <div className="myPage__content__news">
+            <div className="myPage__content__news__search">
+              <div className="myPage__content__news__search__first">
+                <div className="myPage__content__news__search__first__iconArea">
+                  <span className="myPage__content__news__search__first__iconArea__icon">
                     <i className="xi-search" />
                   </span>
                 </div>
-                <div className="authPage__content__news__search__first__inputArea">
+                <div className="myPage__content__news__search__first__inputArea">
                   <input
-                    className="authPage__content__news__search__first__inputArea__input"
+                    className="myPage__content__news__search__first__inputArea__input"
                     placeholder="무엇을 찾고싶으신가요?"
                   />
                 </div>
               </div>
-              <div className="authPage__content__news__search__second">
+              <div className="myPage__content__news__search__second">
                 <hr />
-                <div className="authPage__content__news__search__second__content">
+                <div className="myPage__content__news__search__second__content">
                   <ButtonDropdown
                     isOpen={this.state.dropdownOpen}
                     style={{ marginRight: 10, backgroundColor: "transparent" }}
@@ -170,7 +178,7 @@ class AuthPage extends Component {
             </div>
             <div
               ref={this.paneDidMount}
-              className="authPage__content__news__lists"
+              className="myPage__content__news__lists"
             >
               {news &&
                 news.map((data, index) => {
@@ -186,58 +194,23 @@ class AuthPage extends Component {
                 })}
             </div>
           </div>
-          <div className="authPage__content__chart">
-            <div className="authPage__content__chart__intro">
-              <div className="authPage__content__chart__intro__logo">
+          <div className="myPage__content__chart">
+            <div className="myPage__content__chart__intro">
+              <div className="myPage__content__chart__intro__logo">
                 <img
                   width={45}
                   height={45}
                   src={require("../../Assests/Imgs/enhance_logo.png")}
                 />
-                <p className="authPage__content__chart__intro__logo__text">
+                <p className="myPage__content__chart__intro__logo__text">
                   ENHANCE
                 </p>
               </div>
-              <div className="authPage__content__chart__intro__welcome">
-                <strong>환영합니다.</strong>
-                <p>
-                  인핸스는 가상화폐와 블록체인 기술에 대한 정보를 실시간으로
-                  모아서 한눈에 보기 쉽게 제공해 드리고 있습니다. 인핸스와 함께
-                  가상화폐의 역사를 함께 하세요.
-                </p>
-              </div>
-              <div className="authPage__content__chart__intro__login">
-                <RoundInput
-                  onChange={this.handleEmail}
-                  placeholder="이메일"
-                  type="email"
-                />
-                <br />
-                <RoundInput
-                  onChange={this.handlePassword}
-                  placeholder="비밀번호"
-                  type="password"
-                />
-                <br />
-                <br />
-                <Button
-                  text="로그인"
-                  width={290}
-                  height={50}
-                  onClick={this.handleSignIn}
-                />
-              </div>
-              <div className="authPage__content__chart__intro__signUp">
-                <p>아직 인핸스의 회원이 아니신가요?</p>
-                <p>
-                  <strong
-                    className="authPage__content__chart__intro__signUp__link"
-                    onClick={this.handleSignUp}
-                  >
-                    회원가입
-                  </strong>
-                  하시고 맞춤 정보를 받아가세요!
-                </p>
+              <div className="myPage__content__chart__intro__welcome">
+                <Thumb size={60} fontSize={40} />
+                <strong className="myPage__content__chart__intro__welcome__text">
+                  {me && me[0].username}
+                </strong>
               </div>
             </div>
           </div>
@@ -247,7 +220,7 @@ class AuthPage extends Component {
   }
 }
 
-AuthPage.defaultProps = defaultProps;
-AuthPage.propTypes = propTypes;
+MyPage.defaultProps = defaultProps;
+MyPage.propTypes = propTypes;
 
-export default connect(mapStateToProps)(AuthPage);
+export default connect(mapStateToProps)(MyPage);

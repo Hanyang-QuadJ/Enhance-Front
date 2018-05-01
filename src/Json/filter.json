@@ -1,0 +1,105 @@
+{
+  "concept": [
+    {
+      "label": "All",
+      "clicked": true
+    },
+    {
+      "label": "Calm",
+      "clicked": false,
+      "value": "calm"
+    },
+    {
+      "label": "Sight Seeing",
+      "clicked": false,
+      "value": "sightSeeing"
+    },
+    {
+      "label": "Dandy",
+      "clicked": false,
+      "value": "dandy"
+    },
+    {
+      "label": "Hearty Eater",
+      "clicked": false,
+      "value": "food"
+    },
+    {
+      "label": "Alive",
+      "clicked": false,
+      "value": "activity"
+    },
+    {
+      "label": "Swagger",
+      "clicked": false,
+      "value": "luxury"
+    },
+    {
+      "label": "Romantic",
+      "clicked": false,
+      "value": "love"
+    },
+    {
+      "label": "Party Animal",
+      "clicked": false,
+      "value": "party"
+    }
+  ],
+  "day": [
+    {
+      "label": "All",
+      "clicked": true
+    },
+    {
+      "label": "1 Day",
+      "value": "1 Day",
+      "clicked": false
+    },
+    {
+      "label": "2 Days",
+      "value": "2 Day",
+      "clicked": false
+    },
+    {
+      "label": "3 Days",
+      "value": "3 Days",
+      "clicked": false
+    }
+  ],
+  "area": [
+    {
+      "label": "All",
+      "clicked": true
+    },
+    {
+      "label": "Area 1",
+      "clicked": false
+    },
+    {
+      "label": "Area 2",
+      "clicked": false
+    },
+    {
+      "label": "Area 3",
+      "clicked": false
+    },
+    {
+      "label": "Area 4",
+      "clicked": false
+    }
+  ],
+  "feed_type": ["Recent Posts", "Hot Posts"],
+  "post_type": [
+    "All",
+    "Walkie Talkie",
+    "Question",
+    "Selling/Giveaway",
+    "Hangout",
+    "Area1",
+    "Area2",
+    "Area3",
+    "Area4",
+    "KATUSA",
+    "Ville Channel"
+  ]
+}

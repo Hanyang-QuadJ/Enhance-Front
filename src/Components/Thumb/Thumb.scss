@@ -1,0 +1,25 @@
+/*
+* Author: @nayunhwan (github.com/nayunhwan)
+* Email: nayunhwan.dev@mgail.com
+*/
+.thumb {
+  display: inline-block;
+  position: relative;
+
+  &__image {
+    box-sizing: border-box;
+    border-radius: 50%;
+    border: 1px solid white;
+  }
+}
+
+.thumb__default {
+  font-size: 2rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border-radius: 50%;
+  border: 1px white solid;
+  color: white;
+}

@@ -169,9 +169,9 @@ class HomePage extends Component {
     const { me, token } = this.props;
     const params = {
       token: token,
-      user_id: me[0].id,
       coin_id: coin[index].id
     };
+    //삭제
     if (coin[index].clicked === true) {
       coin[index].clicked = false;
 
@@ -186,13 +186,15 @@ class HomePage extends Component {
         while (this.instance.firstChild) {
           this.instance.removeChild(this.instance.firstChild);
         }
-        this.props.dispatch(PriceAction.removeFav(params)).then(value => {});
+        await this.props.dispatch(PriceAction.removeFav(params));
       } else {
         this.setState({ favorite: coin, coinType: leftOver[0] });
-        this.handleChart(leftOver[0]);
-        this.props.dispatch(PriceAction.removeFav(params)).then(value => {});
+        await this.handleChart(leftOver[0]);
+        await this.props.dispatch(PriceAction.removeFav(params));
       }
-    } else {
+    }
+    //추가
+    else {
       coin[index].clicked = true;
       coin[index].loading = true;
       this.handleChart(data);

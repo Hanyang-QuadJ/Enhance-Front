@@ -3,37 +3,59 @@
 
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { NavBar, List, SideBar, RoundInput, Button } from "../../Components";
+import {
+  NavBar,
+  List,
+  SideBar,
+  RoundInput,
+  Thumb,
+  SocialInput
+} from "../../Components";
+import Textarea from "react-textarea-autosize";
 import { Dots } from "react-activity";
 import * as NewsAction from "../../ActionCreators/NewsAction";
 import * as PriceAction from "../../ActionCreators/PriceAction";
 import * as AuthAction from "../../ActionCreators/AuthAction";
 import coinJson from "../../Json/coin";
+import { Modal, ModalBody, ModalHeader, ModalFooter } from "reactstrap";
+import Loadable from "react-loading-overlay";
 import "react-activity/dist/react-activity.css";
 import {
   ButtonDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
+  Button
 } from "reactstrap";
 
 const defaultProps = {};
 const propTypes = {};
 
+const styles = {
+  styleAdd: {
+    position: "absolute",
+    left: "45vw",
+    bottom: 30
+  }
+};
+
 const mapStateToProps = state => {
   return {
-    news: state.reducer.news
+    news: state.reducer.news,
+    me: state.reducer.me
   };
 };
 
-class AuthPage extends Component {
+class ForumPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       dropdownOpen: false,
-      coins: [],
+      posts: [],
+      postLoading: false,
       favorite: [],
       coinType: "BTC",
+      isFocus: false,
       email: "",
       password: ""
     };
@@ -63,6 +85,24 @@ class AuthPage extends Component {
       dropdownOpen: !prevState.dropdownOpen
     }));
   }
+
+  toggleModal = () => {
+    if (this.props.isLogin === false) {
+      this.props.history.push({
+        pathname: "/auth"
+      });
+    } else {
+      this.setState({
+        showModal: !this.state.showModal
+      });
+    }
+  };
+
+  onFocus = () => {
+    this.setState(prevState => ({
+      isFocus: !prevState.isFocus
+    }));
+  };
 
   handleFavorite = async(index, data) => {
     const coin = this.state.favorite.slice();
@@ -101,58 +141,65 @@ class AuthPage extends Component {
     this.setState({ password: e.target.value });
   };
 
-  handleSignUp = () => {
-    this.props.history.push({
-      pathname: "/auth/signup"
-    });
-  };
-
-  handleSignIn = () => {
-    const { email, password } = this.state;
-    const params = {
-      email,
-      password
-    };
-    this.props.dispatch(AuthAction.postSignIn(params)).then(value => {
-      this.props.dispatch(AuthAction.getMe(value)).then(value2 => {
-        this.props.history.replace({
-          pathname: "/"
-        });
-      });
-    });
-  };
+  handlePost = () => {};
 
   render() {
-    const { coinType, coins, favorite } = this.state;
-    const { news } = this.props;
+    const { coinType, posts, favorite, postLoading, isFocus } = this.state;
+    const { news, me, isLogin } = this.props;
     return (
-      <div className="authPage">
-        <NavBar type="auth" />
+      <div className="forumPage">
+        <NavBar type="forum" />
         <SideBar
           type={coinType}
-          coins={coins}
           favorite={favorite}
           handleFavorite={this.handleFavorite}
         />
-        <div className="authPage__content">
-          <div className="authPage__content__news">
-            <div className="authPage__content__news__search">
-              <div className="authPage__content__news__search__first">
-                <div className="authPage__content__news__search__first__iconArea">
-                  <span className="authPage__content__news__search__first__iconArea__icon">
+        <Modal
+          isOpen={this.state.showModal}
+          toggle={this.toggleModal}
+          size="lg"
+          modalTransition={{ timeout: 20 }}
+          backdropTransition={{ timeout: 10 }}
+          centered={true}
+          // backdrop={false}
+        >
+          <Loadable active={postLoading} spinner text="포스팅 중입니다">
+            <ModalBody>
+              <div className="forumPage__modal">
+                <SocialInput
+                  user={me}
+                  showCamera
+                  isLogin={isLogin}
+                  onChange={this.handleMain}
+                  placeholder="Leave a comment"
+                  onClick={this.handlePost}
+                  postText="등록"
+                  onFocus={this.onFocus}
+                  isFocus={isFocus}
+                />
+              </div>
+            </ModalBody>
+          </Loadable>
+        </Modal>
+        <div className="forumPage__content">
+          <div className="forumPage__content__news">
+            <div className="forumPage__content__news__search">
+              <div className="forumPage__content__news__search__first">
+                <div className="forumPage__content__news__search__first__iconArea">
+                  <span className="forumPage__content__news__search__first__iconArea__icon">
                     <i className="xi-search" />
                   </span>
                 </div>
-                <div className="authPage__content__news__search__first__inputArea">
+                <div className="forumPage__content__news__search__first__inputArea">
                   <input
-                    className="authPage__content__news__search__first__inputArea__input"
+                    className="forumPage__content__news__search__first__inputArea__input"
                     placeholder="무엇을 찾고싶으신가요?"
                   />
                 </div>
               </div>
-              <div className="authPage__content__news__search__second">
+              <div className="forumPage__content__news__search__second">
                 <hr />
-                <div className="authPage__content__news__search__second__content">
+                <div className="forumPage__content__news__search__second__content">
                   <ButtonDropdown
                     isOpen={this.state.dropdownOpen}
                     style={{ marginRight: 10, backgroundColor: "transparent" }}
@@ -165,14 +212,17 @@ class AuthPage extends Component {
                       <DropdownItem>인기 순</DropdownItem>
                     </DropdownMenu>
                   </ButtonDropdown>
+                  <Button onClick={this.toggleModal} size="sm">
+                    새 글 작성
+                  </Button>
                 </div>
               </div>
             </div>
             <div
               ref={this.paneDidMount}
-              className="authPage__content__news__lists"
+              className="forumPage__content__news__lists"
             >
-              {news &&
+              {/* {news &&
                 news.map((data, index) => {
                   return (
                     <List
@@ -183,61 +233,23 @@ class AuthPage extends Component {
                       link={data.link}
                     />
                   );
-                })}
+                })} */}
             </div>
           </div>
-          <div className="authPage__content__chart">
-            <div className="authPage__content__chart__intro">
-              <div className="authPage__content__chart__intro__logo">
+          <div className="forumPage__content__chart">
+            <div className="forumPage__content__chart__intro">
+              <div className="forumPage__content__chart__intro__logo">
                 <img
                   width={45}
                   height={45}
                   src={require("../../Assests/Imgs/enhance_logo.png")}
                 />
-                <p className="authPage__content__chart__intro__logo__text">
+                <p className="forumPage__content__chart__intro__logo__text">
                   ENHANCE
                 </p>
               </div>
-              <div className="authPage__content__chart__intro__welcome">
-                <strong>환영합니다.</strong>
-                <p>
-                  인핸스는 가상화폐와 블록체인 기술에 대한 정보를 실시간으로
-                  모아서 한눈에 보기 쉽게 제공해 드리고 있습니다. 인핸스와 함께
-                  가상화폐의 역사를 함께 하세요.
-                </p>
-              </div>
-              <div className="authPage__content__chart__intro__login">
-                <RoundInput
-                  onChange={this.handleEmail}
-                  placeholder="이메일"
-                  type="email"
-                />
-                <br />
-                <RoundInput
-                  onChange={this.handlePassword}
-                  placeholder="비밀번호"
-                  type="password"
-                />
-                <br />
-                <br />
-                <Button
-                  text="로그인"
-                  width={290}
-                  height={50}
-                  onClick={this.handleSignIn}
-                />
-              </div>
-              <div className="authPage__content__chart__intro__signUp">
-                <p>아직 인핸스의 회원이 아니신가요?</p>
-                <p>
-                  <strong
-                    className="authPage__content__chart__intro__signUp__link"
-                    onClick={this.handleSignUp}
-                  >
-                    회원가입
-                  </strong>
-                  하시고 맞춤 정보를 받아가세요!
-                </p>
+              <div className="forumPage__content__chart__intro__welcome">
+                <h4>Forum</h4>
               </div>
             </div>
           </div>
@@ -247,7 +259,7 @@ class AuthPage extends Component {
   }
 }
 
-AuthPage.defaultProps = defaultProps;
-AuthPage.propTypes = propTypes;
+ForumPage.defaultProps = defaultProps;
+ForumPage.propTypes = propTypes;
 
-export default connect(mapStateToProps)(AuthPage);
+export default connect(mapStateToProps)(ForumPage);

@@ -30,7 +30,7 @@ class RoundInput extends Component {
   }
 
   render() {
-    const { type, onChange, placeholder } = this.props;
+    const { type, onChange, placeholder, isMulti, rows, rowsMax } = this.props;
     return (
       <div className="roundInput">
         <TextField
@@ -41,6 +41,9 @@ class RoundInput extends Component {
           inputStyle={styles.inputText}
           hintStyle={styles.hint}
           underlineStyle={styles.underline}
+          multiLine={isMulti}
+          rows={rows}
+          rowsMax={rowsMax}
         />
       </div>
     );

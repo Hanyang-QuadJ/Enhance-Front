@@ -12,9 +12,9 @@ class DefaultComponent extends Component {
   }
 
   render() {
-    const { text, onClick } = this.props;
+    const { text, onClick, width, height } = this.props;
     return (
-      <div className="button">
+      <div className="button" style={{ width: width, height: height }}>
         <div className="button__content" onClick={onClick}>
           <div className="button__content__text">{text}</div>
         </div>

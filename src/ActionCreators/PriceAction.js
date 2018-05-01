@@ -106,7 +106,6 @@ export const addFav = params => {
           "x-access-token": params.token
         },
         body: JSON.stringify({
-          user_id: 2,
           coin_id: params.coin_id
         })
       });
@@ -136,7 +135,6 @@ export const removeFav = params => {
           "x-access-token": params.token
         },
         body: JSON.stringify({
-          user_id: 2,
           coin_id: params.coin_id
         })
       });

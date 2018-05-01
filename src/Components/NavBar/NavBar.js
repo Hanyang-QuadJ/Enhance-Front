@@ -4,6 +4,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import { Modal, ModalBody, ModalHeader, ModalFooter } from "reactstrap";
+import { Button } from "../";
+
 import cx from "classnames";
 
 import * as DefaultActionCreator from "../../ActionCreators/_DefaultActionCreator";
@@ -22,21 +25,34 @@ const mapStateToProps = state => {
 class NavBar extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      showModal: false
+    };
   }
 
   handleAuth = () => {
     const { isLogin } = this.props;
     if (isLogin === true) {
-      this.props.dispatch(AuthAction.signOut()).then(value => {
-        this.props.history.replace({
-          pathname: "/auth"
-        });
-      });
+      this.toggleModal();
     } else {
       this.props.history.push({
         pathname: "/auth"
       });
     }
+  };
+
+  handleSignOut = () => {
+    this.props.dispatch(AuthAction.signOut()).then(value => {
+      this.props.history.replace({
+        pathname: "/auth"
+      });
+    });
+  };
+
+  toggleModal = () => {
+    this.setState({
+      showModal: !this.state.showModal
+    });
   };
 
   handleNews = () => {
@@ -45,10 +61,46 @@ class NavBar extends Component {
     });
   };
 
+  handleMe = () => {
+    const { me } = this.props;
+    this.props.history.push({
+      pathname: "/@" + me[0].username
+    });
+  };
+
+  handleForum = () => {
+    this.props.history.push({
+      pathname: "/forum"
+    });
+  };
+
   render() {
     const { type, isLogin, me } = this.props;
     return (
       <div className="navBar">
+        <Modal
+          isOpen={this.state.showModal}
+          toggle={this.toggleModal}
+          modalTransition={{ timeout: 20 }}
+          backdropTransition={{ timeout: 10 }}
+          centered={true}
+        >
+          <ModalBody>
+            <div className="navBar__signOut">
+              <div className="navBar__signOut__text">
+                <h4>로그아웃 하시겠습니까?</h4>
+              </div>
+              <div className="navBar__signOut__button">
+                <Button
+                  text="확인"
+                  width={100}
+                  height={50}
+                  onClick={this.handleSignOut}
+                />
+              </div>
+            </div>
+          </ModalBody>
+        </Modal>
         <div className="navBar__content">
           <div className="navBar__content__brand" onClick={this.handleNews}>
             <img
@@ -69,14 +121,24 @@ class NavBar extends Component {
               </span>
               <p>뉴스</p>
             </div>
-            <div className="navBar__content__items__item">
+            <div
+              className={cx("navBar__content__items__item", {
+                "navBar__content__items__item-active": type === "forum"
+              })}
+              onClick={this.handleForum}
+            >
               <span className="navBar__content__items__item-icon">
                 <i className="xi-users-o" />
               </span>
               <p>포럼</p>
             </div>
             {isLogin === true ? (
-              <div className="navBar__content__items__item">
+              <div
+                className={cx("navBar__content__items__item", {
+                  "navBar__content__items__item-active": type === "me"
+                })}
+                onClick={this.handleMe}
+              >
                 <span className="navBar__content__items__item-icon">
                   <i className="xi-user-o" />
                 </span>

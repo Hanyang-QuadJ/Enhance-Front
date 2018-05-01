@@ -55,11 +55,13 @@
     "react": "^16.2.0",
     "react-activity": "^1.2.2",
     "react-dom": "^16.2.0",
+    "react-file-input-previews-base64": "^1.0.6",
     "react-load-script": "0.0.6",
     "react-loading-overlay": "^0.3.0",
     "react-redux": "^4.4.8",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
+    "react-textarea-autosize": "^6.1.0",
     "reactstrap": "^5.0.0",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0"

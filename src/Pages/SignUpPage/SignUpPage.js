@@ -90,7 +90,6 @@ class SignUpPage extends Component {
       password,
       username
     };
-    console.log(params);
     this.props.dispatch(AuthAction.postSignUp(params)).then(value => {
       this.props.dispatch(AuthAction.getMe(value.token)).then(value2 => {
         this.props.history.replace({
@@ -198,9 +197,19 @@ class SignUpPage extends Component {
                 <RoundInput placeholder="비밀번호 확인" type="password" />
                 <br />
                 <br />
-                <Button text="이전으로" onClick={this.handleBack} />
+                <Button
+                  width={290}
+                  height={50}
+                  text="이전으로"
+                  onClick={this.handleBack}
+                />
                 <br />
-                <Button text="회원가입" onClick={this.handleSignUp} />
+                <Button
+                  width={290}
+                  height={50}
+                  text="회원가입"
+                  onClick={this.handleSignUp}
+                />
               </div>
             </div>
           </div>

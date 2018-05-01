@@ -20,7 +20,9 @@ import {
   DefaultReduxPage,
   HomePage,
   AuthPage,
-  SignUpPage
+  SignUpPage,
+  MyPage,
+  ForumPage
 } from "./Pages/";
 
 const muiTheme = getMuiTheme({
@@ -54,6 +56,8 @@ class App extends Component {
       <MuiThemeProvider muiTheme={muiTheme}>
         <div>
           <Route exact path="/" component={HomePage} />
+          <Route exact path="/forum" component={ForumPage} />
+          <Route exact path="/@:user_id" component={MyPage} />
           <Route exact path="/auth" component={AuthPage} />
           <Route path="/auth/signup" component={SignUpPage} />
         </div>
