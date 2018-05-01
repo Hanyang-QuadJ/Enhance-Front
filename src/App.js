@@ -66,14 +66,12 @@ class App extends Component {
   render() {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <Switch>
-          <div>
-            <Route path="/" component={HomePage} />
-            <Route exact path="/forum" component={ForumPage} />
-            <Route path="/auth" component={AuthPage} />
-            <Route path="/auth/signup" component={SignUpPage} />
-          </div>
-        </Switch>
+        <div>
+          <Route path="/news" component={HomePage} />
+          <Route exact path="/forum" component={ForumPage} />
+          <Route path="/auth" component={AuthPage} />
+          <Route path="/auth/signup" component={SignUpPage} />
+        </div>
       </MuiThemeProvider>
     );
   }

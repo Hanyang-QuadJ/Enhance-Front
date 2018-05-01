@@ -54,10 +54,6 @@ class MyPage extends Component {
     }
   };
 
-  componentDidMount() {
-    this.props.dispatch(NewsAction.getNews());
-  }
-
   handleScroll = event => {
     var node = event.target;
     const bottom = node.scrollHeight - node.scrollTop === node.clientHeight;

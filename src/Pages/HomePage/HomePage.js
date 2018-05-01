@@ -38,6 +38,7 @@ class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      navStatus: "news",
       loadGraph: false,
       dropdownOpen: false,
       coinType: "BTC",
@@ -52,12 +53,6 @@ class HomePage extends Component {
     };
     this.toggle = this.toggle.bind(this);
   }
-
-  paneDidMount = node => {
-    if (node) {
-      node.addEventListener("scroll", this.handleScroll.bind(this));
-    }
-  };
 
   renderChart = type => {
     const baseUrl = "https://widgets.cryptocompare.com/";
@@ -169,15 +164,15 @@ class HomePage extends Component {
     });
   }
 
-  handleScroll = event => {
+  handleScroll = e => {
+    const bottom =
+      e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
     const { newsCount, coinId, sourceId } = this.state;
     const newsParams = {
       coinId,
       sourceId,
       newsCount
     };
-    var node = event.target;
-    const bottom = node.scrollHeight - node.scrollTop === node.clientHeight;
     if (bottom) {
       this.setState({ footerLoading: true });
       this.props.dispatch(NewsAction.getNews(newsParams)).then(news => {
@@ -197,20 +192,36 @@ class HomePage extends Component {
   }
 
   handleChart = async(coin, id) => {
-    this.setState({ loadGraph: true, isFavEmpty: false });
+    const { sourceId } = this.state;
+    const newsParams = {
+      coinId: id,
+      sourceId,
+      newsCount: 30
+    };
+    this.setState({
+      loadGraph: true,
+      isFavEmpty: false,
+      newsLoading: true,
+      coinType: coin
+    });
+
     if (this.instance === undefined) {
       this.renderChart(coin);
-      this.setState({ coinType: coin, coinId: id });
+      this.props.dispatch(NewsAction.getNews(newsParams)).then(value => {
+        this.setState({ news: value.result, newsLoading: false, coinId: id });
+      });
     } else {
       while (this.instance.firstChild) {
         this.instance.removeChild(this.instance.firstChild);
       }
-      this.renderChart(coin);
-      this.setState({ coinType: coin, coinId: id });
+      await this.renderChart(coin);
+      this.props.dispatch(NewsAction.getNews(newsParams)).then(value => {
+        this.setState({ news: value.result, newsLoading: false, coinId: id });
+      });
     }
   };
 
-  handleFavorite = async(index, data) => {
+  handleFavorite = async(index, id, data) => {
     const coin = this.state.favorite.slice();
     const { me, token } = this.props;
     const params = {
@@ -232,18 +243,18 @@ class HomePage extends Component {
         while (this.instance.firstChild) {
           this.instance.removeChild(this.instance.firstChild);
         }
-        await this.props.dispatch(PriceAction.removeFav(params));
+        this.props.dispatch(PriceAction.removeFav(params));
       } else {
         this.setState({ favorite: coin, coinType: leftOver[0] });
-        await this.handleChart(leftOver[0]);
-        await this.props.dispatch(PriceAction.removeFav(params));
+        this.handleChart(leftOver[0]);
+        this.props.dispatch(PriceAction.removeFav(params));
       }
     }
     //추가
     else {
       coin[index].clicked = true;
       coin[index].loading = true;
-      this.handleChart(data);
+      // this.handleChart(data);
       this.setState({ favorite: coin });
 
       //즐겨찾기 한 코인들에게, 가격, 증감표시 key 추가
@@ -259,7 +270,7 @@ class HomePage extends Component {
       for (let i = 0; i < result.length; i++) {
         abbrArray[i] = result[i].abbr;
       }
-      this.props.dispatch(PriceAction.addFav(params)).then(value => {
+      this.props.dispatch(PriceAction.addFav(params)).then(x => {
         this.props.dispatch(PriceAction.getPrice(abbrArray)).then(value => {
           for (let i = 0; i < abbrArray.length; i++) {
             result[i].price = value[abbrArray[i]].KRW.PRICE;
@@ -273,7 +284,6 @@ class HomePage extends Component {
   };
 
   render() {
-    console.log(this.props);
     const {
       loadGraph,
       coinType,
@@ -329,15 +339,12 @@ class HomePage extends Component {
               </div>
             </div>
             {newsLoading ? (
-              <div
-                ref={this.paneDidMount}
-                className="homePage__content__news__lists-loading"
-              >
+              <div className="homePage__content__news__lists-loading">
                 <Dots color="#ffffff" size={30} />
               </div>
             ) : (
               <div
-                ref={this.paneDidMount}
+                onScroll={this.handleScroll}
                 className="homePage__content__news__lists"
               >
                 {news &&
@@ -360,11 +367,11 @@ class HomePage extends Component {
               </div>
             )}
           </div>
-          <Route path="/@:user_id" component={MyPage} />
+          <Route path="/news/@:user_id" component={MyPage} />
           <Route
             exact
-            path="/"
-            render={() => {
+            path="/news"
+            children={() => {
               return (
                 <div className="homePage__content__chart">
                   {isFavEmpty === true ? (

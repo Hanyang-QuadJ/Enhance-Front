@@ -116,6 +116,11 @@
           border-left: 3px $active-color solid;
         }
 
+        &-disable {
+          cursor: not-allowed;
+          pointer-events: none;
+        }
+
         &-plus {
           font-size: 2rem;
         }

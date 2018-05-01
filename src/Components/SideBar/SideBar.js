@@ -84,7 +84,9 @@ class SideBar extends Component {
                                   data.clicked === true
                               }
                             )}
-                            onClick={() => handleFavorite(index, data.abbr)}
+                            onClick={() =>
+                              handleFavorite(index, data.id, data.abbr)
+                            }
                           >
                             <div className="sideBar__modal__content__items_wrapper__item__abbr">
                               {data.abbr}
@@ -131,10 +133,17 @@ class SideBar extends Component {
                   } else {
                     return (
                       <div
-                        className={cx("sideBar__content__items__item", {
-                          "sideBar__content__items__item-active":
-                            type === data.abbr
-                        })}
+                        className={cx(
+                          "sideBar__content__items__item",
+                          {
+                            "sideBar__content__items__item-active":
+                              type === data.abbr
+                          },
+                          {
+                            "sideBar__content__items__item-disable":
+                              loadGraph === true
+                          }
+                        )}
                         key={index}
                         onClick={() => onClick(data.abbr, data.id)}
                       >

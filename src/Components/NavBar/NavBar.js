@@ -26,16 +26,18 @@ class NavBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showModal: false
+      showModal: false,
+      navStatus: ""
     };
   }
 
-  handleAuth = () => {
+  handleAuth = async() => {
     const { isLogin } = this.props;
     if (isLogin === true) {
       this.toggleModal();
     } else {
-      this.props.history.push({
+      await this.setState({ navStatus: "auth" });
+      await this.props.history.push({
         pathname: "/auth"
       });
     }
@@ -55,26 +57,30 @@ class NavBar extends Component {
     });
   };
 
-  handleNews = () => {
-    this.props.history.push({
-      pathname: "/"
+  handleNews = async() => {
+    await this.setState({ navStatus: "news" });
+    await this.props.history.push({
+      pathname: "/news"
     });
   };
 
-  handleMe = () => {
+  handleMe = async() => {
+    await this.setState({ navStatus: "me" });
     const { me } = this.props;
-    this.props.history.push({
-      pathname: "/@" + me[0].username
+    await this.props.history.push({
+      pathname: "/news/@" + me[0].username
     });
   };
 
-  handleForum = () => {
-    this.props.history.push({
+  handleForum = async() => {
+    await this.setState({ navStatus: "forum" });
+    await this.props.history.push({
       pathname: "/forum"
     });
   };
 
   render() {
+    const { navStatus } = this.state;
     const { type, isLogin, me } = this.props;
     return (
       <div className="navBar">
