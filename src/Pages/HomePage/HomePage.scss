@@ -64,6 +64,13 @@
         &__second {
           &__content {
             padding-left: 1rem;
+            padding-right: 1rem;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            &__function {
+            }
           }
         }
       }

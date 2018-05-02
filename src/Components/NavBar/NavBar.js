@@ -26,18 +26,16 @@ class NavBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showModal: false,
-      navStatus: ""
+      showModal: false
     };
   }
 
-  handleAuth = async() => {
+  handleAuth = () => {
     const { isLogin } = this.props;
     if (isLogin === true) {
       this.toggleModal();
     } else {
-      await this.setState({ navStatus: "auth" });
-      await this.props.history.push({
+      this.props.history.push({
         pathname: "/auth"
       });
     }
@@ -57,31 +55,21 @@ class NavBar extends Component {
     });
   };
 
-  handleNews = async() => {
-    await this.setState({ navStatus: "news" });
-    await this.props.history.push({
+  handleNews = () => {
+    this.props.history.push({
       pathname: "/news"
     });
   };
 
-  handleMe = async() => {
-    await this.setState({ navStatus: "me" });
-    const { me } = this.props;
-    await this.props.history.push({
-      pathname: "/news/@" + me[0].username
-    });
-  };
-
   handleForum = async() => {
-    await this.setState({ navStatus: "forum" });
-    await this.props.history.push({
+    this.props.history.push({
       pathname: "/forum"
     });
   };
 
   render() {
     const { navStatus } = this.state;
-    const { type, isLogin, me } = this.props;
+    const { type, isLogin, me, onClickMe } = this.props;
     return (
       <div className="navBar">
         <Modal
@@ -138,19 +126,6 @@ class NavBar extends Component {
               </span>
               <p>포럼</p>
             </div>
-            {isLogin === true ? (
-              <div
-                className={cx("navBar__content__items__item", {
-                  "navBar__content__items__item-active": type === "me"
-                })}
-                onClick={this.handleMe}
-              >
-                <span className="navBar__content__items__item-icon">
-                  <i className="xi-user-o" />
-                </span>
-                <p>{me && me[0].username}</p>
-              </div>
-            ) : null}
             <div
               className={cx("navBar__content__items__item", {
                 "navBar__content__items__item-active": type === "auth"

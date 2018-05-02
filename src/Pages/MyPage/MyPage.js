@@ -38,34 +38,9 @@ class MyPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dropdownOpen: false,
       coins: [],
-      favorite: [],
-      coinType: "BTC",
-      email: "",
-      password: ""
+      favorite: []
     };
-    this.toggle = this.toggle.bind(this);
-  }
-
-  paneDidMount = node => {
-    if (node) {
-      node.addEventListener("scroll", this.handleScroll.bind(this));
-    }
-  };
-
-  handleScroll = event => {
-    var node = event.target;
-    const bottom = node.scrollHeight - node.scrollTop === node.clientHeight;
-    if (bottom) {
-      console.log("BOTTOM REACHED:", bottom);
-    }
-  };
-
-  toggle() {
-    this.setState(prevState => ({
-      dropdownOpen: !prevState.dropdownOpen
-    }));
   }
 
   handleFavorite = async(index, data) => {
@@ -98,7 +73,6 @@ class MyPage extends Component {
   };
 
   render() {
-    const { coinType, coins, favorite } = this.state;
     const { news, me } = this.props;
     return (
       <div className="myPage">

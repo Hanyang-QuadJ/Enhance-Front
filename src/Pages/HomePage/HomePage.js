@@ -4,7 +4,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Route, Switch, Link } from "react-router-dom";
-import { NavBar, List, SideBar } from "../../Components";
+import { NavBar, List, SideBar, Thumb } from "../../Components";
 import { Dots } from "react-activity";
 import * as NewsAction from "../../ActionCreators/NewsAction";
 import * as PriceAction from "../../ActionCreators/PriceAction";
@@ -296,7 +296,6 @@ class HomePage extends Component {
   };
 
   render() {
-    console.log(sourceFilter);
     const {
       loadGraph,
       coinType,
@@ -305,12 +304,13 @@ class HomePage extends Component {
       news,
       footerLoading,
       newsLoading,
-      sourceName
+      sourceName,
+      navStatus
     } = this.state;
     const { me, isLogin } = this.props;
     return (
       <div className="homePage">
-        <NavBar type="news" />
+        <NavBar type={navStatus} />
         <SideBar
           onClick={this.handleChart}
           type={coinType}
@@ -365,6 +365,9 @@ class HomePage extends Component {
                         })}
                     </DropdownMenu>
                   </ButtonDropdown>
+                  <div className="homePage__content__news__search__second__content__function">
+                    <Thumb size={30} fontSize={20} />
+                  </div>
                 </div>
               </div>
             </div>
