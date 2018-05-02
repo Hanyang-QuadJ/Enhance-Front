@@ -68,7 +68,7 @@
   },
   "scripts": {
     "start": "webpack-dev-server --hot --host 0.0.0.0",
-    "build": "react-scripts build",
+    "build": "webpack",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
