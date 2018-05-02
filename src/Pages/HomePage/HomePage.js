@@ -44,7 +44,7 @@ class HomePage extends Component {
       news: [],
       favorite: [],
       isFavEmpty: true,
-      newsCount: 30,
+      newsCount: 0,
       sourceId: 0,
       sourceName: "네이버",
       footerLoading: false,
@@ -81,7 +81,7 @@ class HomePage extends Component {
     this.setState({ newsLoading: true, loadGraph: true });
     this.props.dispatch(NewsAction.getNews(newsParams)).then(news => {
       this.setState({
-        newsCount: news.nextIndex,
+        newsCount: newsCount,
         news: news.result,
         newsLoading: false
       });
@@ -132,7 +132,7 @@ class HomePage extends Component {
               const abbrArray = [];
               for (let i = 0; i < result.length; i++) {
                 if (result[i].clicked === true) {
-                  abbrArray.push(result[i].abbr);
+                  abbrArray.push({ id: result[i].id, abbr: result[i].abbr });
                 }
               }
               let final = result.map(function(el) {
@@ -143,19 +143,28 @@ class HomePage extends Component {
               });
 
               this.props
-                .dispatch(PriceAction.getPrice(abbrArray))
+                .dispatch(
+                  PriceAction.getPrice(
+                    abbrArray.map((a, index) => {
+                      return a.abbr;
+                    })
+                  )
+                )
                 .then(value => {
                   for (let i = 0; i < final.length; i++) {
                     for (let j = 0; j < abbrArray.length; j++) {
-                      if (final[i].abbr === abbrArray[j]) {
-                        final[i].price = value[abbrArray[j]].KRW.PRICE;
+                      if (final[i].abbr === abbrArray[j].abbr) {
+                        final[i].price = value[abbrArray[j].abbr].KRW.PRICE;
                         final[i].percent =
-                          value[abbrArray[j]].KRW.CHANGEPCT24HOUR;
+                          value[abbrArray[j].abbr].KRW.CHANGEPCT24HOUR;
                       }
                     }
                   }
-                  this.setState({ favorite: final, coinType: abbrArray[0] });
-                  this.renderChart(abbrArray[0]);
+                  this.setState({
+                    favorite: final,
+                    coinType: abbrArray[0].abbr
+                  });
+                  this.renderChart(abbrArray[0].abbr);
                 });
             }
           });
@@ -208,7 +217,7 @@ class HomePage extends Component {
     const newsParams = {
       coinId: id,
       sourceId,
-      newsCount: 30
+      newsCount: 0
     };
     this.setState({
       loadGraph: true,
@@ -226,8 +235,8 @@ class HomePage extends Component {
       while (this.instance.firstChild) {
         this.instance.removeChild(this.instance.firstChild);
       }
-      await this.renderChart(coin);
-      this.props.dispatch(NewsAction.getNews(newsParams)).then(value => {
+      this.renderChart(coin);
+      await this.props.dispatch(NewsAction.getNews(newsParams)).then(value => {
         this.setState({ news: value.result, newsLoading: false, coinId: id });
       });
     }

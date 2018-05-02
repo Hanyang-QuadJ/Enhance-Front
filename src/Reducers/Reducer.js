@@ -22,7 +22,7 @@ import {
 const initialState = {
   data: null,
   news: [],
-  newsCount: 30,
+  newsCount: 0,
   coinId: 1,
   sourceId: 0,
   prices: null,
