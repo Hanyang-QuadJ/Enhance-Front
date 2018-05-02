@@ -201,7 +201,7 @@ class AuthPage extends Component {
                 <img
                   width={45}
                   height={45}
-                  src={require("../../Assests/Imgs/enhance_logo.png")}
+                  src="https://github.com/Hanyang-QuadJ/enhance/blob/master/public/icons/enhance_logo.png?raw=true"
                 />
                 <p className="authPage__content__chart__intro__logo__text">
                   ENHANCE

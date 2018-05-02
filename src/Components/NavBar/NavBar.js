@@ -99,7 +99,7 @@ class NavBar extends Component {
           <div className="navBar__content__brand" onClick={this.handleNews}>
             <img
               className="navBar__content__brand__logo"
-              src={require("../../Assests/Imgs/enhance_logo.png")}
+              src="https://github.com/Hanyang-QuadJ/enhance/blob/master/public/icons/enhance_logo.png?raw=true"
             />
             <p className="navBar__content__brand__logo__text">ENHANCE</p>
           </div>

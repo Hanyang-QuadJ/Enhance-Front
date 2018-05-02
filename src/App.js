@@ -57,10 +57,15 @@ class App extends Component {
       coinId,
       sourceId
     };
-    this.props.dispatch(NewsAction.getNews(newsParams));
-    if (this.props.isLogin === true) {
-      this.props.dispatch(AuthAction.getMe(this.props.token));
-    }
+    this.props.dispatch(NewsAction.getNews(newsParams)).then(value => {
+      if (this.props.isLogin === true) {
+        this.props.dispatch(AuthAction.getMe(this.props.token)).then(value2 => {
+          this.props.history.push({ pathname: "/news" });
+        });
+      } else {
+        this.props.history.push({ pathname: "/auth" });
+      }
+    });
   }
 
   render() {

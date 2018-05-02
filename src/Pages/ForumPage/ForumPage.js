@@ -62,21 +62,7 @@ class ForumPage extends Component {
     this.toggle = this.toggle.bind(this);
   }
 
-  paneDidMount = node => {
-    if (node) {
-      node.addEventListener("scroll", this.handleScroll.bind(this));
-    }
-  };
-
   componentDidMount() {}
-
-  handleScroll = event => {
-    var node = event.target;
-    const bottom = node.scrollHeight - node.scrollTop === node.clientHeight;
-    if (bottom) {
-      console.log("BOTTOM REACHED:", bottom);
-    }
-  };
 
   toggle() {
     this.setState(prevState => ({
@@ -231,10 +217,7 @@ class ForumPage extends Component {
                 </div>
               </div>
             </div>
-            <div
-              ref={this.paneDidMount}
-              className="forumPage__content__news__lists"
-            >
+            <div className="forumPage__content__news__lists">
               {posts.map((data, index) => {
                 return (
                   <List
@@ -254,7 +237,7 @@ class ForumPage extends Component {
                 <img
                   width={45}
                   height={45}
-                  src={require("../../Assests/Imgs/enhance_logo.png")}
+                  src="https://github.com/Hanyang-QuadJ/enhance/blob/master/public/icons/enhance_logo.png?raw=true"
                 />
                 <p className="forumPage__content__chart__intro__logo__text">
                   ENHANCE

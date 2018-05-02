@@ -37,7 +37,7 @@ class HomePage extends Component {
     super(props);
     this.state = {
       navStatus: "news",
-      loadGraph: false,
+      loadGraph: true,
       dropdownOpen: false,
       coinType: "BTC",
       coinId: 1,

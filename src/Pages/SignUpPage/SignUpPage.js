@@ -100,7 +100,7 @@ class SignUpPage extends Component {
       username
     };
     this.props.dispatch(AuthAction.postSignUp(params)).then(value => {
-      this.props.dispatch(AuthAction.getMe(value.token)).then(value2 => {
+      this.props.dispatch(AuthAction.getMe(value)).then(value2 => {
         this.props.history.replace({
           pathname: "/news"
         });
