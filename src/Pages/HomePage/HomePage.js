@@ -42,6 +42,7 @@ class HomePage extends Component {
       coinType: "BTC",
       coinId: 1,
       news: [],
+      endScroll: false,
       favorite: [],
       isFavEmpty: true,
       newsCount: 0,
@@ -71,103 +72,114 @@ class HomePage extends Component {
   };
 
   componentDidMount() {
-    const { newsCount, coinId, sourceId } = this.state;
-    const newsParams = {
-      coinId,
-      sourceId,
-      newsCount
-    };
-    // 뉴스
-    this.setState({ newsLoading: true, loadGraph: true });
-    this.props.dispatch(NewsAction.getNews(newsParams)).then(news => {
-      this.setState({
-        newsCount: newsCount,
-        news: news.result,
-        newsLoading: false
-      });
-      // 모든 코인
-      this.props.dispatch(PriceAction.getCoins()).then(coins => {
-        //즐겨찾기
-        this.props
-          .dispatch(PriceAction.getFavs(this.props.token))
-          .then(favs => {
-            //즐겨찾기 없을 경우
-            if (
-              favs.length === 0 ||
-              favs === [] ||
-              favs === null ||
-              favs === undefined
-            ) {
-              let result = coins.map(function(el) {
-                let o = Object.assign({}, el);
-                o.clicked = false;
-                o.loading = false;
-                return o;
-              });
-              this.setState({
-                favorite: result,
-                loadGraph: false,
-                isFavEmpty: true
-              });
-            } else {
-              //즐겨찾기 있을 경우
-              let result = coins.map(function(el) {
-                let o = Object.assign({}, el);
-                o.clicked = false;
-                o.loading = false;
-                return o;
-              });
-              for (let i = 0; i < result.length; i++) {
-                for (let j = 0; j < favs.length; j++) {
-                  if (result[i].abbr === favs[j].abbr) {
-                    result[i].clicked = true;
-                  }
-                }
-              }
-              this.setState({
-                favorite: result,
-                loadGraph: true,
-                isFavEmpty: false
-              });
-              const abbrArray = [];
-              for (let i = 0; i < result.length; i++) {
-                if (result[i].clicked === true) {
-                  abbrArray.push({ id: result[i].id, abbr: result[i].abbr });
-                }
-              }
-              let final = result.map(function(el) {
-                let o = Object.assign({}, el);
-                o.price = 0;
-                o.percent = "";
-                return o;
-              });
-
-              this.props
-                .dispatch(
-                  PriceAction.getPrice(
-                    abbrArray.map((a, index) => {
-                      return a.abbr;
-                    })
-                  )
-                )
-                .then(value => {
-                  for (let i = 0; i < final.length; i++) {
-                    for (let j = 0; j < abbrArray.length; j++) {
-                      if (final[i].abbr === abbrArray[j].abbr) {
-                        final[i].price = value[abbrArray[j].abbr].KRW.PRICE;
-                        final[i].percent =
-                          value[abbrArray[j].abbr].KRW.CHANGEPCT24HOUR;
-                      }
-                    }
-                  }
-                  this.setState({
-                    favorite: final,
-                    coinType: abbrArray[0].abbr
-                  });
-                  this.renderChart(abbrArray[0].abbr);
-                });
-            }
+    // 모든 코인
+    this.props.dispatch(PriceAction.getCoins()).then(coins => {
+      //즐겨찾기
+      this.props.dispatch(PriceAction.getFavs(this.props.token)).then(favs => {
+        //즐겨찾기 없을 경우
+        if (
+          favs.length === 0 ||
+          favs === [] ||
+          favs === null ||
+          favs === undefined
+        ) {
+          // 일반 뉴스
+          const { newsCount, coinId, sourceId } = this.state;
+          const newsParams = {
+            coinId,
+            sourceId,
+            newsCount
+          };
+          this.setState({ newsLoading: true, loadGraph: true });
+          this.props.dispatch(NewsAction.getNews(newsParams)).then(news => {
+            this.setState({
+              newsCount: newsCount,
+              news: news.result,
+              newsLoading: false
+            });
+            let result = coins.map(function(el) {
+              let o = Object.assign({}, el);
+              o.clicked = false;
+              o.loading = false;
+              return o;
+            });
+            this.setState({
+              favorite: result,
+              loadGraph: false,
+              isFavEmpty: true
+            });
           });
+        } else {
+          //즐겨찾기 있을 경우
+          let result = coins.map(function(el) {
+            let o = Object.assign({}, el);
+            o.clicked = false;
+            o.loading = false;
+            return o;
+          });
+          for (let i = 0; i < result.length; i++) {
+            for (let j = 0; j < favs.length; j++) {
+              if (result[i].abbr === favs[j].abbr) {
+                result[i].clicked = true;
+              }
+            }
+          }
+          this.setState({
+            favorite: result,
+            loadGraph: true,
+            isFavEmpty: false
+          });
+          const abbrArray = [];
+          for (let i = 0; i < result.length; i++) {
+            if (result[i].clicked === true) {
+              abbrArray.push({ id: result[i].id, abbr: result[i].abbr });
+            }
+          }
+          let final = result.map(function(el) {
+            let o = Object.assign({}, el);
+            o.price = 0;
+            o.percent = "";
+            return o;
+          });
+
+          this.props
+            .dispatch(
+              PriceAction.getPrice(
+                abbrArray.map((a, index) => {
+                  return a.abbr;
+                })
+              )
+            )
+            .then(value => {
+              for (let i = 0; i < final.length; i++) {
+                for (let j = 0; j < abbrArray.length; j++) {
+                  if (final[i].abbr === abbrArray[j].abbr) {
+                    final[i].price = value[abbrArray[j].abbr].KRW.PRICE;
+                    final[i].percent =
+                      value[abbrArray[j].abbr].KRW.CHANGEPCT24HOUR;
+                  }
+                }
+              }
+
+              const { newsCount, sourceId } = this.state;
+              const newsParams = {
+                coinId: abbrArray[0].id,
+                sourceId,
+                newsCount
+              };
+
+              this.setState({ newsLoading: true, loadGraph: true });
+              this.props.dispatch(NewsAction.getNews(newsParams)).then(news => {
+                this.setState({
+                  news: news.result,
+                  newsLoading: false,
+                  favorite: final,
+                  coinType: abbrArray[0].abbr
+                });
+              });
+              this.renderChart(abbrArray[0].abbr);
+            });
+        }
       });
     });
   }
@@ -182,14 +194,23 @@ class HomePage extends Component {
       newsCount
     };
     if (bottom) {
-      this.setState({ footerLoading: true });
-      this.props.dispatch(NewsAction.getNews(newsParams)).then(news => {
-        this.setState(prevState => ({
-          news: [...prevState.news, ...news.result],
-          newsCount: news.nextIndex,
-          footerLoading: false
-        }));
-      });
+      if (this.state.endScroll === false) {
+        this.setState({ footerLoading: true });
+        this.props.dispatch(NewsAction.getNews(newsParams)).then(news => {
+          console.log(news.result.length);
+          if (news.result.length < 10) {
+            this.setState({ endScroll: true, footerLoading: false });
+          } else {
+            this.setState(prevState => ({
+              news: [...prevState.news, ...news.result],
+              newsCount: news.nextIndex,
+              footerLoading: false
+            }));
+          }
+        });
+      } else {
+        return null;
+      }
     }
   };
 
@@ -213,6 +234,7 @@ class HomePage extends Component {
   };
 
   handleChart = async(coin, id) => {
+    this.lists.scrollTop;
     const { sourceId } = this.state;
     const newsParams = {
       coinId: id,
@@ -221,6 +243,7 @@ class HomePage extends Component {
     };
     this.setState({
       loadGraph: true,
+      endScroll: false,
       isFavEmpty: false,
       newsLoading: true,
       coinType: coin
@@ -229,15 +252,25 @@ class HomePage extends Component {
     if (this.instance === undefined) {
       this.renderChart(coin);
       this.props.dispatch(NewsAction.getNews(newsParams)).then(value => {
-        this.setState({ news: value.result, newsLoading: false, coinId: id });
+        this.setState({
+          news: value.result,
+          newsLoading: false,
+          newsCount: 0,
+          coinId: id
+        });
       });
     } else {
       while (this.instance.firstChild) {
         this.instance.removeChild(this.instance.firstChild);
       }
       this.renderChart(coin);
-      await this.props.dispatch(NewsAction.getNews(newsParams)).then(value => {
-        this.setState({ news: value.result, newsLoading: false, coinId: id });
+      this.props.dispatch(NewsAction.getNews(newsParams)).then(value => {
+        this.setState({
+          news: value.result,
+          newsCount: 0,
+          newsLoading: false,
+          coinId: id
+        });
       });
     }
   };
@@ -405,6 +438,9 @@ class HomePage extends Component {
             ) : (
               <div
                 onScroll={this.handleScroll}
+                ref={el => {
+                  this.lists = el;
+                }}
                 className="homePage__content__news__lists"
               >
                 {news &&
