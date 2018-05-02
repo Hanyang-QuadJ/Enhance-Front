@@ -69,7 +69,7 @@ class App extends Component {
         <div>
           <Route path="/news" component={HomePage} />
           <Route exact path="/forum" component={ForumPage} />
-          <Route path="/auth" component={AuthPage} />
+          <Route exact path="/auth" component={AuthPage} />
           <Route path="/auth/signup" component={SignUpPage} />
         </div>
       </MuiThemeProvider>

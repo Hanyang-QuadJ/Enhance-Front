@@ -295,6 +295,19 @@ class HomePage extends Component {
     }
   };
 
+  handleMe = () => {
+    const { isLogin, me } = this.props;
+    if (isLogin) {
+      this.props.history.push({
+        pathname: "/news/@" + me[0].username
+      });
+    } else {
+      this.props.history.push({
+        pathname: "/auth"
+      });
+    }
+  };
+
   render() {
     const {
       loadGraph,
@@ -366,7 +379,12 @@ class HomePage extends Component {
                     </DropdownMenu>
                   </ButtonDropdown>
                   <div className="homePage__content__news__search__second__content__function">
-                    <Thumb size={30} fontSize={20} />
+                    <Thumb
+                      onClick={this.handleMe}
+                      size={30}
+                      fontSize={20}
+                      cursor="pointer"
+                    />
                   </div>
                 </div>
               </div>

@@ -12,19 +12,29 @@ class Thumb extends Component {
   }
 
   render() {
-    const { size, src, fontSize } = this.props;
+    const { size, src, fontSize, cursor, onClick } = this.props;
     if (src === null || src === undefined || src === null) {
       return (
         <span
           className="thumb__default"
-          style={{ width: size, height: size, fontSize: fontSize && fontSize }}
+          onClick={onClick}
+          style={{
+            width: size,
+            height: size,
+            fontSize: fontSize && fontSize,
+            cursor: cursor && cursor
+          }}
         >
           <i className="xi-user-o" />
         </span>
       );
     } else {
       return (
-        <span className="thumb" style={{ width: size, height: size }}>
+        <span
+          onClick={onClick}
+          className="thumb"
+          style={{ width: size, height: size, cursor: cursor && cursor }}
+        >
           <img className="thumb__image" width={size} height={size} src={src} />
         </span>
       );
