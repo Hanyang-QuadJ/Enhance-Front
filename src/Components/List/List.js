@@ -14,10 +14,10 @@ class List extends Component {
   }
 
   render() {
-    const { title, createdAt, type, link, social } = this.props;
+    const { title, createdAt, type, link, social, onClick } = this.props;
     return (
       <a href={link && link} target="_blank">
-        <div className="list">
+        <div className="list" onClick={onClick}>
           <div className="list__content">
             <div className="list__content__date">
               <p>{moment(createdAt).fromNow()}</p>

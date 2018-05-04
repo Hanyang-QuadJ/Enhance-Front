@@ -117,6 +117,11 @@ class SideBar extends Component {
           <div className="sideBar__content__items">
             {favorite &&
               favorite
+                .sort((a, b) => {
+                  if (a.abbr < b.abbr) return -1;
+                  if (a.abbr > b.abbr) return 1;
+                  return 0;
+                })
                 .filter(a => {
                   return a.clicked === true;
                 })

@@ -11,6 +11,8 @@ import {
   Thumb,
   SocialInput
 } from "../../Components";
+import { PostPage, MyPage } from "../";
+import { Route } from "react-router-dom";
 import Textarea from "react-textarea-autosize";
 import { Dots } from "react-activity";
 import * as NewsAction from "../../ActionCreators/NewsAction";
@@ -27,6 +29,7 @@ import {
   DropdownItem,
   Button
 } from "reactstrap";
+import cx from "classnames";
 
 const defaultProps = {};
 const propTypes = {};
@@ -42,8 +45,10 @@ const styles = {
 const mapStateToProps = state => {
   return {
     news: state.reducer.news,
+    token: state.reducer.token,
     me: state.reducer.me,
-    isLogin: state.reducer.isLogin
+    isLogin: state.reducer.isLogin,
+    favorite: state.reducer.favorite
   };
 };
 
@@ -53,16 +58,34 @@ class ForumPage extends Component {
     this.state = {
       dropdownOpen: false,
       posts: [],
-      postLoading: false,
       favorite: [],
+      postLoading: false,
+      myFavorite: [],
       isFocus: false,
       title: "",
-      main: ""
+      main: "",
+      comment: "",
+      selectedPostType: "",
+      selectedPostType2: "자유"
     };
     this.toggle = this.toggle.bind(this);
   }
+  componentWillMount() {
+    this.props.dispatch(PriceAction.getFavs(this.props.token)).then(favs => {
+      if (favs.length === 0) {
+        return null;
+      } else {
+        let result = favs.map(function(el) {
+          let o = Object.assign({}, el);
+          o.clicked = false;
+          return o;
+        });
+        console.log(result);
 
-  componentDidMount() {}
+        this.setState({ favorite: result });
+      }
+    });
+  }
 
   toggle() {
     this.setState(prevState => ({
@@ -76,9 +99,13 @@ class ForumPage extends Component {
         pathname: "/auth"
       });
     } else {
-      this.setState({
-        showModal: !this.state.showModal
-      });
+      if (this.state.favorite.length === 0) {
+        alert("글을 작성하려면 우측에서 종목을 추가하세요");
+      } else {
+        this.setState({
+          showModal: !this.state.showModal
+        });
+      }
     }
   };
 
@@ -125,6 +152,11 @@ class ForumPage extends Component {
     this.setState({ main: e.target.value });
   };
 
+  handleDetail = () => {
+    this.props.history.push({
+      pathname: "/forum/1"
+    });
+  };
   handlePost = async() => {
     const { main, title } = this.state;
     let date = new Date();
@@ -140,42 +172,101 @@ class ForumPage extends Component {
     await this.toggleModal();
   };
 
+  handleType2 = (index, data) => {
+    this.setState({ selectedPostType2: data });
+  };
+
+  handleCoinTag = (index, data) => {
+    let newFav = this.state.favorite.slice();
+    if (!newFav[index].clicked) {
+      newFav[index].clicked = true;
+      this.setState({ favorite: newFav });
+    } else {
+      newFav[index].clicked = false;
+      this.setState({ favorite: newFav });
+    }
+  };
+
   render() {
-    const { coinType, posts, favorite, postLoading, isFocus } = this.state;
+    const {
+      coinType,
+      posts,
+      myFavorite,
+      postLoading,
+      isFocus,
+      selectedPostType,
+      selectedPostType2,
+      favorite
+    } = this.state;
     const { news, me, isLogin } = this.props;
     return (
       <div className="forumPage">
         <NavBar type="forum" />
-        <SideBar
+        {/* <SideBar
           type={coinType}
-          favorite={favorite}
+          favorite={favorite && favorite}
           handleFavorite={this.handleFavorite}
-        />
+        /> */}
         <Modal
           isOpen={this.state.showModal}
           toggle={this.toggleModal}
           size="lg"
           modalTransition={{ timeout: 20 }}
           backdropTransition={{ timeout: 10 }}
-          centered={true}
           // backdrop={false}
         >
           <Loadable active={postLoading} spinner text="포스팅 중입니다">
             <ModalBody>
               <div className="forumPage__modal">
                 <SocialInput
-                  user={me}
+                  user={me && me[0]}
+                  isTitle={true}
+                  minRows={4}
+                  maxRows={6}
                   showCamera
-                  showType
+                  showType2
                   isLogin={isLogin}
                   onChange={this.handleMain}
                   onChangeTitle={this.handleTitle}
                   placeholder="본문을 입력하세요"
                   onClick={this.handlePost}
                   postText="등록"
+                  handleType={this.handleType}
+                  handleType2={this.handleType2}
+                  postType={favorite}
+                  selectedPostType2={selectedPostType2}
                   onFocus={this.onFocus}
                   isFocus={isFocus}
                 />
+                <p className="forumPage__modal__favorite__text">
+                  <span className="forumPage__modal__favorite__icon">
+                    <i className="xi-caret-down-min" />
+                  </span>관련된 종목을 선택하세요
+                </p>
+
+                <div className="forumPage__modal__favorite">
+                  {favorite &&
+                    favorite
+                      .sort((a, b) => {
+                        if (a.abbr < b.abbr) return -1;
+                        if (a.abbr > b.abbr) return 1;
+                        return 0;
+                      })
+                      .map((data, index) => {
+                        return (
+                          <div
+                            key={index}
+                            className={cx("forumPage__modal__favorite__item", {
+                              "forumPage__modal__favorite__item-active":
+                                data.clicked
+                            })}
+                            onClick={() => this.handleCoinTag(index, data.abbr)}
+                          >
+                            {data.abbr}
+                          </div>
+                        );
+                      })}
+                </div>
               </div>
             </ModalBody>
           </Loadable>
@@ -226,27 +317,66 @@ class ForumPage extends Component {
                     title={data.title}
                     createdAt={data.pubDate}
                     type={data.type}
+                    onClick={this.handleDetail}
                   />
                 );
               })}
             </div>
           </div>
+
           <div className="forumPage__content__chart">
-            <div className="forumPage__content__chart__intro">
-              <div className="forumPage__content__chart__intro__logo">
-                <img
-                  width={45}
-                  height={45}
-                  src="https://github.com/Hanyang-QuadJ/enhance/blob/master/public/icons/enhance_logo.png?raw=true"
-                />
-                <p className="forumPage__content__chart__intro__logo__text">
-                  ENHANCE
-                </p>
-              </div>
-              <div className="forumPage__content__chart__intro__welcome">
-                <h4>Forum</h4>
-              </div>
-            </div>
+            <Route path="/forum/@:user_id" component={MyPage} />
+            <Route path="/forum/:post_id" component={PostPage} />
+            <Route
+              exact
+              path="/forum"
+              render={() => {
+                return (
+                  <div className="homePage__content__chart__intro">
+                    <div className="homePage__content__chart__intro__logo">
+                      <img
+                        width={45}
+                        height={45}
+                        src="https://github.com/Hanyang-QuadJ/enhance/blob/master/public/icons/enhance_logo.png?raw=true"
+                      />
+                      <p className="homePage__content__chart__intro__logo__text">
+                        ENHANCE
+                      </p>
+                    </div>
+                    <div className="homePage__content__chart__intro__welcome">
+                      <p>
+                        <strong>환영합니다. </strong>
+                        {me && me[0].username + " 님"}
+                      </p>
+                      <p>
+                        인핸스는 가상화폐와 블록체인 기술에 대한 정보를
+                        실시간으로 모아서 한눈에 보기 쉽게 제공해 드리고
+                        있습니다. 인핸스와 함께 가상화폐의 역사를 함께 하세요.
+                      </p>
+                    </div>
+                    <div className="homePage__content__chart__intro__desc">
+                      <strong>인핸스 뉴스</strong>
+                      <p>
+                        로그인 후 + 버튼을 누르거나 좌측 상단 돋보기 아이콘을
+                        눌러 원하는 가상화폐 종목을 검색하실 수 있습니다.
+                      </p>
+                      <br />
+                      <p>
+                        원하는 가상화폐를 클릭하여 팔로우 하시면 우측 즐겨찾기
+                        목록에 저장되어 해당 가상 화폐의 정보를 계속 보실 수
+                        있습니다.
+                      </p>
+                      <br />
+                      <p>
+                        우측 즐겨찾기 목록에 위치한 가상화폐 종목 박스를
+                        클리하면 좌측 파티션에 해당 가상화폐에 관련된 기사와
+                        정보들이 실시간으로 노출됩니다.
+                      </p>
+                    </div>
+                  </div>
+                );
+              }}
+            />
           </div>
         </div>
       </div>

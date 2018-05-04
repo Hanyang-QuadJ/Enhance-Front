@@ -75,27 +75,21 @@ class MyPage extends Component {
   render() {
     const { news, me } = this.props;
     return (
-      <div className="myPage">
-        <div className="myPage__content">
-          <div className="myPage__content__chart">
-            <div className="myPage__content__chart__intro">
-              <div className="myPage__content__chart__intro__logo">
-                <img
-                  width={45}
-                  height={45}
-                  src={require("../../Assests/Imgs/enhance_logo.png")}
-                />
-                <p className="myPage__content__chart__intro__logo__text">
-                  ENHANCE
-                </p>
-              </div>
-              <div className="myPage__content__chart__intro__welcome">
-                <Thumb size={60} fontSize={40} />
-                <strong className="myPage__content__chart__intro__welcome__text">
-                  {me && me[0].username}
-                </strong>
-              </div>
-            </div>
+      <div className="myPage__content__chart">
+        <div className="myPage__content__chart__intro">
+          <div className="myPage__content__chart__intro__logo">
+            <img
+              width={45}
+              height={45}
+              src="https://github.com/Hanyang-QuadJ/enhance/blob/master/public/icons/enhance_logo.png?raw=true"
+            />
+            <p className="myPage__content__chart__intro__logo__text">ENHANCE</p>
+          </div>
+          <div className="myPage__content__chart__intro__welcome">
+            <Thumb size={60} fontSize={40} />
+            <strong className="myPage__content__chart__intro__welcome__text">
+              {me && me[0].username}
+            </strong>
           </div>
         </div>
       </div>

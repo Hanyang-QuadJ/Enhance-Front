@@ -6,7 +6,8 @@ import {
   Route,
   Link,
   withRouter,
-  Switch
+  Switch,
+  Redirect
 } from "react-router-dom"; // Material UI Provider for React
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
@@ -25,8 +26,6 @@ import {
   MyPage,
   ForumPage
 } from "./Pages/";
-
-import HomePageRoute from "./Pages/HomePage/HomePage";
 
 const muiTheme = getMuiTheme({
   palette: {
@@ -59,11 +58,10 @@ class App extends Component {
     };
     this.props.dispatch(NewsAction.getNews(newsParams)).then(value => {
       if (this.props.isLogin === true) {
-        this.props.dispatch(AuthAction.getMe(this.props.token)).then(value2 => {
-          this.props.history.push({ pathname: "/news" });
-        });
+        this.props
+          .dispatch(AuthAction.getMe(this.props.token))
+          .then(value2 => {});
       } else {
-        this.props.history.push({ pathname: "/auth" });
       }
     });
   }
@@ -72,8 +70,8 @@ class App extends Component {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div>
-          <Route path="/news" component={HomePage} />
-          <Route exact path="/forum" component={ForumPage} />
+          <Route exact path="/" component={HomePage} />
+          <Route path="/forum" component={ForumPage} />
           <Route exact path="/auth" component={AuthPage} />
           <Route path="/auth/signup" component={SignUpPage} />
         </div>

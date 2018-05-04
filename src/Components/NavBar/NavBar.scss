@@ -2,6 +2,7 @@
 * Author: @nayunhwan (github.com/nayunhwan)
 * Email: nayunhwan.dev@mgail.com
 */
+@import url("https://fonts.googleapis.com/css?family=Black+Han+Sans");
 .navBar {
   background: transparent;
   width: 100px;
@@ -33,7 +34,7 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-
+      font-family: "Biryani", sans-serif;
       flex-direction: column;
       height: 145px;
       padding-right: 10px;
@@ -44,7 +45,8 @@
         height: auto;
 
         &__text {
-          font-size: 1rem;
+          margin-top: 5px;
+          font-size: 12px;
         }
       }
     }

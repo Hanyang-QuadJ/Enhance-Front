@@ -9,7 +9,8 @@ import DefaultAction from "../Actions/DefaultAction";
 import { SUCCEED_TO_GET_NEWS } from "../ActionCreators/NewsAction";
 import {
   SUCCEED_TO_GET_PRICE,
-  SUCCEED_TO_GET_COINS
+  SUCCEED_TO_GET_COINS,
+  SUCCEED_TO_GET_FAVS
 } from "../ActionCreators/PriceAction";
 import {
   SUCCEED_TO_SIGNUP,
@@ -25,6 +26,7 @@ const initialState = {
   newsCount: 0,
   coinId: 1,
   sourceId: 0,
+  favorite: null,
   prices: null,
   coins: null,
   me: null,
@@ -69,6 +71,10 @@ const reducer = (state = initialState, action) => {
     case SUCCEED_TO_GET_ME:
       return Object.assign({}, state, {
         me: action.payload
+      });
+    case SUCCEED_TO_GET_FAVS:
+      return Object.assign({}, state, {
+        favorite: action.payload
       });
     case SUCCEED_TO_GET_PRICE:
       return Object.assign({}, state, {

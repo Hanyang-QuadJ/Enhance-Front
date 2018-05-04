@@ -5,7 +5,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { Modal, ModalBody, ModalHeader, ModalFooter } from "reactstrap";
-import { Button } from "../";
+import { Button, Thumb } from "../";
 
 import cx from "classnames";
 
@@ -57,7 +57,7 @@ class NavBar extends Component {
 
   handleNews = () => {
     this.props.history.push({
-      pathname: "/news"
+      pathname: "/"
     });
   };
 
@@ -126,17 +126,28 @@ class NavBar extends Component {
               </span>
               <p>포럼</p>
             </div>
-            <div
-              className={cx("navBar__content__items__item", {
-                "navBar__content__items__item-active": type === "auth"
-              })}
-              onClick={this.handleAuth}
-            >
-              <span className="navBar__content__items__item-icon">
-                <i className="xi-log-in" />
-              </span>
-              {isLogin === true ? <p>로그아웃</p> : <p>로그인</p>}
-            </div>
+            {isLogin ? (
+              <div
+                className={cx("navBar__content__items__item", {
+                  "navBar__content__items__item-active": type === "auth"
+                })}
+                onClick={this.handleAuth}
+              >
+                <Thumb fontSize={30} size={40} />
+              </div>
+            ) : (
+              <div
+                className={cx("navBar__content__items__item", {
+                  "navBar__content__items__item-active": type === "auth"
+                })}
+                onClick={this.handleAuth}
+              >
+                <span className="navBar__content__items__item-icon">
+                  <i className="xi-log-in" />
+                </span>
+                <p>로그인</p>
+              </div>
+            )}
           </div>
         </div>
       </div>

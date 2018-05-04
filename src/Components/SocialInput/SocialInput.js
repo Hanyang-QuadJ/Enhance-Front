@@ -2,10 +2,10 @@
 // If you want to make other Component, Copy and Refactor this Component.
 
 import React, { Component } from "react";
-import filterJson from "../../Json/filter";
 import Textarea from "react-textarea-autosize";
 import Badge from "material-ui/Badge";
 import { Thumb, RoundInput } from "../";
+import categoryJson from "../../Json/category";
 import FileInputComponent from "react-file-input-previews-base64";
 import cx from "classnames";
 import {
@@ -24,16 +24,21 @@ class SocialInput extends Component {
     this.state = {
       imagePreview: [],
       dropdownOpen: false,
-      selectedPostType: "Walkie Takie"
+      dropdownOpen2: false
     };
-    this.toggle = this.toggle.bind(this);
   }
 
-  toggle() {
+  toggle = () => {
     this.setState(prevState => ({
       dropdownOpen: !prevState.dropdownOpen
     }));
-  }
+  };
+
+  toggle2 = () => {
+    this.setState(prevState => ({
+      dropdownOpen2: !prevState.dropdownOpen2
+    }));
+  };
 
   handlePostType = type => {
     this.setState({ selectedPostType: type });
@@ -54,7 +59,7 @@ class SocialInput extends Component {
   };
 
   render() {
-    const postType = filterJson.post_type;
+    const category = categoryJson.category;
     const {
       user,
       isLogin,
@@ -64,16 +69,23 @@ class SocialInput extends Component {
       placeholder,
       handleBase,
       handleType,
+      handleType2,
       selectedPostType,
       imagePreview,
       handleDelete,
       onClick,
       value,
       className,
+      postType,
       postText,
       onFocus,
       isFocus,
-      onChangeTitle
+      minRows,
+      maxRows,
+      isTitle,
+      onChangeTitle,
+      showType2,
+      selectedPostType2
     } = this.props;
     return (
       <div className={cx("socialInput", className)}>
@@ -82,14 +94,17 @@ class SocialInput extends Component {
             <Thumb size={50} src={user && user.profile_img} />
           </div>
           <div className="socialInput__body__inputArea">
-            <input
-              className="socialInput__body__input-title"
-              placeholder="제목"
-              onChange={onChangeTitle}
-            />
+            {isTitle ? (
+              <input
+                className="socialInput__body__input-title"
+                placeholder="제목"
+                onChange={onChangeTitle}
+              />
+            ) : null}
+
             <Textarea
-              minRows={4}
-              maxRows={6}
+              minRows={minRows}
+              maxRows={maxRows}
               value={value}
               onChange={e => onChange(e)}
               onFocus={onFocus}
@@ -134,16 +149,47 @@ class SocialInput extends Component {
               >
                 <DropdownToggle caret>{selectedPostType}</DropdownToggle>
                 <DropdownMenu>
-                  {postType.map((data, index) => {
-                    return (
-                      <DropdownItem
-                        key={index}
-                        onClick={() => handleType(index, data)}
-                      >
-                        {data}
-                      </DropdownItem>
-                    );
-                  })}
+                  {postType
+                    .filter(a => {
+                      return a.abbr !== selectedPostType;
+                    })
+                    .map((data, index) => {
+                      return (
+                        <DropdownItem
+                          key={index}
+                          onClick={() => handleType(index, data.abbr)}
+                        >
+                          {data.abbr}
+                        </DropdownItem>
+                      );
+                    })}
+                </DropdownMenu>
+              </ButtonDropdown>
+            ) : null}
+            {showType2 ? (
+              <ButtonDropdown
+                isOpen={this.state.dropdownOpen2}
+                style={{ marginRight: 10 }}
+                toggle={this.toggle2}
+                size="sm"
+                direction="down"
+              >
+                <DropdownToggle caret>{selectedPostType2}</DropdownToggle>
+                <DropdownMenu>
+                  {category
+                    .filter(a => {
+                      return a !== selectedPostType2;
+                    })
+                    .map((data, index) => {
+                      return (
+                        <DropdownItem
+                          key={index}
+                          onClick={() => handleType2(index, data)}
+                        >
+                          {data}
+                        </DropdownItem>
+                      );
+                    })}
                 </DropdownMenu>
               </ButtonDropdown>
             ) : null}

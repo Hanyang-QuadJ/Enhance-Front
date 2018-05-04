@@ -9,7 +9,7 @@ import { Dots } from "react-activity";
 import * as NewsAction from "../../ActionCreators/NewsAction";
 import * as PriceAction from "../../ActionCreators/PriceAction";
 import coinJson from "../../Json/coin";
-import { _DefaultPage, AuthPage, MyPage } from "../";
+import { MyPage } from "../";
 import "react-activity/dist/react-activity.css";
 import {
   ButtonDropdown,
@@ -30,7 +30,7 @@ const mapStateToProps = state => {
   };
 };
 
-const sourceFilter = [{ id: 0, name: "네이버" }, { id: 1, name: "다음" }];
+const sourceFilter = [{ id: 0, name: "뉴스" }, { id: 1, name: "블로그" }];
 
 class HomePage extends Component {
   constructor(props) {
@@ -47,7 +47,7 @@ class HomePage extends Component {
       isFavEmpty: true,
       newsCount: 0,
       sourceId: 0,
-      sourceName: "네이버",
+      sourceName: "뉴스",
       footerLoading: false,
       newsLoading: false
     };
@@ -71,117 +71,153 @@ class HomePage extends Component {
     };
   };
 
+  componentWillMount() {
+    this.setState({ newsLoading: true });
+  }
+
   componentDidMount() {
-    // 모든 코인
-    this.props.dispatch(PriceAction.getCoins()).then(coins => {
-      //즐겨찾기
-      this.props.dispatch(PriceAction.getFavs(this.props.token)).then(favs => {
-        //즐겨찾기 없을 경우
-        if (
-          favs.length === 0 ||
-          favs === [] ||
-          favs === null ||
-          favs === undefined
-        ) {
-          // 일반 뉴스
-          const { newsCount, coinId, sourceId } = this.state;
-          const newsParams = {
-            coinId,
-            sourceId,
-            newsCount
-          };
-          this.setState({ newsLoading: true, loadGraph: true });
-          this.props.dispatch(NewsAction.getNews(newsParams)).then(news => {
-            this.setState({
-              newsCount: newsCount,
-              news: news.result,
-              newsLoading: false
-            });
-            let result = coins.map(function(el) {
-              let o = Object.assign({}, el);
-              o.clicked = false;
-              o.loading = false;
-              return o;
-            });
-            this.setState({
-              favorite: result,
-              loadGraph: false,
-              isFavEmpty: true
-            });
-          });
-        } else {
-          //즐겨찾기 있을 경우
-          let result = coins.map(function(el) {
-            let o = Object.assign({}, el);
-            o.clicked = false;
-            o.loading = false;
-            return o;
-          });
-          for (let i = 0; i < result.length; i++) {
-            for (let j = 0; j < favs.length; j++) {
-              if (result[i].abbr === favs[j].abbr) {
-                result[i].clicked = true;
-              }
-            }
-          }
-          this.setState({
-            favorite: result,
-            loadGraph: true,
-            isFavEmpty: false
-          });
-          const abbrArray = [];
-          for (let i = 0; i < result.length; i++) {
-            if (result[i].clicked === true) {
-              abbrArray.push({ id: result[i].id, abbr: result[i].abbr });
-            }
-          }
-          let final = result.map(function(el) {
-            let o = Object.assign({}, el);
-            o.price = 0;
-            o.percent = "";
-            return o;
-          });
-
-          this.props
-            .dispatch(
-              PriceAction.getPrice(
-                abbrArray.map((a, index) => {
-                  return a.abbr;
-                })
-              )
-            )
-            .then(value => {
-              for (let i = 0; i < final.length; i++) {
-                for (let j = 0; j < abbrArray.length; j++) {
-                  if (final[i].abbr === abbrArray[j].abbr) {
-                    final[i].price = value[abbrArray[j].abbr].KRW.PRICE;
-                    final[i].percent =
-                      value[abbrArray[j].abbr].KRW.CHANGEPCT24HOUR;
-                  }
-                }
-              }
-
-              const { newsCount, sourceId } = this.state;
+    const { isLogin } = this.props;
+    if (isLogin) {
+      // 모든 코인
+      this.props.dispatch(PriceAction.getCoins()).then(coins => {
+        //즐겨찾기
+        this.props
+          .dispatch(PriceAction.getFavs(this.props.token))
+          .then(favs => {
+            //즐겨찾기 없을 경우
+            if (
+              favs.length === 0 ||
+              favs === [] ||
+              favs === null ||
+              favs === undefined
+            ) {
+              // 일반 뉴스
+              const { newsCount, coinId, sourceId } = this.state;
               const newsParams = {
-                coinId: abbrArray[0].id,
+                coinId,
                 sourceId,
                 newsCount
               };
-
-              this.setState({ newsLoading: true, loadGraph: true });
               this.props.dispatch(NewsAction.getNews(newsParams)).then(news => {
                 this.setState({
-                  news: news.result,
-                  newsLoading: false,
-                  favorite: final,
-                  coinType: abbrArray[0].abbr
+                  newsCount: newsCount,
+                  news: [],
+                  newsLoading: false
+                });
+                let result = coins.map(function(el) {
+                  let o = Object.assign({}, el);
+                  o.clicked = false;
+                  o.loading = false;
+                  return o;
+                });
+                this.setState({
+                  favorite: result,
+                  loadGraph: false,
+                  isFavEmpty: true
                 });
               });
-              this.renderChart(abbrArray[0].abbr);
-            });
-        }
+            } else {
+              //즐겨찾기 있을 경우
+              let result = coins.map(function(el) {
+                let o = Object.assign({}, el);
+                o.clicked = false;
+                o.loading = false;
+                return o;
+              });
+              for (let i = 0; i < result.length; i++) {
+                for (let j = 0; j < favs.length; j++) {
+                  if (result[i].abbr === favs[j].abbr) {
+                    result[i].clicked = true;
+                  }
+                }
+              }
+              this.setState({
+                favorite: result,
+                loadGraph: true,
+                isFavEmpty: false
+              });
+              const abbrArray = [];
+              for (let i = 0; i < result.length; i++) {
+                if (result[i].clicked === true) {
+                  abbrArray.push({ id: result[i].id, abbr: result[i].abbr });
+                }
+              }
+              let final = result.map(function(el) {
+                let o = Object.assign({}, el);
+                o.price = 0;
+                o.percent = "";
+                return o;
+              });
+
+              this.props
+                .dispatch(
+                  PriceAction.getPrice(
+                    abbrArray.map((a, index) => {
+                      return a.abbr;
+                    })
+                  )
+                )
+                .then(value => {
+                  for (let i = 0; i < final.length; i++) {
+                    for (let j = 0; j < abbrArray.length; j++) {
+                      if (final[i].abbr === abbrArray[j].abbr) {
+                        final[i].price = value[abbrArray[j].abbr].KRW.PRICE;
+                        final[i].percent =
+                          value[abbrArray[j].abbr].KRW.CHANGEPCT24HOUR;
+                      }
+                    }
+                  }
+
+                  const { newsCount, sourceId } = this.state;
+                  const newsParams = {
+                    coinId: abbrArray[0].id,
+                    sourceId,
+                    newsCount
+                  };
+
+                  this.setState({ newsLoading: true, loadGraph: true });
+                  this.props
+                    .dispatch(NewsAction.getNews(newsParams))
+                    .then(news => {
+                      this.setState({
+                        news: news.result,
+                        newsLoading: false,
+                        favorite: final,
+                        coinType: abbrArray[0].abbr
+                      });
+                    });
+                  this.renderChart(abbrArray[0].abbr);
+                });
+            }
+          });
       });
-    });
+    } else {
+      const newsParams = {
+        coinId: 1,
+        sourceId: 0,
+        newsCount: 0
+      };
+      const defaultFav = [
+        { id: 1, abbr: "BTC", price: 0, percent: "", clicked: true }
+      ];
+      this.props.dispatch(PriceAction.getPrice("BTC")).then(price => {
+        defaultFav[0].price = price["BTC"].KRW.PRICE;
+        defaultFav[0].percent = price["BTC"].KRW.CHANGEPCT24HOUR;
+        this.props.dispatch(NewsAction.getNews(newsParams)).then(news => {
+          this.setState({
+            news: news.result,
+            newsLoading: false,
+            favorite: defaultFav
+          });
+        });
+      });
+    }
+  }
+
+  componentWillUnmount() {
+    while (this.instance.firstChild) {
+      this.instance.removeChild(this.instance.firstChild);
+    }
   }
 
   handleScroll = e => {
@@ -197,7 +233,6 @@ class HomePage extends Component {
       if (this.state.endScroll === false) {
         this.setState({ footerLoading: true });
         this.props.dispatch(NewsAction.getNews(newsParams)).then(news => {
-          console.log(news.result.length);
           if (news.result.length < 10) {
             this.setState({ endScroll: true, footerLoading: false });
           } else {
@@ -233,7 +268,7 @@ class HomePage extends Component {
     });
   };
 
-  handleChart = async(coin, id) => {
+  handleChart = (coin, id) => {
     this.lists.scrollTop;
     const { sourceId } = this.state;
     const newsParams = {
@@ -292,8 +327,9 @@ class HomePage extends Component {
           leftOver.push(coin[i].abbr);
         }
       }
+      //한개 남았을 때
       if (leftOver.length === 0) {
-        this.setState({ favorite: coin, isFavEmpty: true });
+        this.setState({ favorite: coin, isFavEmpty: true, news: [] });
         while (this.instance.firstChild) {
           this.instance.removeChild(this.instance.firstChild);
         }
@@ -333,19 +369,6 @@ class HomePage extends Component {
           result[index].loading = false;
           this.setState(state => ({ favorite: result }));
         });
-      });
-    }
-  };
-
-  handleMe = () => {
-    const { isLogin, me } = this.props;
-    if (isLogin) {
-      this.props.history.push({
-        pathname: "/news/@" + me[0].username
-      });
-    } else {
-      this.props.history.push({
-        pathname: "/auth"
       });
     }
   };
@@ -420,17 +443,14 @@ class HomePage extends Component {
                         })}
                     </DropdownMenu>
                   </ButtonDropdown>
-                  <div className="homePage__content__news__search__second__content__function">
-                    <Thumb
-                      onClick={this.handleMe}
-                      size={30}
-                      fontSize={20}
-                      cursor="pointer"
-                    />
-                  </div>
                 </div>
               </div>
             </div>
+            {news.length === 0 ? (
+              <div className="homePage__content__news__lists-loading">
+                <p>오른쪽 +버튼을 눌러 원하시는 코인을 팔로우 하세요</p>
+              </div>
+            ) : null}
             {newsLoading ? (
               <div className="homePage__content__news__lists-loading">
                 <Dots color="#ffffff" size={30} />
@@ -463,74 +483,65 @@ class HomePage extends Component {
               </div>
             )}
           </div>
-          <Route path="/news/@:user_id" component={MyPage} />
-          <Route
-            exact
-            path="/news"
-            children={() => {
-              return (
-                <div className="homePage__content__chart">
-                  {isFavEmpty === true ? (
-                    <div className="homePage__content__chart__intro">
-                      <div className="homePage__content__chart__intro__logo">
-                        <img
-                          width={45}
-                          height={45}
-                          src={require("../../Assests/Imgs/enhance_logo.png")}
-                        />
-                        <p className="homePage__content__chart__intro__logo__text">
-                          ENHANCE
-                        </p>
-                      </div>
-                      <div className="homePage__content__chart__intro__welcome">
-                        <p>
-                          <strong>환영합니다. </strong>
-                          {me && me[0].username + " 님"}
-                        </p>
-                        <p>
-                          인핸스는 가상화폐와 블록체인 기술에 대한 정보를
-                          실시간으로 모아서 한눈에 보기 쉽게 제공해 드리고
-                          있습니다. 인핸스와 함께 가상화폐의 역사를 함께 하세요.
-                        </p>
-                      </div>
-                      <div className="homePage__content__chart__intro__desc">
-                        <strong>인핸스 뉴스</strong>
-                        <p>
-                          로그인 후 + 버튼을 누르거나 좌측 상단 돋보기 아이콘을
-                          눌러 원하는 가상화폐 종목을 검색하실 수 있습니다.
-                        </p>
-                        <br />
-                        <p>
-                          원하는 가상화폐를 클릭하여 팔로우 하시면 우측 즐겨찾기
-                          목록에 저장되어 해당 가상 화폐의 정보를 계속 보실 수
-                          있습니다.
-                        </p>
-                        <br />
-                        <p>
-                          우측 즐겨찾기 목록에 위치한 가상화폐 종목 박스를
-                          클리하면 좌측 파티션에 해당 가상화폐에 관련된 기사와
-                          정보들이 실시간으로 노출됩니다.
-                        </p>
-                      </div>
-                    </div>
-                  ) : null}
-                  {loadGraph === true && isLogin === true ? (
-                    <div
-                      className="homePage__content__chart__loading"
-                      ref={el => (this.instance = el)}
-                    >
-                      <Dots color="#ffffff" size={30} />
-                    </div>
-                  ) : (
-                    <div
-                      className="homePage__content__chart__wrapper"
-                      ref={el => (this.instance = el)}
-                    />
-                  )}
+          <div className="homePage__content__chart">
+            {isFavEmpty === true ? (
+              <div className="homePage__content__chart__intro">
+                <div className="homePage__content__chart__intro__logo">
+                  <img
+                    width={45}
+                    height={45}
+                    src="https://github.com/Hanyang-QuadJ/enhance/blob/master/public/icons/enhance_logo.png?raw=true"
+                  />
+                  <p className="homePage__content__chart__intro__logo__text">
+                    ENHANCE
+                  </p>
                 </div>
-              );
-            }}
-          />
+                <div className="homePage__content__chart__intro__welcome">
+                  <p>
+                    <strong>환영합니다. </strong>
+                    {me && me[0].username + " 님"}
+                  </p>
+                  <p>
+                    인핸스는 가상화폐와 블록체인 기술에 대한 정보를 실시간으로
+                    모아서 한눈에 보기 쉽게 제공해 드리고 있습니다. 인핸스와
+                    함께 가상화폐의 역사를 함께 하세요.
+                  </p>
+                </div>
+                <div className="homePage__content__chart__intro__desc">
+                  <strong>인핸스 뉴스</strong>
+                  <p>
+                    로그인 후 + 버튼을 누르거나 좌측 상단 돋보기 아이콘을 눌러
+                    원하는 가상화폐 종목을 검색하실 수 있습니다.
+                  </p>
+                  <br />
+                  <p>
+                    원하는 가상화폐를 클릭하여 팔로우 하시면 우측 즐겨찾기
+                    목록에 저장되어 해당 가상 화폐의 정보를 계속 보실 수
+                    있습니다.
+                  </p>
+                  <br />
+                  <p>
+                    우측 즐겨찾기 목록에 위치한 가상화폐 종목 박스를 클리하면
+                    좌측 파티션에 해당 가상화폐에 관련된 기사와 정보들이
+                    실시간으로 노출됩니다.
+                  </p>
+                </div>
+              </div>
+            ) : null}
+            {loadGraph === true && isLogin === true ? (
+              <div
+                className="homePage__content__chart__loading"
+                ref={el => (this.instance = el)}
+              >
+                <Dots color="#ffffff" size={30} />
+              </div>
+            ) : (
+              <div
+                className="homePage__content__chart__wrapper"
+                ref={el => (this.instance = el)}
+              />
+            )}
+          </div>
         </div>
       </div>
     );

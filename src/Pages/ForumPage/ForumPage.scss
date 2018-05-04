@@ -2,6 +2,7 @@
 * Author: @nayunhwan (github.com/nayunhwan)
 * Email: nayunhwan.dev@mgail.com
 */
+@import "../../mixin.scss";
 .forumPage {
   background: #536976;
   /* fallback for old browsers */
@@ -13,24 +14,60 @@
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
   &__modal {
-    height: 60vh;
+    height: 90vh;
     padding-left: 50px;
     padding-right: 50px;
     display: flex;
     flex-direction: column;
-    &__mainInput {
-      margin-right: 20px;
-      margin-left: 20px;
-      color: white;
-      font-size: 1rem;
-      width: 290px;
-      background: transparent;
-      padding-bottom: 10px;
-      padding-top: 10px;
-      word-break: break-all;
-      border: none;
-      &:focus {
-        outline: none;
+
+    &__favorite {
+      width: 100%;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+
+      &__text {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        text-align: center;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+      }
+
+      &__icon {
+        color: white;
+        font-size: 1.5rem;
+        margin-right: 5px;
+        vertical-align: center;
+      }
+
+      &__item {
+        border: 1px $border-color solid;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        margin-right: 5px;
+        margin-bottom: 5px;
+        cursor: pointer;
+
+        &:hover {
+          @include transition(0.3s);
+          border: 1px white solid;
+        }
+
+        &-active {
+          border: 1px $active-color solid;
+          &:hover {
+            @include transition(0.3s);
+            border: 1px $active-color solid;
+          }
+        }
       }
     }
   }
@@ -121,12 +158,10 @@
 
         display: flex;
         flex-direction: column;
-
         &__logo {
           display: flex;
           flex-direction: row;
           align-items: center;
-
           &__text {
             margin-left: 1rem;
             font-size: 2rem;
@@ -135,20 +170,83 @@
 
         &__welcome {
           margin-top: 6%;
-          display: flex;
-          align-items: center;
-
-          &__text {
-            margin-left: 2%;
-          }
         }
 
-        &__login {
-          margin-top: 15%;
-          width: 100%;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
+        &__desc {
+          margin-top: 6%;
+        }
+
+        &__post {
+          height: 90vh;
+          // border: 1px red solid;
+
+          &__header {
+            border-bottom: 1px $border-color solid;
+            display: flex;
+            height: 10vh;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 1rem;
+
+            &__userInfo {
+              display: flex;
+              width: 15vw;
+              flex-direction: row;
+              align-items: center;
+
+              &__thumb {
+                flex: 1;
+              }
+
+              &__name {
+                flex: 3;
+                margin-left: 10px;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+              }
+
+              &__point {
+                font-size: 13px;
+              }
+            }
+
+            &__detail {
+              display: flex;
+              flex-direction: column;
+              justify-content: flex-end;
+              align-items: flex-end;
+            }
+          }
+
+          &__title {
+            margin-top: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: $border-color 1px solid;
+            font-weight: 400;
+          }
+
+          &__body {
+            margin-top: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: $border-color 1px solid;
+            font-weight: 300;
+          }
+
+          &__footer {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+
+            &__icon {
+              font-size: 1.5rem;
+              margin-right: 1rem;
+            }
+          }
         }
 
         &__signUp {
