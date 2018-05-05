@@ -83,6 +83,7 @@ class SocialInput extends Component {
       minRows,
       maxRows,
       isTitle,
+      onKeyPress,
       onChangeTitle,
       showType2,
       selectedPostType2
@@ -101,7 +102,6 @@ class SocialInput extends Component {
                 onChange={onChangeTitle}
               />
             ) : null}
-
             <Textarea
               minRows={minRows}
               maxRows={maxRows}
@@ -109,6 +109,7 @@ class SocialInput extends Component {
               onChange={e => onChange(e)}
               onFocus={onFocus}
               onBlur={onFocus}
+              onKeyPress={onKeyPress}
               placeholder={isLogin === true ? placeholder : "가입하세요"}
               className="socialInput__body__input"
             />

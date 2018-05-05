@@ -30,7 +30,15 @@ class RoundInput extends Component {
   }
 
   render() {
-    const { type, onChange, placeholder, isMulti, rows, rowsMax } = this.props;
+    const {
+      type,
+      onChange,
+      placeholder,
+      isMulti,
+      rows,
+      rowsMax,
+      onKeyPress
+    } = this.props;
     return (
       <div className="roundInput">
         <TextField
@@ -43,6 +51,7 @@ class RoundInput extends Component {
           underlineStyle={styles.underline}
           multiLine={isMulti}
           rows={rows}
+          onKeyPress={onKeyPress}
           rowsMax={rowsMax}
         />
       </div>

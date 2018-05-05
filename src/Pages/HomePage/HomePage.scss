@@ -92,6 +92,15 @@
           margin-top: 145px;
         }
 
+        &-none {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 55vh;
+          color: white;
+          font-size: 1rem;
+        }
+
         &__footer {
           height: 10vh;
           display: flex;

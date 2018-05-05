@@ -17,6 +17,7 @@ import Textarea from "react-textarea-autosize";
 import { Dots } from "react-activity";
 import * as NewsAction from "../../ActionCreators/NewsAction";
 import * as PriceAction from "../../ActionCreators/PriceAction";
+import * as SocialAction from "../../ActionCreators/SocialAction";
 import * as AuthAction from "../../ActionCreators/AuthAction";
 import coinJson from "../../Json/coin";
 import { Modal, ModalBody, ModalHeader, ModalFooter } from "reactstrap";
@@ -65,25 +66,27 @@ class ForumPage extends Component {
       title: "",
       main: "",
       comment: "",
-      selectedPostType: "",
+      selectedCoinType: [],
       selectedPostType2: "자유"
     };
     this.toggle = this.toggle.bind(this);
   }
-  componentWillMount() {
-    this.props.dispatch(PriceAction.getFavs(this.props.token)).then(favs => {
-      if (favs.length === 0) {
-        return null;
-      } else {
-        let result = favs.map(function(el) {
-          let o = Object.assign({}, el);
-          o.clicked = false;
-          return o;
-        });
-        console.log(result);
 
-        this.setState({ favorite: result });
-      }
+  componentWillMount() {
+    this.props.dispatch(SocialAction.getAllForums()).then(forums => {
+      this.setState({ posts: forums });
+      this.props.dispatch(PriceAction.getFavs(this.props.token)).then(favs => {
+        if (favs.length === 0) {
+          return null;
+        } else {
+          let result = favs.map(function(el) {
+            let o = Object.assign({}, el);
+            o.clicked = false;
+            return o;
+          });
+          this.setState({ favorite: result });
+        }
+      });
     });
   }
 
@@ -157,18 +160,19 @@ class ForumPage extends Component {
       pathname: "/forum/1"
     });
   };
+
   handlePost = async() => {
-    const { main, title } = this.state;
+    const { main, title, selectedCoinType, selectedPostType2 } = this.state;
     let date = new Date();
-    let post = {
-      desc: main,
+    const params = {
       title,
-      createdAt: date,
-      type: "BTC"
+      content: main,
+      category: selectedPostType2,
+      coin_id: selectedCoinType[0]
     };
-    const posts = this.state.posts.slice();
-    posts.push(post);
-    await this.setState({ posts: posts });
+    const newPosts = this.state.posts.slice();
+    newPosts.push(params);
+    await this.setState({ posts: newPosts });
     await this.toggleModal();
   };
 
@@ -176,34 +180,36 @@ class ForumPage extends Component {
     this.setState({ selectedPostType2: data });
   };
 
-  handleCoinTag = (index, data) => {
+  handleCoinTag = (index, id, data) => {
     let newFav = this.state.favorite.slice();
+    let coinType = this.state.selectedCoinType.slice();
     if (!newFav[index].clicked) {
       newFav[index].clicked = true;
-      this.setState({ favorite: newFav });
+      coinType.push(id);
+      this.setState({ favorite: newFav, selectedCoinType: coinType });
     } else {
       newFav[index].clicked = false;
-      this.setState({ favorite: newFav });
+      let coinIndex = coinType.indexOf(id);
+      coinType.splice(coinIndex, 1);
+      this.setState({ favorite: newFav, selectedCoinType: coinType });
     }
   };
 
   render() {
     const {
-      coinType,
       posts,
-      myFavorite,
       postLoading,
       isFocus,
-      selectedPostType,
+      selectedCoinType,
       selectedPostType2,
       favorite
     } = this.state;
     const { news, me, isLogin } = this.props;
+    console.log(selectedCoinType);
     return (
       <div className="forumPage">
         <NavBar type="forum" />
         {/* <SideBar
-          type={coinType}
           favorite={favorite && favorite}
           handleFavorite={this.handleFavorite}
         /> */}
@@ -260,7 +266,9 @@ class ForumPage extends Component {
                               "forumPage__modal__favorite__item-active":
                                 data.clicked
                             })}
-                            onClick={() => this.handleCoinTag(index, data.abbr)}
+                            onClick={() =>
+                              this.handleCoinTag(index, data.coin_id, data.abbr)
+                            }
                           >
                             {data.abbr}
                           </div>

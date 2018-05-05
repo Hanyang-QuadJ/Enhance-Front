@@ -49,27 +49,10 @@ class HomePage extends Component {
       sourceId: 0,
       sourceName: "뉴스",
       footerLoading: false,
-      newsLoading: false
+      newsLoading: true
     };
     this.toggle = this.toggle.bind(this);
   }
-
-  renderChart = type => {
-    const baseUrl = "https://widgets.cryptocompare.com/";
-    let appName = encodeURIComponent(window.location.hostname);
-    if (appName == "") {
-      appName = "local";
-    }
-    let s = document.createElement("script");
-    s.type = "text/javascript";
-    s.async = true;
-    let theUrl = baseUrl + `serve/v3/coin/chart?fsym=${type}&tsyms=KRW`;
-    s.src = theUrl + (theUrl.indexOf("?") >= 0 ? "&" : "?") + "app=" + appName;
-    this.instance.appendChild(s);
-    s.onload = () => {
-      this.setState({ loadGraph: false });
-    };
-  };
 
   componentWillMount() {
     this.setState({ newsLoading: true });
@@ -267,6 +250,22 @@ class HomePage extends Component {
       this.setState({ news: news.result, newsLoading: false });
     });
   };
+  renderChart = type => {
+    const baseUrl = "https://widgets.cryptocompare.com/";
+    let appName = encodeURIComponent(window.location.hostname);
+    if (appName == "") {
+      appName = "local";
+    }
+    let s = document.createElement("script");
+    s.type = "text/javascript";
+    s.async = true;
+    let theUrl = baseUrl + `serve/v3/coin/chart?fsym=${type}&tsyms=KRW`;
+    s.src = theUrl + (theUrl.indexOf("?") >= 0 ? "&" : "?") + "app=" + appName;
+    this.instance.appendChild(s);
+    s.onload = () => {
+      this.setState({ loadGraph: false });
+    };
+  };
 
   handleChart = (coin, id) => {
     this.lists.scrollTop;
@@ -446,11 +445,7 @@ class HomePage extends Component {
                 </div>
               </div>
             </div>
-            {news.length === 0 ? (
-              <div className="homePage__content__news__lists-loading">
-                <p>오른쪽 +버튼을 눌러 원하시는 코인을 팔로우 하세요</p>
-              </div>
-            ) : null}
+
             {newsLoading ? (
               <div className="homePage__content__news__lists-loading">
                 <Dots color="#ffffff" size={30} />
@@ -463,7 +458,12 @@ class HomePage extends Component {
                 }}
                 className="homePage__content__news__lists"
               >
-                {news &&
+                {news.length === 0 ? (
+                  <div className="homePage__content__news__lists-none">
+                    <p>오른쪽 +버튼을 눌러 원하시는 코인을 팔로우 하세요</p>
+                  </div>
+                ) : (
+                  news &&
                   news.map((data, index) => {
                     return (
                       <List
@@ -474,7 +474,9 @@ class HomePage extends Component {
                         link={data.link}
                       />
                     );
-                  })}
+                  })
+                )}
+
                 {footerLoading === true ? (
                   <div className="homePage__content__news__lists__footer">
                     <Dots color="#ffffff" size={20} />

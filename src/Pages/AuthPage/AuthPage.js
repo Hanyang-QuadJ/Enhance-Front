@@ -131,6 +131,23 @@ class AuthPage extends Component {
     });
   };
 
+  handleKeySignIn = event => {
+    if (event.key === "Enter") {
+      const { email, password } = this.state;
+      const params = {
+        email,
+        password
+      };
+      this.props.dispatch(AuthAction.postSignIn(params)).then(value => {
+        this.props.dispatch(AuthAction.getMe(value)).then(value2 => {
+          this.props.history.replace({
+            pathname: "/"
+          });
+        });
+      });
+    }
+  };
+
   render() {
     const { coinType, coins, favorite } = this.state;
     const { news } = this.props;
@@ -226,6 +243,7 @@ class AuthPage extends Component {
                   onChange={this.handlePassword}
                   placeholder="비밀번호"
                   type="password"
+                  onKeyPress={this.handleKeySignIn}
                 />
                 <br />
                 <br />
