@@ -99,6 +99,8 @@
       margin-right: 100px;
 
       &__coin {
+        display: flex;
+        justify-content: center;
         padding: 15px;
         font-size: 13px;
         top: 0;
@@ -114,7 +116,8 @@
         height: calc(100vh - 50px);
         background: transparent;
         overflow-y: scroll;
-
+        padding-left: 1rem;
+        padding-right: 1rem;
         margin-top: 50px;
         & > div {
           background-color: transparent !important;

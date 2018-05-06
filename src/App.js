@@ -15,6 +15,7 @@ import { connect } from "react-redux";
 import { green500 } from "material-ui/styles/colors";
 import * as AuthAction from "./ActionCreators/AuthAction";
 import * as NewsAction from "./ActionCreators/NewsAction";
+import * as PriceAction from "./ActionCreators/PriceAction";
 
 // Own Modules
 import {

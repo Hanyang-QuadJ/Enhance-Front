@@ -61,6 +61,7 @@ class ForumPage extends Component {
       dropdownOpen: false,
       posts: [],
       favorite: [],
+      sideFavorite: [],
       postLoading: false,
       myFavorite: [],
       isFocus: false,
@@ -80,19 +81,90 @@ class ForumPage extends Component {
   }
 
   componentWillMount() {
+    const { isLogin } = this.props;
     this.setState({ isPostsLoading: true });
     this.props.dispatch(SocialAction.getAllForums()).then(forums => {
       this.setState({ posts: forums.reverse(), isPostsLoading: false });
-      this.props.dispatch(PriceAction.getFavs(this.props.token)).then(favs => {
-        if (favs.length === 0) {
-          return null;
+      this.props.dispatch(PriceAction.getCoins()).then(coins => {
+        if (isLogin) {
+          this.props
+            .dispatch(PriceAction.getFavs(this.props.token))
+            .then(favs => {
+              if (favs.length === 0) {
+                let result = coins.map(function(el) {
+                  let o = Object.assign({}, el);
+                  o.clicked = false;
+                  o.loading = false;
+                  return o;
+                });
+                this.setState({
+                  sideFavorite: result
+                });
+              } else {
+                //글 작성 코인 타입
+                let result = favs.map(function(el) {
+                  let o = Object.assign({}, el);
+                  o.clicked = false;
+                  return o;
+                });
+
+                //사이드 바 즐겨찾기
+                let resultSide = coins.map(function(el) {
+                  let o = Object.assign({}, el);
+                  o.clicked = false;
+                  o.selected = false;
+                  o.loading = false;
+                  return o;
+                });
+                for (let i = 0; i < resultSide.length; i++) {
+                  for (let j = 0; j < favs.length; j++) {
+                    if (resultSide[i].abbr === favs[j].abbr) {
+                      resultSide[i].clicked = true;
+                    }
+                  }
+                }
+                this.setState({ favorite: result, sideFavorite: resultSide });
+
+                //Crypto Compare API
+                const abbrArray = [];
+                for (let i = 0; i < resultSide.length; i++) {
+                  if (resultSide[i].clicked === true) {
+                    abbrArray.push({
+                      id: resultSide[i].id,
+                      abbr: resultSide[i].abbr
+                    });
+                  }
+                }
+                let final = resultSide.map(function(el) {
+                  let o = Object.assign({}, el);
+                  o.price = 0;
+                  o.percent = "";
+                  return o;
+                });
+                this.props
+                  .dispatch(
+                    PriceAction.getPrice(
+                      abbrArray.map((a, index) => {
+                        return a.abbr;
+                      })
+                    )
+                  )
+                  .then(value => {
+                    for (let i = 0; i < final.length; i++) {
+                      for (let j = 0; j < abbrArray.length; j++) {
+                        if (final[i].abbr === abbrArray[j].abbr) {
+                          final[i].price = value[abbrArray[j].abbr].KRW.PRICE;
+                          final[i].percent =
+                            value[abbrArray[j].abbr].KRW.CHANGEPCT24HOUR;
+                        }
+                      }
+                    }
+                    this.setState({ sideFavorite: final });
+                  });
+              }
+            });
         } else {
-          let result = favs.map(function(el) {
-            let o = Object.assign({}, el);
-            o.clicked = false;
-            return o;
-          });
-          this.setState({ favorite: result });
+          null;
         }
       });
     });
@@ -126,33 +198,76 @@ class ForumPage extends Component {
     }));
   };
 
-  handleFavorite = async(index, data) => {
-    const coin = this.state.favorite.slice();
-    coin[index].clicked = true;
-    coin[index].loading = true;
-    this.setState({ favorite: coin });
-
-    //즐겨찾기 한 코인들에게, 가격, 증감표시 key 추가
-    let result = coin.map(function(el) {
-      let o = Object.assign({}, el);
-      o.price = 0;
-      o.percent = "";
-      return o;
+  handleFilter = (index, id, coin) => {
+    const newCoin = this.state.sideFavorite.slice();
+    let result = newCoin.filter(a => {
+      return a.clicked === true;
     });
-
-    //즐겨찾기한 코인, 이름만 모으기
-    let abbrArray = [];
-    for (let i = 0; i < result.length; i++) {
-      abbrArray[i] = result[i].abbr;
+    if (result[index].selected) {
+      result[index].selected = false;
+      this.setState({ sideFavorite: newCoin });
+    } else {
+      result[index].selected = true;
+      this.setState({ sideFavorite: newCoin });
     }
-    this.props.dispatch(PriceAction.getPrice(abbrArray)).then(value => {
-      for (let i = 0; i < abbrArray.length; i++) {
-        result[i].price = value[abbrArray[i]].KRW.PRICE;
-        result[i].percent = value[abbrArray[i]].KRW.CHANGEPCT24HOUR;
+  };
+
+  handleFavorite = async(index, id, data) => {
+    const coin = this.state.sideFavorite.slice();
+    const { token } = this.props;
+    const params = {
+      token: token,
+      coin_id: coin[index].id
+    };
+    //삭제
+    if (coin[index].clicked === true) {
+      coin[index].clicked = false;
+
+      let leftOver = [];
+      for (let i = 0; i < coin.length; i++) {
+        if (coin[i].clicked === true) {
+          leftOver.push(coin[i].abbr);
+        }
       }
-      result[index].loading = false;
-      this.setState(state => ({ favorite: result }));
-    });
+      //한개 남았을 때
+      if (leftOver.length === 0) {
+        this.setState({ sideFavorite: coin });
+        this.props.dispatch(PriceAction.removeFav(params));
+      } else {
+        this.setState({ sideFavorite: coin });
+        this.props.dispatch(PriceAction.removeFav(params));
+      }
+    }
+    //추가
+    else {
+      coin[index].clicked = true;
+      coin[index].loading = true;
+      this.setState({ sideFavorite: coin });
+
+      //즐겨찾기 한 코인들에게, 가격, 증감표시 key 추가
+      let result = coin.map(function(el) {
+        let o = Object.assign({}, el);
+        o.price = 0;
+        o.percent = "";
+        return o;
+      });
+
+      //즐겨찾기한 코인, 이름만 모으기
+      let abbrArray = [];
+      for (let i = 0; i < result.length; i++) {
+        abbrArray[i] = result[i].abbr;
+      }
+      this.props.dispatch(PriceAction.addFav(params)).then(x => {
+        this.props.dispatch(PriceAction.getPrice(abbrArray)).then(value => {
+          for (let i = 0; i < abbrArray.length; i++) {
+            result[i].price = value[abbrArray[i]].KRW.PRICE;
+            result[i].percent = value[abbrArray[i]].KRW.CHANGEPCT24HOUR;
+          }
+          result[index].loading = false;
+          this.setState(state => ({ sideFavorite: result }));
+        });
+      });
+    }
   };
 
   handleTitle = e => {
@@ -293,16 +408,22 @@ class ForumPage extends Component {
       selectedPostType2,
       selectedIndex,
       favorite,
-      forum
+      forum,
+      sideFavorite
     } = this.state;
     const { news, me, isLogin } = this.props;
     return (
       <div className="forumPage">
         <NavBar type="forum" />
-        {/* <SideBar
-          favorite={favorite && favorite}
-          handleFavorite={this.handleFavorite}
-        /> */}
+        {isLogin ? (
+          <SideBar
+            multiple
+            favorite={sideFavorite && sideFavorite}
+            onClick={this.handleFilter}
+            handleFavorite={this.handleFavorite}
+          />
+        ) : null}
+
         <Modal
           isOpen={this.state.showModal}
           toggle={this.toggleModal}

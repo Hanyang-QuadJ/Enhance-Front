@@ -275,7 +275,7 @@ class HomePage extends Component {
     };
   };
 
-  handleChart = (coin, id) => {
+  handleChart = (index, id, coin) => {
     this.lists.scrollTop;
     const { sourceId } = this.state;
     const newsParams = {
@@ -298,7 +298,8 @@ class HomePage extends Component {
           news: value.result,
           newsLoading: false,
           newsCount: 0,
-          coinId: id
+          coinId: id,
+          coinType: coin
         });
       });
     } else {
@@ -311,7 +312,8 @@ class HomePage extends Component {
           news: value.result,
           newsCount: 0,
           newsLoading: false,
-          coinId: id
+          coinId: id,
+          coinType: coin
         });
       });
     }
@@ -343,7 +345,7 @@ class HomePage extends Component {
         this.props.dispatch(PriceAction.removeFav(params));
       } else {
         this.setState({ favorite: coin, coinType: leftOver[0] });
-        this.handleChart(leftOver[0], id);
+        this.handleChart(0, id, leftOver[0]);
         this.props.dispatch(PriceAction.removeFav(params));
       }
     }
@@ -351,7 +353,7 @@ class HomePage extends Component {
     else {
       coin[index].clicked = true;
       coin[index].loading = true;
-      this.handleChart(data, id);
+      this.handleChart(0, id, data);
       this.setState({ favorite: coin });
 
       //즐겨찾기 한 코인들에게, 가격, 증감표시 key 추가
@@ -504,7 +506,7 @@ class HomePage extends Component {
             )}
           </div>
           <div className="homePage__content__chart">
-            {isLogin ? (
+            {isLogin && !isFavEmpty ? (
               <div className="homePage__content__chart__coin">{coinType}</div>
             ) : null}
             {isFavEmpty === true ? (

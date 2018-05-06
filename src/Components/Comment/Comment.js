@@ -4,6 +4,7 @@
 import React, { Component } from "react";
 import { Thumb } from "../";
 import moment from "moment";
+import Linkify from "react-linkify";
 
 const defaultProps = {};
 const propTypes = {};
@@ -30,7 +31,16 @@ class Comment extends Component {
               </div>
             </div>
           </div>
-          <div className="comment__content__content">{content}</div>
+          <div className="comment__content__content">
+            <Linkify
+              properties={{
+                target: "_blank",
+                style: { color: "#56b1bf", fontWeight: "400" }
+              }}
+            >
+              {content}
+            </Linkify>
+          </div>
           <div className="comment__content__date">
             {moment(createdAt).fromNow()}
           </div>

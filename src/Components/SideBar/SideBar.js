@@ -50,7 +50,14 @@ class SideBar extends Component {
   };
 
   render() {
-    const { onClick, type, handleFavorite, favorite, loadGraph } = this.props;
+    const {
+      onClick,
+      type,
+      handleFavorite,
+      favorite,
+      loadGraph,
+      multiple
+    } = this.props;
     return (
       <div className="sideBar">
         <Modal
@@ -138,19 +145,33 @@ class SideBar extends Component {
                   } else {
                     return (
                       <div
-                        className={cx(
-                          "sideBar__content__items__item",
-                          {
-                            "sideBar__content__items__item-active":
-                              type === data.abbr
-                          },
-                          {
-                            "sideBar__content__items__item-disable":
-                              loadGraph === true
-                          }
-                        )}
+                        className={
+                          multiple
+                            ? cx(
+                              "sideBar__content__items__item",
+                              {
+                                "sideBar__content__items__item-active":
+                                    data.selected === true
+                              },
+                              {
+                                "sideBar__content__items__item-disable":
+                                    loadGraph === true
+                              }
+                            )
+                            : cx(
+                              "sideBar__content__items__item",
+                              {
+                                "sideBar__content__items__item-active":
+                                    type === data.abbr
+                              },
+                              {
+                                "sideBar__content__items__item-disable":
+                                    loadGraph === true
+                              }
+                            )
+                        }
                         key={index}
-                        onClick={() => onClick(data.abbr, data.id)}
+                        onClick={() => onClick(index, data.id, data.abbr)}
                       >
                         <div className="sideBar__content__items__item__title">
                           {data.abbr}
