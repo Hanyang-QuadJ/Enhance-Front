@@ -101,8 +101,23 @@
             padding-left: 10px;
             padding-right: 10px;
             padding-bottom: 1rem;
-            border-bottom: $border-color 1px solid;
             font-weight: 300;
+          }
+
+          &__coin {
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            font-size: 13px;
+            color: $coin-color;
+
+            &__item {
+              border: 1px $coin-color solid;
+              padding-left: 5px;
+              padding-right: 5px;
+              margin-right: 5px;
+            }
           }
 
           &__footer {
@@ -118,6 +133,9 @@
               margin-right: 1rem;
             }
           }
+        }
+        &__comments {
+          margin-top: 10%;
         }
       }
     }

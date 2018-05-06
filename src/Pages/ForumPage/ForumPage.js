@@ -126,12 +126,6 @@ class ForumPage extends Component {
     }));
   };
 
-  onFocusComment = () => {
-    this.setState(prevState => ({
-      isFocusComment: !prevState.isFocusComment
-    }));
-  };
-
   handleFavorite = async(index, data) => {
     const coin = this.state.favorite.slice();
     coin[index].clicked = true;
@@ -169,14 +163,6 @@ class ForumPage extends Component {
     this.setState({ main: e.target.value });
   };
 
-  handleComment = e => {
-    this.setState({ comment: e.target.value });
-  };
-
-  handlePostComment = e => {
-    const newComments = this.state.comments.slice();
-  };
-
   handleDetail = (index, id) => {
     const { isLogin } = this.props;
     if (isLogin) {
@@ -185,7 +171,15 @@ class ForumPage extends Component {
         forum_id: id
       };
       this.props.dispatch(SocialAction.getOneForum(params)).then(forum => {
-        this.setState({ forum, selectedIndex: index });
+        this.setState({ selectedIndex: index });
+        this.props
+          .dispatch(SocialAction.getOneForumCoins(params))
+          .then(coins => {
+            this.props.history.push({
+              pathname: "/forum/" + id,
+              state: { forum, comment: [], coins }
+            });
+          });
       });
     } else {
       this.props.history.replace({
@@ -200,53 +194,61 @@ class ForumPage extends Component {
       title,
       selectedCoinType,
       selectedAbbr,
-      selectedPostType2,
-      isPostsLoading
+      selectedPostType2
     } = this.state;
-    let date = new Date();
-    const coinArray = [];
-    for (let i = 0; i < selectedAbbr.length; i++) {
-      coinArray.push({ abbr: selectedAbbr[i] });
-    }
-    const params = {
-      title,
-      content: main,
-      category: selectedPostType2,
-      coins: selectedCoinType,
-      created_at: date,
-      token: this.props.token
-    };
-    const frontParams = {
-      title,
-      content: main,
-      category: selectedPostType2,
-      coins: coinArray,
-      created_at: date
-    };
-
-    this.setState({ postLoading: true });
-    this.props.dispatch(SocialAction.postForum(params)).then(id => {
+    if (selectedCoinType.length === 0) {
+      alert("해당하는 종목을 1개 이상 선택해주세요!");
+    } else {
+      let date = new Date();
+      const coinArray = [];
+      for (let i = 0; i < selectedAbbr.length; i++) {
+        coinArray.push({ abbr: selectedAbbr[i] });
+      }
       const params = {
-        token: this.props.token,
-        forum_id: id
+        title,
+        content: main,
+        category: selectedPostType2,
+        coins: selectedCoinType,
+        created_at: date,
+        token: this.props.token
       };
-      this.props
-        .dispatch(SocialAction.getOneForum(params))
-        .then(async forum => {
-          const newPosts = this.state.posts.slice();
-          newPosts.splice(0, 0, frontParams);
-          await this.setState({ posts: newPosts, postLoading: false, forum });
-          await this.toggleModal();
-        });
 
-      // const secondParams = {
-      //   forum_id: id,
-      //   token: this.props.token
-      // };
-      // this.props
-      //   .dispatch(SocialAction.getOneForum(secondParams))
-      //   .then(result => console.log(result));
-    });
+      this.setState({ postLoading: true });
+      this.props.dispatch(SocialAction.postForum(params)).then(id => {
+        const params = {
+          token: this.props.token,
+          forum_id: id
+        };
+
+        const frontParams = {
+          title,
+          id,
+          content: main,
+          category: selectedPostType2,
+          coins: coinArray,
+          created_at: date
+        };
+
+        this.props.dispatch(SocialAction.getOneForum(params)).then(forum => {
+          this.props
+            .dispatch(SocialAction.getOneForumCoins(params))
+            .then(async coins => {
+              const newPosts = this.state.posts.slice();
+              newPosts.splice(0, 0, frontParams);
+              await this.props.history.push({
+                pathname: "/forum/" + id,
+                state: { forum, coins }
+              });
+              await this.setState({
+                posts: newPosts,
+                postLoading: false,
+                selectedIndex: 0
+              });
+              await this.toggleModal();
+            });
+        });
+      });
+    }
   };
 
   handleType2 = (index, data) => {
@@ -427,72 +429,55 @@ class ForumPage extends Component {
               </div>
             )}
           </div>
-          {forum.length === 0 ? (
-            <div className="forumPage__content__chart">
-              <div className="forumPage__content__chart__intro">
-                <div className="forumPage__content__chart__intro__logo">
-                  <img
-                    width={45}
-                    height={45}
-                    src="https://github.com/Hanyang-QuadJ/enhance/blob/master/public/icons/enhance_logo.png?raw=true"
-                  />
-                  <p className="forumPage__content__chart__intro__logo__text">
-                    ENHANCE
-                  </p>
+          <Route path="/forum/:forum_id" component={PostPage} />
+          <Route
+            exact
+            path="/forum"
+            render={() => {
+              return (
+                <div className="forumPage__content__chart">
+                  <div className="forumPage__content__chart__intro">
+                    <div className="forumPage__content__chart__intro__logo">
+                      <img
+                        width={45}
+                        height={45}
+                        src="https://github.com/Hanyang-QuadJ/enhance/blob/master/public/icons/enhance_logo.png?raw=true"
+                      />
+                      <p className="forumPage__content__chart__intro__logo__text">
+                        ENHANCE
+                      </p>
+                    </div>
+                    <div className="forumPage__content__chart__intro__welcome">
+                      <p>
+                        <strong>환영합니다. </strong>
+                        {me && me[0].username + " 님"}
+                      </p>
+                      <p>
+                        인핸스는 가상화폐와 블록체인 기술에 대한 정보를
+                        실시간으로 모아서 한눈에 보기 쉽게 제공해 드리고
+                        있습니다. 인핸스와 함께 가상화폐의 역사를 함께 하세요.
+                      </p>
+                    </div>
+                    <div className="forumPage__content__chart__intro__desc">
+                      <strong>인핸스 포럼</strong>
+                      <p>
+                        로그인 후 + 버튼을 누르거나 좌측 상단 돋보기 아이콘을
+                        눌러 원하는 가상화폐 종목을 검색하실 수 있습니다.
+                      </p>
+                      <br />
+                      <p>
+                        원하는 가상화폐를 클릭하여 팔로우 하시면 우측 즐겨찾기
+                        목록에 저장되어 해당 가상 화폐의 정보를 계속 보실 수
+                        있습니다.
+                      </p>
+                      <br />
+                      <p>각 가상화폐의 종목의 커뮤니티에 참여하세요.</p>
+                    </div>
+                  </div>
                 </div>
-                <div className="forumPage__content__chart__intro__welcome">
-                  <p>
-                    <strong>환영합니다. </strong>
-                    {me && me[0].username + " 님"}
-                  </p>
-                  <p>
-                    인핸스는 가상화폐와 블록체인 기술에 대한 정보를 실시간으로
-                    모아서 한눈에 보기 쉽게 제공해 드리고 있습니다. 인핸스와
-                    함께 가상화폐의 역사를 함께 하세요.
-                  </p>
-                </div>
-                <div className="forumPage__content__chart__intro__desc">
-                  <strong>인핸스 포럼</strong>
-                  <p>
-                    로그인 후 + 버튼을 누르거나 좌측 상단 돋보기 아이콘을 눌러
-                    원하는 가상화폐 종목을 검색하실 수 있습니다.
-                  </p>
-                  <br />
-                  <p>
-                    원하는 가상화폐를 클릭하여 팔로우 하시면 우측 즐겨찾기
-                    목록에 저장되어 해당 가상 화폐의 정보를 계속 보실 수
-                    있습니다.
-                  </p>
-                  <br />
-                  <p>각 가상화폐의 종목의 커뮤니티에 참여하세요.</p>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="forumPage__content__chart">
-              <div className="forumPage__content__chart__intro">
-                <PostPage
-                  userName="이충복"
-                  userPoint={23}
-                  category={forum.category}
-                  createdAt={forum.created_at}
-                  title={forum.title}
-                  content={forum.content}
-                />
-                <SocialInput
-                  user={me && me[0]}
-                  isLogin={isLogin}
-                  onChange={this.handleComment}
-                  placeholder="댓글을 입력하세요"
-                  onClick={this.handlePostComment}
-                  postText="등록"
-                  onFocus={this.onFocusComment}
-                  isFocus={isFocusComment}
-                />
-                <div className="postPage__content__chart__intro__comments" />
-              </div>
-            </div>
-          )}
+              );
+            }}
+          />
         </div>
       </div>
     );
