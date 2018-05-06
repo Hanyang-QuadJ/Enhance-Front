@@ -11,5 +11,4 @@ export AuthPage from "./AuthPage/AuthPage";
 export SignUpPage from "./SignUpPage/SignUpPage";
 export MyPage from "./MyPage/MyPage";
 export ForumPage from "./ForumPage/ForumPage";
-export NewsPage from "./NewsPage/NewsPage";
 export PostPage from "./PostPage/PostPage";

@@ -136,6 +136,17 @@
         height: calc(100vh - 145px);
         margin-top: 145px;
         overflow-y: scroll;
+
+        &-loading {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 55vh;
+          color: white;
+          font-size: 1rem;
+          height: calc(100vh - 100px);
+          margin-top: 100px;
+        }
       }
     }
 
@@ -243,6 +254,7 @@
             padding-bottom: 1rem;
 
             &__icon {
+              display: inline-flex;
               font-size: 1.5rem;
               margin-right: 1rem;
             }

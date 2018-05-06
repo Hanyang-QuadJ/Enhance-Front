@@ -88,7 +88,7 @@ class SideBar extends Component {
                               handleFavorite(index, data.id, data.abbr)
                             }
                           >
-                            <div className="sideBar__modal__content__items_wrapper__item__abbr">
+                            <div className="sideBar__modal__content__items__wrapper__item__abbr">
                               {data.abbr}
                             </div>
                             <div className="sideBar__modal__content__items__wrapper__item__full">
@@ -158,17 +158,17 @@ class SideBar extends Component {
                         <div className="sideBar__content__items__item__price">
                           {data.price}
                         </div>
-                        {Number(data.percent) >= 0 ? (
-                          <div className="sideBar__content__items__item__percent">
-                            <span className="sideBar__content__items__item__percent__icon">
-                              <i className="xi-arrow-up" />
+                        {Number(data.percent) < 0 ? (
+                          <div className="sideBar__content__items__item__percent-down">
+                            <span className="sideBar__content__items__item__percent-down__icon">
+                              <i className="xi-arrow-down" />
                             </span>
                             {data.percent}%
                           </div>
                         ) : (
-                          <div className="sideBar__content__items__item__percent-down">
-                            <span className="sideBar__content__items__item__percent-down__icon">
-                              <i className="xi-arrow-down" />
+                          <div className="sideBar__content__items__item__percent">
+                            <span className="sideBar__content__items__item__percent__icon">
+                              <i className="xi-arrow-up" />
                             </span>
                             {data.percent}%
                           </div>

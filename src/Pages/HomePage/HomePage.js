@@ -11,6 +11,7 @@ import * as PriceAction from "../../ActionCreators/PriceAction";
 import coinJson from "../../Json/coin";
 import { MyPage } from "../";
 import "react-activity/dist/react-activity.css";
+import cx from "classnames";
 import {
   ButtonDropdown,
   DropdownToggle,
@@ -30,24 +31,24 @@ const mapStateToProps = state => {
   };
 };
 
-const sourceFilter = [{ id: 0, name: "뉴스" }, { id: 1, name: "블로그" }];
+const sourceFilter = [{ id: 0, name: "정확도" }, { id: 1, name: "최신순" }];
 
 class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      navStatus: "news",
       loadGraph: true,
       dropdownOpen: false,
-      coinType: "BTC",
+      coinType: "",
       coinId: 1,
       news: [],
       endScroll: false,
       favorite: [],
       isFavEmpty: true,
+      isBlog: false,
       newsCount: 0,
       sourceId: 0,
-      sourceName: "뉴스",
+      sourceName: "정확도",
       footerLoading: false,
       newsLoading: true
     };
@@ -190,6 +191,7 @@ class HomePage extends Component {
           this.setState({
             news: news.result,
             newsLoading: false,
+            coinType: "BTC",
             favorite: defaultFav
           });
         });
@@ -237,6 +239,12 @@ class HomePage extends Component {
       dropdownOpen: !prevState.dropdownOpen
     }));
   }
+
+  toggleBlog = () => {
+    this.setState(prevState => ({
+      isBlog: !prevState.isBlog
+    }));
+  };
 
   handleSource = (id, name) => {
     const { sourceId, coinId } = this.state;
@@ -378,16 +386,16 @@ class HomePage extends Component {
       coinType,
       favorite,
       isFavEmpty,
+      isBlog,
       news,
       footerLoading,
       newsLoading,
-      sourceName,
-      navStatus
+      sourceName
     } = this.state;
     const { me, isLogin } = this.props;
     return (
       <div className="homePage">
-        <NavBar type={navStatus} />
+        <NavBar type="news" />
         <SideBar
           onClick={this.handleChart}
           type={coinType}
@@ -399,20 +407,30 @@ class HomePage extends Component {
           <div className="homePage__content__news">
             <div className="homePage__content__news__search">
               <div className="homePage__content__news__search__first">
-                <div className="homePage__content__news__search__first__iconArea">
-                  <span className="homePage__content__news__search__first__iconArea__icon">
-                    <i className="xi-search" />
-                  </span>
+                <div
+                  onClick={this.toggleBlog}
+                  className={cx(
+                    "homePage__content__news__search__first__item",
+                    {
+                      "homePage__content__news__search__first__item-active": !isBlog
+                    }
+                  )}
+                >
+                  뉴스
                 </div>
-                <div className="homePage__content__news__search__first__inputArea">
-                  <input
-                    className="homePage__content__news__search__first__inputArea__input"
-                    placeholder="무엇을 찾고싶으신가요?"
-                  />
+                <div
+                  onClick={this.toggleBlog}
+                  className={cx(
+                    "homePage__content__news__search__first__item",
+                    {
+                      "homePage__content__news__search__first__item-active": isBlog
+                    }
+                  )}
+                >
+                  블로그
                 </div>
               </div>
               <div className="homePage__content__news__search__second">
-                <hr />
                 <div className="homePage__content__news__search__second__content">
                   <ButtonDropdown
                     isOpen={this.state.dropdownOpen}
@@ -486,6 +504,9 @@ class HomePage extends Component {
             )}
           </div>
           <div className="homePage__content__chart">
+            {isLogin ? (
+              <div className="homePage__content__chart__coin">{coinType}</div>
+            ) : null}
             {isFavEmpty === true ? (
               <div className="homePage__content__chart__intro">
                 <div className="homePage__content__chart__intro__logo">
@@ -536,6 +557,8 @@ class HomePage extends Component {
                 ref={el => (this.instance = el)}
               >
                 <Dots color="#ffffff" size={30} />
+                <br />
+                데이터 생성중입니다. 조금만 기다려주세요
               </div>
             ) : (
               <div

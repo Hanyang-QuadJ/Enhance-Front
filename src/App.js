@@ -61,7 +61,6 @@ class App extends Component {
         this.props
           .dispatch(AuthAction.getMe(this.props.token))
           .then(value2 => {});
-      } else {
       }
     });
   }
@@ -70,8 +69,10 @@ class App extends Component {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div>
-          <Route exact path="/" component={HomePage} />
-          <Route path="/forum" component={ForumPage} />
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route path="/forum" component={ForumPage} />
+          </Switch>
           <Route exact path="/auth" component={AuthPage} />
           <Route path="/auth/signup" component={SignUpPage} />
         </div>

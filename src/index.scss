@@ -12,9 +12,25 @@ body {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: white;
     opacity: 0.7;
-    font-weight: 300;
+    font-size: 14px;
+    font-weight: 300 !important;
     font-family: "Nanum Gothic", sans-serif;
     /* Firefox */
+  }
+  .btn {
+    font-weight: 300 !important;
+  }
+  .btn-group-sm > .btn,
+  .btn-sm {
+    padding: 5px 25px !important;
+    font-size: 13px !important;
+    font-weight: 300 !important;
+    color: white;
+    margin-right: 1px;
+    cursor: pointer;
+    float: left;
+    padding: 5px 13px !important;
+    border-radius: 0 !important;
   }
   margin: 0 auto;
   a:hover {
@@ -43,7 +59,7 @@ body {
     > div {
       background-color: transparent !important;
       color: white !important;
-      border: 1px solid white !important;
+      border: 0 !important;
       border-top: 0 !important;
       font-weight: 300 !important;
       padding: 10px !important;

@@ -133,7 +133,7 @@ class NavBar extends Component {
                 })}
                 onClick={this.handleAuth}
               >
-                <Thumb fontSize={30} size={40} />
+                <Thumb fontSize={30} size={40} src={me && me[0].profile_img} />
               </div>
             ) : (
               <div

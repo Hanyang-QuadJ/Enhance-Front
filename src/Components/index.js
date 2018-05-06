@@ -11,3 +11,4 @@ export RoundInput from "./RoundInput/RoundInput";
 export Button from "./Button/Button";
 export Thumb from "./Thumb/Thumb";
 export SocialInput from "./SocialInput/SocialInput";
+export Comment from "./Comment/Comment";

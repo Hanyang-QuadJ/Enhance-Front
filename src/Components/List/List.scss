@@ -2,12 +2,22 @@
 * Author: @nayunhwan (github.com/nayunhwan)
 * Email: nayunhwan.dev@mgail.com
 */
+@import "../../mixin.scss";
 .list {
   color: white;
   cursor: pointer;
   &:hover {
-    background-color: rgba(83, 105, 118, 0.7);
+    @include transition(0.3s);
+    background-color: rgba(83, 105, 118, 0.3);
   }
+  &-active {
+    background-color: rgba(83, 105, 118, 0.7);
+
+    &:hover {
+      background-color: rgba(83, 105, 118, 0.7);
+    }
+  }
+
   &__content {
     display: flex;
     flex-direction: row;
@@ -18,6 +28,7 @@
 
     &__date {
       flex: 1.5;
+      color: rgba(255, 255, 255, 0.7);
       display: flex;
       font-size: 13px;
       align-items: center;
@@ -25,7 +36,7 @@
     }
 
     &__textArea {
-      flex: 9;
+      flex: 6;
       word-wrap: break-word;
       overflow: auto;
       display: flex;
@@ -35,13 +46,50 @@
 
       &__text {
       }
+
+      &__social {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-top: 2px;
+
+        &__item {
+          font-size: 13px;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          margin-right: 5px;
+          color: $light-main;
+          &__count {
+            margin-right: 3px;
+          }
+          &__icon {
+            display: inline-flex;
+          }
+        }
+      }
     }
     &__type {
       flex: 1;
       font-size: 13px;
       padding-right: 10px;
       display: flex;
+      color: $coin-color;
       justify-content: center;
+
+      &-array {
+        color: $coin-color;
+        flex: 2;
+        flex-wrap: wrap;
+        font-size: 13px;
+        padding-right: 10px;
+        display: flex;
+        justify-content: flex-end;
+
+        &__item {
+          margin-right: 5px;
+        }
+      }
     }
   }
 }

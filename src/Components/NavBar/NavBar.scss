@@ -76,7 +76,8 @@
         }
 
         &-active {
-          border-right: 3px $active-color solid;
+          color: $active-color;
+          font-weight: bold;
         }
 
         &-icon {
