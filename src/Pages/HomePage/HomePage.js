@@ -60,6 +60,7 @@ class HomePage extends Component {
   }
 
   componentDidMount() {
+    console.log(this.instance);
     const { isLogin } = this.props;
     if (isLogin) {
       // 모든 코인
@@ -112,6 +113,7 @@ class HomePage extends Component {
                 for (let j = 0; j < favs.length; j++) {
                   if (result[i].abbr === favs[j].abbr) {
                     result[i].clicked = true;
+                    result[i].loading = true;
                   }
                 }
               }
@@ -145,6 +147,7 @@ class HomePage extends Component {
                   for (let i = 0; i < final.length; i++) {
                     for (let j = 0; j < abbrArray.length; j++) {
                       if (final[i].abbr === abbrArray[j].abbr) {
+                        final[i].loading = false;
                         final[i].price = value[abbrArray[j].abbr].KRW.PRICE;
                         final[i].percent =
                           value[abbrArray[j].abbr].KRW.CHANGEPCT24HOUR;
@@ -200,9 +203,9 @@ class HomePage extends Component {
   }
 
   componentWillUnmount() {
-    while (this.instance.firstChild) {
-      this.instance.removeChild(this.instance.firstChild);
-    }
+    // while (this.instance.firstChild) {
+    //   this.instance.removeChild(this.instance.firstChild);
+    // }
   }
 
   handleScroll = e => {
@@ -306,6 +309,7 @@ class HomePage extends Component {
       while (this.instance.firstChild) {
         this.instance.removeChild(this.instance.firstChild);
       }
+      console.log(this.instance.parentNode);
       this.renderChart(coin);
       this.props.dispatch(NewsAction.getNews(newsParams)).then(value => {
         this.setState({
@@ -506,9 +510,11 @@ class HomePage extends Component {
             )}
           </div>
           <div className="homePage__content__chart">
-            {isLogin && !isFavEmpty ? (
+            {isLogin && !isFavEmpty && coinType !== "" ? (
               <div className="homePage__content__chart__coin">{coinType}</div>
-            ) : null}
+            ) : (
+              <div className="homePage__content__chart__coin">로딩중</div>
+            )}
             {isFavEmpty === true ? (
               <div className="homePage__content__chart__intro">
                 <div className="homePage__content__chart__intro__logo">
@@ -554,20 +560,16 @@ class HomePage extends Component {
               </div>
             ) : null}
             {loadGraph === true && isLogin === true ? (
-              <div
-                className="homePage__content__chart__loading"
-                ref={el => (this.instance = el)}
-              >
+              <div className="homePage__content__chart__loading">
                 <Dots color="#ffffff" size={30} />
                 <br />
                 데이터 생성중입니다. 조금만 기다려주세요
               </div>
-            ) : (
-              <div
-                className="homePage__content__chart__wrapper"
-                ref={el => (this.instance = el)}
-              />
-            )}
+            ) : null}
+            <div
+              className="homePage__content__chart__wrapper"
+              ref={el => (this.instance = el)}
+            />
           </div>
         </div>
       </div>

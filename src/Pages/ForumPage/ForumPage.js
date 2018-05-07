@@ -113,7 +113,7 @@ class ForumPage extends Component {
                   let o = Object.assign({}, el);
                   o.clicked = false;
                   o.selected = false;
-                  o.loading = false;
+                  o.loading = true;
                   return o;
                 });
                 for (let i = 0; i < resultSide.length; i++) {
@@ -153,6 +153,7 @@ class ForumPage extends Component {
                     for (let i = 0; i < final.length; i++) {
                       for (let j = 0; j < abbrArray.length; j++) {
                         if (final[i].abbr === abbrArray[j].abbr) {
+                          final[i].loading = false;
                           final[i].price = value[abbrArray[j].abbr].KRW.PRICE;
                           final[i].percent =
                             value[abbrArray[j].abbr].KRW.CHANGEPCT24HOUR;
@@ -507,7 +508,6 @@ class ForumPage extends Component {
                 </div>
               </div>
               <div className="forumPage__content__news__search__second">
-                <hr />
                 <div className="forumPage__content__news__search__second__content">
                   <ButtonDropdown
                     isOpen={this.state.dropdownOpen}

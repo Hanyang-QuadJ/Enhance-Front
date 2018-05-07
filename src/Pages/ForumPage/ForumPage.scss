@@ -89,15 +89,16 @@
         flex-direction: column;
         position: fixed;
         width: calc(50vw - 100px);
-        padding-top: 1.5rem;
-        height: 145px;
         border-bottom: 1px white solid;
 
         &__first {
           display: flex;
           flex-direction: row;
+          padding: 10px;
+          border-bottom: 1px white solid;
+
           &__iconArea {
-            padding-left: 1rem;
+            padding-left: 5px;
             display: flex;
             justify-content: center;
             margin-right: 1rem;
@@ -122,19 +123,19 @@
         }
 
         &__second {
+          padding: 10px;
+
           &__content {
             display: flex;
             flex-direction: row;
             justify-content: space-between;
-            padding-left: 1rem;
-            padding-right: 1rem;
           }
         }
       }
 
       &__lists {
-        height: calc(100vh - 145px);
-        margin-top: 145px;
+        height: calc(100vh - 110px);
+        margin-top: 110px;
         overflow-y: scroll;
 
         &-loading {

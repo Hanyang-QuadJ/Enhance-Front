@@ -106,10 +106,11 @@
     &__items {
       &__item {
         display: flex;
-        height: 10vh;
         border-bottom: 1px rgba(255, 255, 255, 0.1) solid;
         flex-direction: column;
         justify-content: center;
+        padding-top: 10px;
+        padding-bottom: 10px;
         align-items: center;
         cursor: pointer;
 
