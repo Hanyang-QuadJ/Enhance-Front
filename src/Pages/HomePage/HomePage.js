@@ -60,7 +60,6 @@ class HomePage extends Component {
   }
 
   componentDidMount() {
-    console.log(this.instance);
     const { isLogin } = this.props;
     if (isLogin) {
       // 모든 코인
@@ -166,6 +165,9 @@ class HomePage extends Component {
                   this.props
                     .dispatch(NewsAction.getNews(newsParams))
                     .then(news => {
+                      if (news.result.length < 30) {
+                        this.setState({ endScroll: true });
+                      }
                       this.setState({
                         news: news.result,
                         newsLoading: false,
@@ -221,7 +223,7 @@ class HomePage extends Component {
       if (this.state.endScroll === false) {
         this.setState({ footerLoading: true });
         this.props.dispatch(NewsAction.getNews(newsParams)).then(news => {
-          if (news.result.length < 10) {
+          if (news.result.length < 30) {
             this.setState({ endScroll: true, footerLoading: false });
           } else {
             this.setState(prevState => ({
@@ -309,7 +311,6 @@ class HomePage extends Component {
       while (this.instance.firstChild) {
         this.instance.removeChild(this.instance.firstChild);
       }
-      console.log(this.instance.parentNode);
       this.renderChart(coin);
       this.props.dispatch(NewsAction.getNews(newsParams)).then(value => {
         this.setState({

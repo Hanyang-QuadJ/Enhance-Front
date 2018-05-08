@@ -12,25 +12,36 @@ export const FAILED_TO_GET_ONE_FORUM = "FAILED_TO_GET_ONE_FORUM";
 export const SUCCEED_TO_GET_ONE_FORUM_COINS = "SUCCEED_TO_GET_ONE_FORUM_COINS";
 export const FAILED_TO_GET_ONE_FORUM_COINS = "FAILED_TO_GET_ONE_FORUM_COINS";
 
+export const SUCCEED_TO_GET_ONE_FORUM_COMMENT =
+  "SUCCEED_TO_GET_ONE_FORUM_COMMENT";
+export const FAILED_TO_GET_ONE_FORUM_COMMENT =
+  "FAILED_TO_GET_ONE_FORUM_COMMENT";
+
+export const SUCCEED_TO_POST_FORUM_VIEW = "SUCCEED_TO_POST_FORUM_VIEW";
+export const FAILED_TO_POST_FORUM_VIEW = "FAILED_TO_POST_FORUM_VIEW";
+
 export const SUCCEED_TO_POST_FORUM_COMMENT = "SUCCEED_TO_POST_FORUM_COMMENT";
 export const FAILED_TO_POST_FORUM_COMMENT = "FAILED_TO_POST_FORUM_COMMENT";
 
-export const getAllForums = () => {
+export const getAllForums = params => {
   return async dispatch => {
     try {
-      let response = await fetch(ServerEndPoint + "api/forum/all", {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
+      let response = await fetch(
+        ServerEndPoint + `api/forum/all?index=${params.forumIndex}`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          }
         }
-      });
+      );
       let responseJson = await response.json();
       await dispatch({
         type: SUCCEED_TO_GET_ALL_FORUM,
-        payload: responseJson.forums
+        payload: responseJson
       });
-      return responseJson.forums;
+      return responseJson;
     } catch (error) {
       dispatch({
         type: FAILED_TO_GET_ALL_FORUM,
@@ -98,6 +109,35 @@ export const getOneForumCoins = params => {
   };
 };
 
+export const getOneForumComment = params => {
+  return async dispatch => {
+    try {
+      let response = await fetch(
+        ServerEndPoint + `api/forum/comment/${params.forum_id}`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "x-access-token": params.token
+          }
+        }
+      );
+      let responseJson = await response.json();
+      await dispatch({
+        type: SUCCEED_TO_GET_ONE_FORUM_COMMENT,
+        payload: responseJson.result
+      });
+      return responseJson.result;
+    } catch (error) {
+      dispatch({
+        type: FAILED_TO_GET_ONE_FORUM_COMMENT,
+        payload: { data: "NETWORK_ERROR" }
+      });
+    }
+  };
+};
+
 export const postForum = params => {
   return async dispatch => {
     try {
@@ -124,6 +164,35 @@ export const postForum = params => {
     } catch (error) {
       dispatch({
         type: FAILED_TO_POST_FORUM,
+        payload: { data: "NETWORK_ERROR" }
+      });
+    }
+  };
+};
+
+export const postForumView = params => {
+  return async dispatch => {
+    try {
+      let response = await fetch(
+        ServerEndPoint + "api/forum/view/" + params.forum_id,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "x-access-token": params.token
+          }
+        }
+      );
+      let responseJson = await response.json();
+      await dispatch({
+        type: SUCCEED_TO_POST_FORUM_VIEW,
+        payload: responseJson
+      });
+      return responseJson;
+    } catch (error) {
+      dispatch({
+        type: FAILED_TO_POST_FORUM_VIEW,
         payload: { data: "NETWORK_ERROR" }
       });
     }

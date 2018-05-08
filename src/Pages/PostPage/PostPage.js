@@ -26,7 +26,7 @@ class PostPage extends Component {
     this.state = {
       isFocusComment: false,
       comment: "",
-      comments: []
+      newComment: []
     };
     moment.locale("ko");
   }
@@ -39,7 +39,7 @@ class PostPage extends Component {
   handlePostComment = e => {
     const { me } = this.props;
     const date = new Date();
-    const newComments = this.state.comments.slice();
+    const newComment = this.state.newComment.slice();
     const frontParams = {
       username: me[0].username,
       profile_img: me[0].profile_img,
@@ -52,9 +52,9 @@ class PostPage extends Component {
       content: this.state.comment,
       forum_id: this.props.match.params.forum_id
     };
-    newComments.push(frontParams);
+    newComment.splice(0, 0, frontParams);
     this.props.dispatch(SocialAction.postForumComment(params)).then(value => {
-      this.setState({ comments: newComments, comment: "" });
+      this.setState({ newComment, comment: "" });
     });
   };
 
@@ -64,10 +64,20 @@ class PostPage extends Component {
     }));
   };
 
+  componentDidUpdate(previousProps, previousState) {
+    if (
+      previousProps.location.state.forum !== this.props.location.state.forum
+    ) {
+      this.setState({
+        newComment: []
+      });
+    }
+  }
+
   render() {
-    const { isFocusComment, comments } = this.state;
+    const { isFocusComment, newComment } = this.state;
     const { me, isLogin } = this.props;
-    const { forum, coins } = this.props.location.state;
+    const { forum, coins, comment } = this.props.location.state;
     return (
       <div className="forumPage__content__chart">
         <div className="forumPage__content__chart__intro">
@@ -110,8 +120,14 @@ class PostPage extends Component {
               })}
             </div>
             <div className="postPage__content__chart__intro__post__footer">
+              <span className="postPage__content__chart__intro__post__footer__count">
+                10
+              </span>
               <span className="postPage__content__chart__intro__post__footer__icon">
                 <i className="far fa-thumbs-up" />
+              </span>
+              <span className="postPage__content__chart__intro__post__footer__count">
+                {forum.view_cnt}
               </span>
               <span className="postPage__content__chart__intro__post__footer__icon">
                 <i className="xi-eye" />
@@ -130,7 +146,19 @@ class PostPage extends Component {
             isFocus={isFocusComment}
           />
           <div className="postPage__content__chart__intro__comments">
-            {comments.map((data, index) => {
+            {newComment.map((data, index) => {
+              return (
+                <Comment
+                  key={index}
+                  username={data.username}
+                  profileImg={data.profile_img}
+                  userPoint={data.point}
+                  createdAt={data.created_at}
+                  content={data.content}
+                />
+              );
+            })}
+            {comment.map((data, index) => {
               return (
                 <Comment
                   key={index}

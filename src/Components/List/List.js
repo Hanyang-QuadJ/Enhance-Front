@@ -24,7 +24,9 @@ class List extends Component {
       onClick,
       active,
       index,
-      selectedIndex
+      isLoading,
+      selectedIndex,
+      view
     } = this.props;
     return (
       <a href={link && link} target="_blank">
@@ -57,7 +59,7 @@ class List extends Component {
                   </div>
                   <div className="list__content__textArea__social__item">
                     <span className="list__content__textArea__social__item__count">
-                      10
+                      {view}
                     </span>
                     <span className="list__content__textArea__social__item__icon">
                       <i className="xi-eye" />

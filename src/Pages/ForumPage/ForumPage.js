@@ -62,29 +62,39 @@ class ForumPage extends Component {
       posts: [],
       favorite: [],
       sideFavorite: [],
-      postLoading: false,
-      myFavorite: [],
       isFocus: false,
       isFocusComment: false,
+      postLoading: false,
       isPostsLoading: false,
+      forumLoading: false,
+      footerLoading: false,
       title: "",
       main: "",
-      comment: "",
+      endScroll: false,
       selectedCoinType: [],
       selectedAbbr: [],
       selectedPostType2: "자유",
       selectedIndex: null,
       forum: [],
-      comments: []
+      forumIndex: 0
     };
     this.toggle = this.toggle.bind(this);
   }
 
   componentWillMount() {
     const { isLogin } = this.props;
+    const { forumIndex } = this.state;
+    const params = { forumIndex };
     this.setState({ isPostsLoading: true });
-    this.props.dispatch(SocialAction.getAllForums()).then(forums => {
-      this.setState({ posts: forums.reverse(), isPostsLoading: false });
+    this.props.dispatch(SocialAction.getAllForums(params)).then(forums => {
+      if (forums.forums.length < 30) {
+        this.setState({ endScroll: true });
+      }
+      this.setState({
+        posts: forums.forums.reverse(),
+        forumIndex: forums.nextIndex,
+        isPostsLoading: false
+      });
       this.props.dispatch(PriceAction.getCoins()).then(coins => {
         if (isLogin) {
           this.props
@@ -286,16 +296,32 @@ class ForumPage extends Component {
         token: this.props.token,
         forum_id: id
       };
+      this.setState({ forumLoading: true });
       this.props.dispatch(SocialAction.getOneForum(params)).then(forum => {
+        const newForum = Object.assign({}, forum);
+        newForum.view_cnt = newForum.view_cnt + 1;
         this.setState({ selectedIndex: index });
-        this.props
-          .dispatch(SocialAction.getOneForumCoins(params))
-          .then(coins => {
-            this.props.history.push({
-              pathname: "/forum/" + id,
-              state: { forum, comment: [], coins }
+        this.props.dispatch(SocialAction.postForumView(params)).then(view => {
+          this.props
+            .dispatch(SocialAction.getOneForumCoins(params))
+            .then(coins => {
+              this.props
+                .dispatch(SocialAction.getOneForumComment(params))
+                .then(comment => {
+                  const newPosts = this.state.posts.slice();
+                  newPosts[index].view_cnt = newPosts[index].view_cnt + 1;
+                  this.setState({ posts: newPosts, forumLoading: false });
+                  this.props.history.push({
+                    pathname: "/forum/" + id,
+                    state: {
+                      forum: newForum,
+                      comment: comment.reverse(),
+                      coins
+                    }
+                  });
+                });
             });
-          });
+        });
       });
     } else {
       this.props.history.replace({
@@ -344,7 +370,6 @@ class ForumPage extends Component {
           coins: coinArray,
           created_at: date
         };
-
         this.props.dispatch(SocialAction.getOneForum(params)).then(forum => {
           this.props
             .dispatch(SocialAction.getOneForumCoins(params))
@@ -353,7 +378,7 @@ class ForumPage extends Component {
               newPosts.splice(0, 0, frontParams);
               await this.props.history.push({
                 pathname: "/forum/" + id,
-                state: { forum, coins }
+                state: { forum, coins, comment: [] }
               });
               await this.setState({
                 posts: newPosts,
@@ -399,17 +424,44 @@ class ForumPage extends Component {
     }
   };
 
+  handleScroll = e => {
+    const bottom =
+      e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+    const { forumIndex } = this.state;
+    const params = {
+      forumIndex
+    };
+    if (bottom) {
+      if (this.state.endScroll === false) {
+        this.setState({ footerLoading: true });
+        this.props.dispatch(SocialAction.getAllForums(params)).then(forums => {
+          if (forums.forums.length < 30) {
+            this.setState({ endScroll: true, footerLoading: false });
+          } else {
+            this.setState(prevState => ({
+              posts: [...prevState.posts, ...forums.forums],
+              forumIndex: forums.nextIndex,
+              footerLoading: false
+            }));
+          }
+        });
+      } else {
+        return null;
+      }
+    }
+  };
+
   render() {
     const {
       posts,
       postLoading,
       isPostsLoading,
       isFocus,
-      isFocusComment,
       selectedPostType2,
       selectedIndex,
       favorite,
-      forum,
+      forumLoading,
+      footerLoading,
       sideFavorite
     } = this.state;
     const { news, me, isLogin } = this.props;
@@ -527,26 +579,39 @@ class ForumPage extends Component {
                 </div>
               </div>
             </div>
-            {isPostsLoading ? (
+            {isPostsLoading || forumLoading ? (
               <div className="forumPage__content__news__lists-loading">
                 <Dots color="#ffffff" size={30} />
               </div>
             ) : (
-              <div className="forumPage__content__news__lists">
+              <div
+                ref={el => {
+                  this.lists = el;
+                }}
+                onScroll={this.handleScroll}
+                className="forumPage__content__news__lists"
+              >
                 {posts.map((data, index) => {
                   return (
                     <List
                       social
                       index={index}
+                      isLoading={forumLoading}
                       selectedIndex={selectedIndex}
                       key={index}
                       title={data.title}
                       createdAt={data.created_at}
                       type={data.coins}
+                      view={data.view_cnt}
                       onClick={() => this.handleDetail(index, data.id)}
                     />
                   );
                 })}
+                {footerLoading === true ? (
+                  <div className="forumPage__content__news__lists__footer">
+                    <Dots color="#ffffff" size={20} />
+                  </div>
+                ) : null}
               </div>
             )}
           </div>
