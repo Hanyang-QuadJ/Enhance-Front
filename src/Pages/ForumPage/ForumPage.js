@@ -11,7 +11,7 @@ import {
   Thumb,
   SocialInput
 } from "../../Components";
-import { PostPage, MyPage } from "../";
+import { PostPage, UserInfoPage } from "../";
 import { Route, Switch } from "react-router-dom";
 import Textarea from "react-textarea-autosize";
 import { Dots } from "react-activity";
@@ -90,8 +90,13 @@ class ForumPage extends Component {
       if (forums.forums.length < 30) {
         this.setState({ endScroll: true });
       }
+      let result = forums.forums.reverse().map(function(el) {
+        let o = Object.assign({}, el);
+        o.loading = false;
+        return o;
+      });
       this.setState({
-        posts: forums.forums.reverse(),
+        posts: result,
         forumIndex: forums.nextIndex,
         isPostsLoading: false
       });
@@ -296,7 +301,9 @@ class ForumPage extends Component {
         token: this.props.token,
         forum_id: id
       };
-      this.setState({ forumLoading: true });
+      const newPosts = this.state.posts.slice();
+      newPosts[index].loading = true;
+      this.setState({ posts: newPosts });
       this.props.dispatch(SocialAction.getOneForum(params)).then(forum => {
         const newForum = Object.assign({}, forum);
         newForum.view_cnt = newForum.view_cnt + 1;
@@ -309,8 +316,9 @@ class ForumPage extends Component {
                 .dispatch(SocialAction.getOneForumComment(params))
                 .then(comment => {
                   const newPosts = this.state.posts.slice();
+                  newPosts[index].loading = false;
                   newPosts[index].view_cnt = newPosts[index].view_cnt + 1;
-                  this.setState({ posts: newPosts, forumLoading: false });
+                  this.setState({ posts: newPosts });
                   this.props.history.push({
                     pathname: "/forum/" + id,
                     state: {
@@ -465,6 +473,7 @@ class ForumPage extends Component {
       sideFavorite
     } = this.state;
     const { news, me, isLogin } = this.props;
+    console.log(this.props.match);
     return (
       <div className="forumPage">
         <NavBar type="forum" />
@@ -579,7 +588,7 @@ class ForumPage extends Component {
                 </div>
               </div>
             </div>
-            {isPostsLoading || forumLoading ? (
+            {isPostsLoading ? (
               <div className="forumPage__content__news__lists-loading">
                 <Dots color="#ffffff" size={30} />
               </div>
@@ -596,7 +605,7 @@ class ForumPage extends Component {
                     <List
                       social
                       index={index}
-                      isLoading={forumLoading}
+                      isLoading={data.loading}
                       selectedIndex={selectedIndex}
                       key={index}
                       title={data.title}
@@ -615,55 +624,57 @@ class ForumPage extends Component {
               </div>
             )}
           </div>
-          <Route path="/forum/:forum_id" component={PostPage} />
-          <Route
-            exact
-            path="/forum"
-            render={() => {
-              return (
-                <div className="forumPage__content__chart">
-                  <div className="forumPage__content__chart__intro">
-                    <div className="forumPage__content__chart__intro__logo">
-                      <img
-                        width={45}
-                        height={45}
-                        src="https://github.com/Hanyang-QuadJ/enhance/blob/master/public/icons/enhance_logo.png?raw=true"
-                      />
-                      <p className="forumPage__content__chart__intro__logo__text">
-                        ENHANCE
-                      </p>
-                    </div>
-                    <div className="forumPage__content__chart__intro__welcome">
-                      <p>
-                        <strong>환영합니다. </strong>
-                        {me && me[0].username + " 님"}
-                      </p>
-                      <p>
-                        인핸스는 가상화폐와 블록체인 기술에 대한 정보를
-                        실시간으로 모아서 한눈에 보기 쉽게 제공해 드리고
-                        있습니다. 인핸스와 함께 가상화폐의 역사를 함께 하세요.
-                      </p>
-                    </div>
-                    <div className="forumPage__content__chart__intro__desc">
-                      <strong>인핸스 포럼</strong>
-                      <p>
-                        로그인 후 + 버튼을 누르거나 좌측 상단 돋보기 아이콘을
-                        눌러 원하는 가상화폐 종목을 검색하실 수 있습니다.
-                      </p>
-                      <br />
-                      <p>
-                        원하는 가상화폐를 클릭하여 팔로우 하시면 우측 즐겨찾기
-                        목록에 저장되어 해당 가상 화폐의 정보를 계속 보실 수
-                        있습니다.
-                      </p>
-                      <br />
-                      <p>각 가상화폐의 종목의 커뮤니티에 참여하세요.</p>
+          <Switch>
+            <Route path={`${this.props.match.url}`} component={PostPage} />
+            <Route
+              exact
+              path="/forum"
+              render={() => {
+                return (
+                  <div className="forumPage__content__chart">
+                    <div className="forumPage__content__chart__intro">
+                      <div className="forumPage__content__chart__intro__logo">
+                        <img
+                          width={45}
+                          height={45}
+                          src="https://github.com/Hanyang-QuadJ/enhance/blob/master/public/icons/enhance_logo.png?raw=true"
+                        />
+                        <p className="forumPage__content__chart__intro__logo__text">
+                          ENHANCE
+                        </p>
+                      </div>
+                      <div className="forumPage__content__chart__intro__welcome">
+                        <p>
+                          <strong>환영합니다. </strong>
+                          {me && me[0].username + " 님"}
+                        </p>
+                        <p>
+                          인핸스는 가상화폐와 블록체인 기술에 대한 정보를
+                          실시간으로 모아서 한눈에 보기 쉽게 제공해 드리고
+                          있습니다. 인핸스와 함께 가상화폐의 역사를 함께 하세요.
+                        </p>
+                      </div>
+                      <div className="forumPage__content__chart__intro__desc">
+                        <strong>인핸스 포럼</strong>
+                        <p>
+                          로그인 후 + 버튼을 누르거나 좌측 상단 돋보기 아이콘을
+                          눌러 원하는 가상화폐 종목을 검색하실 수 있습니다.
+                        </p>
+                        <br />
+                        <p>
+                          원하는 가상화폐를 클릭하여 팔로우 하시면 우측 즐겨찾기
+                          목록에 저장되어 해당 가상 화폐의 정보를 계속 보실 수
+                          있습니다.
+                        </p>
+                        <br />
+                        <p>각 가상화폐의 종목의 커뮤니티에 참여하세요.</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            }}
-          />
+                );
+              }}
+            />
+          </Switch>
         </div>
       </div>
     );

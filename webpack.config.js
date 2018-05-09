@@ -40,7 +40,11 @@ module.exports = {
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        loader: "file-loader?name=/public/icons/[name].[ext]"
+        loader: "img-loader?name=/public/imgs/[name].[ext]"
+      },
+      {
+        test: /\.(jpe?g|png|woff|woff2|eot|ttf|svg)$/,
+        loader: "url-loader"
       }
     ]
   }

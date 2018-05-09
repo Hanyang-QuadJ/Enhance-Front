@@ -39,7 +39,8 @@ class SignUpPage extends Component {
       coinType: "BTC",
       email: "",
       password: "",
-      username: ""
+      username: "",
+      isSignedUp: false
     };
     this.toggle = this.toggle.bind(this);
   }
@@ -99,8 +100,10 @@ class SignUpPage extends Component {
       password,
       username
     };
+    this.setState({ isSignedUp: true });
     this.props.dispatch(AuthAction.postSignUp(params)).then(value => {
       this.props.dispatch(AuthAction.getMe(value)).then(value2 => {
+        this.setState({ isSignedUp: false });
         this.props.history.replace({
           pathname: "/"
         });
@@ -109,7 +112,7 @@ class SignUpPage extends Component {
   };
 
   render() {
-    const { coinType, coins, favorite } = this.state;
+    const { coinType, coins, favorite, isSignedUp } = this.state;
     const { news } = this.props;
     return (
       <div className="signUpPage">
@@ -217,6 +220,7 @@ class SignUpPage extends Component {
                   width={290}
                   height={50}
                   text="회원가입"
+                  isLoading={isSignedUp}
                   onClick={this.handleSignUp}
                 />
               </div>

@@ -37,7 +37,8 @@ class RoundInput extends Component {
       isMulti,
       rows,
       rowsMax,
-      onKeyPress
+      onKeyPress,
+      errorText
     } = this.props;
     return (
       <div className="roundInput">
@@ -51,6 +52,7 @@ class RoundInput extends Component {
           underlineStyle={styles.underline}
           multiLine={isMulti}
           rows={rows}
+          errorText={errorText}
           onKeyPress={onKeyPress}
           rowsMax={rowsMax}
         />

@@ -4,6 +4,7 @@
 import React, { Component } from "react";
 import moment from "moment";
 import cx from "classnames";
+import { Dots } from "react-activity";
 
 const defaultProps = {};
 const propTypes = {};
@@ -40,7 +41,13 @@ class List extends Component {
         >
           <div className="list__content">
             <div className="list__content__date">
-              <p>{moment(createdAt).fromNow()}</p>
+              {isLoading ? (
+                <Dots color="#ffffff" size={15} />
+              ) : (
+                <div>
+                  <p>{moment(createdAt).fromNow()}</p>
+                </div>
+              )}
             </div>
             <div className="list__content__textArea">
               <div

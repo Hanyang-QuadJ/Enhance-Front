@@ -11,6 +11,12 @@
     border-radius: 50%;
     border: 1px solid white;
   }
+
+  &__classImage {
+    position: absolute;
+    box-sizing: border-box;
+    border-radius: 50%;
+  }
 }
 
 .thumb__default {

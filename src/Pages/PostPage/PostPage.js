@@ -5,6 +5,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Thumb, SocialInput, Comment } from "../../Components";
 import * as SocialAction from "../../ActionCreators/SocialAction";
+import { Route } from "react-router-dom";
 
 import moment from "moment";
 
@@ -76,16 +77,22 @@ class PostPage extends Component {
 
   render() {
     const { isFocusComment, newComment } = this.state;
-    const { me, isLogin } = this.props;
+    const { me, isLogin, onClick } = this.props;
     const { forum, coins, comment } = this.props.location.state;
     return (
-      <div className="forumPage__content__chart">
-        <div className="forumPage__content__chart__intro">
+      <div className="postPage__content__chart">
+        <div className="postPage__content__chart__intro">
           <div className="postPage__content__chart__intro__post">
             <div className="postPage__content__chart__intro__post__header">
               <div className="postPage__content__chart__intro__post__header__userInfo">
                 <div className="postPage__content__chart__intro__post__header__userInfo__thumb">
-                  <Thumb src={forum.profile_img} fontSize={35} size={50} />
+                  <Thumb
+                    src={forum.profile_img}
+                    fontSize={35}
+                    size={50}
+                    point={forum.point}
+                    onClick={onClick}
+                  />
                 </div>
                 <div className="postPage__content__chart__intro__post__header__userInfo__name">
                   <strong>{forum.username}</strong>

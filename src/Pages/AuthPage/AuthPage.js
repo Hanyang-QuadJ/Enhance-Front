@@ -38,7 +38,9 @@ class AuthPage extends Component {
       favorite: [],
       coinType: "BTC",
       email: "",
-      password: ""
+      password: "",
+      isLoginValid: true,
+      isLoggedIn: false
     };
     this.toggle = this.toggle.bind(this);
   }
@@ -122,12 +124,19 @@ class AuthPage extends Component {
       email,
       password
     };
+    this.setState({ isLoggedIn: true });
     this.props.dispatch(AuthAction.postSignIn(params)).then(value => {
-      this.props.dispatch(AuthAction.getMe(value)).then(value2 => {
-        this.props.history.replace({
-          pathname: "/"
+      if (value === "failed") {
+        this.setState({ isLoginValid: false, isLoggedIn: false });
+      } else {
+        this.setState({ isLoggedIn: false });
+
+        this.props.dispatch(AuthAction.getMe(value)).then(value2 => {
+          this.props.history.replace({
+            pathname: "/"
+          });
         });
-      });
+      }
     });
   };
 
@@ -149,7 +158,7 @@ class AuthPage extends Component {
   };
 
   render() {
-    const { coinType, coins, favorite } = this.state;
+    const { coinType, coins, favorite, isLoginValid, isLoggedIn } = this.state;
     const { news } = this.props;
     return (
       <div className="authPage">
@@ -237,6 +246,9 @@ class AuthPage extends Component {
                   onChange={this.handleEmail}
                   placeholder="이메일"
                   type="email"
+                  errorText={
+                    isLoginValid ? null : "입력하신 정보를 다시 확인하세요"
+                  }
                 />
                 <br />
                 <RoundInput
@@ -244,6 +256,9 @@ class AuthPage extends Component {
                   placeholder="비밀번호"
                   type="password"
                   onKeyPress={this.handleKeySignIn}
+                  errorText={
+                    isLoginValid ? null : "입력하신 정보를 다시 확인하세요"
+                  }
                 />
                 <br />
                 <br />
@@ -251,6 +266,7 @@ class AuthPage extends Component {
                   text="로그인"
                   width={290}
                   height={50}
+                  isLoading={isLoggedIn}
                   onClick={this.handleSignIn}
                 />
               </div>

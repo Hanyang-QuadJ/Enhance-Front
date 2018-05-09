@@ -3,13 +3,10 @@
 
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Route, Switch, Link } from "react-router-dom";
-import { NavBar, List, SideBar, Thumb } from "../../Components";
+import { NavBar, List, SideBar } from "../../Components";
 import { Dots } from "react-activity";
 import * as NewsAction from "../../ActionCreators/NewsAction";
 import * as PriceAction from "../../ActionCreators/PriceAction";
-import coinJson from "../../Json/coin";
-import { MyPage } from "../";
 import "react-activity/dist/react-activity.css";
 import cx from "classnames";
 import {
@@ -18,6 +15,7 @@ import {
   DropdownMenu,
   DropdownItem
 } from "reactstrap";
+import { setTimeout, setInterval } from "timers";
 
 const defaultProps = {};
 const propTypes = {};
@@ -176,6 +174,7 @@ class HomePage extends Component {
                       });
                     });
                   this.renderChart(abbrArray[0].abbr);
+                  // this.handleRefresh();
                 });
             }
           });
@@ -210,7 +209,15 @@ class HomePage extends Component {
     // }
   }
 
+  handleRefresh = () => {
+    const { coinId, sourceId, newsCount } = this.state;
+    setInterval(() => {
+      console.log("11111");
+    }, 5000);
+  };
+
   handleScroll = e => {
+    console.log(e);
     const bottom =
       e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
     const { newsCount, coinId, sourceId } = this.state;
@@ -511,11 +518,9 @@ class HomePage extends Component {
             )}
           </div>
           <div className="homePage__content__chart">
-            {isLogin && !isFavEmpty && coinType !== "" ? (
+            {isLogin && !isFavEmpty && coinType != "" ? (
               <div className="homePage__content__chart__coin">{coinType}</div>
-            ) : (
-              <div className="homePage__content__chart__coin">로딩중</div>
-            )}
+            ) : null}
             {isFavEmpty === true ? (
               <div className="homePage__content__chart__intro">
                 <div className="homePage__content__chart__intro__logo">

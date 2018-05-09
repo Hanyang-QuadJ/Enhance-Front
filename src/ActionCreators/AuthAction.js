@@ -53,7 +53,6 @@ export const postSignUp = params => {
         })
       });
       let responseJson = await response.json();
-      console.log(responseJson);
       await dispatch({
         type: SUCCEED_TO_SIGNUP,
         payload: responseJson.token
