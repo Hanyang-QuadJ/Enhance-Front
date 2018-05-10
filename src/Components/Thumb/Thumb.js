@@ -2,19 +2,133 @@
 // If you want to make other Component, Copy and Refactor this Component.
 
 import React, { Component } from "react";
+import Vip from "../../Assests/Imgs/vip.png";
 import Gold from "../../Assests/Imgs/gold.png";
+import Bronze from "../../Assests/Imgs/bronze.png";
+import Silver from "../../Assests/Imgs/silver.png";
+import { Sentry } from "react-activity";
 
-const defaultProps = {
-  goldImage: Gold
-};
+const defaultProps = {};
 const propTypes = {};
 
 class Thumb extends Component {
   constructor(props) {
     super(props);
   }
-  handleClass = () => {
-    const { point } = this.props;
+
+  handleClass = point => {
+    const { size } = this.props;
+    if (point < 50) {
+      return null;
+    } else if (point >= 50 && point < 120) {
+      return (
+        <img
+          className="thumb__classImage"
+          src={Bronze}
+          width={size > 50 ? size / 2.5 : size / 2}
+          height={size > 50 ? size / 2.5 : size / 2}
+          style={{
+            bottom: "-8px",
+            right: "-5px"
+          }}
+        />
+      );
+    } else if (point >= 120 && point < 200) {
+      return (
+        <img
+          className="thumb__classImage"
+          src={Silver}
+          width={size > 50 ? size / 2.5 : size / 2}
+          height={size > 50 ? size / 2.5 : size / 2}
+          style={{
+            bottom: "-8px",
+            right: "-5px"
+          }}
+        />
+      );
+    } else if (point >= 200 && point < 400) {
+      return (
+        <img
+          className="thumb__classImage"
+          src={Gold}
+          width={size > 50 ? size / 2.5 : size / 2}
+          height={size > 50 ? size / 2.5 : size / 2}
+          style={{
+            bottom: "-8px",
+            right: "-5px"
+          }}
+        />
+      );
+    } else if (point >= 400) {
+      return (
+        <img
+          className="thumb__classImage"
+          src={Vip}
+          width={size > 50 ? size / 2.5 : size / 2}
+          height={size > 50 ? size / 2.5 : size / 2}
+          style={{
+            bottom: "-8px",
+            right: "-5px"
+          }}
+        />
+      );
+    }
+  };
+
+  handleDefaultClass = point => {
+    const { size } = this.props;
+    if (point < 50) {
+      return null;
+    } else if (point >= 50 && point < 120) {
+      return (
+        <img
+          className="thumb__defaultImage"
+          src={Bronze}
+          width={size > 50 ? size / 2.5 : size / 2}
+          height={size > 50 ? size / 2.5 : size / 2}
+          style={{
+            bottom: "-8px",
+            right: "-5px"
+          }}
+        />
+      );
+    } else if (point >= 120 && point < 200) {
+      return (
+        <img
+          className="thumb__defaultImage"
+          src={Silver}
+          width={size > 50 ? size / 2.5 : size / 2}
+          height={size > 50 ? size / 2.5 : size / 2}
+          style={{
+            bottom: "-8px",
+            right: "-5px"
+          }}
+        />
+      );
+    } else if (point >= 200 && point < 400) {
+      return (
+        <img
+          className="thumb__defaultImage"
+          src={Gold}
+          width={size > 50 ? size / 2.5 : size / 2}
+          height={size > 50 ? size / 2.5 : size / 2}
+          style={{}}
+        />
+      );
+    } else if (point >= 400) {
+      return (
+        <img
+          className="thumb__defaultImage"
+          src={Vip}
+          width={size > 50 ? size / 2.5 : size / 2}
+          height={size > 50 ? size / 2.5 : size / 2}
+          style={{
+            bottom: "-8px",
+            right: "-5px"
+          }}
+        />
+      );
+    }
   };
 
   render() {
@@ -24,8 +138,8 @@ class Thumb extends Component {
       fontSize,
       cursor,
       onClick,
-      goldImage,
-      point
+      point,
+      isLoading
     } = this.props;
     if (src === null || src === undefined || src === null) {
       return (
@@ -40,6 +154,7 @@ class Thumb extends Component {
           }}
         >
           <i className="xi-user-o" />
+          {this.handleDefaultClass(point)}
         </span>
       );
     } else {
@@ -49,17 +164,21 @@ class Thumb extends Component {
           className="thumb"
           style={{ width: size, height: size, cursor: cursor && cursor }}
         >
-          <img className="thumb__image" width={size} height={size} src={src} />
-          <img
-            className="thumb__classImage"
-            src={goldImage}
-            width={size / 1.5}
-            height={size / 1.5}
-            style={{
-              bottom: "-8px",
-              right: "-5px"
-            }}
-          />
+          {isLoading ? (
+            <Sentry size={15} color="#ffffff" />
+          ) : (
+            <div>
+              <img
+                className="thumb__image"
+                width={size}
+                height={size}
+                src={src}
+              />
+              {point !== null || point !== undefined
+                ? this.handleClass(point)
+                : null}
+            </div>
+          )}
         </span>
       );
     }

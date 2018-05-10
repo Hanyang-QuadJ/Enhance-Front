@@ -16,12 +16,25 @@ class Comment extends Component {
   }
 
   render() {
-    const { username, userPoint, content, createdAt, profileImg } = this.props;
+    const {
+      username,
+      userPoint,
+      content,
+      createdAt,
+      profileImg,
+      onClick
+    } = this.props;
     return (
       <div className="comment">
         <div className="comment__content">
           <div className="comment__content__userArea">
-            <Thumb src={profileImg} size={35} fontSize={25} />
+            <Thumb
+              src={profileImg}
+              size={35}
+              fontSize={25}
+              onClick={onClick}
+              point={userPoint}
+            />
             <div className="comment__content__userArea__userInfo">
               <div className="comment__content__userArea__userInfo__name">
                 {username}

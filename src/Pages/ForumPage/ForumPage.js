@@ -31,7 +31,6 @@ import {
   Button
 } from "reactstrap";
 import cx from "classnames";
-import moment from "moment";
 
 const defaultProps = {};
 const propTypes = {};
@@ -71,6 +70,7 @@ class ForumPage extends Component {
       title: "",
       main: "",
       endScroll: false,
+      showModal: false,
       selectedCoinType: [],
       selectedAbbr: [],
       selectedPostType2: "자유",
@@ -230,6 +230,7 @@ class ForumPage extends Component {
 
   handleFavorite = async(index, id, data) => {
     const coin = this.state.sideFavorite.slice();
+    const favorite = this.state.favorite.slice();
     const { token } = this.props;
     const params = {
       token: token,
@@ -239,6 +240,12 @@ class ForumPage extends Component {
     if (coin[index].clicked === true) {
       coin[index].clicked = false;
 
+      for (let i = 0; i < favorite.length; i++) {
+        if (favorite[i].abbr === data) {
+          favorite.splice(i, 1);
+        }
+      }
+
       let leftOver = [];
       for (let i = 0; i < coin.length; i++) {
         if (coin[i].clicked === true) {
@@ -247,10 +254,10 @@ class ForumPage extends Component {
       }
       //한개 남았을 때
       if (leftOver.length === 0) {
-        this.setState({ sideFavorite: coin });
+        this.setState({ sideFavorite: coin, favorite });
         this.props.dispatch(PriceAction.removeFav(params));
       } else {
-        this.setState({ sideFavorite: coin });
+        this.setState({ sideFavorite: coin, favorite });
         this.props.dispatch(PriceAction.removeFav(params));
       }
     }
@@ -258,7 +265,9 @@ class ForumPage extends Component {
     else {
       coin[index].clicked = true;
       coin[index].loading = true;
-      this.setState({ sideFavorite: coin });
+      favorite.push({ coin_id: id, clicked: false, abbr: data });
+
+      this.setState({ sideFavorite: coin, favorite });
 
       //즐겨찾기 한 코인들에게, 가격, 증감표시 key 추가
       let result = coin.map(function(el) {
@@ -369,14 +378,14 @@ class ForumPage extends Component {
           token: this.props.token,
           forum_id: id
         };
-
         const frontParams = {
           title,
           id,
           content: main,
           category: selectedPostType2,
           coins: coinArray,
-          created_at: date
+          created_at: date,
+          view_cnt: 0
         };
         this.props.dispatch(SocialAction.getOneForum(params)).then(forum => {
           this.props
@@ -607,7 +616,9 @@ class ForumPage extends Component {
                       isLoading={data.loading}
                       selectedIndex={selectedIndex}
                       key={index}
+                      username={data.username}
                       title={data.title}
+                      point={data.point}
                       createdAt={data.created_at}
                       type={data.coins}
                       view={data.view_cnt}

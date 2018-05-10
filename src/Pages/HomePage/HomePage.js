@@ -83,7 +83,7 @@ class HomePage extends Component {
               };
               this.props.dispatch(NewsAction.getNews(newsParams)).then(news => {
                 this.setState({
-                  newsCount: newsCount,
+                  newsCount: news.nextIndex,
                   news: [],
                   newsLoading: false
                 });
@@ -169,6 +169,7 @@ class HomePage extends Component {
                       }
                       this.setState({
                         news: news.result,
+                        newsCount: news.nextIndex,
                         newsLoading: false,
                         favorite: final,
                         coinType: abbrArray[0].abbr
@@ -218,16 +219,22 @@ class HomePage extends Component {
   };
 
   handleScroll = e => {
-    console.log(e);
-    const bottom =
-      e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+    let scrollTop = e.target.scrollTop;
+    let docHeight = e.target.clientHeight;
+    let winHeight = e.target.scrollHeight;
+    let scrollPercent = scrollTop / (winHeight - docHeight);
+
+    // const bottom =
+    //   Math.floor(e.target.scrollHeight - e.target.scrollTop) ===
+    //   e.target.clientHeight;
     const { newsCount, coinId, sourceId } = this.state;
     const newsParams = {
       coinId,
       sourceId,
       newsCount
     };
-    if (bottom) {
+
+    if (scrollPercent > 0.95) {
       if (this.state.endScroll === false) {
         this.setState({ footerLoading: true });
         this.props.dispatch(NewsAction.getNews(newsParams)).then(news => {

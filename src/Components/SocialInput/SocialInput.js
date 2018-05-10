@@ -92,7 +92,11 @@ class SocialInput extends Component {
       <div className={cx("socialInput", className)}>
         <div className="socialInput__body">
           <div className="socialInput__body__thumbArea">
-            <Thumb size={50} src={user && user.profile_img} />
+            <Thumb
+              size={50}
+              src={user && user.profile_img}
+              point={user && user.point}
+            />
           </div>
           <div className="socialInput__body__inputArea">
             {isTitle ? (

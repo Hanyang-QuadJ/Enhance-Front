@@ -20,6 +20,7 @@
 
   &__content {
     display: flex;
+    width: 100%;
     flex-direction: row;
     align-items: center;
     padding-top: 3%;
@@ -27,10 +28,12 @@
     border-bottom: 1px solid rgba(83, 105, 118, 0.7);
 
     &__date {
-      flex: 1.5;
+      width: 12%;
+      padding-left: 10px;
+      padding-right: 10px;
       color: rgba(255, 255, 255, 0.7);
       display: flex;
-      font-size: 13px;
+      font-size: 10px;
       align-items: center;
       justify-content: center;
     }
@@ -40,11 +43,21 @@
       word-wrap: break-word;
       overflow: auto;
       display: flex;
-      flex-direction: column;
       padding-right: 10px;
-      padding-left: 10px;
+      flex-direction: column;
 
       &__text {
+        display: inline;
+        font-size: 14px;
+      }
+
+      &__username {
+        font-size: 11px;
+        color: $light-main;
+        margin-left: 5px;
+      }
+
+      &__content {
       }
 
       &__social {
@@ -53,8 +66,18 @@
         align-items: center;
         margin-top: 2px;
 
+        &__username {
+          font-size: 12px;
+          color: $light-main;
+        }
+
+        &__items {
+          display: flex;
+          flex-direction: row;
+        }
+
         &__item {
-          font-size: 13px;
+          font-size: 12px;
           display: flex;
           flex-direction: row;
           align-items: center;
@@ -71,16 +94,15 @@
     }
     &__type {
       flex: 1;
-      font-size: 13px;
+      font-size: 10px;
       display: flex;
       color: $coin-color;
       justify-content: center;
 
       &-array {
         color: $coin-color;
-        flex: 2;
         flex-wrap: wrap;
-        font-size: 13px;
+        font-size: 10px;
         padding-right: 10px;
         display: flex;
         justify-content: flex-end;

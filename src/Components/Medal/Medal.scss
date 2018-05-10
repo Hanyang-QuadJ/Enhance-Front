@@ -2,36 +2,25 @@
 * Author: @nayunhwan (github.com/nayunhwan)
 * Email: nayunhwan.dev@mgail.com
 */
-.thumb {
+.medal {
   display: inline-block;
   position: relative;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-
   &__image {
     box-sizing: border-box;
     border-radius: 50%;
     border: 1px solid white;
   }
-
   &__classImage {
-    position: absolute;
-    box-sizing: border-box;
-    border-radius: 50%;
-  }
-
-  &__defaultImage {
-    position: absolute;
-    bottom: -8px;
-    right: -5px;
+    margin-left: 10px;
   }
 }
 
-.thumb__default {
+.medal__default {
   font-size: 2rem;
   display: inline-flex;
-  position: relative;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
@@ -39,4 +28,9 @@
   border: 1px white solid;
   color: white;
   cursor: pointer;
+  &__classImage {
+    position: absolute;
+    box-sizing: border-box;
+    border-radius: 50%;
+  }
 }

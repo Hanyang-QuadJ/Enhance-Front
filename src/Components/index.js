@@ -12,3 +12,4 @@ export Button from "./Button/Button";
 export Thumb from "./Thumb/Thumb";
 export SocialInput from "./SocialInput/SocialInput";
 export Comment from "./Comment/Comment";
+export Medal from "./Medal/Medal";

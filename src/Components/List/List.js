@@ -5,6 +5,7 @@ import React, { Component } from "react";
 import moment from "moment";
 import cx from "classnames";
 import { Dots } from "react-activity";
+import { Medal } from "../";
 
 const defaultProps = {};
 const propTypes = {};
@@ -18,6 +19,7 @@ class List extends Component {
   render() {
     const {
       title,
+      username,
       createdAt,
       type,
       link,
@@ -26,6 +28,7 @@ class List extends Component {
       active,
       index,
       isLoading,
+      point,
       selectedIndex,
       view
     } = this.props;
@@ -50,27 +53,36 @@ class List extends Component {
               )}
             </div>
             <div className="list__content__textArea">
-              <div
-                className="list__content__textArea__text"
-                dangerouslySetInnerHTML={{ __html: title }}
-              />
+              <div className="list__content__textArea__content">
+                <div
+                  className="list__content__textArea__text"
+                  dangerouslySetInnerHTML={{ __html: title }}
+                />
+                <Medal point={point} size={30} />
+                <span className="list__content__textArea__username">
+                  {username}
+                </span>
+              </div>
+
               {social ? (
                 <div className="list__content__textArea__social">
-                  <div className="list__content__textArea__social__item">
-                    <span className="list__content__textArea__social__item__count">
-                      10
-                    </span>
-                    <span className="list__content__textArea__social__item__icon">
-                      <i className="far fa-thumbs-up" />
-                    </span>
-                  </div>
-                  <div className="list__content__textArea__social__item">
-                    <span className="list__content__textArea__social__item__count">
-                      {view}
-                    </span>
-                    <span className="list__content__textArea__social__item__icon">
-                      <i className="xi-eye" />
-                    </span>
+                  <div className="list__content__textArea__social__items">
+                    <div className="list__content__textArea__social__item">
+                      <span className="list__content__textArea__social__item__count">
+                        10
+                      </span>
+                      <span className="list__content__textArea__social__item__icon">
+                        <i className="far fa-thumbs-up" />
+                      </span>
+                    </div>
+                    <div className="list__content__textArea__social__item">
+                      <span className="list__content__textArea__social__item__count">
+                        {view}
+                      </span>
+                      <span className="list__content__textArea__social__item__icon">
+                        <i className="xi-eye" />
+                      </span>
+                    </div>
                   </div>
                 </div>
               ) : null}
@@ -81,16 +93,38 @@ class List extends Component {
               </div>
             ) : (
               <div className="list__content__type-array">
-                {type.map((data, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className="list__content__type-array__item"
-                    >
-                      {data.abbr}
-                    </div>
-                  );
-                })}
+                {type.length > 3
+                  ? type.slice(0, 3).map((data, index) => {
+                    if (index !== 2) {
+                      return (
+                        <div
+                          key={index}
+                          className="list__content__type-array__item"
+                        >
+                          {data.abbr}
+                        </div>
+                      );
+                    } else {
+                      return (
+                        <div
+                          key={index}
+                          className="list__content__type-array__item"
+                        >
+                          {data.abbr} ...
+                        </div>
+                      );
+                    }
+                  })
+                  : type.map((data, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className="list__content__type-array__item"
+                      >
+                        {data.abbr}
+                      </div>
+                    );
+                  })}
               </div>
             )}
           </div>
