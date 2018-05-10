@@ -38,7 +38,8 @@ class PostPage extends Component {
       userPoint: 0,
       userImg: "",
       userLoading: false,
-      forumLength: 0
+      forumLength: 0,
+      commentLength: 0
     };
     moment.locale("ko");
   }
@@ -78,19 +79,22 @@ class PostPage extends Component {
       user_id
     };
     this.props.dispatch(SocialAction.getUserById(params)).then(user => {
-      this.setState({
-        username: user.username,
-        userImg: user.profile_img,
-        userPoint: user.point
-      });
       this.props
-        .dispatch(SocialAction.getForumByUser(params))
-        .then(async forums => {
-          await this.setState({
-            forumLength: forums.length,
-            userLoading: false
-          });
-          await this.toggleModal();
+        .dispatch(SocialAction.getCommentsByUser(params))
+        .then(comments => {
+          this.props
+            .dispatch(SocialAction.getForumByUser(params))
+            .then(async forums => {
+              await this.setState({
+                username: user.username,
+                userImg: user.profile_img,
+                userPoint: user.point,
+                forumLength: forums.length,
+                commentLength: comments.length,
+                userLoading: false
+              });
+              await this.toggleModal();
+            });
         });
     });
   };
@@ -128,6 +132,7 @@ class PostPage extends Component {
         userImg,
         userPoint,
         forumLength,
+        commentLength,
         userLoading
       } = this.state;
       const { me, isLogin, onClick } = this.props;
@@ -164,10 +169,16 @@ class PostPage extends Component {
                         포인트
                       </span>
                     </p>
-                    <p className="postPage__modal__content__area__number">
+                    <p className="postPage__modal__content__area__number-border">
                       {forumLength}
                       <span className="postPage__modal__content__area__text">
                         게시물
+                      </span>
+                    </p>
+                    <p className="postPage__modal__content__area__number">
+                      {commentLength}
+                      <span className="postPage__modal__content__area__text">
+                        댓글
                       </span>
                     </p>
                   </div>

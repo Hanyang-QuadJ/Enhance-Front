@@ -33,20 +33,14 @@ class NavBar extends Component {
   handleAuth = () => {
     const { isLogin } = this.props;
     if (isLogin === true) {
-      this.toggleModal();
+      this.props.history.push({
+        pathname: "/profile"
+      });
     } else {
       this.props.history.push({
         pathname: "/auth"
       });
     }
-  };
-
-  handleSignOut = () => {
-    this.props.dispatch(AuthAction.signOut()).then(value => {
-      this.props.history.replace({
-        pathname: "/auth"
-      });
-    });
   };
 
   toggleModal = () => {

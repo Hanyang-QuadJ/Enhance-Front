@@ -48,6 +48,9 @@ const mapStateToProps = state => {
 class App extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isReady: false
+    };
   }
 
   componentWillMount() {
@@ -59,24 +62,30 @@ class App extends Component {
     };
     this.props.dispatch(NewsAction.getNews(newsParams)).then(value => {
       if (this.props.isLogin === true) {
-        this.props
-          .dispatch(AuthAction.getMe(this.props.token))
-          .then(value2 => {});
+        this.props.dispatch(AuthAction.getMe(this.props.token)).then(value2 => {
+          this.setState({ isReady: true });
+        });
       }
     });
   }
 
   render() {
-    return (
-      <MuiThemeProvider muiTheme={muiTheme}>
-        <div>
-          <Route exact path="/" component={HomePage} />
-          <Route path="/forum" component={ForumPage} />
-          <Route exact path="/auth" component={AuthPage} />
-          <Route path="/auth/signup" component={SignUpPage} />
-        </div>
-      </MuiThemeProvider>
-    );
+    const { isReady } = this.state;
+    if (isReady) {
+      return (
+        <MuiThemeProvider muiTheme={muiTheme}>
+          <div>
+            <Route exact path="/" component={HomePage} />
+            <Route path="/forum" component={ForumPage} />
+            <Route path="/profile" component={MyPage} />
+            <Route exact path="/auth" component={AuthPage} />
+            <Route path="/auth/signup" component={SignUpPage} />
+          </div>
+        </MuiThemeProvider>
+      );
+    } else {
+      return <div className="app">로딩중</div>;
+    }
   }
 }
 

@@ -15,6 +15,10 @@ export const FAILED_TO_GET_FORUM_BY_USER = "FAILED_TO_GET_FORUM_BY_USER";
 export const SUCCEED_TO_GET_USER_BY_ID = "SUCCEED_TO_GET_USER_BY_ID";
 export const FAILED_TO_GET_USER_BY_ID = "FAILED_TO_GET_USER_BY_ID";
 
+export const SUCCEED_TO_GET_COMMENTS_BY_USER =
+  "SUCCEED_TO_GET_COMMENTS_BY_USER";
+export const FAILED_TO_GET_COMMENTS_BY_USER = "FAILED_TO_GET_COMMENTS_BY_USER";
+
 export const SUCCEED_TO_GET_ONE_FORUM_COINS = "SUCCEED_TO_GET_ONE_FORUM_COINS";
 export const FAILED_TO_GET_ONE_FORUM_COINS = "FAILED_TO_GET_ONE_FORUM_COINS";
 
@@ -138,6 +142,35 @@ export const getForumByUser = params => {
     } catch (error) {
       dispatch({
         type: FAILED_TO_GET_FORUM_BY_USER,
+        payload: { data: "NETWORK_ERROR" }
+      });
+    }
+  };
+};
+
+export const getCommentsByUser = params => {
+  return async dispatch => {
+    try {
+      let response = await fetch(
+        ServerEndPoint + `api/forum/comment?user_id=${params.user_id}`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "x-access-token": params.token
+          }
+        }
+      );
+      let responseJson = await response.json();
+      await dispatch({
+        type: SUCCEED_TO_GET_COMMENTS_BY_USER,
+        payload: responseJson.result
+      });
+      return responseJson.result;
+    } catch (error) {
+      dispatch({
+        type: FAILED_TO_GET_COMMENTS_BY_USER,
         payload: { data: "NETWORK_ERROR" }
       });
     }

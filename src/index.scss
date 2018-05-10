@@ -17,6 +17,14 @@ body {
     font-family: "Nanum Gothic", sans-serif;
     /* Firefox */
   }
+  .app {
+    background: #536976;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #292e49, #536976);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #292e49, #536976);
+    height: 100vh;
+  }
   .btn {
     font-weight: 300 !important;
   }
