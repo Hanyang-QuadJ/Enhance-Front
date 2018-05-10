@@ -35089,7 +35089,7 @@
 	exports = module.exports = __webpack_require__(432)();
 	exports.push([module.id, "@import url(https://fonts.googleapis.com/css?family=Black+Han+Sans);", ""]);
 	exports.push([module.id, "@import url(https://fonts.googleapis.com/css?family=Biryani:700|Nanum+Gothic);", ""]);
-	exports.push([module.id, "/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n\n\n.homePage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .homePage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .homePage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .homePage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        border-bottom: 1px white solid; }\n        .homePage__content__news__search__first {\n          padding: 10px;\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid; }\n          .homePage__content__news__search__first__item {\n            font-size: 13px !important;\n            font-weight: 300 !important;\n            color: white;\n            margin-right: 1px;\n            font-weight: 600;\n            cursor: pointer;\n            float: left;\n            padding: 5px 25px;\n            background: transparent; }\n            .homePage__content__news__search__first__item:hover {\n              transition: 0.3s;\n              -webkit-transition: 0.3s;\n              -moz-transition: 0.3s;\n              -o-transition: 0.3s;\n              background-color: #536976; }\n            .homePage__content__news__search__first__item-active {\n              background-color: #536976; }\n        .homePage__content__news__search__second {\n          padding: 10px; }\n          .homePage__content__news__search__second__content {\n            display: flex;\n            flex-direction: row;\n            justify-content: space-between; }\n      .homePage__content__news__lists {\n        height: calc(100vh - 100px);\n        margin-top: 100px;\n        overflow-y: scroll; }\n        .homePage__content__news__lists-loading {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          height: 55vh;\n          color: white;\n          font-size: 1rem;\n          height: calc(100vh - 100px);\n          margin-top: 100px; }\n        .homePage__content__news__lists-none {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          height: 55vh;\n          color: white;\n          font-size: 1rem; }\n        .homePage__content__news__lists__footer {\n          height: 12vh;\n          display: flex;\n          align-items: center;\n          justify-content: center; }\n    .homePage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px; }\n      .homePage__content__chart__coin {\n        display: flex;\n        justify-content: center;\n        padding: 15px;\n        font-size: 13px;\n        top: 0;\n        color: #f4e7d7;\n        border-bottom: 1px solid white;\n        position: fixed;\n        right: 100px;\n        z-index: 500;\n        width: calc(50vw - 100px); }\n      .homePage__content__chart__wrapper {\n        height: calc(100vh - 50px);\n        background: transparent;\n        overflow-y: scroll;\n        padding-left: 1rem;\n        padding-right: 1rem;\n        margin-top: 50px; }\n        .homePage__content__chart__wrapper > div {\n          background-color: transparent !important; }\n      .homePage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        flex-direction: column;\n        justify-content: center;\n        height: 100vh; }\n      .homePage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .homePage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .homePage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n        .homePage__content__chart__intro__welcome {\n          margin-top: 6%; }\n        .homePage__content__chart__intro__desc {\n          margin-top: 6%; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.authPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .authPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .authPage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .authPage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        padding-top: 1.5rem;\n        height: 145px;\n        border-bottom: 1px white solid; }\n        .authPage__content__news__search__first {\n          display: flex;\n          flex-direction: row; }\n          .authPage__content__news__search__first__iconArea {\n            padding-left: 1rem;\n            display: flex;\n            justify-content: center;\n            margin-right: 1rem;\n            align-items: center; }\n            .authPage__content__news__search__first__iconArea__icon {\n              color: white;\n              font-size: 1.5rem; }\n          .authPage__content__news__search__first__inputArea {\n            display: flex;\n            align-items: center; }\n            .authPage__content__news__search__first__inputArea__input {\n              background-color: transparent;\n              outline-width: 0 !important;\n              color: white;\n              border: 0;\n              width: 35vw; }\n        .authPage__content__news__search__second__content {\n          padding-left: 1rem; }\n      .authPage__content__news__lists {\n        height: calc(100vh - 145px);\n        margin-top: 145px;\n        overflow-y: scroll; }\n    .authPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .authPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .authPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .authPage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .authPage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n        .authPage__content__chart__intro__welcome {\n          margin-top: 6%; }\n        .authPage__content__chart__intro__login {\n          margin-top: 15%;\n          width: 100%;\n          display: flex;\n          flex-direction: column;\n          align-items: center; }\n        .authPage__content__chart__intro__signUp {\n          margin-top: 5%;\n          width: 100%;\n          display: flex;\n          flex-direction: column;\n          align-items: center; }\n          .authPage__content__chart__intro__signUp__link {\n            cursor: pointer; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.signUpPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .signUpPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .signUpPage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .signUpPage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        padding-top: 1.5rem;\n        height: 145px;\n        border-bottom: 1px white solid; }\n        .signUpPage__content__news__search__first {\n          display: flex;\n          flex-direction: row; }\n          .signUpPage__content__news__search__first__iconArea {\n            padding-left: 1rem;\n            display: flex;\n            justify-content: center;\n            margin-right: 1rem;\n            align-items: center; }\n            .signUpPage__content__news__search__first__iconArea__icon {\n              color: white;\n              font-size: 1.5rem; }\n          .signUpPage__content__news__search__first__inputArea {\n            display: flex;\n            align-items: center; }\n            .signUpPage__content__news__search__first__inputArea__input {\n              background-color: transparent;\n              outline-width: 0 !important;\n              color: white;\n              border: 0;\n              width: 35vw; }\n        .signUpPage__content__news__search__second__content {\n          padding-left: 1rem; }\n      .signUpPage__content__news__lists {\n        height: calc(100vh - 145px);\n        margin-top: 145px;\n        overflow-y: scroll; }\n    .signUpPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .signUpPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .signUpPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .signUpPage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .signUpPage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n        .signUpPage__content__chart__intro__welcome {\n          margin-top: 6%; }\n        .signUpPage__content__chart__intro__login {\n          margin-top: 15%;\n          width: 100%;\n          display: flex;\n          flex-direction: column;\n          align-items: center; }\n        .signUpPage__content__chart__intro__signUp {\n          margin-top: 5%;\n          width: 100%;\n          display: flex;\n          flex-direction: column;\n          align-items: center; }\n          .signUpPage__content__chart__intro__signUp__link {\n            cursor: pointer; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.forumPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .forumPage__modal {\n    height: 90vh;\n    padding-left: 50px;\n    padding-right: 50px;\n    display: flex;\n    flex-direction: column; }\n    .forumPage__modal__favorite {\n      width: 100%;\n      padding-left: 1rem;\n      padding-right: 1rem;\n      display: flex;\n      flex-direction: row;\n      flex-wrap: wrap;\n      justify-content: center; }\n      .forumPage__modal__favorite__text {\n        margin-top: 2rem;\n        margin-bottom: 1rem;\n        text-align: center;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        align-items: center; }\n      .forumPage__modal__favorite__icon {\n        color: white;\n        font-size: 1.5rem;\n        margin-right: 5px;\n        vertical-align: center; }\n      .forumPage__modal__favorite__item {\n        border: 1px rgba(255, 255, 255, 0.2) solid;\n        padding-left: 10px;\n        padding-right: 10px;\n        padding-top: 5px;\n        padding-bottom: 5px;\n        margin-right: 5px;\n        margin-bottom: 5px;\n        cursor: pointer; }\n        .forumPage__modal__favorite__item:hover {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          border: 1px white solid; }\n        .forumPage__modal__favorite__item-active {\n          border: 1px #5cb85c solid; }\n          .forumPage__modal__favorite__item-active:hover {\n            transition: 0.3s;\n            -webkit-transition: 0.3s;\n            -moz-transition: 0.3s;\n            -o-transition: 0.3s;\n            border: 1px #5cb85c solid; }\n  .forumPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .forumPage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .forumPage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        border-bottom: 1px white solid; }\n        .forumPage__content__news__search__first {\n          display: flex;\n          flex-direction: row;\n          padding: 10px;\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid; }\n          .forumPage__content__news__search__first__iconArea {\n            padding-left: 5px;\n            display: flex;\n            justify-content: center;\n            margin-right: 1rem;\n            align-items: center; }\n            .forumPage__content__news__search__first__iconArea__icon {\n              color: white;\n              font-size: 1.5rem; }\n          .forumPage__content__news__search__first__inputArea {\n            display: flex;\n            align-items: center; }\n            .forumPage__content__news__search__first__inputArea__input {\n              background-color: transparent;\n              outline-width: 0 !important;\n              color: white;\n              border: 0;\n              width: 35vw; }\n        .forumPage__content__news__search__second {\n          padding: 10px; }\n          .forumPage__content__news__search__second__content {\n            display: flex;\n            flex-direction: row;\n            justify-content: space-between; }\n      .forumPage__content__news__lists {\n        height: calc(100vh - 110px);\n        margin-top: 110px;\n        overflow-y: scroll; }\n        .forumPage__content__news__lists-loading {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          height: 55vh;\n          color: white;\n          font-size: 1rem;\n          height: calc(100vh - 100px);\n          margin-top: 100px; }\n        .forumPage__content__news__lists__footer {\n          height: 12vh;\n          display: flex;\n          align-items: center;\n          justify-content: center; }\n    .forumPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .forumPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .forumPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .forumPage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .forumPage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n        .forumPage__content__chart__intro__welcome {\n          margin-top: 6%; }\n        .forumPage__content__chart__intro__desc {\n          margin-top: 6%; }\n        .forumPage__content__chart__intro__post {\n          height: 90vh; }\n          .forumPage__content__chart__intro__post__header {\n            border-bottom: 1px rgba(255, 255, 255, 0.2) solid;\n            display: flex;\n            height: 10vh;\n            flex-direction: row;\n            align-items: center;\n            justify-content: space-between;\n            padding-bottom: 1rem; }\n            .forumPage__content__chart__intro__post__header__userInfo {\n              display: flex;\n              width: 15vw;\n              flex-direction: row;\n              align-items: center; }\n              .forumPage__content__chart__intro__post__header__userInfo__thumb {\n                flex: 1; }\n              .forumPage__content__chart__intro__post__header__userInfo__name {\n                flex: 3;\n                margin-left: 10px;\n                display: flex;\n                flex-direction: column;\n                align-items: flex-start;\n                justify-content: center; }\n              .forumPage__content__chart__intro__post__header__userInfo__point {\n                font-size: 13px; }\n            .forumPage__content__chart__intro__post__header__detail {\n              display: flex;\n              flex-direction: column;\n              justify-content: flex-end;\n              align-items: flex-end; }\n          .forumPage__content__chart__intro__post__title {\n            margin-top: 1rem;\n            padding-bottom: 1rem;\n            border-bottom: rgba(255, 255, 255, 0.2) 1px solid;\n            font-weight: 400; }\n          .forumPage__content__chart__intro__post__body {\n            margin-top: 1rem;\n            padding-bottom: 1rem;\n            border-bottom: rgba(255, 255, 255, 0.2) 1px solid;\n            font-weight: 300; }\n          .forumPage__content__chart__intro__post__footer {\n            display: flex;\n            flex-direction: row;\n            justify-content: center;\n            padding-top: 1rem;\n            padding-bottom: 1rem; }\n            .forumPage__content__chart__intro__post__footer__icon {\n              display: inline-flex;\n              font-size: 1.5rem;\n              margin-right: 1rem; }\n        .forumPage__content__chart__intro__signUp {\n          margin-top: 5%;\n          width: 100%;\n          display: flex;\n          flex-direction: column;\n          align-items: center; }\n          .forumPage__content__chart__intro__signUp__link {\n            cursor: pointer; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.postPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .postPage__modal {\n    height: 60vh;\n    display: flex;\n    align-items: center;\n    justify-content: center; }\n    .postPage__modal__content {\n      margin-left: 1rem;\n      margin-right: 1rem;\n      display: flex;\n      flex-direction: column;\n      justify-content: center;\n      align-items: center; }\n      .postPage__modal__content__area {\n        display: flex;\n        flex-direction: row; }\n        .postPage__modal__content__area__number {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          padding-left: 1.5rem;\n          padding-right: 1.5rem;\n          flex-direction: column;\n          font-weight: 500; }\n          .postPage__modal__content__area__number-border {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            padding-left: 1.5rem;\n            padding-right: 1.5rem;\n            flex-direction: column;\n            font-weight: 500;\n            border-right: 1px rgba(255, 255, 255, 0.2) solid; }\n        .postPage__modal__content__area__text {\n          font-weight: 300 !important; }\n      .postPage__modal__content__username {\n        margin-top: 1rem;\n        margin-bottom: 1rem;\n        font-size: 2rem; }\n  .postPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .postPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .postPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .postPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .postPage__content__chart__intro__loading {\n          padding: 2rem 2rem 2rem 2rem;\n          display: flex;\n          width: 100%;\n          height: 90vh;\n          justify-content: center;\n          align-items: center; }\n        .postPage__content__chart__intro__post__header {\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid;\n          display: flex;\n          height: 10vh;\n          flex-direction: row;\n          align-items: center;\n          justify-content: space-between;\n          padding-bottom: 1rem; }\n          .postPage__content__chart__intro__post__header__userInfo {\n            display: flex;\n            width: 15vw;\n            flex-direction: row;\n            align-items: center; }\n            .postPage__content__chart__intro__post__header__userInfo__thumb {\n              flex: 1; }\n            .postPage__content__chart__intro__post__header__userInfo__name {\n              flex: 3;\n              margin-left: 10px;\n              display: flex;\n              flex-direction: column;\n              align-items: flex-start;\n              justify-content: center; }\n            .postPage__content__chart__intro__post__header__userInfo__point {\n              font-size: 13px; }\n            .postPage__content__chart__intro__post__header__userInfo__date {\n              font-size: 13px;\n              color: rgba(255, 255, 255, 0.5); }\n          .postPage__content__chart__intro__post__header__detail {\n            display: flex;\n            flex-direction: column;\n            justify-content: flex-end;\n            align-items: flex-end; }\n        .postPage__content__chart__intro__post__title {\n          margin-top: 1rem;\n          padding-left: 10px;\n          padding-right: 10px;\n          font-size: 18px;\n          padding-bottom: 1rem;\n          border-bottom: rgba(255, 255, 255, 0.2) 1px solid;\n          font-weight: 400; }\n        .postPage__content__chart__intro__post__body {\n          margin-top: 1rem;\n          padding-left: 10px;\n          padding-right: 10px;\n          padding-bottom: 1rem;\n          font-weight: 300; }\n        .postPage__content__chart__intro__post__coin {\n          margin-top: 1rem;\n          display: flex;\n          flex-direction: row;\n          justify-content: flex-end;\n          font-size: 13px;\n          color: #f4e7d7; }\n          .postPage__content__chart__intro__post__coin__item {\n            border: 1px #f4e7d7 solid;\n            padding-left: 5px;\n            padding-right: 5px;\n            margin-right: 5px; }\n        .postPage__content__chart__intro__post__footer {\n          display: flex;\n          flex-direction: row;\n          justify-content: center;\n          align-items: center;\n          padding-top: 1rem;\n          padding-bottom: 1rem;\n          color: #a0c1b8; }\n          .postPage__content__chart__intro__post__footer__count {\n            font-size: 1rem;\n            margin-right: 7px; }\n          .postPage__content__chart__intro__post__footer__icon {\n            display: inline-flex;\n            font-size: 1.5rem;\n            margin-right: 1rem; }\n        .postPage__content__chart__intro__comments {\n          margin-top: 10%; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.navBar {\n  background: transparent;\n  width: 100px;\n  height: 100vh;\n  position: fixed;\n  left: 0;\n  color: white;\n  border-right: 1px rgba(255, 255, 255, 0.1) solid; }\n  .navBar__signOut {\n    height: 40vh;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    flex-direction: column; }\n    .navBar__signOut__text {\n      margin-bottom: 10%; }\n  .navBar__content {\n    display: flex;\n    flex-direction: column;\n    align-items: center; }\n    .navBar__content__brand {\n      width: 100%;\n      display: flex;\n      align-items: center;\n      justify-content: center;\n      cursor: pointer;\n      font-family: \"Biryani\", sans-serif;\n      flex-direction: column;\n      height: 145px;\n      padding-right: 10px;\n      padding-left: 10px; }\n      .navBar__content__brand__logo {\n        width: 50px;\n        height: auto; }\n        .navBar__content__brand__logo__text {\n          margin-top: 5px;\n          font-size: 12px; }\n    .navBar__content__userArea {\n      height: 17vh;\n      width: 100%;\n      display: inline-flex;\n      align-items: center;\n      justify-content: center; }\n    .navBar__content__items {\n      width: 100%; }\n      .navBar__content__items__item {\n        display: flex;\n        height: 10vh;\n        flex-direction: column;\n        justify-content: center;\n        align-items: center;\n        margin-top: 1.5rem;\n        margin-bottom: 1.5rem;\n        cursor: pointer; }\n        .navBar__content__items__item:first-child {\n          margin-top: 0; }\n        .navBar__content__items__item-active {\n          color: #5cb85c;\n          font-weight: 500; }\n        .navBar__content__items__item-icon {\n          font-size: 2.2rem;\n          display: inline-flex;\n          margin-bottom: 5px; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.list {\n  color: white;\n  cursor: pointer; }\n  .list:hover {\n    transition: 0.3s;\n    -webkit-transition: 0.3s;\n    -moz-transition: 0.3s;\n    -o-transition: 0.3s;\n    background-color: rgba(83, 105, 118, 0.3); }\n  .list-active {\n    background-color: rgba(83, 105, 118, 0.7); }\n    .list-active:hover {\n      background-color: rgba(83, 105, 118, 0.7); }\n  .list__content {\n    display: flex;\n    width: 100%;\n    flex-direction: row;\n    align-items: center;\n    padding-top: 3%;\n    padding-bottom: 3%;\n    border-bottom: 1px solid rgba(83, 105, 118, 0.7); }\n    .list__content__date {\n      width: 12%;\n      padding-left: 10px;\n      padding-right: 10px;\n      color: rgba(255, 255, 255, 0.7);\n      display: flex;\n      font-size: 10px;\n      align-items: center;\n      justify-content: center; }\n    .list__content__textArea {\n      flex: 6;\n      word-wrap: break-word;\n      overflow: auto;\n      display: flex;\n      padding-right: 10px;\n      flex-direction: column; }\n      .list__content__textArea__text {\n        display: inline;\n        font-size: 14px; }\n      .list__content__textArea__username {\n        font-size: 11px;\n        color: #a0c1b8;\n        margin-left: 5px; }\n      .list__content__textArea__social {\n        display: flex;\n        flex-direction: row;\n        align-items: center;\n        margin-top: 2px; }\n        .list__content__textArea__social__username {\n          font-size: 12px;\n          color: #a0c1b8; }\n        .list__content__textArea__social__items {\n          display: flex;\n          flex-direction: row; }\n        .list__content__textArea__social__item {\n          font-size: 12px;\n          display: flex;\n          flex-direction: row;\n          align-items: center;\n          margin-right: 5px;\n          color: #a0c1b8; }\n          .list__content__textArea__social__item__count {\n            margin-right: 5px; }\n          .list__content__textArea__social__item__icon {\n            display: inline-flex; }\n    .list__content__type {\n      flex: 1;\n      font-size: 10px;\n      display: flex;\n      color: #f4e7d7;\n      justify-content: center; }\n      .list__content__type-array {\n        color: #f4e7d7;\n        flex-wrap: wrap;\n        font-size: 10px;\n        padding-right: 10px;\n        display: flex;\n        justify-content: flex-end; }\n        .list__content__type-array__item {\n          margin-right: 5px; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.sideBar {\n  background: transparent;\n  width: 100px;\n  height: 100vh;\n  overflow-y: scroll;\n  position: fixed;\n  right: 0;\n  color: white;\n  border-left: 1px rgba(255, 255, 255, 0.1) solid; }\n  .sideBar__modal {\n    height: 60vh;\n    overflow-y: scroll; }\n    .sideBar__modal__close {\n      cursor: pointer; }\n    .sideBar__modal__header {\n      font-weight: 300 !important; }\n    .sideBar__modal__content {\n      display: flex;\n      justify-content: center;\n      color: white; }\n      .sideBar__modal__content__items {\n        width: 50vw;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        flex-wrap: wrap; }\n        .sideBar__modal__content__items__wrapper {\n          display: flex;\n          width: 25%;\n          margin-top: 1.5rem;\n          flex-direction: column;\n          align-items: center;\n          margin-right: 1rem; }\n          .sideBar__modal__content__items__wrapper:nth-child(3n) {\n            margin-right: 0; }\n          .sideBar__modal__content__items__wrapper__item {\n            display: flex;\n            padding: 5px 1.5rem 5px 1.5rem;\n            flex-direction: column;\n            width: 100%;\n            border: 1px rgba(255, 255, 255, 0.2) solid;\n            justify-content: center;\n            align-items: center; }\n            .sideBar__modal__content__items__wrapper__item:hover {\n              border: 1px white solid;\n              cursor: pointer; }\n            .sideBar__modal__content__items__wrapper__item-active {\n              border: 1px #5cb85c solid; }\n              .sideBar__modal__content__items__wrapper__item-active:hover {\n                border: 1px #5cb85c solid;\n                cursor: pointer; }\n            .sideBar__modal__content__items__wrapper__item__full {\n              width: 100%;\n              overflow: auto;\n              word-wrap: break-word;\n              text-align: center; }\n            .sideBar__modal__content__items__wrapper__item__abbr {\n              text-align: center;\n              color: #f4e7d7;\n              width: 100%;\n              overflow: auto;\n              word-wrap: break-word; }\n            .sideBar__modal__content__items__wrapper__item__kor {\n              width: 100%;\n              text-align: center;\n              overflow: auto;\n              word-wrap: break-word; }\n  .sideBar__content {\n    display: flex;\n    flex-direction: column;\n    width: 100%; }\n    .sideBar__content__items__item {\n      display: flex;\n      border-bottom: 1px rgba(255, 255, 255, 0.1) solid;\n      flex-direction: column;\n      justify-content: center;\n      padding-top: 10px;\n      padding-bottom: 10px;\n      align-items: center;\n      cursor: pointer; }\n      .sideBar__content__items__item-active {\n        border-left: 3px #5cb85c solid; }\n      .sideBar__content__items__item-disable {\n        cursor: not-allowed;\n        pointer-events: none; }\n      .sideBar__content__items__item-plus {\n        font-size: 2rem; }\n      .sideBar__content__items__item:hover {\n        background-color: #536976; }\n      .sideBar__content__items__item__title {\n        color: #f4e7d7; }\n      .sideBar__content__items__item__price {\n        font-size: 10px; }\n        .sideBar__content__items__item__price__icon {\n          display: inline-flex; }\n      .sideBar__content__items__item__percent {\n        font-size: 10px;\n        color: #5cb85c; }\n        .sideBar__content__items__item__percent__icon {\n          display: inline-flex; }\n      .sideBar__content__items__item__percent-down {\n        font-size: 10px;\n        color: #f26968; }\n        .sideBar__content__items__item__percent-down__icon {\n          display: inline-flex; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.roundInput__content {\n  padding-left: 1rem;\n  width: 300px !important;\n  height: 60px !important;\n  border: 1px rgba(255, 255, 255, 0.2) solid !important;\n  border-radius: 75px !important;\n  font-size: 1rem;\n  outline-width: 0 !important;\n  color: white; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.button__content {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  border: 1px white solid;\n  height: 100%;\n  padding-top: 10px;\n  padding-bottom: 10px; }\n  .button__content:hover {\n    border: 1px #5cb85c solid;\n    color: #5cb85c;\n    cursor: pointer; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.thumb {\n  display: inline-block;\n  position: relative;\n  justify-content: center;\n  align-items: center;\n  cursor: pointer; }\n  .thumb__image {\n    box-sizing: border-box;\n    border-radius: 50%;\n    border: 1px solid white; }\n  .thumb__classImage {\n    position: absolute;\n    box-sizing: border-box;\n    border-radius: 50%; }\n  .thumb__defaultImage {\n    position: absolute;\n    bottom: -8px;\n    right: -5px; }\n\n.thumb__default {\n  font-size: 2rem;\n  display: inline-flex;\n  position: relative;\n  justify-content: center;\n  align-items: center;\n  box-sizing: border-box;\n  border-radius: 50%;\n  border: 1px white solid;\n  color: white;\n  cursor: pointer; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.socialInput {\n  padding-top: 30px;\n  background-color: transparent;\n  padding-left: 20px;\n  padding-right: 20px;\n  padding-bottom: 5px; }\n  .socialInput hr {\n    background-color: rgba(255, 255, 255, 0.2); }\n  .socialInput__hr-active {\n    margin-top: 1rem;\n    margin-bottom: 1rem;\n    border: 0;\n    border-top: 1px white solid; }\n  .socialInput__body {\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    padding-bottom: 10px; }\n    .socialInput__body__thumbArea__thumb {\n      font-size: 2rem;\n      display: inline-flex;\n      width: 50px;\n      height: 50px;\n      justify-content: center;\n      align-items: center;\n      box-sizing: border-box;\n      border-radius: 50%;\n      border: 1px rgba(0, 0, 0, 0.2) solid;\n      color: white; }\n    .socialInput__body__inputArea {\n      width: 95%; }\n    .socialInput__body__input {\n      margin-right: 20px;\n      margin-left: 20px;\n      color: white;\n      font-size: 1rem;\n      background: transparent;\n      width: 95%;\n      padding-bottom: 10px;\n      padding-top: 10px;\n      word-break: break-all;\n      border: none; }\n      .socialInput__body__input:focus {\n        transition: 0.3s;\n        -webkit-transition: 0.3s;\n        -moz-transition: 0.3s;\n        -o-transition: 0.3s;\n        outline: none; }\n      .socialInput__body__input-title {\n        margin-right: 20px;\n        margin-left: 20px;\n        margin-bottom: 10px;\n        color: white;\n        font-size: 1rem;\n        background: transparent;\n        width: 60%;\n        padding-bottom: 10px;\n        padding-top: 10px;\n        word-break: break-all;\n        border-top: none;\n        border-left: none;\n        border-right: none;\n        border-bottom: 1px rgba(255, 255, 255, 0.2) solid !important; }\n        .socialInput__body__input-title:focus {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          outline: none;\n          border-bottom: 1px white solid !important; }\n  .socialInput__footer {\n    display: flex;\n    flex-direction: row;\n    justify-content: space-between;\n    align-items: center; }\n    .socialInput__footer__camera__icon {\n      font-size: 1.6rem;\n      color: white; }\n      .socialInput__footer__camera__icon:hover {\n        transition: 0.3s;\n        -webkit-transition: 0.3s;\n        -moz-transition: 0.3s;\n        -o-transition: 0.3s;\n        color: white;\n        cursor: pointer; }\n    .socialInput__footer__postArea {\n      display: inline-flex;\n      align-items: center;\n      justify-content: center; }\n      .socialInput__footer__postArea__postButton {\n        background-color: transparent;\n        color: white;\n        font-weight: 300;\n        padding-left: 10px;\n        padding-top: 3px;\n        border: 1px solid rgba(255, 255, 255, 0.2);\n        padding-bottom: 3px;\n        display: inline-flex;\n        padding-right: 10px;\n        cursor: pointer; }\n        .socialInput__footer__postArea__postButton:hover {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          color: white;\n          border: 1px solid white; }\n    .socialInput__footer__imagePreview {\n      display: flex;\n      flex-direction: row;\n      flex-wrap: wrap; }\n      .socialInput__footer__imagePreview__image {\n        transition: 0.3s;\n        -webkit-transition: 0.3s;\n        -moz-transition: 0.3s;\n        -o-transition: 0.3s;\n        height: 60px; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.comment__content {\n  transition: 0.3s;\n  -webkit-transition: 0.3s;\n  -moz-transition: 0.3s;\n  -o-transition: 0.3s;\n  display: flex;\n  padding-left: 20px;\n  padding-right: 20px;\n  box-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);\n  flex-direction: row;\n  align-items: center;\n  justify-content: space-between;\n  padding-top: 1rem;\n  padding-bottom: 1rem;\n  margin-bottom: 1rem; }\n  .comment__content__userArea {\n    flex: 2;\n    display: flex;\n    flex-direction: row;\n    align-items: center; }\n    .comment__content__userArea__userInfo {\n      display: flex;\n      flex-direction: column;\n      margin-left: 10px; }\n      .comment__content__userArea__userInfo__name {\n        font-size: 13px; }\n      .comment__content__userArea__userInfo__point {\n        font-size: 13px; }\n  .comment__content__content {\n    flex: 4;\n    word-wrap: break-word;\n    overflow: auto;\n    display: flex;\n    flex-direction: column;\n    padding-right: 10px; }\n  .comment__content__date {\n    flex: 1;\n    display: flex;\n    justify-content: flex-end;\n    align-items: center;\n    font-size: 13px;\n    color: rgba(255, 255, 255, 0.3); }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.medal {\n  display: inline-block;\n  position: relative;\n  justify-content: center;\n  align-items: center;\n  cursor: pointer; }\n  .medal__image {\n    box-sizing: border-box;\n    border-radius: 50%;\n    border: 1px solid white; }\n  .medal__classImage {\n    margin-left: 10px; }\n\n.medal__default {\n  font-size: 2rem;\n  display: inline-flex;\n  justify-content: center;\n  align-items: center;\n  box-sizing: border-box;\n  border-radius: 50%;\n  border: 1px white solid;\n  color: white;\n  cursor: pointer; }\n  .medal__default__classImage {\n    position: absolute;\n    box-sizing: border-box;\n    border-radius: 50%; }\n\nbody {\n  margin: 0 auto;\n  font-weight: 300; }\n  body ::placeholder {\n    /* Chrome, Firefox, Opera, Safari 10.1+ */\n    color: white;\n    opacity: 0.7;\n    font-size: 14px;\n    font-weight: 300 !important;\n    font-family: \"Nanum Gothic\", sans-serif;\n    /* Firefox */ }\n  body .btn {\n    font-weight: 300 !important; }\n  body .btn-group-sm > .btn,\n  body .btn-sm {\n    padding: 5px 25px !important;\n    font-size: 13px !important;\n    font-weight: 300 !important;\n    color: white;\n    margin-right: 1px;\n    cursor: pointer;\n    float: left;\n    padding: 5px 13px !important;\n    border-radius: 0 !important; }\n  body a:hover {\n    text-decoration: none; }\n  body p {\n    margin: 0; }\n  body hr {\n    background-color: white; }\n  body .cTypeTabActive {\n    background: #536976 !important;\n    font-weight: 300; }\n  body .chartTypeTabLinks {\n    background: transparent;\n    font-weight: 300 !important; }\n  body text {\n    fill: white; }\n  body .ccc-widget > div {\n    background-color: transparent !important;\n    color: white !important;\n    border: 0 !important;\n    border-top: 0 !important;\n    font-weight: 300 !important;\n    padding: 10px !important; }\n  body .cccCustomRadioContainer > label {\n    color: white !important; }\n  body .tabperiods {\n    background: transparent !important;\n    font-weight: 300 !important; }\n  body .active {\n    border-color: #5cb85c !important; }\n  body .tabperiods_active {\n    font-weight: 900 !important;\n    color: #5cb85c !important; }\n  body .chartTypeTabLinks:hover {\n    background: #536976; }\n  body .modal-content {\n    font-weight: 300 !important;\n    border-radius: 0px !important;\n    background: #536976;\n    margin: 0 !important;\n    color: white;\n    padding: 0 !important;\n    /* fallback for old browsers */\n    background: -webkit-linear-gradient(to bottom, #292e49, #536976);\n    /* Chrome 10-25, Safari 5.1-6 */\n    background: linear-gradient(to bottom, #292e49, #536976);\n    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  body .modal-backdrop.show {\n    opacity: 0.1 !important; }\n  body .dropdown-menu {\n    position: absolute;\n    top: 100%;\n    left: 0;\n    z-index: 1000;\n    display: none;\n    float: left;\n    min-width: 10rem;\n    padding: 0.5rem 0;\n    margin: 0.125rem 0 0;\n    font-size: 1rem;\n    color: white !important;\n    text-align: left;\n    list-style: none;\n    background-color: #292e49 !important;\n    background-clip: padding-box;\n    border: 1px solid rgba(0, 0, 0, 0.15);\n    border-radius: 0px !important; }\n  body .dropdown-item {\n    display: block;\n    width: 100%;\n    cursor: pointer;\n    padding: 0.25rem 1.5rem;\n    clear: both;\n    font-weight: 400;\n    color: white !important;\n    text-align: inherit;\n    white-space: nowrap;\n    background-color: transparent;\n    border: 0; }\n    body .dropdown-item:hover {\n      background-color: transparent !important; }\n  body .chartTypeTabLinks {\n    font-size: 13px !important;\n    color: white;\n    margin-right: 1px;\n    font-weight: 600;\n    cursor: pointer;\n    float: left;\n    padding: 5px 25px;\n    background: transparent; }\n", ""]);
+	exports.push([module.id, "/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n\n\n.homePage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .homePage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .homePage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .homePage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        border-bottom: 1px white solid; }\n        .homePage__content__news__search__first {\n          padding: 10px;\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid; }\n          .homePage__content__news__search__first__item {\n            font-size: 13px !important;\n            font-weight: 300 !important;\n            color: white;\n            margin-right: 1px;\n            font-weight: 600;\n            cursor: pointer;\n            float: left;\n            padding: 5px 25px;\n            background: transparent; }\n            .homePage__content__news__search__first__item:hover {\n              transition: 0.3s;\n              -webkit-transition: 0.3s;\n              -moz-transition: 0.3s;\n              -o-transition: 0.3s;\n              background-color: #536976; }\n            .homePage__content__news__search__first__item-active {\n              background-color: #536976; }\n        .homePage__content__news__search__second {\n          padding: 10px; }\n          .homePage__content__news__search__second__content {\n            display: flex;\n            flex-direction: row;\n            justify-content: space-between; }\n      .homePage__content__news__lists {\n        height: calc(100vh - 100px);\n        margin-top: 100px;\n        overflow-y: scroll; }\n        .homePage__content__news__lists-loading {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          height: 55vh;\n          color: white;\n          font-size: 1rem;\n          height: calc(100vh - 100px);\n          margin-top: 100px; }\n        .homePage__content__news__lists-none {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          height: 55vh;\n          color: white;\n          font-size: 1rem; }\n        .homePage__content__news__lists__footer {\n          height: 12vh;\n          display: flex;\n          align-items: center;\n          justify-content: center; }\n    .homePage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px; }\n      .homePage__content__chart__coin {\n        display: flex;\n        justify-content: center;\n        padding: 15px;\n        font-size: 13px;\n        top: 0;\n        color: #f4e7d7;\n        border-bottom: 1px solid white;\n        position: fixed;\n        right: 100px;\n        z-index: 500;\n        width: calc(50vw - 100px); }\n      .homePage__content__chart__wrapper {\n        height: calc(100vh - 50px);\n        background: transparent;\n        overflow-y: scroll;\n        padding-left: 1rem;\n        padding-right: 1rem;\n        margin-top: 50px; }\n        .homePage__content__chart__wrapper > div {\n          background-color: transparent !important; }\n      .homePage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        flex-direction: column;\n        justify-content: center;\n        height: 100vh; }\n      .homePage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .homePage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .homePage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n        .homePage__content__chart__intro__welcome {\n          margin-top: 6%; }\n        .homePage__content__chart__intro__desc {\n          margin-top: 6%; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.authPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .authPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .authPage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .authPage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        padding-top: 1.5rem;\n        height: 145px;\n        border-bottom: 1px white solid; }\n        .authPage__content__news__search__first {\n          display: flex;\n          flex-direction: row; }\n          .authPage__content__news__search__first__iconArea {\n            padding-left: 1rem;\n            display: flex;\n            justify-content: center;\n            margin-right: 1rem;\n            align-items: center; }\n            .authPage__content__news__search__first__iconArea__icon {\n              color: white;\n              font-size: 1.5rem; }\n          .authPage__content__news__search__first__inputArea {\n            display: flex;\n            align-items: center; }\n            .authPage__content__news__search__first__inputArea__input {\n              background-color: transparent;\n              outline-width: 0 !important;\n              color: white;\n              border: 0;\n              width: 35vw; }\n        .authPage__content__news__search__second__content {\n          padding-left: 1rem; }\n      .authPage__content__news__lists {\n        height: calc(100vh - 145px);\n        margin-top: 145px;\n        overflow-y: scroll; }\n    .authPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .authPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .authPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .authPage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .authPage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n        .authPage__content__chart__intro__welcome {\n          margin-top: 6%; }\n        .authPage__content__chart__intro__login {\n          margin-top: 15%;\n          width: 100%;\n          display: flex;\n          flex-direction: column;\n          align-items: center; }\n        .authPage__content__chart__intro__signUp {\n          margin-top: 5%;\n          width: 100%;\n          display: flex;\n          flex-direction: column;\n          align-items: center; }\n          .authPage__content__chart__intro__signUp__link {\n            cursor: pointer; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.signUpPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .signUpPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .signUpPage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .signUpPage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        padding-top: 1.5rem;\n        height: 145px;\n        border-bottom: 1px white solid; }\n        .signUpPage__content__news__search__first {\n          display: flex;\n          flex-direction: row; }\n          .signUpPage__content__news__search__first__iconArea {\n            padding-left: 1rem;\n            display: flex;\n            justify-content: center;\n            margin-right: 1rem;\n            align-items: center; }\n            .signUpPage__content__news__search__first__iconArea__icon {\n              color: white;\n              font-size: 1.5rem; }\n          .signUpPage__content__news__search__first__inputArea {\n            display: flex;\n            align-items: center; }\n            .signUpPage__content__news__search__first__inputArea__input {\n              background-color: transparent;\n              outline-width: 0 !important;\n              color: white;\n              border: 0;\n              width: 35vw; }\n        .signUpPage__content__news__search__second__content {\n          padding-left: 1rem; }\n      .signUpPage__content__news__lists {\n        height: calc(100vh - 145px);\n        margin-top: 145px;\n        overflow-y: scroll; }\n    .signUpPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .signUpPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .signUpPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .signUpPage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .signUpPage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n        .signUpPage__content__chart__intro__welcome {\n          margin-top: 6%; }\n        .signUpPage__content__chart__intro__login {\n          margin-top: 15%;\n          width: 100%;\n          display: flex;\n          flex-direction: column;\n          align-items: center; }\n        .signUpPage__content__chart__intro__signUp {\n          margin-top: 5%;\n          width: 100%;\n          display: flex;\n          flex-direction: column;\n          align-items: center; }\n          .signUpPage__content__chart__intro__signUp__link {\n            cursor: pointer; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.forumPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .forumPage__modal {\n    height: 90vh;\n    padding-left: 50px;\n    padding-right: 50px;\n    display: flex;\n    flex-direction: column; }\n    .forumPage__modal__favorite {\n      width: 100%;\n      padding-left: 1rem;\n      padding-right: 1rem;\n      display: flex;\n      flex-direction: row;\n      flex-wrap: wrap;\n      justify-content: center; }\n      .forumPage__modal__favorite__text {\n        margin-top: 2rem;\n        margin-bottom: 1rem;\n        text-align: center;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        align-items: center; }\n      .forumPage__modal__favorite__icon {\n        color: white;\n        font-size: 1.5rem;\n        margin-right: 5px;\n        vertical-align: center; }\n      .forumPage__modal__favorite__item {\n        border: 1px rgba(255, 255, 255, 0.2) solid;\n        padding-left: 10px;\n        padding-right: 10px;\n        padding-top: 5px;\n        padding-bottom: 5px;\n        margin-right: 5px;\n        margin-bottom: 5px;\n        cursor: pointer; }\n        .forumPage__modal__favorite__item:hover {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          border: 1px white solid; }\n        .forumPage__modal__favorite__item-active {\n          border: 1px #5cb85c solid; }\n          .forumPage__modal__favorite__item-active:hover {\n            transition: 0.3s;\n            -webkit-transition: 0.3s;\n            -moz-transition: 0.3s;\n            -o-transition: 0.3s;\n            border: 1px #5cb85c solid; }\n  .forumPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .forumPage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .forumPage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        border-bottom: 1px white solid; }\n        .forumPage__content__news__search__first {\n          display: flex;\n          flex-direction: row;\n          padding: 10px;\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid; }\n          .forumPage__content__news__search__first__iconArea {\n            padding-left: 5px;\n            display: flex;\n            justify-content: center;\n            margin-right: 1rem;\n            align-items: center; }\n            .forumPage__content__news__search__first__iconArea__icon {\n              color: white;\n              font-size: 1.5rem; }\n          .forumPage__content__news__search__first__inputArea {\n            display: flex;\n            align-items: center; }\n            .forumPage__content__news__search__first__inputArea__input {\n              background-color: transparent;\n              outline-width: 0 !important;\n              color: white;\n              border: 0;\n              width: 35vw; }\n        .forumPage__content__news__search__second {\n          padding: 10px; }\n          .forumPage__content__news__search__second__content {\n            display: flex;\n            flex-direction: row;\n            justify-content: space-between; }\n      .forumPage__content__news__lists {\n        height: calc(100vh - 110px);\n        margin-top: 110px;\n        overflow-y: scroll; }\n        .forumPage__content__news__lists-loading {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          height: 55vh;\n          color: white;\n          font-size: 1rem;\n          height: calc(100vh - 100px);\n          margin-top: 100px; }\n        .forumPage__content__news__lists__footer {\n          height: 12vh;\n          display: flex;\n          align-items: center;\n          justify-content: center; }\n    .forumPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .forumPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .forumPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .forumPage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .forumPage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n        .forumPage__content__chart__intro__welcome {\n          margin-top: 6%; }\n        .forumPage__content__chart__intro__desc {\n          margin-top: 6%; }\n        .forumPage__content__chart__intro__post {\n          height: 90vh; }\n          .forumPage__content__chart__intro__post__header {\n            border-bottom: 1px rgba(255, 255, 255, 0.2) solid;\n            display: flex;\n            height: 10vh;\n            flex-direction: row;\n            align-items: center;\n            justify-content: space-between;\n            padding-bottom: 1rem; }\n            .forumPage__content__chart__intro__post__header__userInfo {\n              display: flex;\n              width: 15vw;\n              flex-direction: row;\n              align-items: center; }\n              .forumPage__content__chart__intro__post__header__userInfo__thumb {\n                flex: 1; }\n              .forumPage__content__chart__intro__post__header__userInfo__name {\n                flex: 3;\n                margin-left: 10px;\n                display: flex;\n                flex-direction: column;\n                align-items: flex-start;\n                justify-content: center; }\n              .forumPage__content__chart__intro__post__header__userInfo__point {\n                font-size: 13px; }\n            .forumPage__content__chart__intro__post__header__detail {\n              display: flex;\n              flex-direction: column;\n              justify-content: flex-end;\n              align-items: flex-end; }\n          .forumPage__content__chart__intro__post__title {\n            margin-top: 1rem;\n            padding-bottom: 1rem;\n            border-bottom: rgba(255, 255, 255, 0.2) 1px solid;\n            font-weight: 400; }\n          .forumPage__content__chart__intro__post__body {\n            margin-top: 1rem;\n            padding-bottom: 1rem;\n            border-bottom: rgba(255, 255, 255, 0.2) 1px solid;\n            font-weight: 300; }\n          .forumPage__content__chart__intro__post__footer {\n            display: flex;\n            flex-direction: row;\n            justify-content: center;\n            padding-top: 1rem;\n            padding-bottom: 1rem; }\n            .forumPage__content__chart__intro__post__footer__icon {\n              display: inline-flex;\n              font-size: 1.5rem;\n              margin-right: 1rem; }\n        .forumPage__content__chart__intro__signUp {\n          margin-top: 5%;\n          width: 100%;\n          display: flex;\n          flex-direction: column;\n          align-items: center; }\n          .forumPage__content__chart__intro__signUp__link {\n            cursor: pointer; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.postPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .postPage__modal {\n    height: 60vh;\n    display: flex;\n    align-items: center;\n    justify-content: center; }\n    .postPage__modal__content {\n      margin-left: 1rem;\n      margin-right: 1rem;\n      display: flex;\n      flex-direction: column;\n      justify-content: center;\n      align-items: center; }\n      .postPage__modal__content__area {\n        display: flex;\n        flex-direction: row; }\n        .postPage__modal__content__area__number {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          padding-left: 1.5rem;\n          padding-right: 1.5rem;\n          flex-direction: column;\n          font-weight: 500; }\n          .postPage__modal__content__area__number-border {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            padding-left: 1.5rem;\n            padding-right: 1.5rem;\n            flex-direction: column;\n            font-weight: 500;\n            border-right: 1px rgba(255, 255, 255, 0.2) solid; }\n        .postPage__modal__content__area__text {\n          font-weight: 300 !important; }\n      .postPage__modal__content__username {\n        margin-top: 1rem;\n        margin-bottom: 1rem;\n        font-size: 2rem; }\n  .postPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .postPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .postPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .postPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .postPage__content__chart__intro__loading {\n          padding: 2rem 2rem 2rem 2rem;\n          display: flex;\n          width: 100%;\n          height: 90vh;\n          justify-content: center;\n          align-items: center; }\n        .postPage__content__chart__intro__post__header {\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid;\n          display: flex;\n          height: 10vh;\n          flex-direction: row;\n          align-items: center;\n          justify-content: space-between;\n          padding-bottom: 1rem; }\n          .postPage__content__chart__intro__post__header__userInfo {\n            display: flex;\n            width: 15vw;\n            flex-direction: row;\n            align-items: center; }\n            .postPage__content__chart__intro__post__header__userInfo__thumb {\n              flex: 1; }\n            .postPage__content__chart__intro__post__header__userInfo__name {\n              flex: 3;\n              margin-left: 10px;\n              display: flex;\n              flex-direction: column;\n              align-items: flex-start;\n              justify-content: center; }\n            .postPage__content__chart__intro__post__header__userInfo__point {\n              font-size: 13px; }\n            .postPage__content__chart__intro__post__header__userInfo__date {\n              font-size: 13px;\n              color: rgba(255, 255, 255, 0.5); }\n          .postPage__content__chart__intro__post__header__detail {\n            display: flex;\n            flex-direction: column;\n            justify-content: flex-end;\n            align-items: flex-end; }\n        .postPage__content__chart__intro__post__title {\n          margin-top: 1rem;\n          padding-left: 10px;\n          padding-right: 10px;\n          font-size: 18px;\n          padding-bottom: 1rem;\n          border-bottom: rgba(255, 255, 255, 0.2) 1px solid;\n          font-weight: 400; }\n        .postPage__content__chart__intro__post__body {\n          margin-top: 1rem;\n          padding-left: 10px;\n          padding-right: 10px;\n          padding-bottom: 1rem;\n          font-weight: 300; }\n        .postPage__content__chart__intro__post__coin {\n          margin-top: 1rem;\n          display: flex;\n          flex-direction: row;\n          justify-content: flex-end;\n          font-size: 13px;\n          color: #f4e7d7; }\n          .postPage__content__chart__intro__post__coin__item {\n            border: 1px #f4e7d7 solid;\n            padding-left: 5px;\n            padding-right: 5px;\n            margin-right: 5px; }\n        .postPage__content__chart__intro__post__footer {\n          display: flex;\n          flex-direction: row;\n          justify-content: center;\n          align-items: center;\n          padding-top: 1rem;\n          padding-bottom: 1rem;\n          color: #a0c1b8; }\n          .postPage__content__chart__intro__post__footer__count {\n            font-size: 1rem;\n            margin-right: 7px; }\n          .postPage__content__chart__intro__post__footer__icon {\n            display: inline-flex;\n            font-size: 1.5rem;\n            margin-right: 1rem; }\n        .postPage__content__chart__intro__comments {\n          margin-top: 10%; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.userPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .userPage__modal {\n    height: 90vh;\n    padding-left: 50px;\n    padding-right: 50px;\n    display: flex;\n    flex-direction: column; }\n    .userPage__modal__favorite {\n      width: 100%;\n      padding-left: 1rem;\n      padding-right: 1rem;\n      display: flex;\n      flex-direction: row;\n      flex-wrap: wrap;\n      justify-content: center; }\n      .userPage__modal__favorite__text {\n        margin-top: 2rem;\n        margin-bottom: 1rem;\n        text-align: center;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        align-items: center; }\n      .userPage__modal__favorite__icon {\n        color: white;\n        font-size: 1.5rem;\n        margin-right: 5px;\n        vertical-align: center; }\n      .userPage__modal__favorite__item {\n        border: 1px rgba(255, 255, 255, 0.2) solid;\n        padding-left: 10px;\n        padding-right: 10px;\n        padding-top: 5px;\n        padding-bottom: 5px;\n        margin-right: 5px;\n        margin-bottom: 5px;\n        cursor: pointer; }\n        .userPage__modal__favorite__item:hover {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          border: 1px white solid; }\n        .userPage__modal__favorite__item-active {\n          border: 1px #5cb85c solid; }\n          .userPage__modal__favorite__item-active:hover {\n            transition: 0.3s;\n            -webkit-transition: 0.3s;\n            -moz-transition: 0.3s;\n            -o-transition: 0.3s;\n            border: 1px #5cb85c solid; }\n  .userPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .userPage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .userPage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        border-bottom: 1px white solid; }\n        .userPage__content__news__search__first {\n          display: flex;\n          flex-direction: row;\n          padding: 10px;\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid; }\n          .userPage__content__news__search__first__iconArea {\n            padding-left: 5px;\n            display: flex;\n            justify-content: center;\n            margin-right: 1rem;\n            align-items: center; }\n            .userPage__content__news__search__first__iconArea__icon {\n              color: white;\n              font-size: 1.5rem; }\n          .userPage__content__news__search__first__inputArea {\n            display: flex;\n            align-items: center; }\n            .userPage__content__news__search__first__inputArea__input {\n              background-color: transparent;\n              outline-width: 0 !important;\n              color: white;\n              border: 0;\n              width: 35vw; }\n        .userPage__content__news__search__second {\n          padding: 10px; }\n          .userPage__content__news__search__second__content {\n            display: flex;\n            flex-direction: row;\n            justify-content: space-between; }\n      .userPage__content__news__lists {\n        height: calc(100vh - 110px);\n        margin-top: 110px;\n        overflow-y: scroll; }\n        .userPage__content__news__lists-loading {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          height: 55vh;\n          color: white;\n          font-size: 1rem;\n          height: calc(100vh - 100px);\n          margin-top: 100px; }\n        .userPage__content__news__lists__footer {\n          height: 12vh;\n          display: flex;\n          align-items: center;\n          justify-content: center; }\n    .userPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .userPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .userPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .userPage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .userPage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n        .userPage__content__chart__intro__welcome {\n          margin-top: 6%; }\n        .userPage__content__chart__intro__desc {\n          margin-top: 6%; }\n        .userPage__content__chart__intro__post {\n          height: 90vh; }\n          .userPage__content__chart__intro__post__header {\n            border-bottom: 1px rgba(255, 255, 255, 0.2) solid;\n            display: flex;\n            height: 10vh;\n            flex-direction: row;\n            align-items: center;\n            justify-content: space-between;\n            padding-bottom: 1rem; }\n            .userPage__content__chart__intro__post__header__userInfo {\n              display: flex;\n              width: 15vw;\n              flex-direction: row;\n              align-items: center; }\n              .userPage__content__chart__intro__post__header__userInfo__thumb {\n                flex: 1; }\n              .userPage__content__chart__intro__post__header__userInfo__name {\n                flex: 3;\n                margin-left: 10px;\n                display: flex;\n                flex-direction: column;\n                align-items: flex-start;\n                justify-content: center; }\n              .userPage__content__chart__intro__post__header__userInfo__point {\n                font-size: 13px; }\n            .userPage__content__chart__intro__post__header__detail {\n              display: flex;\n              flex-direction: column;\n              justify-content: flex-end;\n              align-items: flex-end; }\n          .userPage__content__chart__intro__post__title {\n            margin-top: 1rem;\n            padding-bottom: 1rem;\n            border-bottom: rgba(255, 255, 255, 0.2) 1px solid;\n            font-weight: 400; }\n          .userPage__content__chart__intro__post__body {\n            margin-top: 1rem;\n            padding-bottom: 1rem;\n            border-bottom: rgba(255, 255, 255, 0.2) 1px solid;\n            font-weight: 300; }\n          .userPage__content__chart__intro__post__footer {\n            display: flex;\n            flex-direction: row;\n            justify-content: center;\n            padding-top: 1rem;\n            padding-bottom: 1rem; }\n            .userPage__content__chart__intro__post__footer__icon {\n              display: inline-flex;\n              font-size: 1.5rem;\n              margin-right: 1rem; }\n        .userPage__content__chart__intro__signUp {\n          margin-top: 5%;\n          width: 100%;\n          display: flex;\n          flex-direction: column;\n          align-items: center; }\n          .userPage__content__chart__intro__signUp__link {\n            cursor: pointer; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.myPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .myPage__modal {\n    height: 90vh;\n    padding-left: 50px;\n    padding-right: 50px;\n    display: flex;\n    flex-direction: column; }\n    .myPage__modal__favorite {\n      width: 100%;\n      padding-left: 1rem;\n      padding-right: 1rem;\n      display: flex;\n      flex-direction: row;\n      flex-wrap: wrap;\n      justify-content: center; }\n      .myPage__modal__favorite__text {\n        margin-top: 2rem;\n        margin-bottom: 1rem;\n        text-align: center;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        align-items: center; }\n      .myPage__modal__favorite__icon {\n        color: white;\n        font-size: 1.5rem;\n        margin-right: 5px;\n        vertical-align: center; }\n      .myPage__modal__favorite__item {\n        border: 1px rgba(255, 255, 255, 0.2) solid;\n        padding-left: 10px;\n        padding-right: 10px;\n        padding-top: 5px;\n        padding-bottom: 5px;\n        margin-right: 5px;\n        margin-bottom: 5px;\n        cursor: pointer; }\n        .myPage__modal__favorite__item:hover {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          border: 1px white solid; }\n        .myPage__modal__favorite__item-active {\n          border: 1px #5cb85c solid; }\n          .myPage__modal__favorite__item-active:hover {\n            transition: 0.3s;\n            -webkit-transition: 0.3s;\n            -moz-transition: 0.3s;\n            -o-transition: 0.3s;\n            border: 1px #5cb85c solid; }\n  .myPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .myPage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .myPage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        border-bottom: 1px white solid; }\n        .myPage__content__news__search__first {\n          display: flex;\n          flex-direction: row;\n          padding: 10px;\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid; }\n          .myPage__content__news__search__first__iconArea {\n            padding-left: 5px;\n            display: flex;\n            justify-content: center;\n            margin-right: 1rem;\n            align-items: center; }\n            .myPage__content__news__search__first__iconArea__icon {\n              color: white;\n              font-size: 1.5rem; }\n          .myPage__content__news__search__first__inputArea {\n            display: flex;\n            align-items: center; }\n            .myPage__content__news__search__first__inputArea__input {\n              background-color: transparent;\n              outline-width: 0 !important;\n              color: white;\n              border: 0;\n              width: 35vw; }\n        .myPage__content__news__search__second {\n          padding: 10px; }\n          .myPage__content__news__search__second__content {\n            display: flex;\n            flex-direction: row;\n            justify-content: space-between; }\n      .myPage__content__news__lists {\n        height: calc(100vh - 110px);\n        margin-top: 110px;\n        overflow-y: scroll; }\n        .myPage__content__news__lists-loading {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          height: 55vh;\n          color: white;\n          font-size: 1rem;\n          height: calc(100vh - 100px);\n          margin-top: 100px; }\n        .myPage__content__news__lists__footer {\n          height: 12vh;\n          display: flex;\n          align-items: center;\n          justify-content: center; }\n    .myPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .myPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .myPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column;\n        align-items: center;\n        height: 100%;\n        justify-content: center; }\n        .myPage__content__chart__intro__content {\n          margin-left: 1rem;\n          margin-right: 1rem;\n          display: flex;\n          flex-direction: column;\n          justify-content: center;\n          align-items: center; }\n          .myPage__content__chart__intro__content__area {\n            display: flex;\n            flex-direction: row; }\n            .myPage__content__chart__intro__content__area__number {\n              display: flex;\n              justify-content: center;\n              align-items: center;\n              padding-left: 1.5rem;\n              padding-right: 1.5rem;\n              flex-direction: column;\n              font-weight: 500; }\n              .myPage__content__chart__intro__content__area__number-border {\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                padding-left: 1.5rem;\n                padding-right: 1.5rem;\n                flex-direction: column;\n                font-weight: 500;\n                border-right: 1px rgba(255, 255, 255, 0.2) solid; }\n            .myPage__content__chart__intro__content__area__text {\n              font-weight: 300 !important; }\n          .myPage__content__chart__intro__content__username {\n            margin-top: 1rem;\n            margin-bottom: 1rem;\n            font-size: 2rem; }\n        .myPage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .myPage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.navBar {\n  background: transparent;\n  width: 100px;\n  height: 100vh;\n  position: fixed;\n  left: 0;\n  color: white;\n  border-right: 1px rgba(255, 255, 255, 0.1) solid; }\n  .navBar__signOut {\n    height: 40vh;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    flex-direction: column; }\n    .navBar__signOut__text {\n      margin-bottom: 10%; }\n  .navBar__content {\n    display: flex;\n    flex-direction: column;\n    align-items: center; }\n    .navBar__content__brand {\n      width: 100%;\n      display: flex;\n      align-items: center;\n      justify-content: center;\n      cursor: pointer;\n      font-family: \"Biryani\", sans-serif;\n      flex-direction: column;\n      height: 145px;\n      padding-right: 10px;\n      padding-left: 10px; }\n      .navBar__content__brand__logo {\n        width: 50px;\n        height: auto; }\n        .navBar__content__brand__logo__text {\n          margin-top: 5px;\n          font-size: 12px; }\n    .navBar__content__userArea {\n      height: 17vh;\n      width: 100%;\n      display: inline-flex;\n      align-items: center;\n      justify-content: center; }\n    .navBar__content__items {\n      width: 100%; }\n      .navBar__content__items__item {\n        display: flex;\n        height: 10vh;\n        flex-direction: column;\n        justify-content: center;\n        align-items: center;\n        margin-top: 1.5rem;\n        margin-bottom: 1.5rem;\n        cursor: pointer; }\n        .navBar__content__items__item:first-child {\n          margin-top: 0; }\n        .navBar__content__items__item-active {\n          color: #5cb85c;\n          font-weight: 500; }\n        .navBar__content__items__item-icon {\n          font-size: 2.2rem;\n          display: inline-flex;\n          margin-bottom: 5px; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.list {\n  color: white;\n  cursor: pointer; }\n  .list:hover {\n    transition: 0.3s;\n    -webkit-transition: 0.3s;\n    -moz-transition: 0.3s;\n    -o-transition: 0.3s;\n    background-color: rgba(83, 105, 118, 0.3); }\n  .list-active {\n    background-color: rgba(83, 105, 118, 0.7); }\n    .list-active:hover {\n      background-color: rgba(83, 105, 118, 0.7); }\n  .list__content {\n    display: flex;\n    width: 100%;\n    flex-direction: row;\n    align-items: center;\n    padding-top: 3%;\n    padding-bottom: 3%;\n    border-bottom: 1px solid rgba(83, 105, 118, 0.7); }\n    .list__content__date {\n      width: 12%;\n      padding-left: 10px;\n      padding-right: 10px;\n      color: rgba(255, 255, 255, 0.7);\n      display: flex;\n      font-size: 10px;\n      align-items: center;\n      justify-content: center; }\n    .list__content__textArea {\n      flex: 6;\n      word-wrap: break-word;\n      overflow: auto;\n      display: flex;\n      padding-right: 10px;\n      flex-direction: column; }\n      .list__content__textArea__text {\n        display: inline;\n        font-size: 14px; }\n      .list__content__textArea__username {\n        font-size: 11px;\n        color: #a0c1b8;\n        margin-left: 5px; }\n      .list__content__textArea__social {\n        display: flex;\n        flex-direction: row;\n        align-items: center;\n        margin-top: 2px; }\n        .list__content__textArea__social__username {\n          font-size: 12px;\n          color: #a0c1b8; }\n        .list__content__textArea__social__items {\n          display: flex;\n          flex-direction: row; }\n        .list__content__textArea__social__item {\n          font-size: 12px;\n          display: flex;\n          flex-direction: row;\n          align-items: center;\n          margin-right: 5px;\n          color: #a0c1b8; }\n          .list__content__textArea__social__item__count {\n            margin-right: 5px; }\n          .list__content__textArea__social__item__icon {\n            display: inline-flex; }\n    .list__content__type {\n      flex: 1;\n      font-size: 10px;\n      display: flex;\n      color: #f4e7d7;\n      justify-content: center; }\n      .list__content__type-array {\n        color: #f4e7d7;\n        flex-wrap: wrap;\n        font-size: 10px;\n        padding-right: 10px;\n        display: flex;\n        justify-content: flex-end; }\n        .list__content__type-array__item {\n          margin-right: 5px; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.sideBar {\n  background: transparent;\n  width: 100px;\n  height: 100vh;\n  overflow-y: scroll;\n  position: fixed;\n  right: 0;\n  color: white;\n  border-left: 1px rgba(255, 255, 255, 0.1) solid; }\n  .sideBar__modal {\n    height: 60vh;\n    overflow-y: scroll; }\n    .sideBar__modal__close {\n      cursor: pointer; }\n    .sideBar__modal__header {\n      font-weight: 300 !important; }\n    .sideBar__modal__content {\n      display: flex;\n      justify-content: center;\n      color: white; }\n      .sideBar__modal__content__items {\n        width: 50vw;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        flex-wrap: wrap; }\n        .sideBar__modal__content__items__wrapper {\n          display: flex;\n          width: 25%;\n          margin-top: 1.5rem;\n          flex-direction: column;\n          align-items: center;\n          margin-right: 1rem; }\n          .sideBar__modal__content__items__wrapper:nth-child(3n) {\n            margin-right: 0; }\n          .sideBar__modal__content__items__wrapper__item {\n            display: flex;\n            padding: 5px 1.5rem 5px 1.5rem;\n            flex-direction: column;\n            width: 100%;\n            border: 1px rgba(255, 255, 255, 0.2) solid;\n            justify-content: center;\n            align-items: center; }\n            .sideBar__modal__content__items__wrapper__item:hover {\n              border: 1px white solid;\n              cursor: pointer; }\n            .sideBar__modal__content__items__wrapper__item-active {\n              border: 1px #5cb85c solid; }\n              .sideBar__modal__content__items__wrapper__item-active:hover {\n                border: 1px #5cb85c solid;\n                cursor: pointer; }\n            .sideBar__modal__content__items__wrapper__item__full {\n              width: 100%;\n              overflow: auto;\n              word-wrap: break-word;\n              text-align: center; }\n            .sideBar__modal__content__items__wrapper__item__abbr {\n              text-align: center;\n              color: #f4e7d7;\n              width: 100%;\n              overflow: auto;\n              word-wrap: break-word; }\n            .sideBar__modal__content__items__wrapper__item__kor {\n              width: 100%;\n              text-align: center;\n              overflow: auto;\n              word-wrap: break-word; }\n  .sideBar__content {\n    display: flex;\n    flex-direction: column;\n    width: 100%; }\n    .sideBar__content__items__item {\n      display: flex;\n      border-bottom: 1px rgba(255, 255, 255, 0.1) solid;\n      flex-direction: column;\n      justify-content: center;\n      padding-top: 10px;\n      padding-bottom: 10px;\n      align-items: center;\n      cursor: pointer; }\n      .sideBar__content__items__item-active {\n        border-left: 3px #5cb85c solid; }\n      .sideBar__content__items__item-disable {\n        cursor: not-allowed;\n        pointer-events: none; }\n      .sideBar__content__items__item-plus {\n        font-size: 2rem; }\n      .sideBar__content__items__item:hover {\n        background-color: #536976; }\n      .sideBar__content__items__item__title {\n        color: #f4e7d7; }\n      .sideBar__content__items__item__price {\n        font-size: 10px; }\n        .sideBar__content__items__item__price__icon {\n          display: inline-flex; }\n      .sideBar__content__items__item__percent {\n        font-size: 10px;\n        color: #5cb85c; }\n        .sideBar__content__items__item__percent__icon {\n          display: inline-flex; }\n      .sideBar__content__items__item__percent-down {\n        font-size: 10px;\n        color: #f26968; }\n        .sideBar__content__items__item__percent-down__icon {\n          display: inline-flex; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.roundInput__content {\n  padding-left: 1rem;\n  width: 300px !important;\n  height: 60px !important;\n  border: 1px rgba(255, 255, 255, 0.2) solid !important;\n  border-radius: 75px !important;\n  font-size: 1rem;\n  outline-width: 0 !important;\n  color: white; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.button__content {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  border: 1px white solid;\n  height: 100%;\n  padding-top: 10px;\n  padding-bottom: 10px; }\n  .button__content:hover {\n    border: 1px #5cb85c solid;\n    color: #5cb85c;\n    cursor: pointer; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.thumb {\n  display: inline-block;\n  position: relative;\n  justify-content: center;\n  align-items: center;\n  cursor: pointer; }\n  .thumb__image {\n    box-sizing: border-box;\n    border-radius: 50%;\n    border: 1px solid white; }\n  .thumb__classImage {\n    position: absolute;\n    box-sizing: border-box;\n    border-radius: 50%; }\n  .thumb__defaultImage {\n    position: absolute;\n    bottom: -8px;\n    right: -5px; }\n\n.thumb__default {\n  font-size: 2rem;\n  display: inline-flex;\n  position: relative;\n  justify-content: center;\n  align-items: center;\n  box-sizing: border-box;\n  border-radius: 50%;\n  border: 1px white solid;\n  color: white;\n  cursor: pointer; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.socialInput {\n  padding-top: 30px;\n  background-color: transparent;\n  padding-left: 20px;\n  padding-right: 20px;\n  padding-bottom: 5px; }\n  .socialInput hr {\n    background-color: rgba(255, 255, 255, 0.2); }\n  .socialInput__hr-active {\n    margin-top: 1rem;\n    margin-bottom: 1rem;\n    border: 0;\n    border-top: 1px white solid; }\n  .socialInput__body {\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    padding-bottom: 10px; }\n    .socialInput__body__thumbArea__thumb {\n      font-size: 2rem;\n      display: inline-flex;\n      width: 50px;\n      height: 50px;\n      justify-content: center;\n      align-items: center;\n      box-sizing: border-box;\n      border-radius: 50%;\n      border: 1px rgba(0, 0, 0, 0.2) solid;\n      color: white; }\n    .socialInput__body__inputArea {\n      width: 95%; }\n    .socialInput__body__input {\n      margin-right: 20px;\n      margin-left: 20px;\n      color: white;\n      font-size: 1rem;\n      background: transparent;\n      width: 95%;\n      padding-bottom: 10px;\n      padding-top: 10px;\n      word-break: break-all;\n      border: none; }\n      .socialInput__body__input:focus {\n        transition: 0.3s;\n        -webkit-transition: 0.3s;\n        -moz-transition: 0.3s;\n        -o-transition: 0.3s;\n        outline: none; }\n      .socialInput__body__input-title {\n        margin-right: 20px;\n        margin-left: 20px;\n        margin-bottom: 10px;\n        color: white;\n        font-size: 1rem;\n        background: transparent;\n        width: 60%;\n        padding-bottom: 10px;\n        padding-top: 10px;\n        word-break: break-all;\n        border-top: none;\n        border-left: none;\n        border-right: none;\n        border-bottom: 1px rgba(255, 255, 255, 0.2) solid !important; }\n        .socialInput__body__input-title:focus {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          outline: none;\n          border-bottom: 1px white solid !important; }\n  .socialInput__footer {\n    display: flex;\n    flex-direction: row;\n    justify-content: space-between;\n    align-items: center; }\n    .socialInput__footer__camera__icon {\n      font-size: 1.6rem;\n      color: white; }\n      .socialInput__footer__camera__icon:hover {\n        transition: 0.3s;\n        -webkit-transition: 0.3s;\n        -moz-transition: 0.3s;\n        -o-transition: 0.3s;\n        color: white;\n        cursor: pointer; }\n    .socialInput__footer__postArea {\n      display: inline-flex;\n      align-items: center;\n      justify-content: center; }\n      .socialInput__footer__postArea__postButton {\n        background-color: transparent;\n        color: white;\n        font-weight: 300;\n        padding-left: 10px;\n        padding-top: 3px;\n        border: 1px solid rgba(255, 255, 255, 0.2);\n        padding-bottom: 3px;\n        display: inline-flex;\n        padding-right: 10px;\n        cursor: pointer; }\n        .socialInput__footer__postArea__postButton:hover {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          color: white;\n          border: 1px solid white; }\n    .socialInput__footer__imagePreview {\n      display: flex;\n      flex-direction: row;\n      flex-wrap: wrap; }\n      .socialInput__footer__imagePreview__image {\n        transition: 0.3s;\n        -webkit-transition: 0.3s;\n        -moz-transition: 0.3s;\n        -o-transition: 0.3s;\n        height: 60px; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.comment__content {\n  transition: 0.3s;\n  -webkit-transition: 0.3s;\n  -moz-transition: 0.3s;\n  -o-transition: 0.3s;\n  display: flex;\n  padding-left: 20px;\n  padding-right: 20px;\n  box-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);\n  flex-direction: row;\n  align-items: center;\n  justify-content: space-between;\n  padding-top: 1rem;\n  padding-bottom: 1rem;\n  margin-bottom: 1rem; }\n  .comment__content__userArea {\n    flex: 2;\n    display: flex;\n    flex-direction: row;\n    align-items: center; }\n    .comment__content__userArea__userInfo {\n      display: flex;\n      flex-direction: column;\n      margin-left: 10px; }\n      .comment__content__userArea__userInfo__name {\n        font-size: 13px; }\n      .comment__content__userArea__userInfo__point {\n        font-size: 13px; }\n  .comment__content__content {\n    flex: 4;\n    word-wrap: break-word;\n    overflow: auto;\n    display: flex;\n    flex-direction: column;\n    padding-right: 10px; }\n  .comment__content__date {\n    flex: 1;\n    display: flex;\n    justify-content: flex-end;\n    align-items: center;\n    font-size: 13px;\n    color: rgba(255, 255, 255, 0.3); }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.medal {\n  display: inline-block;\n  position: relative;\n  justify-content: center;\n  align-items: center;\n  cursor: pointer; }\n  .medal__image {\n    box-sizing: border-box;\n    border-radius: 50%;\n    border: 1px solid white; }\n  .medal__classImage {\n    margin-left: 10px; }\n\n.medal__default {\n  font-size: 2rem;\n  display: inline-flex;\n  justify-content: center;\n  align-items: center;\n  box-sizing: border-box;\n  border-radius: 50%;\n  border: 1px white solid;\n  color: white;\n  cursor: pointer; }\n  .medal__default__classImage {\n    position: absolute;\n    box-sizing: border-box;\n    border-radius: 50%; }\n\nbody {\n  margin: 0 auto;\n  font-weight: 300; }\n  body ::placeholder {\n    /* Chrome, Firefox, Opera, Safari 10.1+ */\n    color: white;\n    opacity: 0.7;\n    font-size: 14px;\n    font-weight: 300 !important;\n    font-family: \"Nanum Gothic\", sans-serif;\n    /* Firefox */ }\n  body .app {\n    background: #536976;\n    /* fallback for old browsers */\n    background: -webkit-linear-gradient(to right, #292e49, #536976);\n    /* Chrome 10-25, Safari 5.1-6 */\n    background: linear-gradient(to right, #292e49, #536976);\n    height: 100vh; }\n  body .btn {\n    font-weight: 300 !important; }\n  body .btn-group-sm > .btn,\n  body .btn-sm {\n    padding: 5px 25px !important;\n    font-size: 13px !important;\n    font-weight: 300 !important;\n    color: white;\n    margin-right: 1px;\n    cursor: pointer;\n    float: left;\n    padding: 5px 13px !important;\n    border-radius: 0 !important; }\n  body a:hover {\n    text-decoration: none; }\n  body p {\n    margin: 0; }\n  body hr {\n    background-color: white; }\n  body .cTypeTabActive {\n    background: #536976 !important;\n    font-weight: 300; }\n  body .chartTypeTabLinks {\n    background: transparent;\n    font-weight: 300 !important; }\n  body text {\n    fill: white; }\n  body .ccc-widget > div {\n    background-color: transparent !important;\n    color: white !important;\n    border: 0 !important;\n    border-top: 0 !important;\n    font-weight: 300 !important;\n    padding: 10px !important; }\n  body .cccCustomRadioContainer > label {\n    color: white !important; }\n  body .tabperiods {\n    background: transparent !important;\n    font-weight: 300 !important; }\n  body .active {\n    border-color: #5cb85c !important; }\n  body .tabperiods_active {\n    font-weight: 900 !important;\n    color: #5cb85c !important; }\n  body .chartTypeTabLinks:hover {\n    background: #536976; }\n  body .modal-content {\n    font-weight: 300 !important;\n    border-radius: 0px !important;\n    background: #536976;\n    margin: 0 !important;\n    color: white;\n    padding: 0 !important;\n    /* fallback for old browsers */\n    background: -webkit-linear-gradient(to bottom, #292e49, #536976);\n    /* Chrome 10-25, Safari 5.1-6 */\n    background: linear-gradient(to bottom, #292e49, #536976);\n    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  body .modal-backdrop.show {\n    opacity: 0.1 !important; }\n  body .dropdown-menu {\n    position: absolute;\n    top: 100%;\n    left: 0;\n    z-index: 1000;\n    display: none;\n    float: left;\n    min-width: 10rem;\n    padding: 0.5rem 0;\n    margin: 0.125rem 0 0;\n    font-size: 1rem;\n    color: white !important;\n    text-align: left;\n    list-style: none;\n    background-color: #292e49 !important;\n    background-clip: padding-box;\n    border: 1px solid rgba(0, 0, 0, 0.15);\n    border-radius: 0px !important; }\n  body .dropdown-item {\n    display: block;\n    width: 100%;\n    cursor: pointer;\n    padding: 0.25rem 1.5rem;\n    clear: both;\n    font-weight: 400;\n    color: white !important;\n    text-align: inherit;\n    white-space: nowrap;\n    background-color: transparent;\n    border: 0; }\n    body .dropdown-item:hover {\n      background-color: transparent !important; }\n  body .chartTypeTabLinks {\n    font-size: 13px !important;\n    color: white;\n    margin-right: 1px;\n    font-weight: 600;\n    cursor: pointer;\n    float: left;\n    padding: 5px 25px;\n    background: transparent; }\n", ""]);
 
 /***/ }),
 /* 442 */
@@ -35175,7 +35175,12 @@
 	  function App(props) {
 	    _classCallCheck(this, App);
 	
-	    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+	
+	    _this.state = {
+	      isReady: false
+	    };
+	    return _this;
 	  }
 	
 	  _createClass(App, [{
@@ -35196,25 +35201,38 @@
 	      };
 	      this.props.dispatch(NewsAction.getNews(newsParams)).then(function (value) {
 	        if (_this2.props.isLogin === true) {
-	          _this2.props.dispatch(AuthAction.getMe(_this2.props.token)).then(function (value2) {});
+	          _this2.props.dispatch(AuthAction.getMe(_this2.props.token)).then(function (value2) {
+	            _this2.setState({ isReady: true });
+	          });
 	        }
 	      });
 	    }
 	  }, {
 	    key: "render",
 	    value: function render() {
-	      return _react2.default.createElement(
-	        _MuiThemeProvider2.default,
-	        { muiTheme: muiTheme },
-	        _react2.default.createElement(
+	      var isReady = this.state.isReady;
+	
+	      if (isReady) {
+	        return _react2.default.createElement(
+	          _MuiThemeProvider2.default,
+	          { muiTheme: muiTheme },
+	          _react2.default.createElement(
+	            "div",
+	            null,
+	            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/", component: _Pages.HomePage }),
+	            _react2.default.createElement(_reactRouterDom.Route, { path: "/forum", component: _Pages.ForumPage }),
+	            _react2.default.createElement(_reactRouterDom.Route, { path: "/profile", component: _Pages.MyPage }),
+	            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/auth", component: _Pages.AuthPage }),
+	            _react2.default.createElement(_reactRouterDom.Route, { path: "/auth/signup", component: _Pages.SignUpPage })
+	          )
+	        );
+	      } else {
+	        return _react2.default.createElement(
 	          "div",
-	          null,
-	          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/", component: _Pages.HomePage }),
-	          _react2.default.createElement(_reactRouterDom.Route, { path: "/forum", component: _Pages.ForumPage }),
-	          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/auth", component: _Pages.AuthPage }),
-	          _react2.default.createElement(_reactRouterDom.Route, { path: "/auth/signup", component: _Pages.SignUpPage })
-	        )
-	      );
+	          { className: "app" },
+	          "\uB85C\uB529\uC911"
+	        );
+	      }
 	    }
 	  }]);
 	
@@ -42362,7 +42380,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.PostPage = exports.ForumPage = exports.SignUpPage = exports.AuthPage = exports.HomePage = exports.DefaultReduxPage = exports.DefaultPage = undefined;
+	exports.MyPage = exports.UserPage = exports.PostPage = exports.ForumPage = exports.SignUpPage = exports.AuthPage = exports.HomePage = exports.DefaultReduxPage = exports.DefaultPage = undefined;
 	
 	var _DefaultPage2 = __webpack_require__(586);
 	
@@ -42392,6 +42410,14 @@
 	
 	var _PostPage3 = _interopRequireDefault(_PostPage2);
 	
+	var _UserPage2 = __webpack_require__(859);
+	
+	var _UserPage3 = _interopRequireDefault(_UserPage2);
+	
+	var _MyPage2 = __webpack_require__(860);
+	
+	var _MyPage3 = _interopRequireDefault(_MyPage2);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.DefaultPage = _DefaultPage3.default; /*
@@ -42407,6 +42433,8 @@
 	exports.SignUpPage = _SignUpPage3.default;
 	exports.ForumPage = _ForumPage3.default;
 	exports.PostPage = _PostPage3.default;
+	exports.UserPage = _UserPage3.default;
+	exports.MyPage = _MyPage3.default;
 
 /***/ }),
 /* 586 */
@@ -45712,20 +45740,14 @@
 	      var isLogin = _this.props.isLogin;
 	
 	      if (isLogin === true) {
-	        _this.toggleModal();
+	        _this.props.history.push({
+	          pathname: "/profile"
+	        });
 	      } else {
 	        _this.props.history.push({
 	          pathname: "/auth"
 	        });
 	      }
-	    };
-	
-	    _this.handleSignOut = function () {
-	      _this.props.dispatch(AuthAction.signOut()).then(function (value) {
-	        _this.props.history.replace({
-	          pathname: "/auth"
-	        });
-	      });
 	    };
 	
 	    _this.toggleModal = function () {
@@ -87625,7 +87647,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.postForumComment = exports.postForumView = exports.postForum = exports.getOneForumComment = exports.getOneForumCoins = exports.getForumByUser = exports.getUserById = exports.getOneForum = exports.getAllForums = exports.FAILED_TO_POST_FORUM_COMMENT = exports.SUCCEED_TO_POST_FORUM_COMMENT = exports.FAILED_TO_POST_FORUM_VIEW = exports.SUCCEED_TO_POST_FORUM_VIEW = exports.FAILED_TO_GET_ONE_FORUM_COMMENT = exports.SUCCEED_TO_GET_ONE_FORUM_COMMENT = exports.FAILED_TO_GET_ONE_FORUM_COINS = exports.SUCCEED_TO_GET_ONE_FORUM_COINS = exports.FAILED_TO_GET_USER_BY_ID = exports.SUCCEED_TO_GET_USER_BY_ID = exports.FAILED_TO_GET_FORUM_BY_USER = exports.SUCCEED_TO_GET_FORUM_BY_USER = exports.FAILED_TO_GET_ONE_FORUM = exports.SUCCEED_TO_GET_ONE_FORUM = exports.FAILED_TO_POST_FORUM = exports.SUCCEED_TO_POST_FORUM = exports.FAILED_TO_GET_ALL_FORUM = exports.SUCCEED_TO_GET_ALL_FORUM = undefined;
+	exports.postForumComment = exports.postForumView = exports.postForum = exports.getOneForumComment = exports.getOneForumCoins = exports.getCommentsByUser = exports.getForumByUser = exports.getUserById = exports.getOneForum = exports.getAllForums = exports.FAILED_TO_POST_FORUM_COMMENT = exports.SUCCEED_TO_POST_FORUM_COMMENT = exports.FAILED_TO_POST_FORUM_VIEW = exports.SUCCEED_TO_POST_FORUM_VIEW = exports.FAILED_TO_GET_ONE_FORUM_COMMENT = exports.SUCCEED_TO_GET_ONE_FORUM_COMMENT = exports.FAILED_TO_GET_ONE_FORUM_COINS = exports.SUCCEED_TO_GET_ONE_FORUM_COINS = exports.FAILED_TO_GET_COMMENTS_BY_USER = exports.SUCCEED_TO_GET_COMMENTS_BY_USER = exports.FAILED_TO_GET_USER_BY_ID = exports.SUCCEED_TO_GET_USER_BY_ID = exports.FAILED_TO_GET_FORUM_BY_USER = exports.SUCCEED_TO_GET_FORUM_BY_USER = exports.FAILED_TO_GET_ONE_FORUM = exports.SUCCEED_TO_GET_ONE_FORUM = exports.FAILED_TO_POST_FORUM = exports.SUCCEED_TO_POST_FORUM = exports.FAILED_TO_GET_ALL_FORUM = exports.SUCCEED_TO_GET_ALL_FORUM = undefined;
 	
 	var _Server = __webpack_require__(437);
 	
@@ -87645,6 +87667,9 @@
 	
 	var SUCCEED_TO_GET_USER_BY_ID = exports.SUCCEED_TO_GET_USER_BY_ID = "SUCCEED_TO_GET_USER_BY_ID";
 	var FAILED_TO_GET_USER_BY_ID = exports.FAILED_TO_GET_USER_BY_ID = "FAILED_TO_GET_USER_BY_ID";
+	
+	var SUCCEED_TO_GET_COMMENTS_BY_USER = exports.SUCCEED_TO_GET_COMMENTS_BY_USER = "SUCCEED_TO_GET_COMMENTS_BY_USER";
+	var FAILED_TO_GET_COMMENTS_BY_USER = exports.FAILED_TO_GET_COMMENTS_BY_USER = "FAILED_TO_GET_COMMENTS_BY_USER";
 	
 	var SUCCEED_TO_GET_ONE_FORUM_COINS = exports.SUCCEED_TO_GET_ONE_FORUM_COINS = "SUCCEED_TO_GET_ONE_FORUM_COINS";
 	var FAILED_TO_GET_ONE_FORUM_COINS = exports.FAILED_TO_GET_ONE_FORUM_COINS = "FAILED_TO_GET_ONE_FORUM_COINS";
@@ -87889,7 +87914,7 @@
 	  }();
 	};
 	
-	var getOneForumCoins = exports.getOneForumCoins = function getOneForumCoins(params) {
+	var getCommentsByUser = exports.getCommentsByUser = function getCommentsByUser(params) {
 	  return function () {
 	    var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(dispatch) {
 	      var response, responseJson;
@@ -87899,7 +87924,7 @@
 	            case 0:
 	              _context5.prev = 0;
 	              _context5.next = 3;
-	              return fetch(_Server.ServerEndPoint + ("api/forum/coin/" + params.forum_id), {
+	              return fetch(_Server.ServerEndPoint + ("api/forum/comment?user_id=" + params.user_id), {
 	                method: "GET",
 	                headers: {
 	                  Accept: "application/json",
@@ -87917,7 +87942,7 @@
 	              responseJson = _context5.sent;
 	              _context5.next = 9;
 	              return dispatch({
-	                type: SUCCEED_TO_GET_ONE_FORUM,
+	                type: SUCCEED_TO_GET_COMMENTS_BY_USER,
 	                payload: responseJson.result
 	              });
 	
@@ -87929,7 +87954,7 @@
 	              _context5.t0 = _context5["catch"](0);
 	
 	              dispatch({
-	                type: FAILED_TO_GET_ONE_FORUM,
+	                type: FAILED_TO_GET_COMMENTS_BY_USER,
 	                payload: { data: "NETWORK_ERROR" }
 	              });
 	
@@ -87947,7 +87972,7 @@
 	  }();
 	};
 	
-	var getOneForumComment = exports.getOneForumComment = function getOneForumComment(params) {
+	var getOneForumCoins = exports.getOneForumCoins = function getOneForumCoins(params) {
 	  return function () {
 	    var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(dispatch) {
 	      var response, responseJson;
@@ -87957,7 +87982,7 @@
 	            case 0:
 	              _context6.prev = 0;
 	              _context6.next = 3;
-	              return fetch(_Server.ServerEndPoint + ("api/forum/comment/" + params.forum_id), {
+	              return fetch(_Server.ServerEndPoint + ("api/forum/coin/" + params.forum_id), {
 	                method: "GET",
 	                headers: {
 	                  Accept: "application/json",
@@ -87975,7 +88000,7 @@
 	              responseJson = _context6.sent;
 	              _context6.next = 9;
 	              return dispatch({
-	                type: SUCCEED_TO_GET_ONE_FORUM_COMMENT,
+	                type: SUCCEED_TO_GET_ONE_FORUM,
 	                payload: responseJson.result
 	              });
 	
@@ -87987,7 +88012,7 @@
 	              _context6.t0 = _context6["catch"](0);
 	
 	              dispatch({
-	                type: FAILED_TO_GET_ONE_FORUM_COMMENT,
+	                type: FAILED_TO_GET_ONE_FORUM,
 	                payload: { data: "NETWORK_ERROR" }
 	              });
 	
@@ -88005,7 +88030,7 @@
 	  }();
 	};
 	
-	var postForum = exports.postForum = function postForum(params) {
+	var getOneForumComment = exports.getOneForumComment = function getOneForumComment(params) {
 	  return function () {
 	    var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(dispatch) {
 	      var response, responseJson;
@@ -88015,19 +88040,13 @@
 	            case 0:
 	              _context7.prev = 0;
 	              _context7.next = 3;
-	              return fetch(_Server.ServerEndPoint + "api/forum/create", {
-	                method: "POST",
+	              return fetch(_Server.ServerEndPoint + ("api/forum/comment/" + params.forum_id), {
+	                method: "GET",
 	                headers: {
 	                  Accept: "application/json",
 	                  "Content-Type": "application/json",
 	                  "x-access-token": params.token
-	                },
-	                body: JSON.stringify({
-	                  coin_list: params.coins,
-	                  category: params.category,
-	                  title: params.title,
-	                  content: params.content
-	                })
+	                }
 	              });
 	
 	            case 3:
@@ -88039,19 +88058,19 @@
 	              responseJson = _context7.sent;
 	              _context7.next = 9;
 	              return dispatch({
-	                type: SUCCEED_TO_POST_FORUM,
-	                payload: responseJson.forum_id
+	                type: SUCCEED_TO_GET_ONE_FORUM_COMMENT,
+	                payload: responseJson.result
 	              });
 	
 	            case 9:
-	              return _context7.abrupt("return", responseJson.forum_id);
+	              return _context7.abrupt("return", responseJson.result);
 	
 	            case 12:
 	              _context7.prev = 12;
 	              _context7.t0 = _context7["catch"](0);
 	
 	              dispatch({
-	                type: FAILED_TO_POST_FORUM,
+	                type: FAILED_TO_GET_ONE_FORUM_COMMENT,
 	                payload: { data: "NETWORK_ERROR" }
 	              });
 	
@@ -88069,7 +88088,7 @@
 	  }();
 	};
 	
-	var postForumView = exports.postForumView = function postForumView(params) {
+	var postForum = exports.postForum = function postForum(params) {
 	  return function () {
 	    var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(dispatch) {
 	      var response, responseJson;
@@ -88079,13 +88098,19 @@
 	            case 0:
 	              _context8.prev = 0;
 	              _context8.next = 3;
-	              return fetch(_Server.ServerEndPoint + "api/forum/view/" + params.forum_id, {
+	              return fetch(_Server.ServerEndPoint + "api/forum/create", {
 	                method: "POST",
 	                headers: {
 	                  Accept: "application/json",
 	                  "Content-Type": "application/json",
 	                  "x-access-token": params.token
-	                }
+	                },
+	                body: JSON.stringify({
+	                  coin_list: params.coins,
+	                  category: params.category,
+	                  title: params.title,
+	                  content: params.content
+	                })
 	              });
 	
 	            case 3:
@@ -88097,19 +88122,19 @@
 	              responseJson = _context8.sent;
 	              _context8.next = 9;
 	              return dispatch({
-	                type: SUCCEED_TO_POST_FORUM_VIEW,
-	                payload: responseJson
+	                type: SUCCEED_TO_POST_FORUM,
+	                payload: responseJson.forum_id
 	              });
 	
 	            case 9:
-	              return _context8.abrupt("return", responseJson);
+	              return _context8.abrupt("return", responseJson.forum_id);
 	
 	            case 12:
 	              _context8.prev = 12;
 	              _context8.t0 = _context8["catch"](0);
 	
 	              dispatch({
-	                type: FAILED_TO_POST_FORUM_VIEW,
+	                type: FAILED_TO_POST_FORUM,
 	                payload: { data: "NETWORK_ERROR" }
 	              });
 	
@@ -88127,7 +88152,7 @@
 	  }();
 	};
 	
-	var postForumComment = exports.postForumComment = function postForumComment(params) {
+	var postForumView = exports.postForumView = function postForumView(params) {
 	  return function () {
 	    var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9(dispatch) {
 	      var response, responseJson;
@@ -88137,16 +88162,13 @@
 	            case 0:
 	              _context9.prev = 0;
 	              _context9.next = 3;
-	              return fetch(_Server.ServerEndPoint + ("api/forum/create/comment/" + params.forum_id), {
+	              return fetch(_Server.ServerEndPoint + "api/forum/view/" + params.forum_id, {
 	                method: "POST",
 	                headers: {
 	                  Accept: "application/json",
 	                  "Content-Type": "application/json",
 	                  "x-access-token": params.token
-	                },
-	                body: JSON.stringify({
-	                  content: params.content
-	                })
+	                }
 	              });
 	
 	            case 3:
@@ -88158,19 +88180,19 @@
 	              responseJson = _context9.sent;
 	              _context9.next = 9;
 	              return dispatch({
-	                type: SUCCEED_TO_POST_FORUM_COMMENT,
-	                payload: responseJson.forum_id
+	                type: SUCCEED_TO_POST_FORUM_VIEW,
+	                payload: responseJson
 	              });
 	
 	            case 9:
-	              return _context9.abrupt("return", responseJson.forum_id);
+	              return _context9.abrupt("return", responseJson);
 	
 	            case 12:
 	              _context9.prev = 12;
 	              _context9.t0 = _context9["catch"](0);
 	
 	              dispatch({
-	                type: FAILED_TO_POST_FORUM_COMMENT,
+	                type: FAILED_TO_POST_FORUM_VIEW,
 	                payload: { data: "NETWORK_ERROR" }
 	              });
 	
@@ -88184,6 +88206,67 @@
 	
 	    return function (_x9) {
 	      return _ref9.apply(this, arguments);
+	    };
+	  }();
+	};
+	
+	var postForumComment = exports.postForumComment = function postForumComment(params) {
+	  return function () {
+	    var _ref10 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10(dispatch) {
+	      var response, responseJson;
+	      return regeneratorRuntime.wrap(function _callee10$(_context10) {
+	        while (1) {
+	          switch (_context10.prev = _context10.next) {
+	            case 0:
+	              _context10.prev = 0;
+	              _context10.next = 3;
+	              return fetch(_Server.ServerEndPoint + ("api/forum/create/comment/" + params.forum_id), {
+	                method: "POST",
+	                headers: {
+	                  Accept: "application/json",
+	                  "Content-Type": "application/json",
+	                  "x-access-token": params.token
+	                },
+	                body: JSON.stringify({
+	                  content: params.content
+	                })
+	              });
+	
+	            case 3:
+	              response = _context10.sent;
+	              _context10.next = 6;
+	              return response.json();
+	
+	            case 6:
+	              responseJson = _context10.sent;
+	              _context10.next = 9;
+	              return dispatch({
+	                type: SUCCEED_TO_POST_FORUM_COMMENT,
+	                payload: responseJson.forum_id
+	              });
+	
+	            case 9:
+	              return _context10.abrupt("return", responseJson.forum_id);
+	
+	            case 12:
+	              _context10.prev = 12;
+	              _context10.t0 = _context10["catch"](0);
+	
+	              dispatch({
+	                type: FAILED_TO_POST_FORUM_COMMENT,
+	                payload: { data: "NETWORK_ERROR" }
+	              });
+	
+	            case 15:
+	            case "end":
+	              return _context10.stop();
+	          }
+	        }
+	      }, _callee10, undefined, [[0, 12]]);
+	    }));
+	
+	    return function (_x10) {
+	      return _ref10.apply(this, arguments);
 	    };
 	  }();
 	};
@@ -88295,39 +88378,40 @@
 	        user_id: user_id
 	      };
 	      _this.props.dispatch(SocialAction.getUserById(params)).then(function (user) {
-	        _this.setState({
-	          username: user.username,
-	          userImg: user.profile_img,
-	          userPoint: user.point
-	        });
-	        _this.props.dispatch(SocialAction.getForumByUser(params)).then(function () {
-	          var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(forums) {
-	            return regeneratorRuntime.wrap(function _callee$(_context) {
-	              while (1) {
-	                switch (_context.prev = _context.next) {
-	                  case 0:
-	                    _context.next = 2;
-	                    return _this.setState({
-	                      forumLength: forums.length,
-	                      userLoading: false
-	                    });
+	        _this.props.dispatch(SocialAction.getCommentsByUser(params)).then(function (comments) {
+	          _this.props.dispatch(SocialAction.getForumByUser(params)).then(function () {
+	            var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(forums) {
+	              return regeneratorRuntime.wrap(function _callee$(_context) {
+	                while (1) {
+	                  switch (_context.prev = _context.next) {
+	                    case 0:
+	                      _context.next = 2;
+	                      return _this.setState({
+	                        username: user.username,
+	                        userImg: user.profile_img,
+	                        userPoint: user.point,
+	                        forumLength: forums.length,
+	                        commentLength: comments.length,
+	                        userLoading: false
+	                      });
 	
-	                  case 2:
-	                    _context.next = 4;
-	                    return _this.toggleModal();
+	                    case 2:
+	                      _context.next = 4;
+	                      return _this.toggleModal();
 	
-	                  case 4:
-	                  case "end":
-	                    return _context.stop();
+	                    case 4:
+	                    case "end":
+	                      return _context.stop();
+	                  }
 	                }
-	              }
-	            }, _callee, _this2);
-	          }));
+	              }, _callee, _this2);
+	            }));
 	
-	          return function (_x) {
-	            return _ref.apply(this, arguments);
-	          };
-	        }());
+	            return function (_x) {
+	              return _ref.apply(this, arguments);
+	            };
+	          }());
+	        });
 	      });
 	    };
 	
@@ -88355,7 +88439,8 @@
 	      userPoint: 0,
 	      userImg: "",
 	      userLoading: false,
-	      forumLength: 0
+	      forumLength: 0,
+	      commentLength: 0
 	    };
 	    _moment2.default.locale("ko");
 	    return _this;
@@ -88388,6 +88473,7 @@
 	            userImg = _state.userImg,
 	            userPoint = _state.userPoint,
 	            forumLength = _state.forumLength,
+	            commentLength = _state.commentLength,
 	            userLoading = _state.userLoading;
 	        var _props = this.props,
 	            me = _props.me,
@@ -88449,12 +88535,22 @@
 	                    ),
 	                    _react2.default.createElement(
 	                      "p",
-	                      { className: "postPage__modal__content__area__number" },
+	                      { className: "postPage__modal__content__area__number-border" },
 	                      forumLength,
 	                      _react2.default.createElement(
 	                        "span",
 	                        { className: "postPage__modal__content__area__text" },
 	                        "\uAC8C\uC2DC\uBB3C"
+	                      )
+	                    ),
+	                    _react2.default.createElement(
+	                      "p",
+	                      { className: "postPage__modal__content__area__number" },
+	                      commentLength,
+	                      _react2.default.createElement(
+	                        "span",
+	                        { className: "postPage__modal__content__area__text" },
+	                        "\uB313\uAE00"
 	                      )
 	                    )
 	                  )
@@ -88629,6 +88725,1511 @@
 	PostPage.propTypes = propTypes;
 	
 	exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps)(PostPage));
+
+/***/ }),
+/* 859 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(328);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(381);
+	
+	var _Components = __webpack_require__(620);
+	
+	var _ = __webpack_require__(585);
+	
+	var _reactRouterDom = __webpack_require__(393);
+	
+	var _reactActivity = __webpack_require__(755);
+	
+	var _NewsAction = __webpack_require__(436);
+	
+	var NewsAction = _interopRequireWildcard(_NewsAction);
+	
+	var _PriceAction = __webpack_require__(438);
+	
+	var PriceAction = _interopRequireWildcard(_PriceAction);
+	
+	var _SocialAction = __webpack_require__(857);
+	
+	var SocialAction = _interopRequireWildcard(_SocialAction);
+	
+	var _AuthAction = __webpack_require__(439);
+	
+	var AuthAction = _interopRequireWildcard(_AuthAction);
+	
+	var _reactstrap = __webpack_require__(623);
+	
+	var _reactLoadingOverlay = __webpack_require__(759);
+	
+	var _reactLoadingOverlay2 = _interopRequireDefault(_reactLoadingOverlay);
+	
+	__webpack_require__(757);
+	
+	var _classnames = __webpack_require__(624);
+	
+	var _classnames2 = _interopRequireDefault(_classnames);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // This Page is Skeleton of React Structure for Web Development
+	// If you want to make other page, Copy and Refactor this page.
+	
+	var defaultProps = {};
+	var propTypes = {};
+	
+	var styles = {
+	  styleAdd: {
+	    position: "absolute",
+	    left: "45vw",
+	    bottom: 30
+	  }
+	};
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    news: state.reducer.news,
+	    token: state.reducer.token,
+	    me: state.reducer.me,
+	    isLogin: state.reducer.isLogin,
+	    favorite: state.reducer.favorite
+	  };
+	};
+	
+	var UserPage = function (_Component) {
+	  _inherits(UserPage, _Component);
+	
+	  function UserPage(props) {
+	    var _this2 = this;
+	
+	    _classCallCheck(this, UserPage);
+	
+	    var _this = _possibleConstructorReturn(this, (UserPage.__proto__ || Object.getPrototypeOf(UserPage)).call(this, props));
+	
+	    _this.toggleModal = function () {
+	      if (_this.props.isLogin === false) {
+	        _this.props.history.push({
+	          pathname: "/auth"
+	        });
+	      } else {
+	        if (_this.state.favorite.length === 0) {
+	          alert("글을 작성하려면 우측에서 종목을 추가하세요");
+	        } else {
+	          _this.setState({
+	            showModal: !_this.state.showModal
+	          });
+	        }
+	      }
+	    };
+	
+	    _this.onFocus = function () {
+	      _this.setState(function (prevState) {
+	        return {
+	          isFocus: !prevState.isFocus
+	        };
+	      });
+	    };
+	
+	    _this.handleFilter = function (index, id, coin) {
+	      var newCoin = _this.state.sideFavorite.slice();
+	      var result = newCoin.filter(function (a) {
+	        return a.clicked === true;
+	      });
+	      if (result[index].selected) {
+	        result[index].selected = false;
+	        _this.setState({ sideFavorite: newCoin });
+	      } else {
+	        result[index].selected = true;
+	        _this.setState({ sideFavorite: newCoin });
+	      }
+	    };
+	
+	    _this.handleFavorite = function () {
+	      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(index, id, data) {
+	        var coin, favorite, token, params, i, leftOver, _i, result, abbrArray, _i2;
+	
+	        return regeneratorRuntime.wrap(function _callee$(_context) {
+	          while (1) {
+	            switch (_context.prev = _context.next) {
+	              case 0:
+	                coin = _this.state.sideFavorite.slice();
+	                favorite = _this.state.favorite.slice();
+	                token = _this.props.token;
+	                params = {
+	                  token: token,
+	                  coin_id: coin[index].id
+	                };
+	                //삭제
+	
+	                if (coin[index].clicked === true) {
+	                  coin[index].clicked = false;
+	
+	                  for (i = 0; i < favorite.length; i++) {
+	                    if (favorite[i].abbr === data) {
+	                      favorite.splice(i, 1);
+	                    }
+	                  }
+	
+	                  leftOver = [];
+	
+	                  for (_i = 0; _i < coin.length; _i++) {
+	                    if (coin[_i].clicked === true) {
+	                      leftOver.push(coin[_i].abbr);
+	                    }
+	                  }
+	                  //한개 남았을 때
+	                  if (leftOver.length === 0) {
+	                    _this.setState({ sideFavorite: coin, favorite: favorite });
+	                    _this.props.dispatch(PriceAction.removeFav(params));
+	                  } else {
+	                    _this.setState({ sideFavorite: coin, favorite: favorite });
+	                    _this.props.dispatch(PriceAction.removeFav(params));
+	                  }
+	                }
+	                //추가
+	                else {
+	                    coin[index].clicked = true;
+	                    coin[index].loading = true;
+	                    favorite.push({ coin_id: id, clicked: false, abbr: data });
+	
+	                    _this.setState({ sideFavorite: coin, favorite: favorite });
+	
+	                    //즐겨찾기 한 코인들에게, 가격, 증감표시 key 추가
+	                    result = coin.map(function (el) {
+	                      var o = Object.assign({}, el);
+	                      o.price = 0;
+	                      o.percent = "";
+	                      return o;
+	                    });
+	
+	                    //즐겨찾기한 코인, 이름만 모으기
+	
+	                    abbrArray = [];
+	
+	                    for (_i2 = 0; _i2 < result.length; _i2++) {
+	                      abbrArray[_i2] = result[_i2].abbr;
+	                    }
+	                    _this.props.dispatch(PriceAction.addFav(params)).then(function (x) {
+	                      _this.props.dispatch(PriceAction.getPrice(abbrArray)).then(function (value) {
+	                        for (var _i3 = 0; _i3 < abbrArray.length; _i3++) {
+	                          result[_i3].price = value[abbrArray[_i3]].KRW.PRICE;
+	                          result[_i3].percent = value[abbrArray[_i3]].KRW.CHANGEPCT24HOUR;
+	                        }
+	                        result[index].loading = false;
+	                        _this.setState(function (state) {
+	                          return { sideFavorite: result };
+	                        });
+	                      });
+	                    });
+	                  }
+	
+	              case 5:
+	              case "end":
+	                return _context.stop();
+	            }
+	          }
+	        }, _callee, _this2);
+	      }));
+	
+	      return function (_x, _x2, _x3) {
+	        return _ref.apply(this, arguments);
+	      };
+	    }();
+	
+	    _this.handleTitle = function (e) {
+	      _this.setState({ title: e.target.value });
+	    };
+	
+	    _this.handleMain = function (e) {
+	      _this.setState({ main: e.target.value });
+	    };
+	
+	    _this.handleDetail = function (index, id) {
+	      var isLogin = _this.props.isLogin;
+	
+	      if (isLogin) {
+	        var params = {
+	          token: _this.props.token,
+	          forum_id: id
+	        };
+	        var newPosts = _this.state.posts.slice();
+	        newPosts[index].loading = true;
+	        _this.setState({ posts: newPosts });
+	        _this.props.dispatch(SocialAction.getOneForum(params)).then(function (forum) {
+	          var newForum = Object.assign({}, forum);
+	          newForum.view_cnt = newForum.view_cnt + 1;
+	          _this.setState({ selectedIndex: index });
+	          _this.props.dispatch(SocialAction.postForumView(params)).then(function (view) {
+	            _this.props.dispatch(SocialAction.getOneForumCoins(params)).then(function (coins) {
+	              _this.props.dispatch(SocialAction.getOneForumComment(params)).then(function (comment) {
+	                var newPosts = _this.state.posts.slice();
+	                newPosts[index].loading = false;
+	                newPosts[index].view_cnt = newPosts[index].view_cnt + 1;
+	                _this.setState({ posts: newPosts });
+	                _this.props.history.push({
+	                  pathname: "/forum/" + id,
+	                  state: {
+	                    forum: newForum,
+	                    comment: comment.reverse(),
+	                    coins: coins
+	                  }
+	                });
+	              });
+	            });
+	          });
+	        });
+	      } else {
+	        _this.props.history.replace({
+	          pathname: "/auth"
+	        });
+	      }
+	    };
+	
+	    _this.handlePost = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+	      var _this$state, main, title, selectedCoinType, selectedAbbr, selectedPostType2, date, coinArray, i, params;
+	
+	      return regeneratorRuntime.wrap(function _callee3$(_context3) {
+	        while (1) {
+	          switch (_context3.prev = _context3.next) {
+	            case 0:
+	              _this$state = _this.state, main = _this$state.main, title = _this$state.title, selectedCoinType = _this$state.selectedCoinType, selectedAbbr = _this$state.selectedAbbr, selectedPostType2 = _this$state.selectedPostType2;
+	
+	              if (selectedCoinType.length === 0) {
+	                alert("해당하는 종목을 1개 이상 선택해주세요!");
+	              } else {
+	                date = new Date();
+	                coinArray = [];
+	
+	                for (i = 0; i < selectedAbbr.length; i++) {
+	                  coinArray.push({ abbr: selectedAbbr[i] });
+	                }
+	                params = {
+	                  title: title,
+	                  content: main,
+	                  category: selectedPostType2,
+	                  coins: selectedCoinType,
+	                  created_at: date,
+	                  token: _this.props.token
+	                };
+	
+	
+	                _this.setState({ postLoading: true });
+	                _this.props.dispatch(SocialAction.postForum(params)).then(function (id) {
+	                  var params = {
+	                    token: _this.props.token,
+	                    forum_id: id
+	                  };
+	                  var frontParams = {
+	                    title: title,
+	                    id: id,
+	                    content: main,
+	                    category: selectedPostType2,
+	                    coins: coinArray,
+	                    created_at: date,
+	                    view_cnt: 0
+	                  };
+	                  _this.props.dispatch(SocialAction.getOneForum(params)).then(function (forum) {
+	                    _this.props.dispatch(SocialAction.getOneForumCoins(params)).then(function () {
+	                      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(coins) {
+	                        var newPosts;
+	                        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+	                          while (1) {
+	                            switch (_context2.prev = _context2.next) {
+	                              case 0:
+	                                newPosts = _this.state.posts.slice();
+	
+	                                newPosts.splice(0, 0, frontParams);
+	                                _context2.next = 4;
+	                                return _this.props.history.push({
+	                                  pathname: "/forum/" + id,
+	                                  state: { forum: forum, coins: coins, comment: [] }
+	                                });
+	
+	                              case 4:
+	                                _context2.next = 6;
+	                                return _this.setState({
+	                                  posts: newPosts,
+	                                  postLoading: false,
+	                                  selectedIndex: 0
+	                                });
+	
+	                              case 6:
+	                                _context2.next = 8;
+	                                return _this.toggleModal();
+	
+	                              case 8:
+	                              case "end":
+	                                return _context2.stop();
+	                            }
+	                          }
+	                        }, _callee2, _this2);
+	                      }));
+	
+	                      return function (_x4) {
+	                        return _ref3.apply(this, arguments);
+	                      };
+	                    }());
+	                  });
+	                });
+	              }
+	
+	            case 2:
+	            case "end":
+	              return _context3.stop();
+	          }
+	        }
+	      }, _callee3, _this2);
+	    }));
+	
+	    _this.handleType2 = function (index, data) {
+	      _this.setState({ selectedPostType2: data });
+	    };
+	
+	    _this.handleCoinTag = function (index, id, data) {
+	      var newFav = _this.state.favorite.slice();
+	      var coinType = _this.state.selectedCoinType.slice();
+	      var abbrType = _this.state.selectedAbbr.slice();
+	
+	      if (!newFav[index].clicked) {
+	        newFav[index].clicked = true;
+	        coinType.push(id);
+	        abbrType.push(data);
+	        _this.setState({
+	          favorite: newFav,
+	          selectedCoinType: coinType,
+	          selectedAbbr: abbrType
+	        });
+	      } else {
+	        newFav[index].clicked = false;
+	        var coinIndex = coinType.indexOf(id);
+	        var abbrIndex = abbrType.indexOf(data);
+	        coinType.splice(coinIndex, 1);
+	        abbrType.splice(abbrIndex, 1);
+	        _this.setState({
+	          favorite: newFav,
+	          selectedCoinType: coinType,
+	          selectedAbbr: abbrType
+	        });
+	      }
+	    };
+	
+	    _this.handleScroll = function (e) {
+	      var bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+	      var forumIndex = _this.state.forumIndex;
+	
+	      var params = {
+	        forumIndex: forumIndex
+	      };
+	      if (bottom) {
+	        if (_this.state.endScroll === false) {
+	          _this.setState({ footerLoading: true });
+	          _this.props.dispatch(SocialAction.getAllForums(params)).then(function (forums) {
+	            if (forums.forums.length < 30) {
+	              _this.setState({ endScroll: true, footerLoading: false });
+	            } else {
+	              _this.setState(function (prevState) {
+	                return {
+	                  posts: [].concat(_toConsumableArray(prevState.posts), _toConsumableArray(forums.forums)),
+	                  forumIndex: forums.nextIndex,
+	                  footerLoading: false
+	                };
+	              });
+	            }
+	          });
+	        } else {
+	          return null;
+	        }
+	      }
+	    };
+	
+	    _this.state = {
+	      dropdownOpen: false,
+	      posts: [],
+	      favorite: [],
+	      sideFavorite: [],
+	      isFocus: false,
+	      isFocusComment: false,
+	      postLoading: false,
+	      isPostsLoading: false,
+	      forumLoading: false,
+	      footerLoading: false,
+	      title: "",
+	      main: "",
+	      endScroll: false,
+	      showModal: false,
+	      selectedCoinType: [],
+	      selectedAbbr: [],
+	      selectedPostType2: "자유",
+	      selectedIndex: null,
+	      forum: [],
+	      forumIndex: 0
+	    };
+	    _this.toggle = _this.toggle.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(UserPage, [{
+	    key: "componentWillMount",
+	    value: function componentWillMount() {
+	      var _this3 = this;
+	
+	      var isLogin = this.props.isLogin;
+	      var forumIndex = this.state.forumIndex;
+	
+	      var params = { forumIndex: forumIndex };
+	      this.setState({ isPostsLoading: true });
+	      this.props.dispatch(SocialAction.getAllForums(params)).then(function (forums) {
+	        if (forums.forums.length < 30) {
+	          _this3.setState({ endScroll: true });
+	        }
+	        var result = forums.forums.reverse().map(function (el) {
+	          var o = Object.assign({}, el);
+	          o.loading = false;
+	          return o;
+	        });
+	        _this3.setState({
+	          posts: result,
+	          forumIndex: forums.nextIndex,
+	          isPostsLoading: false
+	        });
+	        _this3.props.dispatch(PriceAction.getCoins()).then(function (coins) {
+	          if (isLogin) {
+	            _this3.props.dispatch(PriceAction.getFavs(_this3.props.token)).then(function (favs) {
+	              if (favs.length === 0) {
+	                var _result = coins.map(function (el) {
+	                  var o = Object.assign({}, el);
+	                  o.clicked = false;
+	                  o.loading = false;
+	                  return o;
+	                });
+	                _this3.setState({
+	                  sideFavorite: _result
+	                });
+	              } else {
+	                //글 작성 코인 타입
+	                var _result2 = favs.map(function (el) {
+	                  var o = Object.assign({}, el);
+	                  o.clicked = false;
+	                  return o;
+	                });
+	
+	                //사이드 바 즐겨찾기
+	                var resultSide = coins.map(function (el) {
+	                  var o = Object.assign({}, el);
+	                  o.clicked = false;
+	                  o.selected = false;
+	                  o.loading = true;
+	                  return o;
+	                });
+	                for (var i = 0; i < resultSide.length; i++) {
+	                  for (var j = 0; j < favs.length; j++) {
+	                    if (resultSide[i].abbr === favs[j].abbr) {
+	                      resultSide[i].clicked = true;
+	                    }
+	                  }
+	                }
+	                _this3.setState({ favorite: _result2, sideFavorite: resultSide });
+	
+	                //Crypto Compare API
+	                var abbrArray = [];
+	                for (var _i4 = 0; _i4 < resultSide.length; _i4++) {
+	                  if (resultSide[_i4].clicked === true) {
+	                    abbrArray.push({
+	                      id: resultSide[_i4].id,
+	                      abbr: resultSide[_i4].abbr
+	                    });
+	                  }
+	                }
+	                var final = resultSide.map(function (el) {
+	                  var o = Object.assign({}, el);
+	                  o.price = 0;
+	                  o.percent = "";
+	                  return o;
+	                });
+	                _this3.props.dispatch(PriceAction.getPrice(abbrArray.map(function (a, index) {
+	                  return a.abbr;
+	                }))).then(function (value) {
+	                  for (var _i5 = 0; _i5 < final.length; _i5++) {
+	                    for (var _j = 0; _j < abbrArray.length; _j++) {
+	                      if (final[_i5].abbr === abbrArray[_j].abbr) {
+	                        final[_i5].loading = false;
+	                        final[_i5].price = value[abbrArray[_j].abbr].KRW.PRICE;
+	                        final[_i5].percent = value[abbrArray[_j].abbr].KRW.CHANGEPCT24HOUR;
+	                      }
+	                    }
+	                  }
+	                  _this3.setState({ sideFavorite: final });
+	                });
+	              }
+	            });
+	          } else {
+	            null;
+	          }
+	        });
+	      });
+	    }
+	  }, {
+	    key: "toggle",
+	    value: function toggle() {
+	      this.setState(function (prevState) {
+	        return {
+	          dropdownOpen: !prevState.dropdownOpen
+	        };
+	      });
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _this4 = this;
+	
+	      var _state = this.state,
+	          posts = _state.posts,
+	          postLoading = _state.postLoading,
+	          isPostsLoading = _state.isPostsLoading,
+	          isFocus = _state.isFocus,
+	          selectedPostType2 = _state.selectedPostType2,
+	          selectedIndex = _state.selectedIndex,
+	          favorite = _state.favorite,
+	          forumLoading = _state.forumLoading,
+	          footerLoading = _state.footerLoading,
+	          sideFavorite = _state.sideFavorite;
+	      var _props = this.props,
+	          news = _props.news,
+	          me = _props.me,
+	          isLogin = _props.isLogin;
+	
+	      return _react2.default.createElement(
+	        "div",
+	        { className: "forumPage" },
+	        _react2.default.createElement(_Components.NavBar, { type: "forum" }),
+	        isLogin ? _react2.default.createElement(_Components.SideBar, {
+	          multiple: true,
+	          favorite: sideFavorite && sideFavorite,
+	          onClick: this.handleFilter,
+	          handleFavorite: this.handleFavorite
+	        }) : null,
+	        _react2.default.createElement(
+	          _reactstrap.Modal,
+	          {
+	            isOpen: this.state.showModal,
+	            toggle: this.toggleModal,
+	            size: "lg",
+	            modalTransition: { timeout: 20 },
+	            backdropTransition: { timeout: 10 }
+	            // backdrop={false}
+	          },
+	          _react2.default.createElement(
+	            _reactLoadingOverlay2.default,
+	            { active: postLoading, spinner: true, text: "\uD3EC\uC2A4\uD305 \uC911\uC785\uB2C8\uB2E4" },
+	            _react2.default.createElement(
+	              _reactstrap.ModalBody,
+	              null,
+	              _react2.default.createElement(
+	                "div",
+	                { className: "forumPage__modal" },
+	                _react2.default.createElement(_Components.SocialInput, {
+	                  user: me && me[0],
+	                  isTitle: true,
+	                  minRows: 4,
+	                  maxRows: 6,
+	                  showCamera: true,
+	                  showType2: true,
+	                  isLogin: isLogin,
+	                  onChange: this.handleMain,
+	                  onChangeTitle: this.handleTitle,
+	                  placeholder: "\uBCF8\uBB38\uC744 \uC785\uB825\uD558\uC138\uC694",
+	                  onClick: this.handlePost,
+	                  postText: "\uB4F1\uB85D",
+	                  handleType: this.handleType,
+	                  handleType2: this.handleType2,
+	                  postType: favorite,
+	                  selectedPostType2: selectedPostType2,
+	                  onFocus: this.onFocus,
+	                  isFocus: isFocus
+	                }),
+	                _react2.default.createElement(
+	                  "p",
+	                  { className: "forumPage__modal__favorite__text" },
+	                  _react2.default.createElement(
+	                    "span",
+	                    { className: "forumPage__modal__favorite__icon" },
+	                    _react2.default.createElement("i", { className: "xi-caret-down-min" })
+	                  ),
+	                  "\uAD00\uB828\uB41C \uC885\uBAA9\uC744 \uC120\uD0DD\uD558\uC138\uC694"
+	                ),
+	                _react2.default.createElement(
+	                  "div",
+	                  { className: "forumPage__modal__favorite" },
+	                  favorite && favorite.sort(function (a, b) {
+	                    if (a.abbr < b.abbr) return -1;
+	                    if (a.abbr > b.abbr) return 1;
+	                    return 0;
+	                  }).map(function (data, index) {
+	                    return _react2.default.createElement(
+	                      "div",
+	                      {
+	                        key: index,
+	                        className: (0, _classnames2.default)("forumPage__modal__favorite__item", {
+	                          "forumPage__modal__favorite__item-active": data.clicked
+	                        }),
+	                        onClick: function onClick() {
+	                          return _this4.handleCoinTag(index, data.coin_id, data.abbr);
+	                        }
+	                      },
+	                      data.abbr
+	                    );
+	                  })
+	                )
+	              )
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "forumPage__content" },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "forumPage__content__news" },
+	            _react2.default.createElement(
+	              "div",
+	              { className: "forumPage__content__news__search" },
+	              _react2.default.createElement(
+	                "div",
+	                { className: "forumPage__content__news__search__first" },
+	                _react2.default.createElement(
+	                  "div",
+	                  { className: "forumPage__content__news__search__first__iconArea" },
+	                  _react2.default.createElement(
+	                    "span",
+	                    { className: "forumPage__content__news__search__first__iconArea__icon" },
+	                    _react2.default.createElement("i", { className: "xi-search" })
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  "div",
+	                  { className: "forumPage__content__news__search__first__inputArea" },
+	                  _react2.default.createElement("input", {
+	                    className: "forumPage__content__news__search__first__inputArea__input",
+	                    placeholder: "\uBB34\uC5C7\uC744 \uCC3E\uACE0\uC2F6\uC73C\uC2E0\uAC00\uC694?"
+	                  })
+	                )
+	              ),
+	              _react2.default.createElement(
+	                "div",
+	                { className: "forumPage__content__news__search__second" },
+	                _react2.default.createElement(
+	                  "div",
+	                  { className: "forumPage__content__news__search__second__content" },
+	                  _react2.default.createElement(
+	                    _reactstrap.ButtonDropdown,
+	                    {
+	                      isOpen: this.state.dropdownOpen,
+	                      style: { marginRight: 10, backgroundColor: "transparent" },
+	                      toggle: this.toggle,
+	                      size: "sm",
+	                      direction: "down"
+	                    },
+	                    _react2.default.createElement(
+	                      _reactstrap.DropdownToggle,
+	                      { caret: true },
+	                      "\uCD5C\uC2E0 \uC21C"
+	                    ),
+	                    _react2.default.createElement(
+	                      _reactstrap.DropdownMenu,
+	                      null,
+	                      _react2.default.createElement(
+	                        _reactstrap.DropdownItem,
+	                        null,
+	                        "\uC778\uAE30 \uC21C"
+	                      )
+	                    )
+	                  ),
+	                  _react2.default.createElement(
+	                    _reactstrap.Button,
+	                    { onClick: this.toggleModal, size: "sm" },
+	                    "\uC0C8 \uAE00 \uC791\uC131"
+	                  )
+	                )
+	              )
+	            ),
+	            isPostsLoading ? _react2.default.createElement(
+	              "div",
+	              { className: "forumPage__content__news__lists-loading" },
+	              _react2.default.createElement(_reactActivity.Dots, { color: "#ffffff", size: 30 })
+	            ) : _react2.default.createElement(
+	              "div",
+	              {
+	                ref: function ref(el) {
+	                  _this4.lists = el;
+	                },
+	                onScroll: this.handleScroll,
+	                className: "forumPage__content__news__lists"
+	              },
+	              posts.map(function (data, index) {
+	                return _react2.default.createElement(_Components.List, {
+	                  social: true,
+	                  index: index,
+	                  isLoading: data.loading,
+	                  selectedIndex: selectedIndex,
+	                  key: index,
+	                  username: data.username,
+	                  title: data.title,
+	                  point: data.point,
+	                  createdAt: data.created_at,
+	                  type: data.coins,
+	                  view: data.view_cnt,
+	                  onClick: function onClick() {
+	                    return _this4.handleDetail(index, data.id);
+	                  }
+	                });
+	              }),
+	              footerLoading === true ? _react2.default.createElement(
+	                "div",
+	                { className: "forumPage__content__news__lists__footer" },
+	                _react2.default.createElement(_reactActivity.Dots, { color: "#ffffff", size: 20 })
+	              ) : null
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactRouterDom.Switch,
+	            null,
+	            _react2.default.createElement(_reactRouterDom.Route, {
+	              path: this.props.match.url + "/:forum_id",
+	              component: _.PostPage
+	            }),
+	            _react2.default.createElement(_reactRouterDom.Route, {
+	              exact: true,
+	              path: "" + this.props.match.url,
+	              render: function render() {
+	                return _react2.default.createElement(
+	                  "div",
+	                  { className: "forumPage__content__chart" },
+	                  _react2.default.createElement(
+	                    "div",
+	                    { className: "forumPage__content__chart__intro" },
+	                    _react2.default.createElement(
+	                      "div",
+	                      { className: "forumPage__content__chart__intro__logo" },
+	                      _react2.default.createElement("img", {
+	                        width: 45,
+	                        height: 45,
+	                        src: "https://github.com/Hanyang-QuadJ/enhance/blob/master/public/icons/enhance_logo.png?raw=true"
+	                      }),
+	                      _react2.default.createElement(
+	                        "p",
+	                        { className: "forumPage__content__chart__intro__logo__text" },
+	                        "ENHANCE"
+	                      )
+	                    ),
+	                    _react2.default.createElement(
+	                      "div",
+	                      { className: "forumPage__content__chart__intro__welcome" },
+	                      _react2.default.createElement(
+	                        "p",
+	                        null,
+	                        _react2.default.createElement(
+	                          "strong",
+	                          null,
+	                          "\uD658\uC601\uD569\uB2C8\uB2E4. "
+	                        ),
+	                        me && me[0].username + " 님"
+	                      ),
+	                      _react2.default.createElement(
+	                        "p",
+	                        null,
+	                        "\uC778\uD578\uC2A4\uB294 \uAC00\uC0C1\uD654\uD3D0\uC640 \uBE14\uB85D\uCCB4\uC778 \uAE30\uC220\uC5D0 \uB300\uD55C \uC815\uBCF4\uB97C \uC2E4\uC2DC\uAC04\uC73C\uB85C \uBAA8\uC544\uC11C \uD55C\uB208\uC5D0 \uBCF4\uAE30 \uC27D\uAC8C \uC81C\uACF5\uD574 \uB4DC\uB9AC\uACE0 \uC788\uC2B5\uB2C8\uB2E4. \uC778\uD578\uC2A4\uC640 \uD568\uAED8 \uAC00\uC0C1\uD654\uD3D0\uC758 \uC5ED\uC0AC\uB97C \uD568\uAED8 \uD558\uC138\uC694."
+	                      )
+	                    ),
+	                    _react2.default.createElement(
+	                      "div",
+	                      { className: "forumPage__content__chart__intro__desc" },
+	                      _react2.default.createElement(
+	                        "strong",
+	                        null,
+	                        "\uC778\uD578\uC2A4 \uD3EC\uB7FC"
+	                      ),
+	                      _react2.default.createElement(
+	                        "p",
+	                        null,
+	                        "\uB85C\uADF8\uC778 \uD6C4 + \uBC84\uD2BC\uC744 \uB204\uB974\uAC70\uB098 \uC88C\uCE21 \uC0C1\uB2E8 \uB3CB\uBCF4\uAE30 \uC544\uC774\uCF58\uC744 \uB20C\uB7EC \uC6D0\uD558\uB294 \uAC00\uC0C1\uD654\uD3D0 \uC885\uBAA9\uC744 \uAC80\uC0C9\uD558\uC2E4 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+	                      ),
+	                      _react2.default.createElement("br", null),
+	                      _react2.default.createElement(
+	                        "p",
+	                        null,
+	                        "\uC6D0\uD558\uB294 \uAC00\uC0C1\uD654\uD3D0\uB97C \uD074\uB9AD\uD558\uC5EC \uD314\uB85C\uC6B0 \uD558\uC2DC\uBA74 \uC6B0\uCE21 \uC990\uACA8\uCC3E\uAE30 \uBAA9\uB85D\uC5D0 \uC800\uC7A5\uB418\uC5B4 \uD574\uB2F9 \uAC00\uC0C1 \uD654\uD3D0\uC758 \uC815\uBCF4\uB97C \uACC4\uC18D \uBCF4\uC2E4 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+	                      ),
+	                      _react2.default.createElement("br", null),
+	                      _react2.default.createElement(
+	                        "p",
+	                        null,
+	                        "\uAC01 \uAC00\uC0C1\uD654\uD3D0\uC758 \uC885\uBAA9\uC758 \uCEE4\uBBA4\uB2C8\uD2F0\uC5D0 \uCC38\uC5EC\uD558\uC138\uC694."
+	                      )
+	                    )
+	                  )
+	                );
+	              }
+	            })
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return UserPage;
+	}(_react.Component);
+	
+	UserPage.defaultProps = defaultProps;
+	UserPage.propTypes = propTypes;
+	
+	exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps)(UserPage));
+
+/***/ }),
+/* 860 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(328);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(381);
+	
+	var _Components = __webpack_require__(620);
+	
+	var _ = __webpack_require__(585);
+	
+	var _reactRouterDom = __webpack_require__(393);
+	
+	var _reactActivity = __webpack_require__(755);
+	
+	var _NewsAction = __webpack_require__(436);
+	
+	var NewsAction = _interopRequireWildcard(_NewsAction);
+	
+	var _PriceAction = __webpack_require__(438);
+	
+	var PriceAction = _interopRequireWildcard(_PriceAction);
+	
+	var _SocialAction = __webpack_require__(857);
+	
+	var SocialAction = _interopRequireWildcard(_SocialAction);
+	
+	var _AuthAction = __webpack_require__(439);
+	
+	var AuthAction = _interopRequireWildcard(_AuthAction);
+	
+	var _reactstrap = __webpack_require__(623);
+	
+	__webpack_require__(757);
+	
+	var _classnames = __webpack_require__(624);
+	
+	var _classnames2 = _interopRequireDefault(_classnames);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // This Page is Skeleton of React Structure for Web Development
+	// If you want to make other page, Copy and Refactor this page.
+	
+	var defaultProps = {};
+	var propTypes = {};
+	
+	var styles = {
+	  styleAdd: {
+	    position: "absolute",
+	    left: "45vw",
+	    bottom: 30
+	  }
+	};
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    news: state.reducer.news,
+	    token: state.reducer.token,
+	    me: state.reducer.me,
+	    isLogin: state.reducer.isLogin,
+	    favorite: state.reducer.favorite
+	  };
+	};
+	
+	var MyPage = function (_Component) {
+	  _inherits(MyPage, _Component);
+	
+	  function MyPage(props) {
+	    var _this2 = this;
+	
+	    _classCallCheck(this, MyPage);
+	
+	    var _this = _possibleConstructorReturn(this, (MyPage.__proto__ || Object.getPrototypeOf(MyPage)).call(this, props));
+	
+	    _this.handleFilter = function (index, id, coin) {
+	      var newCoin = _this.state.sideFavorite.slice();
+	      var result = newCoin.filter(function (a) {
+	        return a.clicked === true;
+	      });
+	      if (result[index].selected) {
+	        result[index].selected = false;
+	        _this.setState({ sideFavorite: newCoin });
+	      } else {
+	        result[index].selected = true;
+	        _this.setState({ sideFavorite: newCoin });
+	      }
+	    };
+	
+	    _this.handleFavorite = function () {
+	      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(index, id, data) {
+	        var coin, favorite, token, params, i, leftOver, _i, result, abbrArray, _i2;
+	
+	        return regeneratorRuntime.wrap(function _callee$(_context) {
+	          while (1) {
+	            switch (_context.prev = _context.next) {
+	              case 0:
+	                coin = _this.state.sideFavorite.slice();
+	                favorite = _this.state.favorite.slice();
+	                token = _this.props.token;
+	                params = {
+	                  token: token,
+	                  coin_id: coin[index].id
+	                };
+	                //삭제
+	
+	                if (coin[index].clicked === true) {
+	                  coin[index].clicked = false;
+	
+	                  for (i = 0; i < favorite.length; i++) {
+	                    if (favorite[i].abbr === data) {
+	                      favorite.splice(i, 1);
+	                    }
+	                  }
+	
+	                  leftOver = [];
+	
+	                  for (_i = 0; _i < coin.length; _i++) {
+	                    if (coin[_i].clicked === true) {
+	                      leftOver.push(coin[_i].abbr);
+	                    }
+	                  }
+	                  //한개 남았을 때
+	                  if (leftOver.length === 0) {
+	                    _this.setState({ sideFavorite: coin, favorite: favorite });
+	                    _this.props.dispatch(PriceAction.removeFav(params));
+	                  } else {
+	                    _this.setState({ sideFavorite: coin, favorite: favorite });
+	                    _this.props.dispatch(PriceAction.removeFav(params));
+	                  }
+	                }
+	                //추가
+	                else {
+	                    coin[index].clicked = true;
+	                    coin[index].loading = true;
+	                    favorite.push({ coin_id: id, clicked: false, abbr: data });
+	
+	                    _this.setState({ sideFavorite: coin, favorite: favorite });
+	
+	                    //즐겨찾기 한 코인들에게, 가격, 증감표시 key 추가
+	                    result = coin.map(function (el) {
+	                      var o = Object.assign({}, el);
+	                      o.price = 0;
+	                      o.percent = "";
+	                      return o;
+	                    });
+	
+	                    //즐겨찾기한 코인, 이름만 모으기
+	
+	                    abbrArray = [];
+	
+	                    for (_i2 = 0; _i2 < result.length; _i2++) {
+	                      abbrArray[_i2] = result[_i2].abbr;
+	                    }
+	                    _this.props.dispatch(PriceAction.addFav(params)).then(function (x) {
+	                      _this.props.dispatch(PriceAction.getPrice(abbrArray)).then(function (value) {
+	                        for (var _i3 = 0; _i3 < abbrArray.length; _i3++) {
+	                          result[_i3].price = value[abbrArray[_i3]].KRW.PRICE;
+	                          result[_i3].percent = value[abbrArray[_i3]].KRW.CHANGEPCT24HOUR;
+	                        }
+	                        result[index].loading = false;
+	                        _this.setState(function (state) {
+	                          return { sideFavorite: result };
+	                        });
+	                      });
+	                    });
+	                  }
+	
+	              case 5:
+	              case "end":
+	                return _context.stop();
+	            }
+	          }
+	        }, _callee, _this2);
+	      }));
+	
+	      return function (_x, _x2, _x3) {
+	        return _ref.apply(this, arguments);
+	      };
+	    }();
+	
+	    _this.handleDetail = function (index, id) {
+	      var isLogin = _this.props.isLogin;
+	
+	      var params = {
+	        token: _this.props.token,
+	        forum_id: id
+	      };
+	      var newPosts = _this.state.posts.slice();
+	      newPosts[index].loading = true;
+	      _this.setState({ posts: newPosts });
+	      _this.props.dispatch(SocialAction.getOneForum(params)).then(function (forum) {
+	        var newForum = Object.assign({}, forum);
+	        newForum.view_cnt = newForum.view_cnt + 1;
+	        _this.setState({ selectedIndex: index });
+	        _this.props.dispatch(SocialAction.postForumView(params)).then(function (view) {
+	          _this.props.dispatch(SocialAction.getOneForumCoins(params)).then(function (coins) {
+	            _this.props.dispatch(SocialAction.getOneForumComment(params)).then(function (comment) {
+	              var newPosts = _this.state.posts.slice();
+	              newPosts[index].loading = false;
+	              newPosts[index].view_cnt = newPosts[index].view_cnt + 1;
+	              _this.setState({ posts: newPosts });
+	              _this.props.history.push({
+	                pathname: "/profile/" + id,
+	                state: {
+	                  forum: newForum,
+	                  comment: comment.reverse(),
+	                  coins: coins
+	                }
+	              });
+	            });
+	          });
+	        });
+	      });
+	    };
+	
+	    _this.handleScroll = function (e) {
+	      var bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+	      var forumIndex = _this.state.forumIndex;
+	
+	      var params = {
+	        forumIndex: forumIndex
+	      };
+	      if (bottom) {
+	        if (_this.state.endScroll === false) {
+	          _this.setState({ footerLoading: true });
+	          _this.props.dispatch(SocialAction.getAllForums(params)).then(function (forums) {
+	            if (forums.forums.length < 30) {
+	              _this.setState({ endScroll: true, footerLoading: false });
+	            } else {
+	              _this.setState(function (prevState) {
+	                return {
+	                  posts: [].concat(_toConsumableArray(prevState.posts), _toConsumableArray(forums.forums)),
+	                  forumIndex: forums.nextIndex,
+	                  footerLoading: false
+	                };
+	              });
+	            }
+	          });
+	        } else {
+	          return null;
+	        }
+	      }
+	    };
+	
+	    _this.handleSignOut = function () {
+	      _this.props.dispatch(AuthAction.signOut()).then(function (value) {
+	        _this.props.history.replace({
+	          pathname: "/auth"
+	        });
+	      });
+	    };
+	
+	    _this.state = {
+	      dropdownOpen: false,
+	      posts: [],
+	      comments: [],
+	      favorite: [],
+	      sideFavorite: [],
+	      isFocus: false,
+	      isFocusComment: false,
+	      isPostsLoading: false,
+	      forumLoading: false,
+	      selectedCoinType: [],
+	      selectedAbbr: [],
+	      selectedPostType2: "자유",
+	      selectedIndex: null,
+	      forum: [],
+	      forumIndex: 0
+	    };
+	    _this.toggle = _this.toggle.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(MyPage, [{
+	    key: "componentWillMount",
+	    value: function componentWillMount() {
+	      var _this3 = this;
+	
+	      var _props = this.props,
+	          me = _props.me,
+	          token = _props.token;
+	
+	      var params = { user_id: me[0].id, token: token };
+	      this.setState({ isPostsLoading: true });
+	      this.props.dispatch(SocialAction.getForumByUser(params)).then(function (forums) {
+	        _this3.props.dispatch(SocialAction.getCommentsByUser(params)).then(function (comments) {
+	          var result = forums.reverse().map(function (el) {
+	            var o = Object.assign({}, el);
+	            o.loading = false;
+	            return o;
+	          });
+	          var commentResult = forums.reverse().map(function (el) {
+	            var o = Object.assign({}, el);
+	            o.loading = false;
+	            return o;
+	          });
+	          _this3.setState({
+	            posts: result,
+	            comments: commentResult,
+	            isPostsLoading: false
+	          });
+	          _this3.props.dispatch(PriceAction.getCoins()).then(function (coins) {
+	            _this3.props.dispatch(PriceAction.getFavs(_this3.props.token)).then(function (favs) {
+	              if (favs.length === 0) {
+	                var _result = coins.map(function (el) {
+	                  var o = Object.assign({}, el);
+	                  o.clicked = false;
+	                  o.loading = false;
+	                  return o;
+	                });
+	                _this3.setState({
+	                  sideFavorite: _result
+	                });
+	              } else {
+	                //글 작성 코인 타입
+	                var _result2 = favs.map(function (el) {
+	                  var o = Object.assign({}, el);
+	                  o.clicked = false;
+	                  return o;
+	                });
+	
+	                //사이드 바 즐겨찾기
+	                var resultSide = coins.map(function (el) {
+	                  var o = Object.assign({}, el);
+	                  o.clicked = false;
+	                  o.selected = false;
+	                  o.loading = true;
+	                  return o;
+	                });
+	                for (var i = 0; i < resultSide.length; i++) {
+	                  for (var j = 0; j < favs.length; j++) {
+	                    if (resultSide[i].abbr === favs[j].abbr) {
+	                      resultSide[i].clicked = true;
+	                    }
+	                  }
+	                }
+	                _this3.setState({ favorite: _result2, sideFavorite: resultSide });
+	
+	                //Crypto Compare API
+	                var abbrArray = [];
+	                for (var _i4 = 0; _i4 < resultSide.length; _i4++) {
+	                  if (resultSide[_i4].clicked === true) {
+	                    abbrArray.push({
+	                      id: resultSide[_i4].id,
+	                      abbr: resultSide[_i4].abbr
+	                    });
+	                  }
+	                }
+	                var final = resultSide.map(function (el) {
+	                  var o = Object.assign({}, el);
+	                  o.price = 0;
+	                  o.percent = "";
+	                  return o;
+	                });
+	                _this3.props.dispatch(PriceAction.getPrice(abbrArray.map(function (a, index) {
+	                  return a.abbr;
+	                }))).then(function (value) {
+	                  for (var _i5 = 0; _i5 < final.length; _i5++) {
+	                    for (var _j = 0; _j < abbrArray.length; _j++) {
+	                      if (final[_i5].abbr === abbrArray[_j].abbr) {
+	                        final[_i5].loading = false;
+	                        final[_i5].price = value[abbrArray[_j].abbr].KRW.PRICE;
+	                        final[_i5].percent = value[abbrArray[_j].abbr].KRW.CHANGEPCT24HOUR;
+	                      }
+	                    }
+	                  }
+	                  _this3.setState({ sideFavorite: final });
+	                });
+	              }
+	            });
+	          });
+	        });
+	      });
+	    }
+	  }, {
+	    key: "toggle",
+	    value: function toggle() {
+	      this.setState(function (prevState) {
+	        return {
+	          dropdownOpen: !prevState.dropdownOpen
+	        };
+	      });
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _this4 = this;
+	
+	      var _state = this.state,
+	          posts = _state.posts,
+	          comments = _state.comments,
+	          isPostsLoading = _state.isPostsLoading,
+	          selectedIndex = _state.selectedIndex,
+	          favorite = _state.favorite,
+	          footerLoading = _state.footerLoading,
+	          sideFavorite = _state.sideFavorite;
+	      var me = this.props.me;
+	
+	      return _react2.default.createElement(
+	        "div",
+	        { className: "myPage" },
+	        _react2.default.createElement(_Components.NavBar, { type: "auth" }),
+	        _react2.default.createElement(_Components.SideBar, {
+	          multiple: true,
+	          favorite: sideFavorite && sideFavorite,
+	          onClick: this.handleFilter,
+	          handleFavorite: this.handleFavorite
+	        }),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "myPage__content" },
+	          _react2.default.createElement(
+	            "div",
+	            { className: "myPage__content__news" },
+	            _react2.default.createElement(
+	              "div",
+	              { className: "myPage__content__news__search" },
+	              _react2.default.createElement(
+	                "div",
+	                { className: "myPage__content__news__search__first" },
+	                _react2.default.createElement(
+	                  "div",
+	                  { className: "myPage__content__news__search__first__iconArea" },
+	                  _react2.default.createElement(
+	                    "span",
+	                    { className: "myPage__content__news__search__first__iconArea__icon" },
+	                    _react2.default.createElement("i", { className: "xi-search" })
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  "div",
+	                  { className: "myPage__content__news__search__first__inputArea" },
+	                  _react2.default.createElement("input", {
+	                    className: "myPage__content__news__search__first__inputArea__input",
+	                    placeholder: "\uBB34\uC5C7\uC744 \uCC3E\uACE0\uC2F6\uC73C\uC2E0\uAC00\uC694?"
+	                  })
+	                )
+	              ),
+	              _react2.default.createElement(
+	                "div",
+	                { className: "myPage__content__news__search__second" },
+	                _react2.default.createElement(
+	                  "div",
+	                  { className: "myPage__content__news__search__second__content" },
+	                  _react2.default.createElement(
+	                    _reactstrap.ButtonDropdown,
+	                    {
+	                      isOpen: this.state.dropdownOpen,
+	                      style: { marginRight: 10, backgroundColor: "transparent" },
+	                      toggle: this.toggle,
+	                      size: "sm",
+	                      direction: "down"
+	                    },
+	                    _react2.default.createElement(
+	                      _reactstrap.DropdownToggle,
+	                      { caret: true },
+	                      "\uCD5C\uC2E0 \uC21C"
+	                    ),
+	                    _react2.default.createElement(
+	                      _reactstrap.DropdownMenu,
+	                      null,
+	                      _react2.default.createElement(
+	                        _reactstrap.DropdownItem,
+	                        null,
+	                        "\uC778\uAE30 \uC21C"
+	                      )
+	                    )
+	                  )
+	                )
+	              )
+	            ),
+	            isPostsLoading ? _react2.default.createElement(
+	              "div",
+	              { className: "myPage__content__news__lists-loading" },
+	              _react2.default.createElement(_reactActivity.Dots, { color: "#ffffff", size: 30 })
+	            ) : _react2.default.createElement(
+	              "div",
+	              {
+	                ref: function ref(el) {
+	                  _this4.lists = el;
+	                },
+	                onScroll: this.handleScroll,
+	                className: "myPage__content__news__lists"
+	              },
+	              posts.map(function (data, index) {
+	                return _react2.default.createElement(_Components.List, {
+	                  social: true,
+	                  index: index,
+	                  isLoading: data.loading,
+	                  selectedIndex: selectedIndex,
+	                  key: index,
+	                  username: data.username,
+	                  title: data.title,
+	                  point: data.point,
+	                  createdAt: data.created_at,
+	                  type: data.coins,
+	                  view: data.view_cnt,
+	                  onClick: function onClick() {
+	                    return _this4.handleDetail(index, data.id);
+	                  }
+	                });
+	              }),
+	              footerLoading === true ? _react2.default.createElement(
+	                "div",
+	                { className: "myPage__content__news__lists__footer" },
+	                _react2.default.createElement(_reactActivity.Dots, { color: "#ffffff", size: 20 })
+	              ) : null
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactRouterDom.Switch,
+	            null,
+	            _react2.default.createElement(_reactRouterDom.Route, {
+	              path: this.props.match.url + "/:forum_id",
+	              component: _.PostPage
+	            }),
+	            _react2.default.createElement(_reactRouterDom.Route, {
+	              exact: true,
+	              path: "" + this.props.match.url,
+	              render: function render() {
+	                return _react2.default.createElement(
+	                  "div",
+	                  { className: "myPage__content__chart" },
+	                  _react2.default.createElement(
+	                    "div",
+	                    { className: "myPage__content__chart__intro" },
+	                    _react2.default.createElement(
+	                      "div",
+	                      { className: "myPage__content__chart__intro" },
+	                      _react2.default.createElement(
+	                        "div",
+	                        { className: "myPage__content__chart__intro__content" },
+	                        _react2.default.createElement(_Components.Thumb, {
+	                          src: me[0].profile_img,
+	                          fontSize: 75,
+	                          size: 90,
+	                          point: me[0].point
+	                        }),
+	                        _react2.default.createElement(
+	                          "p",
+	                          { className: "myPage__content__chart__intro__content__username" },
+	                          me[0].username
+	                        ),
+	                        _react2.default.createElement(
+	                          "div",
+	                          { className: "myPage__content__chart__intro__content__area" },
+	                          _react2.default.createElement(
+	                            "p",
+	                            { className: "myPage__content__chart__intro__content__area__number-border" },
+	                            me[0].point,
+	                            _react2.default.createElement(
+	                              "span",
+	                              { className: "myPage__content__chart__intro__content__area__text" },
+	                              "\uD3EC\uC778\uD2B8"
+	                            )
+	                          ),
+	                          _react2.default.createElement(
+	                            "p",
+	                            { className: "myPage__content__chart__intro__content__area__number-border" },
+	                            posts.length,
+	                            _react2.default.createElement(
+	                              "span",
+	                              { className: "myPage__content__chart__intro__content__area__text" },
+	                              "\uAC8C\uC2DC\uBB3C"
+	                            )
+	                          ),
+	                          _react2.default.createElement(
+	                            "p",
+	                            { className: "myPage__content__chart__intro__content__area__number" },
+	                            comments.length,
+	                            _react2.default.createElement(
+	                              "span",
+	                              { className: "myPage__content__chart__intro__content__area__text" },
+	                              "\uB313\uAE00"
+	                            )
+	                          )
+	                        ),
+	                        _react2.default.createElement("br", null),
+	                        _react2.default.createElement("br", null),
+	                        _react2.default.createElement(_Components.Button, {
+	                          text: "\uB85C\uADF8\uC544\uC6C3",
+	                          width: 100,
+	                          height: 40,
+	                          onClick: _this4.handleSignOut
+	                        })
+	                      )
+	                    )
+	                  )
+	                );
+	              }
+	            })
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return MyPage;
+	}(_react.Component);
+	
+	MyPage.defaultProps = defaultProps;
+	MyPage.propTypes = propTypes;
+	
+	exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps)(MyPage));
 
 /***/ })
 /******/ ]);
