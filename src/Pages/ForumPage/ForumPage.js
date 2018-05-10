@@ -12,7 +12,7 @@ import {
   SocialInput
 } from "../../Components";
 import { PostPage, UserInfoPage } from "../";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 import Textarea from "react-textarea-autosize";
 import { Dots } from "react-activity";
 import * as NewsAction from "../../ActionCreators/NewsAction";
@@ -473,7 +473,6 @@ class ForumPage extends Component {
       sideFavorite
     } = this.state;
     const { news, me, isLogin } = this.props;
-    console.log(this.props.match);
     return (
       <div className="forumPage">
         <NavBar type="forum" />
@@ -625,10 +624,13 @@ class ForumPage extends Component {
             )}
           </div>
           <Switch>
-            <Route path={`${this.props.match.url}`} component={PostPage} />
+            <Route
+              path={`${this.props.match.url}/:forum_id`}
+              component={PostPage}
+            />
             <Route
               exact
-              path="/forum"
+              path={`${this.props.match.url}`}
               render={() => {
                 return (
                   <div className="forumPage__content__chart">
@@ -684,4 +686,4 @@ class ForumPage extends Component {
 ForumPage.defaultProps = defaultProps;
 ForumPage.propTypes = propTypes;
 
-export default connect(mapStateToProps)(ForumPage);
+export default withRouter(connect(mapStateToProps)(ForumPage));

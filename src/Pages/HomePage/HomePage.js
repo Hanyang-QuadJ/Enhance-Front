@@ -3,6 +3,7 @@
 
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import { NavBar, List, SideBar } from "../../Components";
 import { Dots } from "react-activity";
 import * as NewsAction from "../../ActionCreators/NewsAction";
@@ -586,4 +587,4 @@ class HomePage extends Component {
 HomePage.defaultProps = defaultProps;
 HomePage.propTypes = propTypes;
 
-export default connect(mapStateToProps)(HomePage);
+export default withRouter(connect(mapStateToProps)(HomePage));

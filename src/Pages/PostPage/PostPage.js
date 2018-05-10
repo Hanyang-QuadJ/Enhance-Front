@@ -5,7 +5,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Thumb, SocialInput, Comment } from "../../Components";
 import * as SocialAction from "../../ActionCreators/SocialAction";
-import { Route } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 import moment from "moment";
 
@@ -27,7 +27,8 @@ class PostPage extends Component {
     this.state = {
       isFocusComment: false,
       comment: "",
-      newComment: []
+      newComment: [],
+      user: []
     };
     moment.locale("ko");
   }
@@ -76,115 +77,123 @@ class PostPage extends Component {
   }
 
   render() {
-    const { isFocusComment, newComment } = this.state;
-    const { me, isLogin, onClick } = this.props;
-    const { forum, coins, comment } = this.props.location.state;
-    return (
-      <div className="postPage__content__chart">
-        <div className="postPage__content__chart__intro">
-          <div className="postPage__content__chart__intro__post">
-            <div className="postPage__content__chart__intro__post__header">
-              <div className="postPage__content__chart__intro__post__header__userInfo">
-                <div className="postPage__content__chart__intro__post__header__userInfo__thumb">
-                  <Thumb
-                    src={forum.profile_img}
-                    fontSize={35}
-                    size={50}
-                    point={forum.point}
-                    onClick={onClick}
-                  />
+    if (this.props.location.state === undefined) {
+      window.location.href = "/enhance/forum";
+    } else {
+      const { isFocusComment, newComment, user } = this.state;
+      const { me, isLogin, onClick } = this.props;
+      const { forum, coins, comment } = this.props.location.state;
+      console.log(user);
+
+      return (
+        <div className="postPage__content__chart">
+          {user.length === 0 ? (
+            <div className="postPage__content__chart__intro">
+              <div className="postPage__content__chart__intro__post">
+                <div className="postPage__content__chart__intro__post__header">
+                  <div className="postPage__content__chart__intro__post__header__userInfo">
+                    <div className="postPage__content__chart__intro__post__header__userInfo__thumb">
+                      <Thumb
+                        src={forum.profile_img}
+                        fontSize={35}
+                        size={50}
+                        point={forum.point}
+                        onClick={onClick}
+                      />
+                    </div>
+                    <div className="postPage__content__chart__intro__post__header__userInfo__name">
+                      <strong>{forum.username}</strong>
+                      <span className="postPage__content__chart__intro__post__header__userInfo__point">
+                        {`${forum.point} 포인트`}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="postPage__content__chart__intro__post__header__detail">
+                    <p>{forum.category}</p>
+                    <span className="postPage__content__chart__intro__post__header__userInfo__date">
+                      {moment(forum.created_at).fromNow()}
+                    </span>
+                  </div>
                 </div>
-                <div className="postPage__content__chart__intro__post__header__userInfo__name">
-                  <strong>{forum.username}</strong>
-                  <span className="postPage__content__chart__intro__post__header__userInfo__point">
-                    {`${forum.point} 포인트`}
+                <div className="postPage__content__chart__intro__post__title">
+                  <p>{forum.title}</p>
+                </div>
+                <div className="postPage__content__chart__intro__post__body">
+                  <p>{forum.content}</p>
+                </div>
+                <div className="postPage__content__chart__intro__post__coin">
+                  {coins.map((data, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className="postPage__content__chart__intro__post__coin__item"
+                      >
+                        {data.abbr}
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="postPage__content__chart__intro__post__footer">
+                  <span className="postPage__content__chart__intro__post__footer__count">
+                    10
+                  </span>
+                  <span className="postPage__content__chart__intro__post__footer__icon">
+                    <i className="far fa-thumbs-up" />
+                  </span>
+                  <span className="postPage__content__chart__intro__post__footer__count">
+                    {forum.view_cnt}
+                  </span>
+                  <span className="postPage__content__chart__intro__post__footer__icon">
+                    <i className="xi-eye" />
                   </span>
                 </div>
               </div>
-              <div className="postPage__content__chart__intro__post__header__detail">
-                <p>{forum.category}</p>
-                <span className="postPage__content__chart__intro__post__header__userInfo__date">
-                  {moment(forum.created_at).fromNow()}
-                </span>
+              <SocialInput
+                user={me && me[0]}
+                isLogin={isLogin}
+                value={this.state.comment}
+                onChange={this.handleComment}
+                placeholder="댓글을 입력하세요"
+                onClick={this.handlePostComment}
+                postText="등록"
+                onFocus={this.onFocusComment}
+                isFocus={isFocusComment}
+              />
+              <div className="postPage__content__chart__intro__comments">
+                {newComment.map((data, index) => {
+                  return (
+                    <Comment
+                      key={index}
+                      username={data.username}
+                      profileImg={data.profile_img}
+                      userPoint={data.point}
+                      createdAt={data.created_at}
+                      content={data.content}
+                    />
+                  );
+                })}
+                {comment.map((data, index) => {
+                  return (
+                    <Comment
+                      key={index}
+                      username={data.username}
+                      profileImg={data.profile_img}
+                      userPoint={data.point}
+                      createdAt={data.created_at}
+                      content={data.content}
+                    />
+                  );
+                })}
               </div>
             </div>
-            <div className="postPage__content__chart__intro__post__title">
-              <p>{forum.title}</p>
-            </div>
-            <div className="postPage__content__chart__intro__post__body">
-              <p>{forum.content}</p>
-            </div>
-            <div className="postPage__content__chart__intro__post__coin">
-              {coins.map((data, index) => {
-                return (
-                  <div
-                    key={index}
-                    className="postPage__content__chart__intro__post__coin__item"
-                  >
-                    {data.abbr}
-                  </div>
-                );
-              })}
-            </div>
-            <div className="postPage__content__chart__intro__post__footer">
-              <span className="postPage__content__chart__intro__post__footer__count">
-                10
-              </span>
-              <span className="postPage__content__chart__intro__post__footer__icon">
-                <i className="far fa-thumbs-up" />
-              </span>
-              <span className="postPage__content__chart__intro__post__footer__count">
-                {forum.view_cnt}
-              </span>
-              <span className="postPage__content__chart__intro__post__footer__icon">
-                <i className="xi-eye" />
-              </span>
-            </div>
-          </div>
-          <SocialInput
-            user={me && me[0]}
-            isLogin={isLogin}
-            value={this.state.comment}
-            onChange={this.handleComment}
-            placeholder="댓글을 입력하세요"
-            onClick={this.handlePostComment}
-            postText="등록"
-            onFocus={this.onFocusComment}
-            isFocus={isFocusComment}
-          />
-          <div className="postPage__content__chart__intro__comments">
-            {newComment.map((data, index) => {
-              return (
-                <Comment
-                  key={index}
-                  username={data.username}
-                  profileImg={data.profile_img}
-                  userPoint={data.point}
-                  createdAt={data.created_at}
-                  content={data.content}
-                />
-              );
-            })}
-            {comment.map((data, index) => {
-              return (
-                <Comment
-                  key={index}
-                  username={data.username}
-                  profileImg={data.profile_img}
-                  userPoint={data.point}
-                  createdAt={data.created_at}
-                  content={data.content}
-                />
-              );
-            })}
-          </div>
+          ) : null}
         </div>
-      </div>
-    );
+      );
+    }
   }
 }
 
 PostPage.defaultProps = defaultProps;
 PostPage.propTypes = propTypes;
 
-export default connect(mapStateToProps)(PostPage);
+export default withRouter(connect(mapStateToProps)(PostPage));

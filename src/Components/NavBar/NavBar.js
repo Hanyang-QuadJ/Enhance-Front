@@ -61,9 +61,10 @@ class NavBar extends Component {
     });
   };
 
-  handleForum = async() => {
+  handleForum = () => {
     this.props.history.push({
-      pathname: "/forum"
+      pathname: "/forum",
+      state: "hello"
     });
   };
 

@@ -35209,12 +35209,8 @@
 	        _react2.default.createElement(
 	          "div",
 	          null,
-	          _react2.default.createElement(
-	            _reactRouterDom.Switch,
-	            null,
-	            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/", component: _Pages.HomePage }),
-	            _react2.default.createElement(_reactRouterDom.Route, { path: "/forum", component: _Pages.ForumPage })
-	          ),
+	          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/", component: _Pages.HomePage }),
+	          _react2.default.createElement(_reactRouterDom.Route, { path: "/forum", component: _Pages.ForumPage }),
 	          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/auth", component: _Pages.AuthPage }),
 	          _react2.default.createElement(_reactRouterDom.Route, { path: "/auth/signup", component: _Pages.SignUpPage })
 	        )
@@ -44817,6 +44813,8 @@
 	
 	var _reactRedux = __webpack_require__(381);
 	
+	var _reactRouterDom = __webpack_require__(393);
+	
 	var _Components = __webpack_require__(620);
 	
 	var _reactActivity = __webpack_require__(755);
@@ -45516,7 +45514,7 @@
 	HomePage.defaultProps = defaultProps;
 	HomePage.propTypes = propTypes;
 	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps)(HomePage);
+	exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps)(HomePage));
 
 /***/ }),
 /* 620 */
@@ -45677,8 +45675,6 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -45700,8 +45696,6 @@
 	  _inherits(NavBar, _Component);
 	
 	  function NavBar(props) {
-	    var _this2 = this;
-	
 	    _classCallCheck(this, NavBar);
 	
 	    var _this = _possibleConstructorReturn(this, (NavBar.__proto__ || Object.getPrototypeOf(NavBar)).call(this, props));
@@ -45738,22 +45732,12 @@
 	      });
 	    };
 	
-	    _this.handleForum = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-	      return regeneratorRuntime.wrap(function _callee$(_context) {
-	        while (1) {
-	          switch (_context.prev = _context.next) {
-	            case 0:
-	              _this.props.history.push({
-	                pathname: "/forum"
-	              });
-	
-	            case 1:
-	            case "end":
-	              return _context.stop();
-	          }
-	        }
-	      }, _callee, _this2);
-	    }));
+	    _this.handleForum = function () {
+	      _this.props.history.push({
+	        pathname: "/forum",
+	        state: "hello"
+	      });
+	    };
 	
 	    _this.state = {
 	      showModal: false
@@ -87337,10 +87321,13 @@
 	          _react2.default.createElement(
 	            _reactRouterDom.Switch,
 	            null,
-	            _react2.default.createElement(_reactRouterDom.Route, { path: "/forum/:forum_id", component: _.PostPage }),
+	            _react2.default.createElement(_reactRouterDom.Route, {
+	              path: this.props.match.url + "/:forum_id",
+	              component: _.PostPage
+	            }),
 	            _react2.default.createElement(_reactRouterDom.Route, {
 	              exact: true,
-	              path: "/forum",
+	              path: "" + this.props.match.url,
 	              render: function render() {
 	                return _react2.default.createElement(
 	                  "div",
@@ -87423,7 +87410,7 @@
 	ForumPage.defaultProps = defaultProps;
 	ForumPage.propTypes = propTypes;
 	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps)(ForumPage);
+	exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps)(ForumPage));
 
 /***/ }),
 /* 854 */
@@ -87974,7 +87961,8 @@
 	    _this.state = {
 	      isFocusComment: false,
 	      comment: "",
-	      newComment: []
+	      newComment: [],
+	      user: []
 	    };
 	    _moment2.default.locale("ko");
 	    return _this;
@@ -87995,168 +87983,175 @@
 	  }, {
 	    key: "render",
 	    value: function render() {
-	      var _state = this.state,
-	          isFocusComment = _state.isFocusComment,
-	          newComment = _state.newComment;
-	      var _props = this.props,
-	          me = _props.me,
-	          isLogin = _props.isLogin,
-	          onClick = _props.onClick;
-	      var _props$location$state = this.props.location.state,
-	          forum = _props$location$state.forum,
-	          coins = _props$location$state.coins,
-	          comment = _props$location$state.comment;
+	      if (this.props.location.state === undefined) {
+	        window.location.href = "/enhance/forum";
+	      } else {
+	        var _state = this.state,
+	            isFocusComment = _state.isFocusComment,
+	            newComment = _state.newComment,
+	            user = _state.user;
+	        var _props = this.props,
+	            me = _props.me,
+	            isLogin = _props.isLogin,
+	            onClick = _props.onClick;
+	        var _props$location$state = this.props.location.state,
+	            forum = _props$location$state.forum,
+	            coins = _props$location$state.coins,
+	            comment = _props$location$state.comment;
 	
-	      return _react2.default.createElement(
-	        "div",
-	        { className: "forumPage__content__chart" },
-	        _react2.default.createElement(
+	        console.log(user);
+	
+	        return _react2.default.createElement(
 	          "div",
-	          { className: "forumPage__content__chart__intro" },
-	          _react2.default.createElement(
+	          { className: "postPage__content__chart" },
+	          user.length === 0 ? _react2.default.createElement(
 	            "div",
-	            { className: "postPage__content__chart__intro__post" },
+	            { className: "postPage__content__chart__intro" },
 	            _react2.default.createElement(
 	              "div",
-	              { className: "postPage__content__chart__intro__post__header" },
+	              { className: "postPage__content__chart__intro__post" },
 	              _react2.default.createElement(
 	                "div",
-	                { className: "postPage__content__chart__intro__post__header__userInfo" },
+	                { className: "postPage__content__chart__intro__post__header" },
 	                _react2.default.createElement(
 	                  "div",
-	                  { className: "postPage__content__chart__intro__post__header__userInfo__thumb" },
-	                  _react2.default.createElement(_Components.Thumb, {
-	                    src: forum.profile_img,
-	                    fontSize: 35,
-	                    size: 50,
-	                    point: forum.point,
-	                    onClick: onClick
-	                  })
+	                  { className: "postPage__content__chart__intro__post__header__userInfo" },
+	                  _react2.default.createElement(
+	                    "div",
+	                    { className: "postPage__content__chart__intro__post__header__userInfo__thumb" },
+	                    _react2.default.createElement(_Components.Thumb, {
+	                      src: forum.profile_img,
+	                      fontSize: 35,
+	                      size: 50,
+	                      point: forum.point,
+	                      onClick: onClick
+	                    })
+	                  ),
+	                  _react2.default.createElement(
+	                    "div",
+	                    { className: "postPage__content__chart__intro__post__header__userInfo__name" },
+	                    _react2.default.createElement(
+	                      "strong",
+	                      null,
+	                      forum.username
+	                    ),
+	                    _react2.default.createElement(
+	                      "span",
+	                      { className: "postPage__content__chart__intro__post__header__userInfo__point" },
+	                      forum.point + " \uD3EC\uC778\uD2B8"
+	                    )
+	                  )
 	                ),
 	                _react2.default.createElement(
 	                  "div",
-	                  { className: "postPage__content__chart__intro__post__header__userInfo__name" },
+	                  { className: "postPage__content__chart__intro__post__header__detail" },
 	                  _react2.default.createElement(
-	                    "strong",
+	                    "p",
 	                    null,
-	                    forum.username
+	                    forum.category
 	                  ),
 	                  _react2.default.createElement(
 	                    "span",
-	                    { className: "postPage__content__chart__intro__post__header__userInfo__point" },
-	                    forum.point + " \uD3EC\uC778\uD2B8"
+	                    { className: "postPage__content__chart__intro__post__header__userInfo__date" },
+	                    (0, _moment2.default)(forum.created_at).fromNow()
 	                  )
 	                )
 	              ),
 	              _react2.default.createElement(
 	                "div",
-	                { className: "postPage__content__chart__intro__post__header__detail" },
+	                { className: "postPage__content__chart__intro__post__title" },
 	                _react2.default.createElement(
 	                  "p",
 	                  null,
-	                  forum.category
+	                  forum.title
+	                )
+	              ),
+	              _react2.default.createElement(
+	                "div",
+	                { className: "postPage__content__chart__intro__post__body" },
+	                _react2.default.createElement(
+	                  "p",
+	                  null,
+	                  forum.content
+	                )
+	              ),
+	              _react2.default.createElement(
+	                "div",
+	                { className: "postPage__content__chart__intro__post__coin" },
+	                coins.map(function (data, index) {
+	                  return _react2.default.createElement(
+	                    "div",
+	                    {
+	                      key: index,
+	                      className: "postPage__content__chart__intro__post__coin__item"
+	                    },
+	                    data.abbr
+	                  );
+	                })
+	              ),
+	              _react2.default.createElement(
+	                "div",
+	                { className: "postPage__content__chart__intro__post__footer" },
+	                _react2.default.createElement(
+	                  "span",
+	                  { className: "postPage__content__chart__intro__post__footer__count" },
+	                  "10"
 	                ),
 	                _react2.default.createElement(
 	                  "span",
-	                  { className: "postPage__content__chart__intro__post__header__userInfo__date" },
-	                  (0, _moment2.default)(forum.created_at).fromNow()
+	                  { className: "postPage__content__chart__intro__post__footer__icon" },
+	                  _react2.default.createElement("i", { className: "far fa-thumbs-up" })
+	                ),
+	                _react2.default.createElement(
+	                  "span",
+	                  { className: "postPage__content__chart__intro__post__footer__count" },
+	                  forum.view_cnt
+	                ),
+	                _react2.default.createElement(
+	                  "span",
+	                  { className: "postPage__content__chart__intro__post__footer__icon" },
+	                  _react2.default.createElement("i", { className: "xi-eye" })
 	                )
 	              )
 	            ),
-	            _react2.default.createElement(
-	              "div",
-	              { className: "postPage__content__chart__intro__post__title" },
-	              _react2.default.createElement(
-	                "p",
-	                null,
-	                forum.title
-	              )
-	            ),
-	            _react2.default.createElement(
-	              "div",
-	              { className: "postPage__content__chart__intro__post__body" },
-	              _react2.default.createElement(
-	                "p",
-	                null,
-	                forum.content
-	              )
-	            ),
-	            _react2.default.createElement(
-	              "div",
-	              { className: "postPage__content__chart__intro__post__coin" },
-	              coins.map(function (data, index) {
-	                return _react2.default.createElement(
-	                  "div",
-	                  {
-	                    key: index,
-	                    className: "postPage__content__chart__intro__post__coin__item"
-	                  },
-	                  data.abbr
-	                );
-	              })
-	            ),
-	            _react2.default.createElement(
-	              "div",
-	              { className: "postPage__content__chart__intro__post__footer" },
-	              _react2.default.createElement(
-	                "span",
-	                { className: "postPage__content__chart__intro__post__footer__count" },
-	                "10"
-	              ),
-	              _react2.default.createElement(
-	                "span",
-	                { className: "postPage__content__chart__intro__post__footer__icon" },
-	                _react2.default.createElement("i", { className: "far fa-thumbs-up" })
-	              ),
-	              _react2.default.createElement(
-	                "span",
-	                { className: "postPage__content__chart__intro__post__footer__count" },
-	                forum.view_cnt
-	              ),
-	              _react2.default.createElement(
-	                "span",
-	                { className: "postPage__content__chart__intro__post__footer__icon" },
-	                _react2.default.createElement("i", { className: "xi-eye" })
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(_Components.SocialInput, {
-	            user: me && me[0],
-	            isLogin: isLogin,
-	            value: this.state.comment,
-	            onChange: this.handleComment,
-	            placeholder: "\uB313\uAE00\uC744 \uC785\uB825\uD558\uC138\uC694",
-	            onClick: this.handlePostComment,
-	            postText: "\uB4F1\uB85D",
-	            onFocus: this.onFocusComment,
-	            isFocus: isFocusComment
-	          }),
-	          _react2.default.createElement(
-	            "div",
-	            { className: "postPage__content__chart__intro__comments" },
-	            newComment.map(function (data, index) {
-	              return _react2.default.createElement(_Components.Comment, {
-	                key: index,
-	                username: data.username,
-	                profileImg: data.profile_img,
-	                userPoint: data.point,
-	                createdAt: data.created_at,
-	                content: data.content
-	              });
+	            _react2.default.createElement(_Components.SocialInput, {
+	              user: me && me[0],
+	              isLogin: isLogin,
+	              value: this.state.comment,
+	              onChange: this.handleComment,
+	              placeholder: "\uB313\uAE00\uC744 \uC785\uB825\uD558\uC138\uC694",
+	              onClick: this.handlePostComment,
+	              postText: "\uB4F1\uB85D",
+	              onFocus: this.onFocusComment,
+	              isFocus: isFocusComment
 	            }),
-	            comment.map(function (data, index) {
-	              return _react2.default.createElement(_Components.Comment, {
-	                key: index,
-	                username: data.username,
-	                profileImg: data.profile_img,
-	                userPoint: data.point,
-	                createdAt: data.created_at,
-	                content: data.content
-	              });
-	            })
-	          )
-	        )
-	      );
+	            _react2.default.createElement(
+	              "div",
+	              { className: "postPage__content__chart__intro__comments" },
+	              newComment.map(function (data, index) {
+	                return _react2.default.createElement(_Components.Comment, {
+	                  key: index,
+	                  username: data.username,
+	                  profileImg: data.profile_img,
+	                  userPoint: data.point,
+	                  createdAt: data.created_at,
+	                  content: data.content
+	                });
+	              }),
+	              comment.map(function (data, index) {
+	                return _react2.default.createElement(_Components.Comment, {
+	                  key: index,
+	                  username: data.username,
+	                  profileImg: data.profile_img,
+	                  userPoint: data.point,
+	                  createdAt: data.created_at,
+	                  content: data.content
+	                });
+	              })
+	            )
+	          ) : null
+	        );
+	      }
 	    }
 	  }]);
 	
@@ -88166,7 +88161,7 @@
 	PostPage.defaultProps = defaultProps;
 	PostPage.propTypes = propTypes;
 	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps)(PostPage);
+	exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps)(PostPage));
 
 /***/ })
 /******/ ]);
