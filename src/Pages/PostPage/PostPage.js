@@ -87,106 +87,104 @@ class PostPage extends Component {
 
       return (
         <div className="postPage__content__chart">
-          {user.length === 0 ? (
-            <div className="postPage__content__chart__intro">
-              <div className="postPage__content__chart__intro__post">
-                <div className="postPage__content__chart__intro__post__header">
-                  <div className="postPage__content__chart__intro__post__header__userInfo">
-                    <div className="postPage__content__chart__intro__post__header__userInfo__thumb">
-                      <Thumb
-                        src={forum.profile_img}
-                        fontSize={35}
-                        size={50}
-                        point={forum.point}
-                        onClick={onClick}
-                      />
-                    </div>
-                    <div className="postPage__content__chart__intro__post__header__userInfo__name">
-                      <strong>{forum.username}</strong>
-                      <span className="postPage__content__chart__intro__post__header__userInfo__point">
-                        {`${forum.point} 포인트`}
-                      </span>
-                    </div>
+          <div className="postPage__content__chart__intro">
+            <div className="postPage__content__chart__intro__post">
+              <div className="postPage__content__chart__intro__post__header">
+                <div className="postPage__content__chart__intro__post__header__userInfo">
+                  <div className="postPage__content__chart__intro__post__header__userInfo__thumb">
+                    <Thumb
+                      src={forum.profile_img}
+                      fontSize={35}
+                      size={50}
+                      point={forum.point}
+                      onClick={onClick}
+                    />
                   </div>
-                  <div className="postPage__content__chart__intro__post__header__detail">
-                    <p>{forum.category}</p>
-                    <span className="postPage__content__chart__intro__post__header__userInfo__date">
-                      {moment(forum.created_at).fromNow()}
+                  <div className="postPage__content__chart__intro__post__header__userInfo__name">
+                    <strong>{forum.username}</strong>
+                    <span className="postPage__content__chart__intro__post__header__userInfo__point">
+                      {`${forum.point} 포인트`}
                     </span>
                   </div>
                 </div>
-                <div className="postPage__content__chart__intro__post__title">
-                  <p>{forum.title}</p>
-                </div>
-                <div className="postPage__content__chart__intro__post__body">
-                  <p>{forum.content}</p>
-                </div>
-                <div className="postPage__content__chart__intro__post__coin">
-                  {coins.map((data, index) => {
-                    return (
-                      <div
-                        key={index}
-                        className="postPage__content__chart__intro__post__coin__item"
-                      >
-                        {data.abbr}
-                      </div>
-                    );
-                  })}
-                </div>
-                <div className="postPage__content__chart__intro__post__footer">
-                  <span className="postPage__content__chart__intro__post__footer__count">
-                    10
-                  </span>
-                  <span className="postPage__content__chart__intro__post__footer__icon">
-                    <i className="far fa-thumbs-up" />
-                  </span>
-                  <span className="postPage__content__chart__intro__post__footer__count">
-                    {forum.view_cnt}
-                  </span>
-                  <span className="postPage__content__chart__intro__post__footer__icon">
-                    <i className="xi-eye" />
+                <div className="postPage__content__chart__intro__post__header__detail">
+                  <p>{forum.category}</p>
+                  <span className="postPage__content__chart__intro__post__header__userInfo__date">
+                    {moment(forum.created_at).fromNow()}
                   </span>
                 </div>
               </div>
-              <SocialInput
-                user={me && me[0]}
-                isLogin={isLogin}
-                value={this.state.comment}
-                onChange={this.handleComment}
-                placeholder="댓글을 입력하세요"
-                onClick={this.handlePostComment}
-                postText="등록"
-                onFocus={this.onFocusComment}
-                isFocus={isFocusComment}
-              />
-              <div className="postPage__content__chart__intro__comments">
-                {newComment.map((data, index) => {
+              <div className="postPage__content__chart__intro__post__title">
+                <p>{forum.title}</p>
+              </div>
+              <div className="postPage__content__chart__intro__post__body">
+                <p>{forum.content}</p>
+              </div>
+              <div className="postPage__content__chart__intro__post__coin">
+                {coins.map((data, index) => {
                   return (
-                    <Comment
+                    <div
                       key={index}
-                      username={data.username}
-                      profileImg={data.profile_img}
-                      userPoint={data.point}
-                      createdAt={data.created_at}
-                      content={data.content}
-                    />
+                      className="postPage__content__chart__intro__post__coin__item"
+                    >
+                      {data.abbr}
+                    </div>
                   );
                 })}
-                {comment.map((data, index) => {
-                  return (
-                    <Comment
-                      key={index}
-                      username={data.username}
-                      profileImg={data.profile_img}
-                      userPoint={data.point}
-                      createdAt={data.created_at}
-                      content={data.content}
-                    />
-                  );
-                })}
+              </div>
+              <div className="postPage__content__chart__intro__post__footer">
+                <span className="postPage__content__chart__intro__post__footer__count">
+                  10
+                </span>
+                <span className="postPage__content__chart__intro__post__footer__icon">
+                  <i className="far fa-thumbs-up" />
+                </span>
+                <span className="postPage__content__chart__intro__post__footer__count">
+                  {forum.view_cnt}
+                </span>
+                <span className="postPage__content__chart__intro__post__footer__icon">
+                  <i className="xi-eye" />
+                </span>
               </div>
             </div>
-          ) : null}
+            <SocialInput
+              user={me && me[0]}
+              isLogin={isLogin}
+              value={this.state.comment}
+              onChange={this.handleComment}
+              placeholder="댓글을 입력하세요"
+              onClick={this.handlePostComment}
+              postText="등록"
+              onFocus={this.onFocusComment}
+              isFocus={isFocusComment}
+            />
+            <div className="postPage__content__chart__intro__comments">
+              {newComment.map((data, index) => {
+                return (
+                  <Comment
+                    key={index}
+                    username={data.username}
+                    profileImg={data.profile_img}
+                    userPoint={data.point}
+                    createdAt={data.created_at}
+                    content={data.content}
+                  />
+                );
+              })}
+              {comment.map((data, index) => {
+                return (
+                  <Comment
+                    key={index}
+                    username={data.username}
+                    profileImg={data.profile_img}
+                    userPoint={data.point}
+                    createdAt={data.created_at}
+                    content={data.content}
+                  />
+                );
+              })}
+            </div>
+          </div>
         </div>
       );
     }
