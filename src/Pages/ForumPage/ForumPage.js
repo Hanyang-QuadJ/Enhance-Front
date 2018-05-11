@@ -331,6 +331,7 @@ class ForumPage extends Component {
                   this.props.history.push({
                     pathname: "/forum/" + id,
                     state: {
+                      name: this.props.me[0].username,
                       forum: newForum,
                       comment: comment.reverse(),
                       coins

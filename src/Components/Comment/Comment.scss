@@ -17,6 +17,21 @@
     padding-bottom: 1rem;
     margin-bottom: 1rem;
 
+    &-mine {
+      @include transition(0.3s);
+      display: flex;
+      padding-left: 20px;
+      padding-right: 20px;
+      box-shadow: 0px !important;
+      border: 1px solid $light-main;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      margin-bottom: 1rem;
+    }
+
     &__userArea {
       flex: 2;
       display: flex;

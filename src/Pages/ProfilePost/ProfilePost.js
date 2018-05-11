@@ -10,6 +10,7 @@ import * as SocialAction from "../../ActionCreators/SocialAction";
 import { withRouter } from "react-router-dom";
 import { Modal, ModalBody, ModalHeader, ModalFooter } from "reactstrap";
 import { Dots } from "react-activity";
+import cx from "classnames";
 
 import moment from "moment";
 
@@ -25,7 +26,7 @@ const mapStateToProps = state => {
   };
 };
 
-class PostPage extends Component {
+class ProfilePost extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -123,7 +124,7 @@ class PostPage extends Component {
 
   render() {
     if (this.props.location.state === undefined) {
-      window.location.href = "/enhance/forum";
+      window.location.href = "/enhance/profile";
     } else {
       const {
         isFocusComment,
@@ -284,8 +285,8 @@ class PostPage extends Component {
                       userPoint={data.point}
                       onClick={() => this.handleUser(data.user_id)}
                       createdAt={data.created_at}
-                      checkName={name}
                       content={data.content}
+                      checkName={name}
                     />
                   );
                 })}
@@ -298,7 +299,7 @@ class PostPage extends Component {
   }
 }
 
-PostPage.defaultProps = defaultProps;
-PostPage.propTypes = propTypes;
+ProfilePost.defaultProps = defaultProps;
+ProfilePost.propTypes = propTypes;
 
-export default withRouter(connect(mapStateToProps)(PostPage));
+export default withRouter(connect(mapStateToProps)(ProfilePost));

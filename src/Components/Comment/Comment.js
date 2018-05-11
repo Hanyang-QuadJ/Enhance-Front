@@ -5,6 +5,7 @@ import React, { Component } from "react";
 import { Thumb } from "../";
 import moment from "moment";
 import Linkify from "react-linkify";
+import cx from "classnames";
 
 const defaultProps = {};
 const propTypes = {};
@@ -22,11 +23,16 @@ class Comment extends Component {
       content,
       createdAt,
       profileImg,
-      onClick
+      onClick,
+      checkName
     } = this.props;
     return (
       <div className="comment">
-        <div className="comment__content">
+        <div
+          className={cx("comment__content", {
+            "comment__content-mine": username === checkName && checkName
+          })}
+        >
           <div className="comment__content__userArea">
             <Thumb
               src={profileImg}

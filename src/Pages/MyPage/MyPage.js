@@ -4,14 +4,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { NavBar, List, SideBar, Thumb, Button } from "../../Components";
-import { PostPage } from "../";
+import { PostPage, ProfilePost } from "../";
 import { Route, Switch, withRouter } from "react-router-dom";
 import { Dots } from "react-activity";
 import * as NewsAction from "../../ActionCreators/NewsAction";
 import * as PriceAction from "../../ActionCreators/PriceAction";
 import * as SocialAction from "../../ActionCreators/SocialAction";
 import * as AuthAction from "../../ActionCreators/AuthAction";
-import { Modal, ModalBody, ModalHeader, ModalFooter } from "reactstrap";
 import "react-activity/dist/react-activity.css";
 import {
   ButtonDropdown,
@@ -41,6 +40,13 @@ const mapStateToProps = state => {
     favorite: state.reducer.favorite
   };
 };
+const sourceFilter = [{ id: 0, name: "게시글" }, { id: 1, name: "댓글" }];
+
+function removeDuplicates(myArr, prop) {
+  return myArr.filter((obj, pos, arr) => {
+    return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
+  });
+}
 
 class MyPage extends Component {
   constructor(props) {
@@ -55,10 +61,11 @@ class MyPage extends Component {
       isFocusComment: false,
       isPostsLoading: false,
       forumLoading: false,
+      selectedType: "게시글",
       selectedCoinType: [],
       selectedAbbr: [],
-      selectedPostType2: "자유",
       selectedIndex: null,
+      selectedCommentIndex: null,
       forum: [],
       forumIndex: 0
     };
@@ -78,7 +85,7 @@ class MyPage extends Component {
             o.loading = false;
             return o;
           });
-          let commentResult = forums.reverse().map(function(el) {
+          let commentResult = comments.reverse().map(function(el) {
             let o = Object.assign({}, el);
             o.loading = false;
             return o;
@@ -177,6 +184,10 @@ class MyPage extends Component {
     }));
   }
 
+  handleType = data => {
+    this.setState({ selectedType: data });
+  };
+
   handleFilter = (index, id, coin) => {
     const newCoin = this.state.sideFavorite.slice();
     let result = newCoin.filter(a => {
@@ -258,8 +269,7 @@ class MyPage extends Component {
     }
   };
 
-  handleDetail = (index, id) => {
-    const { isLogin } = this.props;
+  handleDetail = (index, id, name) => {
     const params = {
       token: this.props.token,
       forum_id: id
@@ -268,29 +278,54 @@ class MyPage extends Component {
     newPosts[index].loading = true;
     this.setState({ posts: newPosts });
     this.props.dispatch(SocialAction.getOneForum(params)).then(forum => {
-      const newForum = Object.assign({}, forum);
-      newForum.view_cnt = newForum.view_cnt + 1;
       this.setState({ selectedIndex: index });
-      this.props.dispatch(SocialAction.postForumView(params)).then(view => {
+      this.props.dispatch(SocialAction.getOneForumCoins(params)).then(coins => {
         this.props
-          .dispatch(SocialAction.getOneForumCoins(params))
-          .then(coins => {
-            this.props
-              .dispatch(SocialAction.getOneForumComment(params))
-              .then(comment => {
-                const newPosts = this.state.posts.slice();
-                newPosts[index].loading = false;
-                newPosts[index].view_cnt = newPosts[index].view_cnt + 1;
-                this.setState({ posts: newPosts });
-                this.props.history.push({
-                  pathname: "/profile/" + id,
-                  state: {
-                    forum: newForum,
-                    comment: comment.reverse(),
-                    coins
-                  }
-                });
-              });
+          .dispatch(SocialAction.getOneForumComment(params))
+          .then(comment => {
+            const newPosts = this.state.posts.slice();
+            newPosts[index].loading = false;
+            this.setState({ posts: newPosts });
+            this.props.history.push({
+              pathname: "/profile/" + id,
+              state: {
+                name,
+                forum,
+                comment: comment.reverse(),
+                coins
+              }
+            });
+          });
+      });
+    });
+  };
+
+  handleCommentDetail = (index, id, name) => {
+    const params = {
+      token: this.props.token,
+      forum_id: id
+    };
+    const newPosts = this.state.comments.slice();
+    newPosts[index].loading = true;
+    this.setState({ comments: newPosts });
+    this.props.dispatch(SocialAction.getOneForum(params)).then(forum => {
+      this.setState({ selectedCommentIndex: index });
+      this.props.dispatch(SocialAction.getOneForumCoins(params)).then(coins => {
+        this.props
+          .dispatch(SocialAction.getOneForumComment(params))
+          .then(comment => {
+            const newPosts = this.state.comments.slice();
+            newPosts[index].loading = false;
+            this.setState({ comments: newPosts });
+            this.props.history.push({
+              pathname: "/profile/" + id,
+              state: {
+                name,
+                forum,
+                comment: comment.reverse(),
+                coins
+              }
+            });
           });
       });
     });
@@ -337,9 +372,11 @@ class MyPage extends Component {
       comments,
       isPostsLoading,
       selectedIndex,
+      selectedCommentIndex,
       favorite,
       footerLoading,
-      sideFavorite
+      sideFavorite,
+      selectedType
     } = this.state;
     const { me } = this.props;
     return (
@@ -376,9 +413,24 @@ class MyPage extends Component {
                     size="sm"
                     direction="down"
                   >
-                    <DropdownToggle caret>최신 순</DropdownToggle>
+                    <DropdownToggle caret>
+                      {this.state.selectedType}
+                    </DropdownToggle>
                     <DropdownMenu>
-                      <DropdownItem>인기 순</DropdownItem>
+                      {sourceFilter
+                        .filter(a => {
+                          return a.name !== this.state.selectedType;
+                        })
+                        .map((data, index) => {
+                          return (
+                            <DropdownItem
+                              key={index}
+                              onClick={() => this.handleType(data.name)}
+                            >
+                              {data.name}
+                            </DropdownItem>
+                          );
+                        })}
                     </DropdownMenu>
                   </ButtonDropdown>
                 </div>
@@ -396,24 +448,49 @@ class MyPage extends Component {
                 onScroll={this.handleScroll}
                 className="myPage__content__news__lists"
               >
-                {posts.map((data, index) => {
-                  return (
-                    <List
-                      social
-                      index={index}
-                      isLoading={data.loading}
-                      selectedIndex={selectedIndex}
-                      key={index}
-                      username={data.username}
-                      title={data.title}
-                      point={data.point}
-                      createdAt={data.created_at}
-                      type={data.coins}
-                      view={data.view_cnt}
-                      onClick={() => this.handleDetail(index, data.id)}
-                    />
-                  );
-                })}
+                {selectedType === "게시글"
+                  ? posts.map((data, index) => {
+                    return (
+                      <List
+                        social
+                        index={index}
+                        isLoading={data.loading}
+                        selectedIndex={selectedIndex}
+                        key={index}
+                        username={data.username}
+                        title={data.title}
+                        point={data.point}
+                        createdAt={data.created_at}
+                        type={data.coins}
+                        view={data.view_cnt}
+                        onClick={() =>
+                          this.handleDetail(index, data.id, data.username)
+                        }
+                      />
+                    );
+                  })
+                  : removeDuplicates(comments, "forum_id").map(
+                    (data, index) => {
+                      return (
+                        <List
+                          index={index}
+                          isLoading={data.loading}
+                          selectedIndex={selectedCommentIndex}
+                          key={index}
+                          title={data.content}
+                          createdAt={data.created_at}
+                          type="댓글"
+                          onClick={() =>
+                            this.handleCommentDetail(
+                              index,
+                              data.forum_id,
+                              data.username
+                            )
+                          }
+                        />
+                      );
+                    }
+                  )}
                 {footerLoading === true ? (
                   <div className="myPage__content__news__lists__footer">
                     <Dots color="#ffffff" size={20} />
@@ -425,7 +502,7 @@ class MyPage extends Component {
           <Switch>
             <Route
               path={`${this.props.match.url}/:forum_id`}
-              component={PostPage}
+              component={ProfilePost}
             />
             <Route
               exact

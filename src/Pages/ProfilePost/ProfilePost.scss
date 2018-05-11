@@ -1,0 +1,213 @@
+/*
+* Author: @nayunhwan (github.com/nayunhwan)
+* Email: nayunhwan.dev@mgail.com
+*/
+.postPage {
+  background: #536976;
+  /* fallback for old browsers */
+
+  background: -webkit-linear-gradient(to right, #292e49, #536976);
+  /* Chrome 10-25, Safari 5.1-6 */
+
+  background: linear-gradient(to right, #292e49, #536976);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  &__modal {
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &__content {
+      margin-left: 1rem;
+      margin-right: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      &__area {
+        display: flex;
+        flex-direction: row;
+
+        &__number {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding-left: 1.5rem;
+          padding-right: 1.5rem;
+          flex-direction: column;
+          font-weight: 500;
+
+          &-border {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+            flex-direction: column;
+            font-weight: 500;
+            border-right: 1px $border-color solid;
+          }
+        }
+
+        &__text {
+          font-weight: 300 !important;
+        }
+      }
+
+      &__username {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        font-size: 2rem;
+      }
+
+      &__point {
+      }
+    }
+  }
+
+  &__content {
+    margin-left: 100px;
+    height: 100vh;
+    overflow-y: hidden;
+
+    &__chart {
+      color: white;
+      height: 100vh;
+      width: calc(50vw-100px);
+      margin-right: 100px;
+      overflow-y: scroll;
+
+      &__loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+
+      &__intro {
+        padding: 2rem 2rem 2rem 2rem;
+
+        display: flex;
+        flex-direction: column;
+
+        &__loading {
+          padding: 2rem 2rem 2rem 2rem;
+          display: flex;
+          width: 100%;
+          height: 90vh;
+          justify-content: center;
+          align-items: center;
+        }
+
+        &__post {
+          // border: 1px red solid;
+
+          &__header {
+            border-bottom: 1px $border-color solid;
+            display: flex;
+            height: 10vh;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 1rem;
+
+            &__userInfo {
+              display: flex;
+              width: 15vw;
+              flex-direction: row;
+              align-items: center;
+
+              &__thumb {
+                flex: 1;
+              }
+
+              &__name {
+                flex: 3;
+                margin-left: 10px;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+              }
+
+              &__point {
+                font-size: 13px;
+              }
+
+              &__date {
+                font-size: 13px;
+                color: rgba(255, 255, 255, 0.5);
+              }
+            }
+
+            &__detail {
+              display: flex;
+              flex-direction: column;
+              justify-content: flex-end;
+              align-items: flex-end;
+            }
+          }
+
+          &__title {
+            margin-top: 1rem;
+            padding-left: 10px;
+            padding-right: 10px;
+            font-size: 18px;
+            padding-bottom: 1rem;
+            border-bottom: $border-color 1px solid;
+            font-weight: 400;
+          }
+
+          &__body {
+            margin-top: 1rem;
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-bottom: 1rem;
+            font-weight: 300;
+          }
+
+          &__coin {
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            font-size: 13px;
+            color: $coin-color;
+
+            &__item {
+              border: 1px $coin-color solid;
+              padding-left: 5px;
+              padding-right: 5px;
+              margin-right: 5px;
+            }
+          }
+
+          &__footer {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            color: $light-main;
+
+            &__count {
+              font-size: 1rem;
+              margin-right: 7px;
+            }
+
+            &__icon {
+              display: inline-flex;
+              font-size: 1.5rem;
+              margin-right: 1rem;
+            }
+          }
+        }
+        &__comments {
+          margin-top: 10%;
+        }
+      }
+    }
+  }
+}
