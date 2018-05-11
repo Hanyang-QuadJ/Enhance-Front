@@ -35,14 +35,6 @@ import cx from "classnames";
 const defaultProps = {};
 const propTypes = {};
 
-const styles = {
-  styleAdd: {
-    position: "absolute",
-    left: "45vw",
-    bottom: 30
-  }
-};
-
 const mapStateToProps = state => {
   return {
     news: state.reducer.news,
@@ -76,7 +68,8 @@ class ForumPage extends Component {
       selectedPostType2: "자유",
       selectedIndex: null,
       forum: [],
-      forumIndex: 0
+      forumIndex: 0,
+      postButton: "등록"
     };
     this.toggle = this.toggle.bind(this);
   }
@@ -386,7 +379,9 @@ class ForumPage extends Component {
           category: selectedPostType2,
           coins: coinArray,
           created_at: date,
-          view_cnt: 0
+          view_cnt: 0,
+          username: this.props.me[0].username,
+          me: this.props.me
         };
         this.props.dispatch(SocialAction.getOneForum(params)).then(forum => {
           this.props
@@ -469,6 +464,58 @@ class ForumPage extends Component {
     }
   };
 
+  handleEdit = async(title, main, coins, category) => {
+    const { favorite } = this.state;
+
+    let newFav = favorite.slice();
+    newFav.map((data, index) => {
+      data.clicked = false;
+    });
+    let type = [];
+    let abbr = [];
+    for (let i = 0; i < coins.length; i++) {
+      for (let j = 0; j < newFav.length; j++) {
+        if (coins[i].abbr === newFav[j].abbr) {
+          newFav[j].clicked = true;
+        }
+      }
+    }
+
+    for (let i = 0; i < coins.length; i++) {
+      abbr.push(coins[i].abbr);
+      type.push(coins[i].id);
+    }
+    await this.setState({
+      title,
+      main,
+      postButton: "수정",
+      favorite: newFav,
+      selectedAbbr: abbr,
+      selectedCoinType: type,
+      selectedPostType2: category
+    });
+    await this.toggleModal();
+  };
+
+  handleOpenPost = async() => {
+    const { favorite } = this.state;
+    const newFav = favorite.slice();
+    newFav.map((data, index) => {
+      data.clicked = false;
+    });
+
+    await this.setState({
+      title: "",
+      main: "",
+      postButton: "등록",
+      selectedCoinType: [],
+      selectedAbbr: [],
+      selectedPostType2: "자유",
+      favorite: newFav
+    });
+    await this.toggleModal();
+  };
+
   render() {
     const {
       posts,
@@ -478,11 +525,15 @@ class ForumPage extends Component {
       selectedPostType2,
       selectedIndex,
       favorite,
-      forumLoading,
       footerLoading,
-      sideFavorite
+      sideFavorite,
+      postButton,
+      main,
+      title
     } = this.state;
     const { news, me, isLogin } = this.props;
+    console.log(this.state.selectedAbbr);
+
     return (
       <div className="forumPage">
         <NavBar type="forum" />
@@ -518,13 +569,15 @@ class ForumPage extends Component {
                   onChangeTitle={this.handleTitle}
                   placeholder="본문을 입력하세요"
                   onClick={this.handlePost}
-                  postText="등록"
+                  postText={postButton}
                   handleType={this.handleType}
                   handleType2={this.handleType2}
                   postType={favorite}
                   selectedPostType2={selectedPostType2}
                   onFocus={this.onFocus}
                   isFocus={isFocus}
+                  value={main}
+                  titleValue={title}
                 />
                 <p className="forumPage__modal__favorite__text">
                   <span className="forumPage__modal__favorite__icon">
@@ -591,7 +644,7 @@ class ForumPage extends Component {
                       <DropdownItem>인기 순</DropdownItem>
                     </DropdownMenu>
                   </ButtonDropdown>
-                  <Button onClick={this.toggleModal} size="sm">
+                  <Button onClick={this.handleOpenPost} size="sm">
                     새 글 작성
                   </Button>
                 </div>
@@ -613,6 +666,7 @@ class ForumPage extends Component {
                   return (
                     <List
                       social
+                      me={me[0]}
                       index={index}
                       isLoading={data.loading}
                       selectedIndex={selectedIndex}
@@ -624,6 +678,14 @@ class ForumPage extends Component {
                       type={data.coins}
                       view={data.view_cnt}
                       onClick={() => this.handleDetail(index, data.id)}
+                      onEditClick={() =>
+                        this.handleEdit(
+                          data.title,
+                          data.content,
+                          data.coins,
+                          data.category
+                        )
+                      }
                     />
                   );
                 })}

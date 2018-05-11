@@ -19,6 +19,9 @@ export const SUCCEED_TO_GET_COMMENTS_BY_USER =
   "SUCCEED_TO_GET_COMMENTS_BY_USER";
 export const FAILED_TO_GET_COMMENTS_BY_USER = "FAILED_TO_GET_COMMENTS_BY_USER";
 
+export const SUCCEED_TO_GET_FAVS_BY_USER = "SUCCEED_TO_GET_FAVS_BY_USER";
+export const FAILED_TO_GET_FAVS_BY_USER = "FAILED_TO_GET_FAVS_BY_USER";
+
 export const SUCCEED_TO_GET_ONE_FORUM_COINS = "SUCCEED_TO_GET_ONE_FORUM_COINS";
 export const FAILED_TO_GET_ONE_FORUM_COINS = "FAILED_TO_GET_ONE_FORUM_COINS";
 
@@ -148,6 +151,35 @@ export const getForumByUser = params => {
   };
 };
 
+export const getFavByUser = params => {
+  return async dispatch => {
+    try {
+      let response = await fetch(
+        ServerEndPoint + `api/favorite?user_id=${params.user_id}`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "x-access-token": params.token
+          }
+        }
+      );
+      let responseJson = await response.json();
+      await dispatch({
+        type: SUCCEED_TO_GET_FAVS_BY_USER,
+        payload: responseJson.myFavorites
+      });
+      return responseJson.myFavorites;
+    } catch (error) {
+      dispatch({
+        type: FAILED_TO_GET_FAVS_BY_USER,
+        payload: { data: "NETWORK_ERROR" }
+      });
+    }
+  };
+};
+
 export const getCommentsByUser = params => {
   return async dispatch => {
     try {
@@ -239,6 +271,38 @@ export const postForum = params => {
   return async dispatch => {
     try {
       let response = await fetch(ServerEndPoint + "api/forum/create", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "x-access-token": params.token
+        },
+        body: JSON.stringify({
+          coin_list: params.coins,
+          category: params.category,
+          title: params.title,
+          content: params.content
+        })
+      });
+      let responseJson = await response.json();
+      await dispatch({
+        type: SUCCEED_TO_POST_FORUM,
+        payload: responseJson.forum_id
+      });
+      return responseJson.forum_id;
+    } catch (error) {
+      dispatch({
+        type: FAILED_TO_POST_FORUM,
+        payload: { data: "NETWORK_ERROR" }
+      });
+    }
+  };
+};
+
+export const updateForum = params => {
+  return async dispatch => {
+    try {
+      let response = await fetch(ServerEndPoint + "api/forum/update", {
         method: "POST",
         headers: {
           Accept: "application/json",

@@ -72,6 +72,19 @@ class Thumb extends Component {
           }}
         />
       );
+    } else {
+      return (
+        <img
+          className="thumb__classImage"
+          src={Vip}
+          width={size > 50 ? size / 2.5 : size / 2}
+          height={size > 50 ? size / 2.5 : size / 2}
+          style={{
+            bottom: "-8px",
+            right: "-5px"
+          }}
+        />
+      );
     }
   };
 
@@ -139,7 +152,8 @@ class Thumb extends Component {
       cursor,
       onClick,
       point,
-      isLoading
+      isLoading,
+      border
     } = this.props;
     if (src === null || src === undefined || src === null) {
       return (
@@ -173,6 +187,7 @@ class Thumb extends Component {
                 width={size}
                 height={size}
                 src={src}
+                style={{ border: border }}
               />
               {point !== null || point !== undefined
                 ? this.handleClass(point)

@@ -38,6 +38,7 @@ class PostPage extends Component {
       userPoint: 0,
       userImg: "",
       userLoading: false,
+      userCoins: [],
       forumLength: 0,
       commentLength: 0
     };
@@ -82,19 +83,22 @@ class PostPage extends Component {
       this.props
         .dispatch(SocialAction.getCommentsByUser(params))
         .then(comments => {
-          this.props
-            .dispatch(SocialAction.getForumByUser(params))
-            .then(async forums => {
-              await this.setState({
-                username: user.username,
-                userImg: user.profile_img,
-                userPoint: user.point,
-                forumLength: forums.length,
-                commentLength: comments.length,
-                userLoading: false
+          this.props.dispatch(SocialAction.getFavByUser(params)).then(favs => {
+            this.props
+              .dispatch(SocialAction.getForumByUser(params))
+              .then(async forums => {
+                await this.setState({
+                  username: user.username,
+                  userImg: user.profile_img,
+                  userCoins: favs,
+                  userPoint: user.point,
+                  forumLength: forums.length,
+                  commentLength: comments.length,
+                  userLoading: false
+                });
+                await this.toggleModal();
               });
-              await this.toggleModal();
-            });
+          });
         });
     });
   };
@@ -130,6 +134,7 @@ class PostPage extends Component {
         newComment,
         username,
         userImg,
+        userCoins,
         userPoint,
         forumLength,
         commentLength,
@@ -181,6 +186,18 @@ class PostPage extends Component {
                         댓글
                       </span>
                     </p>
+                  </div>
+                  <div className="postPage__modal__content__coins">
+                    {userCoins.map((data, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className="postPage__modal__content__coins__coin"
+                        >
+                          {data.abbr}
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>

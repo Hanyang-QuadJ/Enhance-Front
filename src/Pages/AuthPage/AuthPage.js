@@ -147,12 +147,19 @@ class AuthPage extends Component {
         email,
         password
       };
+      this.setState({ isLoggedIn: true });
       this.props.dispatch(AuthAction.postSignIn(params)).then(value => {
-        this.props.dispatch(AuthAction.getMe(value)).then(value2 => {
-          this.props.history.replace({
-            pathname: "/"
+        if (value === "failed") {
+          this.setState({ isLoginValid: false, isLoggedIn: false });
+        } else {
+          this.setState({ isLoggedIn: false });
+
+          this.props.dispatch(AuthAction.getMe(value)).then(value2 => {
+            this.props.history.replace({
+              pathname: "/"
+            });
           });
-        });
+        }
       });
     }
   };

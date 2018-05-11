@@ -60,6 +60,17 @@
       &__content {
       }
 
+      &__edit {
+        font-size: 13px;
+        margin-left: 5px;
+        cursor: pointer;
+
+        &:hover {
+          @include transition(0.3s);
+          color: $light-main;
+        }
+      }
+
       &__social {
         display: flex;
         flex-direction: row;

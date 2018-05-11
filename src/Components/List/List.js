@@ -18,6 +18,7 @@ class List extends Component {
 
   render() {
     const {
+      me,
       title,
       username,
       createdAt,
@@ -25,6 +26,7 @@ class List extends Component {
       link,
       social,
       onClick,
+      onEditClick,
       active,
       index,
       isLoading,
@@ -62,6 +64,14 @@ class List extends Component {
                 <span className="list__content__textArea__username">
                   {username}
                 </span>
+                {me && me.username === username ? (
+                  <span
+                    className="list__content__textArea__edit"
+                    onClick={onEditClick}
+                  >
+                    <i className="xi-pen-o" />
+                  </span>
+                ) : null}
               </div>
 
               {social ? (

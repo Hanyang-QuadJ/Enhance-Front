@@ -65,6 +65,8 @@ class App extends Component {
         this.props.dispatch(AuthAction.getMe(this.props.token)).then(value2 => {
           this.setState({ isReady: true });
         });
+      } else {
+        this.setState({ isReady: true });
       }
     });
   }

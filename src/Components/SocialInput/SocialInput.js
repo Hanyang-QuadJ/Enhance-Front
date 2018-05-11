@@ -79,6 +79,7 @@ class SocialInput extends Component {
       postType,
       postText,
       onFocus,
+      titleValue,
       isFocus,
       minRows,
       maxRows,
@@ -103,6 +104,7 @@ class SocialInput extends Component {
               <input
                 className="socialInput__body__input-title"
                 placeholder="제목"
+                value={titleValue}
                 onChange={onChangeTitle}
               />
             ) : null}

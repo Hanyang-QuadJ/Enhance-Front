@@ -3,7 +3,14 @@
 
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { NavBar, List, SideBar, Thumb, Button } from "../../Components";
+import {
+  NavBar,
+  List,
+  SideBar,
+  Thumb,
+  Button,
+  SocialInput
+} from "../../Components";
 import { PostPage, ProfilePost } from "../";
 import { Route, Switch, withRouter } from "react-router-dom";
 import { Dots } from "react-activity";
@@ -16,20 +23,15 @@ import {
   ButtonDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
+  Modal,
+  ModalBody
 } from "reactstrap";
 import cx from "classnames";
+import Loadable from "react-loading-overlay";
 
 const defaultProps = {};
 const propTypes = {};
-
-const styles = {
-  styleAdd: {
-    position: "absolute",
-    left: "45vw",
-    bottom: 30
-  }
-};
 
 const mapStateToProps = state => {
   return {
@@ -56,18 +58,23 @@ class MyPage extends Component {
       posts: [],
       comments: [],
       favorite: [],
+      showModal: false,
       sideFavorite: [],
       isFocus: false,
       isFocusComment: false,
       isPostsLoading: false,
+      postLoading: false,
       forumLoading: false,
       selectedType: "게시글",
+      selectedPostType2: "",
       selectedCoinType: [],
       selectedAbbr: [],
       selectedIndex: null,
       selectedCommentIndex: null,
       forum: [],
-      forumIndex: 0
+      forumIndex: 0,
+      main: "",
+      title: ""
     };
     this.toggle = this.toggle.bind(this);
   }
@@ -178,11 +185,23 @@ class MyPage extends Component {
     });
   }
 
+  onFocus = () => {
+    this.setState(prevState => ({
+      isFocus: !prevState.isFocus
+    }));
+  };
+
   toggle() {
     this.setState(prevState => ({
       dropdownOpen: !prevState.dropdownOpen
     }));
   }
+
+  toggleModal = () => {
+    this.setState({
+      showModal: !this.state.showModal
+    });
+  };
 
   handleType = data => {
     this.setState({ selectedType: data });
@@ -331,6 +350,38 @@ class MyPage extends Component {
     });
   };
 
+  handleEdit = async(title, main, coins, category) => {
+    const { favorite } = this.state;
+    let newFav = favorite.slice();
+    newFav.map((data, index) => {
+      data.clicked = false;
+    });
+    let type = [];
+    let abbr = [];
+    for (let i = 0; i < coins.length; i++) {
+      for (let j = 0; j < newFav.length; j++) {
+        if (coins[i].abbr === newFav[j].abbr) {
+          newFav[j].clicked = true;
+        }
+      }
+    }
+
+    for (let i = 0; i < coins.length; i++) {
+      abbr.push(coins[i].abbr);
+      type.push(coins[i].id);
+    }
+    await this.setState({
+      title,
+      main,
+      postButton: "수정",
+      favorite: newFav,
+      selectedAbbr: abbr,
+      selectedCoinType: type,
+      selectedPostType2: category
+    });
+    await this.toggleModal();
+  };
+
   handleScroll = e => {
     const bottom =
       e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
@@ -369,16 +420,21 @@ class MyPage extends Component {
   render() {
     const {
       posts,
+      main,
+      title,
       comments,
       isPostsLoading,
       selectedIndex,
       selectedCommentIndex,
       favorite,
+      isFocus,
       footerLoading,
       sideFavorite,
-      selectedType
+      postLoading,
+      selectedType,
+      selectedPostType2
     } = this.state;
-    const { me } = this.props;
+    const { me, isLogin } = this.props;
     return (
       <div className="myPage">
         <NavBar type="auth" />
@@ -388,6 +444,74 @@ class MyPage extends Component {
           onClick={this.handleFilter}
           handleFavorite={this.handleFavorite}
         />
+        <Modal
+          isOpen={this.state.showModal}
+          toggle={this.toggleModal}
+          size="lg"
+          modalTransition={{ timeout: 20 }}
+          backdropTransition={{ timeout: 10 }}
+          // backdrop={false}
+        >
+          <Loadable active={postLoading} spinner text="포스팅 중입니다">
+            <ModalBody>
+              <div className="forumPage__modal">
+                <SocialInput
+                  user={me && me[0]}
+                  isTitle={true}
+                  minRows={4}
+                  maxRows={6}
+                  showCamera
+                  showType2
+                  isLogin={isLogin}
+                  onChange={this.handleMain}
+                  onChangeTitle={this.handleTitle}
+                  placeholder="본문을 입력하세요"
+                  onClick={this.handlePost}
+                  postText="수정"
+                  handleType={this.handleType}
+                  handleType2={this.handleType2}
+                  postType={favorite}
+                  selectedPostType2={selectedPostType2}
+                  onFocus={this.onFocus}
+                  isFocus={isFocus}
+                  value={main}
+                  titleValue={title}
+                />
+                <p className="forumPage__modal__favorite__text">
+                  <span className="forumPage__modal__favorite__icon">
+                    <i className="xi-caret-down-min" />
+                  </span>관련된 종목을 선택하세요
+                </p>
+
+                <div className="forumPage__modal__favorite">
+                  {favorite &&
+                    favorite
+                      .sort((a, b) => {
+                        if (a.abbr < b.abbr) return -1;
+                        if (a.abbr > b.abbr) return 1;
+                        return 0;
+                      })
+                      .map((data, index) => {
+                        return (
+                          <div
+                            key={index}
+                            className={cx("forumPage__modal__favorite__item", {
+                              "forumPage__modal__favorite__item-active":
+                                data.clicked
+                            })}
+                            onClick={() =>
+                              this.handleCoinTag(index, data.coin_id, data.abbr)
+                            }
+                          >
+                            {data.abbr}
+                          </div>
+                        );
+                      })}
+                </div>
+              </div>
+            </ModalBody>
+          </Loadable>
+        </Modal>
         <div className="myPage__content">
           <div className="myPage__content__news">
             <div className="myPage__content__news__search">
@@ -454,6 +578,7 @@ class MyPage extends Component {
                       <List
                         social
                         index={index}
+                        me={me[0]}
                         isLoading={data.loading}
                         selectedIndex={selectedIndex}
                         key={index}
@@ -465,6 +590,14 @@ class MyPage extends Component {
                         view={data.view_cnt}
                         onClick={() =>
                           this.handleDetail(index, data.id, data.username)
+                        }
+                        onEditClick={() =>
+                          this.handleEdit(
+                            data.title,
+                            data.content,
+                            data.coins,
+                            data.category
+                          )
                         }
                       />
                     );
@@ -542,8 +675,20 @@ class MyPage extends Component {
                               </span>
                             </p>
                           </div>
-                          <br />
-                          <br />
+
+                          <div className="myPage__content__chart__intro__content__coins">
+                            {favorite.map((data, index) => {
+                              return (
+                                <div
+                                  key={index}
+                                  className="myPage__content__chart__intro__content__coins__coin"
+                                >
+                                  {data.abbr}
+                                </div>
+                              );
+                            })}
+                          </div>
+
                           <Button
                             text="로그아웃"
                             width={100}

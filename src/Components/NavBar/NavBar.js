@@ -57,8 +57,7 @@ class NavBar extends Component {
 
   handleForum = () => {
     this.props.history.push({
-      pathname: "/forum",
-      state: "hello"
+      pathname: "/forum"
     });
   };
 
@@ -131,6 +130,7 @@ class NavBar extends Component {
                 <Thumb
                   fontSize={30}
                   size={40}
+                  border={type === "auth" ? "2px rgb(92, 184, 92) solid" : null}
                   src={me && me[0].profile_img}
                   point={me && me[0].point}
                 />
