@@ -312,24 +312,35 @@ class ForumPage extends Component {
         this.setState({ selectedIndex: index });
         this.props.dispatch(SocialAction.postForumView(params)).then(view => {
           this.props
-            .dispatch(SocialAction.getOneForumCoins(params))
-            .then(coins => {
+            .dispatch(SocialAction.getLikeCheck(params))
+            .then(result => {
+              let isLiked;
+              if (result.message === "You already liked this forum") {
+                isLiked = true;
+              } else {
+                isLiked = false;
+              }
               this.props
-                .dispatch(SocialAction.getOneForumComment(params))
-                .then(comment => {
-                  const newPosts = this.state.posts.slice();
-                  newPosts[index].loading = false;
-                  newPosts[index].view_cnt = newPosts[index].view_cnt + 1;
-                  this.setState({ posts: newPosts });
-                  this.props.history.push({
-                    pathname: "/forum/" + id,
-                    state: {
-                      name: this.props.me[0].username,
-                      forum: newForum,
-                      comment: comment.reverse(),
-                      coins
-                    }
-                  });
+                .dispatch(SocialAction.getOneForumCoins(params))
+                .then(coins => {
+                  this.props
+                    .dispatch(SocialAction.getOneForumComment(params))
+                    .then(comment => {
+                      const newPosts = this.state.posts.slice();
+                      newPosts[index].loading = false;
+                      newPosts[index].view_cnt = newPosts[index].view_cnt + 1;
+                      this.setState({ posts: newPosts });
+                      this.props.history.push({
+                        pathname: "/forum/" + id,
+                        state: {
+                          name: this.props.me[0].username,
+                          forum: newForum,
+                          comment: comment.reverse(),
+                          coins,
+                          liked: isLiked
+                        }
+                      });
+                    });
                 });
             });
         });
@@ -532,8 +543,6 @@ class ForumPage extends Component {
       title
     } = this.state;
     const { news, me, isLogin } = this.props;
-    console.log(this.state.selectedAbbr);
-
     return (
       <div className="forumPage">
         <NavBar type="forum" />
@@ -674,6 +683,7 @@ class ForumPage extends Component {
                       username={data.username}
                       title={data.title}
                       point={data.point}
+                      likeCount={data.like_cnt}
                       createdAt={data.created_at}
                       type={data.coins}
                       view={data.view_cnt}

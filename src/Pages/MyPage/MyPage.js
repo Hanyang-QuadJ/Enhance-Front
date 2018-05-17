@@ -582,6 +582,8 @@ class MyPage extends Component {
                         isLoading={data.loading}
                         selectedIndex={selectedIndex}
                         key={index}
+                        value={main}
+                        titleValue={title}
                         username={data.username}
                         title={data.title}
                         point={data.point}

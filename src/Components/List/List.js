@@ -6,6 +6,14 @@ import moment from "moment";
 import cx from "classnames";
 import { Dots } from "react-activity";
 import { Medal } from "../";
+import NumericLabel from "react-pretty-numbers";
+
+let option = {
+  title: true,
+  shortFormat: true,
+  shortFormatMinValue: 10000,
+  shortFormatPrecision: 1
+};
 
 const defaultProps = {};
 const propTypes = {};
@@ -32,6 +40,7 @@ class List extends Component {
       isLoading,
       point,
       selectedIndex,
+      likeCount,
       view
     } = this.props;
     return (
@@ -79,7 +88,9 @@ class List extends Component {
                   <div className="list__content__textArea__social__items">
                     <div className="list__content__textArea__social__item">
                       <span className="list__content__textArea__social__item__count">
-                        10
+                        <NumericLabel params={option}>
+                          {likeCount && likeCount}
+                        </NumericLabel>
                       </span>
                       <span className="list__content__textArea__social__item__icon">
                         <i className="far fa-thumbs-up" />

@@ -2,19 +2,23 @@
 // If you want to make other page, Copy and Refactor this page.
 
 import React, { Component } from "react";
-import { Route } from "react-router-dom";
 import { connect } from "react-redux";
-import { UserInfoPage } from "../";
 import { Thumb, SocialInput, Comment } from "../../Components";
 import * as SocialAction from "../../ActionCreators/SocialAction";
 import { withRouter } from "react-router-dom";
-import { Modal, ModalBody, ModalHeader, ModalFooter } from "reactstrap";
+import { Modal, ModalBody } from "reactstrap";
 import { Dots } from "react-activity";
-
+import NumericLabel from "react-pretty-numbers";
 import moment from "moment";
 
 const defaultProps = {};
 const propTypes = {};
+let option = {
+  title: true,
+  shortFormat: true,
+  shortFormatMinValue: 10000,
+  shortFormatPrecision: 1
+};
 
 const mapStateToProps = state => {
   return {
@@ -40,11 +44,12 @@ class PostPage extends Component {
       userLoading: false,
       userCoins: [],
       forumLength: 0,
-      commentLength: 0
+      commentLength: 0,
+      isLiked: false,
+      newLike: 0
     };
     moment.locale("ko");
   }
-  componentWillMount() {}
 
   handleComment = e => {
     this.setState({ comment: e.target.value });
@@ -103,6 +108,52 @@ class PostPage extends Component {
     });
   };
 
+  handleLike = () => {
+    const { forum, liked } = this.props.location.state;
+    const params = {
+      token: this.props.token,
+      forum_id: Number(this.props.match.params.forum_id)
+    };
+    if (liked) {
+      this.props.dispatch(SocialAction.postForumLike(params)).then(value => {
+        this.setState(prevState => ({
+          isLiked: false,
+          newLike: forum.like_cnt
+        }));
+      });
+    } else {
+      this.props.dispatch(SocialAction.postForumLike(params)).then(value => {
+        this.setState(prevState => ({
+          isLiked: true,
+          newLike: forum.like_cnt + 1
+        }));
+      });
+    }
+  };
+
+  handleDisLike = () => {
+    const { forum, liked } = this.props.location.state;
+    const params = {
+      token: this.props.token,
+      forum_id: Number(this.props.match.params.forum_id)
+    };
+    if (liked) {
+      this.props.dispatch(SocialAction.postForumDisLike(params)).then(value => {
+        this.setState(prevState => ({
+          isLiked: true,
+          newLike: forum.like_cnt - 1
+        }));
+      });
+    } else {
+      this.props.dispatch(SocialAction.postForumDisLike(params)).then(value => {
+        this.setState(prevState => ({
+          isLiked: false,
+          newLike: forum.like_cnt - 1
+        }));
+      });
+    }
+  };
+
   onFocusComment = () => {
     this.setState(prevState => ({
       isFocusComment: !prevState.isFocusComment
@@ -114,7 +165,9 @@ class PostPage extends Component {
       previousProps.location.state.forum !== this.props.location.state.forum
     ) {
       this.setState({
-        newComment: []
+        newComment: [],
+        newLike: 0,
+        isLiked: false
       });
     }
   }
@@ -130,6 +183,8 @@ class PostPage extends Component {
       window.location.href = "/enhance/forum";
     } else {
       const {
+        isLiked,
+        newLike,
         isFocusComment,
         newComment,
         username,
@@ -141,7 +196,7 @@ class PostPage extends Component {
         userLoading
       } = this.state;
       const { me, isLogin, onClick } = this.props;
-      const { forum, coins, comment, name } = this.props.location.state;
+      const { forum, coins, comment, name, liked } = this.props.location.state;
 
       return (
         <div className="postPage__content__chart">
@@ -255,11 +310,39 @@ class PostPage extends Component {
                 </div>
                 <div className="postPage__content__chart__intro__post__footer">
                   <span className="postPage__content__chart__intro__post__footer__count">
-                    10
+                    {!isLiked ? (
+                      <NumericLabel params={option}>
+                        {forum.like_cnt}
+                      </NumericLabel>
+                    ) : (
+                      <NumericLabel params={option}>{newLike}</NumericLabel>
+                    )}
                   </span>
-                  <span className="postPage__content__chart__intro__post__footer__icon">
-                    <i className="far fa-thumbs-up" />
-                  </span>
+
+                  {!liked ? (
+                    <span
+                      className="postPage__content__chart__intro__post__footer__icon"
+                      onClick={!isLiked ? this.handleLike : this.handleDisLike}
+                    >
+                      {!isLiked ? (
+                        <i className="xi-heart-o" />
+                      ) : (
+                        <i className="xi-heart" />
+                      )}
+                    </span>
+                  ) : (
+                    <span
+                      className="postPage__content__chart__intro__post__footer__icon"
+                      onClick={isLiked ? this.handleLike : this.handleDisLike}
+                    >
+                      {isLiked ? (
+                        <i className="xi-heart-o" />
+                      ) : (
+                        <i className="xi-heart" />
+                      )}
+                    </span>
+                  )}
+
                   <span className="postPage__content__chart__intro__post__footer__count">
                     {forum.view_cnt}
                   </span>

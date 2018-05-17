@@ -30,6 +30,13 @@ export const SUCCEED_TO_GET_ONE_FORUM_COMMENT =
 export const FAILED_TO_GET_ONE_FORUM_COMMENT =
   "FAILED_TO_GET_ONE_FORUM_COMMENT";
 
+export const SUCCEED_TO_GET_FORUM_LIKE_CHECK =
+  "SUCCEED_TO_GET_FORUM_LIKE_CHECK";
+export const FAILED_TO_GET_FORUM_LIKE_CHECK = "FAILED_TO_GET_FORUM_LIKE_CHECK";
+
+export const SUCCEED_TO_POST_FORUM_LIKE = "SUCCEED_TO_POST_FORUM_LIKE";
+export const FAILED_TO_POST_FORUM_LIKE = "FAILED_TO_POST_FORUM_LIKE";
+
 export const SUCCEED_TO_POST_FORUM_VIEW = "SUCCEED_TO_POST_FORUM_VIEW";
 export const FAILED_TO_POST_FORUM_VIEW = "FAILED_TO_POST_FORUM_VIEW";
 
@@ -354,6 +361,93 @@ export const postForumView = params => {
     } catch (error) {
       dispatch({
         type: FAILED_TO_POST_FORUM_VIEW,
+        payload: { data: "NETWORK_ERROR" }
+      });
+    }
+  };
+};
+
+export const getLikeCheck = params => {
+  return async dispatch => {
+    try {
+      let response = await fetch(
+        ServerEndPoint + "api/forum/like/check/" + params.forum_id,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "x-access-token": params.token
+          }
+        }
+      );
+      let responseJson = await response.json();
+      await dispatch({
+        type: SUCCEED_TO_GET_FORUM_LIKE_CHECK,
+        payload: responseJson
+      });
+      return responseJson;
+    } catch (error) {
+      dispatch({
+        type: FAILED_TO_GET_FORUM_LIKE_CHECK,
+        payload: { data: "NETWORK_ERROR" }
+      });
+    }
+  };
+};
+
+export const postForumLike = params => {
+  return async dispatch => {
+    try {
+      let response = await fetch(
+        ServerEndPoint + "api/forum/like/" + params.forum_id,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "x-access-token": params.token
+          }
+        }
+      );
+      let responseJson = await response.json();
+      await dispatch({
+        type: SUCCEED_TO_POST_FORUM_LIKE,
+        payload: responseJson
+      });
+      return responseJson;
+    } catch (error) {
+      dispatch({
+        type: FAILED_TO_POST_FORUM_LIKE,
+        payload: { data: "NETWORK_ERROR" }
+      });
+    }
+  };
+};
+
+export const postForumDisLike = params => {
+  return async dispatch => {
+    try {
+      let response = await fetch(
+        ServerEndPoint + "api/forum/dislike/" + params.forum_id,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "x-access-token": params.token
+          }
+        }
+      );
+      let responseJson = await response.json();
+      await dispatch({
+        type: SUCCEED_TO_POST_FORUM_LIKE,
+        payload: responseJson
+      });
+      return responseJson;
+    } catch (error) {
+      dispatch({
+        type: FAILED_TO_POST_FORUM_LIKE,
         payload: { data: "NETWORK_ERROR" }
       });
     }

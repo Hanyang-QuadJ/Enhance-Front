@@ -61,7 +61,7 @@
         flex-wrap: wrap;
         flex-direction: row;
         font-size: 13px;
-        width: 100%;
+        width: 80%;
         justify-content: center;
         flex-wrap: wrap;
         margin-bottom: 5px;
@@ -213,6 +213,7 @@
             align-items: center;
             padding-top: 1rem;
             padding-bottom: 1rem;
+            cursor: pointer;
             color: $light-main;
 
             &__count {
