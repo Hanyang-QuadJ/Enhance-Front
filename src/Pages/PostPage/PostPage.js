@@ -9,6 +9,7 @@ import { withRouter } from "react-router-dom";
 import { Modal, ModalBody } from "reactstrap";
 import { Dots } from "react-activity";
 import NumericLabel from "react-pretty-numbers";
+import Linkify from "react-linkify";
 import moment from "moment";
 
 const defaultProps = {};
@@ -294,7 +295,14 @@ class PostPage extends Component {
                   <p>{forum.title}</p>
                 </div>
                 <div className="postPage__content__chart__intro__post__body">
-                  <p>{forum.content}</p>
+                  <Linkify
+                    properties={{
+                      target: "_blank",
+                      style: { color: "#56b1bf", fontWeight: "400" }
+                    }}
+                  >
+                    {forum.content}
+                  </Linkify>
                 </div>
                 <div className="postPage__content__chart__intro__post__coin">
                   {coins.map((data, index) => {

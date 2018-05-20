@@ -11,10 +11,9 @@ import {
   Button,
   SocialInput
 } from "../../Components";
-import { PostPage, ProfilePost } from "../";
+import { ProfilePost } from "../";
 import { Route, Switch, withRouter } from "react-router-dom";
 import { Dots } from "react-activity";
-import * as NewsAction from "../../ActionCreators/NewsAction";
 import * as PriceAction from "../../ActionCreators/PriceAction";
 import * as SocialAction from "../../ActionCreators/SocialAction";
 import * as AuthAction from "../../ActionCreators/AuthAction";
@@ -74,7 +73,9 @@ class MyPage extends Component {
       forum: [],
       forumIndex: 0,
       main: "",
-      title: ""
+      title: "",
+      editIndex: 0,
+      editId: 0
     };
     this.toggle = this.toggle.bind(this);
   }
@@ -203,8 +204,20 @@ class MyPage extends Component {
     });
   };
 
+  handleTitle = e => {
+    this.setState({ title: e.target.value });
+  };
+
+  handleMain = e => {
+    this.setState({ main: e.target.value });
+  };
+
   handleType = data => {
     this.setState({ selectedType: data });
+  };
+
+  handleType2 = (index, data) => {
+    this.setState({ selectedPostType2: data });
   };
 
   handleFilter = (index, id, coin) => {
@@ -218,6 +231,69 @@ class MyPage extends Component {
     } else {
       result[index].selected = true;
       this.setState({ sideFavorite: newCoin });
+    }
+  };
+
+  handleEditPost = () => {
+    const {
+      main,
+      title,
+      selectedCoinType,
+      selectedAbbr,
+      selectedPostType2,
+      posts,
+      editIndex,
+      editId
+    } = this.state;
+    if (selectedCoinType.length === 0) {
+      alert("해당하는 종목을 1개 이상 선택해주세요!");
+    } else {
+      const coinArray = [];
+      for (let i = 0; i < selectedAbbr.length; i++) {
+        coinArray.push({ abbr: selectedAbbr[i], id : selectedCoinType[i] });
+      }
+      const params = {
+        id: editId,
+        title,
+        content: main,
+        category: selectedPostType2,
+        coins: selectedCoinType,
+        token: this.props.token
+      };
+
+      this.setState({ postLoading: true });
+      this.props.dispatch(SocialAction.editForum(params)).then(value => {
+        const params = {
+          token: this.props.token,
+          forum_id: editId
+        };
+        //프론트 수정
+        const newPosts = posts.slice();
+        const i = editIndex;
+        newPosts[i].title = title;
+        newPosts[i].main = main;
+        newPosts[i].coins = coinArray;
+        newPosts[i].category = selectedPostType2;
+
+        this.props.dispatch(SocialAction.getOneForum(params)).then(forum => {
+          this.props
+            .dispatch(SocialAction.getOneForumCoins(params))
+            .then(async coins => {
+              await this.setState({
+                title,
+                main,
+                posts: newPosts,
+                postLoading: false,
+                selectedIndex: editIndex
+              });
+              await this.toggleModal();
+              await this.props.history.push({
+                pathname: "/profile/" + editId,
+                state: { forum, coins, comment: [] }
+              });
+            });
+        });
+      });
     }
   };
 
@@ -319,6 +395,34 @@ class MyPage extends Component {
     });
   };
 
+  handleCoinTag = (index, id, data) => {
+    let newFav = this.state.favorite.slice();
+    let coinType = this.state.selectedCoinType.slice();
+    let abbrType = this.state.selectedAbbr.slice();
+
+    if (!newFav[index].clicked) {
+      newFav[index].clicked = true;
+      coinType.push(id);
+      abbrType.push(data);
+      this.setState({
+        favorite: newFav,
+        selectedCoinType: coinType,
+        selectedAbbr: abbrType
+      });
+    } else {
+      newFav[index].clicked = false;
+      let coinIndex = coinType.indexOf(id);
+      let abbrIndex = abbrType.indexOf(data);
+      coinType.splice(coinIndex, 1);
+      abbrType.splice(abbrIndex, 1);
+      this.setState({
+        favorite: newFav,
+        selectedCoinType: coinType,
+        selectedAbbr: abbrType
+      });
+    }
+  };
+
   handleCommentDetail = (index, id, name) => {
     const params = {
       token: this.props.token,
@@ -350,7 +454,7 @@ class MyPage extends Component {
     });
   };
 
-  handleEdit = async(title, main, coins, category) => {
+  handleEdit = async(title, main, coins, category, index, id) => {
     const { favorite } = this.state;
     let newFav = favorite.slice();
     newFav.map((data, index) => {
@@ -377,7 +481,9 @@ class MyPage extends Component {
       favorite: newFav,
       selectedAbbr: abbr,
       selectedCoinType: type,
-      selectedPostType2: category
+      selectedPostType2: category,
+      editId: id,
+      editIndex: index
     });
     await this.toggleModal();
   };
@@ -432,9 +538,13 @@ class MyPage extends Component {
       sideFavorite,
       postLoading,
       selectedType,
-      selectedPostType2
+      selectedPostType2,
+      selectedCoinType,
+      selectedAbbr
     } = this.state;
     const { me, isLogin } = this.props;
+    console.log(selectedCoinType);
+
     return (
       <div className="myPage">
         <NavBar type="auth" />
@@ -466,7 +576,7 @@ class MyPage extends Component {
                   onChange={this.handleMain}
                   onChangeTitle={this.handleTitle}
                   placeholder="본문을 입력하세요"
-                  onClick={this.handlePost}
+                  onClick={this.handleEditPost}
                   postText="수정"
                   handleType={this.handleType}
                   handleType2={this.handleType2}
@@ -588,6 +698,7 @@ class MyPage extends Component {
                         title={data.title}
                         point={data.point}
                         createdAt={data.created_at}
+                        likeCount={data.like_cnt}
                         type={data.coins}
                         view={data.view_cnt}
                         onClick={() =>
@@ -598,7 +709,9 @@ class MyPage extends Component {
                             data.title,
                             data.content,
                             data.coins,
-                            data.category
+                            data.category,
+                            index,
+                            data.id
                           )
                         }
                       />

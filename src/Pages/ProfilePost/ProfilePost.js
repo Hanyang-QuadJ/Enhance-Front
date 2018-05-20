@@ -256,7 +256,7 @@ class ProfilePost extends Component {
                 </div>
                 <div className="postPage__content__chart__intro__post__footer">
                   <span className="postPage__content__chart__intro__post__footer__count">
-                    10
+                    {forum.like_cnt}
                   </span>
                   <span className="postPage__content__chart__intro__post__footer__icon">
                     <i className="far fa-thumbs-up" />

@@ -306,6 +306,39 @@ export const postForum = params => {
   };
 };
 
+export const editForum = params => {
+  return async dispatch => {
+    try {
+      let response = await fetch(ServerEndPoint + "api/forum/update", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "x-access-token": params.token
+        },
+        body: JSON.stringify({
+          id: params.id,
+          coin_list: params.coins,
+          category: params.category,
+          title: params.title,
+          content: params.content
+        })
+      });
+      let responseJson = await response.json();
+      await dispatch({
+        type: SUCCEED_TO_POST_FORUM,
+        payload: responseJson
+      });
+      return responseJson;
+    } catch (error) {
+      dispatch({
+        type: FAILED_TO_POST_FORUM,
+        payload: { data: "NETWORK_ERROR" }
+      });
+    }
+  };
+};
+
 export const updateForum = params => {
   return async dispatch => {
     try {

@@ -69,7 +69,9 @@ class ForumPage extends Component {
       selectedIndex: null,
       forum: [],
       forumIndex: 0,
-      postButton: "등록"
+      postButton: "등록",
+      editIndex: 0,
+      editId: 0
     };
     this.toggle = this.toggle.bind(this);
   }
@@ -416,6 +418,71 @@ class ForumPage extends Component {
     }
   };
 
+  handleEditPost = () => {
+    const {
+      main,
+      title,
+      selectedCoinType,
+      selectedAbbr,
+      selectedPostType2,
+      posts,
+      editIndex,
+      editId
+    } = this.state;
+    if (selectedCoinType.length === 0) {
+      alert("해당하는 종목을 1개 이상 선택해주세요!");
+    } else {
+      let date = new Date();
+      const coinArray = [];
+      for (let i = 0; i < selectedAbbr.length; i++) {
+        coinArray.push({ abbr: selectedAbbr[i], id: selectedCoinType[i] });
+      }
+      const params = {
+        id: editId,
+        title,
+        content: main,
+        category: selectedPostType2,
+        coins: selectedCoinType,
+        created_at: date,
+        token: this.props.token
+      };
+
+      this.setState({ postLoading: true });
+      this.props.dispatch(SocialAction.editForum(params)).then(value => {
+        const params = {
+          token: this.props.token,
+          forum_id: editId
+        };
+        //프론트 수정
+        const newPosts = posts.slice();
+        const i = editIndex;
+        newPosts[i].title = title;
+        newPosts[i].main = main;
+        newPosts[i].coins = coinArray;
+        newPosts[i].category = selectedPostType2;
+
+        this.props.dispatch(SocialAction.getOneForum(params)).then(forum => {
+          this.props
+            .dispatch(SocialAction.getOneForumCoins(params))
+            .then(async coins => {
+              await this.setState({
+                title,
+                main,
+                posts: newPosts,
+                postLoading: false,
+                selectedIndex: editIndex
+              });
+              await this.toggleModal();
+              await this.props.history.push({
+                pathname: "/forum/" + editId,
+                state: { forum, coins, comment: [] }
+              });
+            });
+        });
+      });
+    }
+  };
+
   handleType2 = (index, data) => {
     this.setState({ selectedPostType2: data });
   };
@@ -475,7 +542,7 @@ class ForumPage extends Component {
     }
   };
 
-  handleEdit = async(title, main, coins, category) => {
+  handleEdit = async(title, main, coins, category, index, id) => {
     const { favorite } = this.state;
 
     let newFav = favorite.slice();
@@ -500,6 +567,8 @@ class ForumPage extends Component {
       title,
       main,
       postButton: "수정",
+      editIndex: index,
+      editId: id,
       favorite: newFav,
       selectedAbbr: abbr,
       selectedCoinType: type,
@@ -542,7 +611,7 @@ class ForumPage extends Component {
       main,
       title
     } = this.state;
-    const { news, me, isLogin } = this.props;
+    const { me, isLogin } = this.props;
     return (
       <div className="forumPage">
         <NavBar type="forum" />
@@ -577,7 +646,11 @@ class ForumPage extends Component {
                   onChange={this.handleMain}
                   onChangeTitle={this.handleTitle}
                   placeholder="본문을 입력하세요"
-                  onClick={this.handlePost}
+                  onClick={
+                    postButton === "수정"
+                      ? this.handleEditPost
+                      : this.handlePost
+                  }
                   postText={postButton}
                   handleType={this.handleType}
                   handleType2={this.handleType2}
@@ -693,7 +766,9 @@ class ForumPage extends Component {
                           data.title,
                           data.content,
                           data.coins,
-                          data.category
+                          data.category,
+                          index,
+                          data.id
                         )
                       }
                     />
