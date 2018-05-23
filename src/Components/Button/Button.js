@@ -7,15 +7,25 @@ import { Dots } from "react-activity";
 const defaultProps = {};
 const propTypes = {};
 
-class DefaultComponent extends Component {
+class Button extends Component {
   constructor(props) {
     super(props);
   }
 
   render() {
-    const { text, onClick, width, height, isLoading } = this.props;
+    const {
+      text,
+      onClick,
+      width,
+      height,
+      isLoading,
+      marginBottom
+    } = this.props;
     return (
-      <div className="button" style={{ width: width, height: height }}>
+      <div
+        className="button"
+        style={{ width: width, height: height, marginBottom: marginBottom }}
+      >
         <div className="button__content" onClick={onClick}>
           {isLoading ? (
             <Dots color="#ffffff" size={20} />
@@ -28,7 +38,7 @@ class DefaultComponent extends Component {
   }
 }
 
-DefaultComponent.defaultProps = defaultProps;
-DefaultComponent.propTypes = propTypes;
+Button.defaultProps = defaultProps;
+Button.propTypes = propTypes;
 
-export default DefaultComponent;
+export default Button;

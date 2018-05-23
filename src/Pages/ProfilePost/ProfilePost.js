@@ -10,12 +10,21 @@ import * as SocialAction from "../../ActionCreators/SocialAction";
 import { withRouter } from "react-router-dom";
 import { Modal, ModalBody, ModalHeader, ModalFooter } from "reactstrap";
 import { Dots } from "react-activity";
+import NumericLabel from "react-pretty-numbers";
+import Linkify from "react-linkify";
 import cx from "classnames";
 
 import moment from "moment";
 
 const defaultProps = {};
 const propTypes = {};
+
+let option = {
+  title: true,
+  shortFormat: true,
+  shortFormatMinValue: 10000,
+  shortFormatPrecision: 1
+};
 
 const mapStateToProps = state => {
   return {
@@ -41,7 +50,9 @@ class ProfilePost extends Component {
       userCoins: [],
       userLoading: false,
       forumLength: 0,
-      commentLength: 0
+      commentLength: 0,
+      isLiked: false,
+      newLike: 0
     };
     moment.locale("ko");
   }
@@ -71,6 +82,52 @@ class ProfilePost extends Component {
     this.props.dispatch(SocialAction.postForumComment(params)).then(value => {
       this.setState({ newComment, comment: "" });
     });
+  };
+
+  handleLike = () => {
+    const { forum, liked } = this.props.location.state;
+    const params = {
+      token: this.props.token,
+      forum_id: Number(this.props.match.params.forum_id)
+    };
+    if (liked) {
+      this.props.dispatch(SocialAction.postForumLike(params)).then(value => {
+        this.setState(prevState => ({
+          isLiked: false,
+          newLike: forum.like_cnt
+        }));
+      });
+    } else {
+      this.props.dispatch(SocialAction.postForumLike(params)).then(value => {
+        this.setState(prevState => ({
+          isLiked: true,
+          newLike: forum.like_cnt + 1
+        }));
+      });
+    }
+  };
+
+  handleDisLike = () => {
+    const { forum, liked } = this.props.location.state;
+    const params = {
+      token: this.props.token,
+      forum_id: Number(this.props.match.params.forum_id)
+    };
+    if (liked) {
+      this.props.dispatch(SocialAction.postForumDisLike(params)).then(value => {
+        this.setState(prevState => ({
+          isLiked: true,
+          newLike: forum.like_cnt - 1
+        }));
+      });
+    } else {
+      this.props.dispatch(SocialAction.postForumDisLike(params)).then(value => {
+        this.setState(prevState => ({
+          isLiked: false,
+          newLike: forum.like_cnt - 1
+        }));
+      });
+    }
   };
 
   handleUser = user_id => {
@@ -115,7 +172,9 @@ class ProfilePost extends Component {
       previousProps.location.state.forum !== this.props.location.state.forum
     ) {
       this.setState({
-        newComment: []
+        newComment: [],
+        newLike: 0,
+        isLiked: false
       });
     }
   }
@@ -133,16 +192,18 @@ class ProfilePost extends Component {
       const {
         isFocusComment,
         newComment,
+        newLike,
         username,
         userImg,
         userCoins,
         userPoint,
         forumLength,
         commentLength,
-        userLoading
+        userLoading,
+        isLiked
       } = this.state;
       const { me, isLogin, onClick } = this.props;
-      const { forum, coins, comment, name } = this.props.location.state;
+      const { forum, coins, comment, name, liked } = this.props.location.state;
 
       return (
         <div className="postPage__content__chart">
@@ -240,7 +301,14 @@ class ProfilePost extends Component {
                   <p>{forum.title}</p>
                 </div>
                 <div className="postPage__content__chart__intro__post__body">
-                  <p>{forum.content}</p>
+                  <Linkify
+                    properties={{
+                      target: "_blank",
+                      style: { color: "#56b1bf", fontWeight: "400" }
+                    }}
+                  >
+                    {forum.content}
+                  </Linkify>
                 </div>
                 <div className="postPage__content__chart__intro__post__coin">
                   {coins.map((data, index) => {
@@ -256,11 +324,38 @@ class ProfilePost extends Component {
                 </div>
                 <div className="postPage__content__chart__intro__post__footer">
                   <span className="postPage__content__chart__intro__post__footer__count">
-                    {forum.like_cnt}
+                    {!isLiked ? (
+                      <NumericLabel params={option}>
+                        {forum.like_cnt}
+                      </NumericLabel>
+                    ) : (
+                      <NumericLabel params={option}>{newLike}</NumericLabel>
+                    )}
                   </span>
-                  <span className="postPage__content__chart__intro__post__footer__icon">
-                    <i className="far fa-thumbs-up" />
-                  </span>
+                  {!liked ? (
+                    <span
+                      className="postPage__content__chart__intro__post__footer__icon"
+                      onClick={!isLiked ? this.handleLike : this.handleDisLike}
+                    >
+                      {!isLiked ? (
+                        <i className="xi-heart-o" />
+                      ) : (
+                        <i className="xi-heart" />
+                      )}
+                    </span>
+                  ) : (
+                    <span
+                      className="postPage__content__chart__intro__post__footer__icon"
+                      onClick={isLiked ? this.handleLike : this.handleDisLike}
+                    >
+                      {isLiked ? (
+                        <i className="xi-heart-o" />
+                      ) : (
+                        <i className="xi-heart" />
+                      )}
+                    </span>
+                  )}
+
                   <span className="postPage__content__chart__intro__post__footer__count">
                     {forum.view_cnt}
                   </span>

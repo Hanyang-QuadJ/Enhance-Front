@@ -250,7 +250,7 @@ class MyPage extends Component {
     } else {
       const coinArray = [];
       for (let i = 0; i < selectedAbbr.length; i++) {
-        coinArray.push({ abbr: selectedAbbr[i], id : selectedCoinType[i] });
+        coinArray.push({ abbr: selectedAbbr[i], id: selectedCoinType[i] });
       }
       const params = {
         id: editId,
@@ -381,15 +381,26 @@ class MyPage extends Component {
             const newPosts = this.state.posts.slice();
             newPosts[index].loading = false;
             this.setState({ posts: newPosts });
-            this.props.history.push({
-              pathname: "/profile/" + id,
-              state: {
-                name,
-                forum,
-                comment: comment.reverse(),
-                coins
-              }
-            });
+            this.props
+              .dispatch(SocialAction.getLikeCheck(params))
+              .then(result => {
+                let isLiked;
+                if (result.message === "You already liked this forum") {
+                  isLiked = true;
+                } else {
+                  isLiked = false;
+                }
+                this.props.history.push({
+                  pathname: "/profile/" + id,
+                  state: {
+                    name,
+                    forum,
+                    comment: comment.reverse(),
+                    coins,
+                    liked: isLiked
+                  }
+                });
+              });
           });
       });
     });
@@ -806,6 +817,13 @@ class MyPage extends Component {
 
                           <Button
                             text="로그아웃"
+                            width={100}
+                            height={40}
+                            marginBottom={10}
+                            onClick={this.handleSignOut}
+                          />
+                          <Button
+                            text="프로필 등록"
                             width={100}
                             height={40}
                             onClick={this.handleSignOut}

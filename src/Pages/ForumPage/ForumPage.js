@@ -71,7 +71,8 @@ class ForumPage extends Component {
       forumIndex: 0,
       postButton: "등록",
       editIndex: 0,
-      editId: 0
+      editId: 0,
+      imagePreview: []
     };
     this.toggle = this.toggle.bind(this);
   }
@@ -221,6 +222,20 @@ class ForumPage extends Component {
       result[index].selected = true;
       this.setState({ sideFavorite: newCoin });
     }
+  };
+
+  handlePreview = file_arr => {
+    let imagePreview = this.state.imagePreview.slice();
+    for (let i = 0; i < file_arr.length; i++) {
+      imagePreview.push(file_arr[i].base64);
+    }
+    this.setState({ imagePreview });
+  };
+
+  handleBadge = value => {
+    let imagePreview = this.state.imagePreview.slice();
+    imagePreview.splice(imagePreview.indexOf(value), 1);
+    this.setState({ imagePreview });
   };
 
   handleFavorite = async(index, id, data) => {
@@ -602,6 +617,7 @@ class ForumPage extends Component {
       postLoading,
       isPostsLoading,
       isFocus,
+      imagePreview,
       selectedPostType2,
       selectedIndex,
       favorite,
@@ -645,6 +661,7 @@ class ForumPage extends Component {
                   isLogin={isLogin}
                   onChange={this.handleMain}
                   onChangeTitle={this.handleTitle}
+                  imagePreview={imagePreview}
                   placeholder="본문을 입력하세요"
                   onClick={
                     postButton === "수정"
@@ -652,6 +669,8 @@ class ForumPage extends Component {
                       : this.handlePost
                   }
                   postText={postButton}
+                  handleDelete={this.handleBadge}
+                  handleBase={this.handlePreview}
                   handleType={this.handleType}
                   handleType2={this.handleType2}
                   postType={favorite}
