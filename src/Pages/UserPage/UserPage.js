@@ -3,36 +3,34 @@
 
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { NavBar, List, SideBar, SocialInput } from "../../Components";
-import { PostPage } from "../";
+import {
+  NavBar,
+  List,
+  SideBar,
+  Thumb,
+  Button,
+  SocialInput
+} from "../../Components";
+import { ProfilePost } from "../";
 import { Route, Switch, withRouter } from "react-router-dom";
 import { Dots } from "react-activity";
-import * as NewsAction from "../../ActionCreators/NewsAction";
 import * as PriceAction from "../../ActionCreators/PriceAction";
 import * as SocialAction from "../../ActionCreators/SocialAction";
 import * as AuthAction from "../../ActionCreators/AuthAction";
-import { Modal, ModalBody, ModalHeader, ModalFooter } from "reactstrap";
-import Loadable from "react-loading-overlay";
 import "react-activity/dist/react-activity.css";
 import {
   ButtonDropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  Button
+  Modal,
+  ModalBody
 } from "reactstrap";
 import cx from "classnames";
+import Loadable from "react-loading-overlay";
 
 const defaultProps = {};
 const propTypes = {};
-
-const styles = {
-  styleAdd: {
-    position: "absolute",
-    left: "45vw",
-    bottom: 30
-  }
-};
 
 const mapStateToProps = state => {
   return {
@@ -43,6 +41,13 @@ const mapStateToProps = state => {
     favorite: state.reducer.favorite
   };
 };
+const sourceFilter = [{ id: 0, name: "게시글" }, { id: 1, name: "댓글" }];
+
+function removeDuplicates(myArr, prop) {
+  return myArr.filter((obj, pos, arr) => {
+    return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
+  });
+}
 
 class UserPage extends Component {
   constructor(props) {
@@ -50,132 +55,143 @@ class UserPage extends Component {
     this.state = {
       dropdownOpen: false,
       posts: [],
+      comments: [],
       favorite: [],
+      showModal: false,
       sideFavorite: [],
       isFocus: false,
       isFocusComment: false,
-      postLoading: false,
       isPostsLoading: false,
+      postLoading: false,
       forumLoading: false,
-      footerLoading: false,
-      title: "",
-      main: "",
-      endScroll: false,
-      showModal: false,
+      selectedType: "게시글",
+      selectedPostType2: "",
       selectedCoinType: [],
       selectedAbbr: [],
-      selectedPostType2: "자유",
       selectedIndex: null,
+      selectedCommentIndex: null,
       forum: [],
-      forumIndex: 0
+      forumIndex: 0,
+      main: "",
+      title: "",
+      editIndex: 0,
+      editId: 0
     };
     this.toggle = this.toggle.bind(this);
   }
 
   componentWillMount() {
-    const { isLogin } = this.props;
-    const { forumIndex } = this.state;
-    const params = { forumIndex };
+    const { token } = this.props;
+    const user_id = this.props.match.params.user_id;
+    const params = { user_id: user_id, token };
     this.setState({ isPostsLoading: true });
-    this.props.dispatch(SocialAction.getAllForums(params)).then(forums => {
-      if (forums.forums.length < 30) {
-        this.setState({ endScroll: true });
-      }
-      let result = forums.forums.reverse().map(function(el) {
-        let o = Object.assign({}, el);
-        o.loading = false;
-        return o;
-      });
-      this.setState({
-        posts: result,
-        forumIndex: forums.nextIndex,
-        isPostsLoading: false
-      });
-      this.props.dispatch(PriceAction.getCoins()).then(coins => {
-        if (isLogin) {
-          this.props
-            .dispatch(PriceAction.getFavs(this.props.token))
-            .then(favs => {
-              if (favs.length === 0) {
-                let result = coins.map(function(el) {
-                  let o = Object.assign({}, el);
-                  o.clicked = false;
-                  o.loading = false;
-                  return o;
-                });
-                this.setState({
-                  sideFavorite: result
-                });
-              } else {
-                //글 작성 코인 타입
-                let result = favs.map(function(el) {
-                  let o = Object.assign({}, el);
-                  o.clicked = false;
-                  return o;
-                });
+    this.props.dispatch(SocialAction.getForumByUser(params)).then(forums => {
+      this.props
+        .dispatch(SocialAction.getCommentsByUser(params))
+        .then(comments => {
+          let result = forums.reverse().map(function(el) {
+            let o = Object.assign({}, el);
+            o.loading = false;
+            return o;
+          });
+          let commentResult = comments.reverse().map(function(el) {
+            let o = Object.assign({}, el);
+            o.loading = false;
+            return o;
+          });
+          this.setState({
+            posts: result,
+            comments: commentResult,
+            isPostsLoading: false
+          });
+          this.props.dispatch(PriceAction.getCoins()).then(coins => {
+            this.props
+              .dispatch(PriceAction.getFavs(this.props.token))
+              .then(favs => {
+                if (favs.length === 0) {
+                  let result = coins.map(function(el) {
+                    let o = Object.assign({}, el);
+                    o.clicked = false;
+                    o.loading = false;
+                    return o;
+                  });
+                  this.setState({
+                    sideFavorite: result
+                  });
+                } else {
+                  //글 작성 코인 타입
+                  let result = favs.map(function(el) {
+                    let o = Object.assign({}, el);
+                    o.clicked = false;
+                    return o;
+                  });
 
-                //사이드 바 즐겨찾기
-                let resultSide = coins.map(function(el) {
-                  let o = Object.assign({}, el);
-                  o.clicked = false;
-                  o.selected = false;
-                  o.loading = true;
-                  return o;
-                });
-                for (let i = 0; i < resultSide.length; i++) {
-                  for (let j = 0; j < favs.length; j++) {
-                    if (resultSide[i].abbr === favs[j].abbr) {
-                      resultSide[i].clicked = true;
-                    }
-                  }
-                }
-                this.setState({ favorite: result, sideFavorite: resultSide });
-
-                //Crypto Compare API
-                const abbrArray = [];
-                for (let i = 0; i < resultSide.length; i++) {
-                  if (resultSide[i].clicked === true) {
-                    abbrArray.push({
-                      id: resultSide[i].id,
-                      abbr: resultSide[i].abbr
-                    });
-                  }
-                }
-                let final = resultSide.map(function(el) {
-                  let o = Object.assign({}, el);
-                  o.price = 0;
-                  o.percent = "";
-                  return o;
-                });
-                this.props
-                  .dispatch(
-                    PriceAction.getPrice(
-                      abbrArray.map((a, index) => {
-                        return a.abbr;
-                      })
-                    )
-                  )
-                  .then(value => {
-                    for (let i = 0; i < final.length; i++) {
-                      for (let j = 0; j < abbrArray.length; j++) {
-                        if (final[i].abbr === abbrArray[j].abbr) {
-                          final[i].loading = false;
-                          final[i].price = value[abbrArray[j].abbr].KRW.PRICE;
-                          final[i].percent =
-                            value[abbrArray[j].abbr].KRW.CHANGEPCT24HOUR;
-                        }
+                  //사이드 바 즐겨찾기
+                  let resultSide = coins.map(function(el) {
+                    let o = Object.assign({}, el);
+                    o.clicked = false;
+                    o.selected = false;
+                    o.loading = true;
+                    return o;
+                  });
+                  for (let i = 0; i < resultSide.length; i++) {
+                    for (let j = 0; j < favs.length; j++) {
+                      if (resultSide[i].abbr === favs[j].abbr) {
+                        resultSide[i].clicked = true;
                       }
                     }
-                    this.setState({ sideFavorite: final });
+                  }
+                  this.setState({ favorite: result, sideFavorite: resultSide });
+
+                  //Crypto Compare API
+                  const abbrArray = [];
+                  for (let i = 0; i < resultSide.length; i++) {
+                    if (resultSide[i].clicked === true) {
+                      abbrArray.push({
+                        id: resultSide[i].id,
+                        abbr: resultSide[i].abbr
+                      });
+                    }
+                  }
+                  let final = resultSide.map(function(el) {
+                    let o = Object.assign({}, el);
+                    o.price = 0;
+                    o.percent = "";
+                    return o;
                   });
-              }
-            });
-        } else {
-          null;
-        }
-      });
+                  this.props
+                    .dispatch(
+                      PriceAction.getPrice(
+                        abbrArray.map((a, index) => {
+                          return a.abbr;
+                        })
+                      )
+                    )
+                    .then(value => {
+                      for (let i = 0; i < final.length; i++) {
+                        for (let j = 0; j < abbrArray.length; j++) {
+                          if (final[i].abbr === abbrArray[j].abbr) {
+                            final[i].loading = false;
+                            final[i].price = value[abbrArray[j].abbr].KRW.PRICE;
+                            final[i].percent =
+                              value[abbrArray[j].abbr].KRW.CHANGEPCT24HOUR;
+                          }
+                        }
+                      }
+                      this.setState({ sideFavorite: final });
+                    });
+                }
+              });
+          });
+        });
     });
   }
+
+  onFocus = () => {
+    this.setState(prevState => ({
+      isFocus: !prevState.isFocus
+    }));
+  };
 
   toggle() {
     this.setState(prevState => ({
@@ -184,25 +200,25 @@ class UserPage extends Component {
   }
 
   toggleModal = () => {
-    if (this.props.isLogin === false) {
-      this.props.history.push({
-        pathname: "/auth"
-      });
-    } else {
-      if (this.state.favorite.length === 0) {
-        alert("글을 작성하려면 우측에서 종목을 추가하세요");
-      } else {
-        this.setState({
-          showModal: !this.state.showModal
-        });
-      }
-    }
+    this.setState({
+      showModal: !this.state.showModal
+    });
   };
 
-  onFocus = () => {
-    this.setState(prevState => ({
-      isFocus: !prevState.isFocus
-    }));
+  handleTitle = e => {
+    this.setState({ title: e.target.value });
+  };
+
+  handleMain = e => {
+    this.setState({ main: e.target.value });
+  };
+
+  handleType = data => {
+    this.setState({ selectedType: data });
+  };
+
+  handleType2 = (index, data) => {
+    this.setState({ selectedPostType2: data });
   };
 
   handleFilter = (index, id, coin) => {
@@ -286,122 +302,46 @@ class UserPage extends Component {
     }
   };
 
-  handleTitle = e => {
-    this.setState({ title: e.target.value });
-  };
-
-  handleMain = e => {
-    this.setState({ main: e.target.value });
-  };
-
-  handleDetail = (index, id) => {
-    const { isLogin } = this.props;
-    if (isLogin) {
-      const params = {
-        token: this.props.token,
-        forum_id: id
-      };
-      const newPosts = this.state.posts.slice();
-      newPosts[index].loading = true;
-      this.setState({ posts: newPosts });
-      this.props.dispatch(SocialAction.getOneForum(params)).then(forum => {
-        const newForum = Object.assign({}, forum);
-        newForum.view_cnt = newForum.view_cnt + 1;
-        this.setState({ selectedIndex: index });
-        this.props.dispatch(SocialAction.postForumView(params)).then(view => {
-          this.props
-            .dispatch(SocialAction.getOneForumCoins(params))
-            .then(coins => {
-              this.props
-                .dispatch(SocialAction.getOneForumComment(params))
-                .then(comment => {
-                  const newPosts = this.state.posts.slice();
-                  newPosts[index].loading = false;
-                  newPosts[index].view_cnt = newPosts[index].view_cnt + 1;
-                  this.setState({ posts: newPosts });
-                  this.props.history.push({
-                    pathname: "/forum/" + id,
-                    state: {
-                      forum: newForum,
-                      comment: comment.reverse(),
-                      coins
-                    }
-                  });
+  handleDetail = (index, id, name) => {
+    const params = {
+      token: this.props.token,
+      forum_id: id
+    };
+    const newPosts = this.state.posts.slice();
+    newPosts[index].loading = true;
+    this.setState({ posts: newPosts });
+    this.props.dispatch(SocialAction.getOneForum(params)).then(forum => {
+      this.setState({ selectedIndex: index });
+      this.props.dispatch(SocialAction.getOneForumCoins(params)).then(coins => {
+        this.props
+          .dispatch(SocialAction.getOneForumComment(params))
+          .then(comment => {
+            const newPosts = this.state.posts.slice();
+            newPosts[index].loading = false;
+            this.setState({ posts: newPosts });
+            this.props
+              .dispatch(SocialAction.getLikeCheck(params))
+              .then(result => {
+                let isLiked;
+                if (result.message === "You already liked this forum") {
+                  isLiked = true;
+                } else {
+                  isLiked = false;
+                }
+                this.props.history.push({
+                  pathname: `/@${this.props.match.params.user_id}/${id}`,
+                  state: {
+                    name,
+                    forum,
+                    comment: comment.reverse(),
+                    coins,
+                    liked: isLiked
+                  }
                 });
-            });
-        });
-      });
-    } else {
-      this.props.history.replace({
-        pathname: "/auth"
-      });
-    }
-  };
-
-  handlePost = async() => {
-    const {
-      main,
-      title,
-      selectedCoinType,
-      selectedAbbr,
-      selectedPostType2
-    } = this.state;
-    if (selectedCoinType.length === 0) {
-      alert("해당하는 종목을 1개 이상 선택해주세요!");
-    } else {
-      let date = new Date();
-      const coinArray = [];
-      for (let i = 0; i < selectedAbbr.length; i++) {
-        coinArray.push({ abbr: selectedAbbr[i] });
-      }
-      const params = {
-        title,
-        content: main,
-        category: selectedPostType2,
-        coins: selectedCoinType,
-        created_at: date,
-        token: this.props.token
-      };
-
-      this.setState({ postLoading: true });
-      this.props.dispatch(SocialAction.postForum(params)).then(id => {
-        const params = {
-          token: this.props.token,
-          forum_id: id
-        };
-        const frontParams = {
-          title,
-          id,
-          content: main,
-          category: selectedPostType2,
-          coins: coinArray,
-          created_at: date,
-          view_cnt: 0
-        };
-        this.props.dispatch(SocialAction.getOneForum(params)).then(forum => {
-          this.props
-            .dispatch(SocialAction.getOneForumCoins(params))
-            .then(async coins => {
-              const newPosts = this.state.posts.slice();
-              newPosts.splice(0, 0, frontParams);
-              await this.props.history.push({
-                pathname: "/forum/" + id,
-                state: { forum, coins, comment: [] }
               });
-              await this.setState({
-                posts: newPosts,
-                postLoading: false,
-                selectedIndex: 0
-              });
-              await this.toggleModal();
-            });
-        });
+          });
       });
-    }
-  };
-
-  handleType2 = (index, data) => {
-    this.setState({ selectedPostType2: data });
+    });
   };
 
   handleCoinTag = (index, id, data) => {
@@ -432,6 +372,37 @@ class UserPage extends Component {
     }
   };
 
+  handleCommentDetail = (index, id, name) => {
+    const params = {
+      token: this.props.token,
+      forum_id: id
+    };
+    const newPosts = this.state.comments.slice();
+    newPosts[index].loading = true;
+    this.setState({ comments: newPosts });
+    this.props.dispatch(SocialAction.getOneForum(params)).then(forum => {
+      this.setState({ selectedCommentIndex: index });
+      this.props.dispatch(SocialAction.getOneForumCoins(params)).then(coins => {
+        this.props
+          .dispatch(SocialAction.getOneForumComment(params))
+          .then(comment => {
+            const newPosts = this.state.comments.slice();
+            newPosts[index].loading = false;
+            this.setState({ comments: newPosts });
+            this.props.history.push({
+              pathname: `/@${this.props.match.params.user_id}/${id}`,
+              state: {
+                name,
+                forum,
+                comment: comment.reverse(),
+                coins
+              }
+            });
+          });
+      });
+    });
+  };
+
   handleScroll = e => {
     const bottom =
       e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
@@ -459,116 +430,69 @@ class UserPage extends Component {
     }
   };
 
+  handleSignOut = () => {
+    this.props.dispatch(AuthAction.signOut()).then(value => {
+      this.props.history.replace({
+        pathname: "/auth"
+      });
+    });
+  };
+
   render() {
     const {
       posts,
-      postLoading,
+      main,
+      title,
+      comments,
       isPostsLoading,
-      isFocus,
-      selectedPostType2,
       selectedIndex,
+      selectedCommentIndex,
       favorite,
-      forumLoading,
+      isFocus,
       footerLoading,
-      sideFavorite
+      sideFavorite,
+      postLoading,
+      selectedType,
+      selectedPostType2,
+      selectedCoinType,
+      selectedAbbr
     } = this.state;
-    const { news, me, isLogin } = this.props;
+    const {
+      userId,
+      userImg,
+      userPoint,
+      userCoins,
+      username
+    } = this.props.location.state;
+    const { me } = this.props;
+
     return (
-      <div className="forumPage">
+      <div className="userPage">
         <NavBar type="forum" />
-        {isLogin ? (
-          <SideBar
-            multiple
-            favorite={sideFavorite && sideFavorite}
-            onClick={this.handleFilter}
-            handleFavorite={this.handleFavorite}
-          />
-        ) : null}
-
-        <Modal
-          isOpen={this.state.showModal}
-          toggle={this.toggleModal}
-          size="lg"
-          modalTransition={{ timeout: 20 }}
-          backdropTransition={{ timeout: 10 }}
-          // backdrop={false}
-        >
-          <Loadable active={postLoading} spinner text="포스팅 중입니다">
-            <ModalBody>
-              <div className="forumPage__modal">
-                <SocialInput
-                  user={me && me[0]}
-                  isTitle={true}
-                  minRows={4}
-                  maxRows={6}
-                  showCamera
-                  showType2
-                  isLogin={isLogin}
-                  onChange={this.handleMain}
-                  onChangeTitle={this.handleTitle}
-                  placeholder="본문을 입력하세요"
-                  onClick={this.handlePost}
-                  postText="등록"
-                  handleType={this.handleType}
-                  handleType2={this.handleType2}
-                  postType={favorite}
-                  selectedPostType2={selectedPostType2}
-                  onFocus={this.onFocus}
-                  isFocus={isFocus}
-                />
-                <p className="forumPage__modal__favorite__text">
-                  <span className="forumPage__modal__favorite__icon">
-                    <i className="xi-caret-down-min" />
-                  </span>관련된 종목을 선택하세요
-                </p>
-
-                <div className="forumPage__modal__favorite">
-                  {favorite &&
-                    favorite
-                      .sort((a, b) => {
-                        if (a.abbr < b.abbr) return -1;
-                        if (a.abbr > b.abbr) return 1;
-                        return 0;
-                      })
-                      .map((data, index) => {
-                        return (
-                          <div
-                            key={index}
-                            className={cx("forumPage__modal__favorite__item", {
-                              "forumPage__modal__favorite__item-active":
-                                data.clicked
-                            })}
-                            onClick={() =>
-                              this.handleCoinTag(index, data.coin_id, data.abbr)
-                            }
-                          >
-                            {data.abbr}
-                          </div>
-                        );
-                      })}
-                </div>
-              </div>
-            </ModalBody>
-          </Loadable>
-        </Modal>
-        <div className="forumPage__content">
-          <div className="forumPage__content__news">
-            <div className="forumPage__content__news__search">
-              <div className="forumPage__content__news__search__first">
-                <div className="forumPage__content__news__search__first__iconArea">
-                  <span className="forumPage__content__news__search__first__iconArea__icon">
+        <SideBar
+          multiple
+          favorite={sideFavorite && sideFavorite}
+          onClick={this.handleFilter}
+          handleFavorite={this.handleFavorite}
+        />
+        <div className="userPage__content">
+          <div className="userPage__content__news">
+            <div className="userPage__content__news__search">
+              <div className="userPage__content__news__search__first">
+                <div className="userPage__content__news__search__first__iconArea">
+                  <span className="userPage__content__news__search__first__iconArea__icon">
                     <i className="xi-search" />
                   </span>
                 </div>
-                <div className="forumPage__content__news__search__first__inputArea">
+                <div className="userPage__content__news__search__first__inputArea">
                   <input
-                    className="forumPage__content__news__search__first__inputArea__input"
+                    className="userPage__content__news__search__first__inputArea__input"
                     placeholder="무엇을 찾고싶으신가요?"
                   />
                 </div>
               </div>
-              <div className="forumPage__content__news__search__second">
-                <div className="forumPage__content__news__search__second__content">
+              <div className="userPage__content__news__search__second">
+                <div className="userPage__content__news__search__second__content">
                   <ButtonDropdown
                     isOpen={this.state.dropdownOpen}
                     style={{ marginRight: 10, backgroundColor: "transparent" }}
@@ -576,19 +500,31 @@ class UserPage extends Component {
                     size="sm"
                     direction="down"
                   >
-                    <DropdownToggle caret>최신 순</DropdownToggle>
+                    <DropdownToggle caret>
+                      {this.state.selectedType}
+                    </DropdownToggle>
                     <DropdownMenu>
-                      <DropdownItem>인기 순</DropdownItem>
+                      {sourceFilter
+                        .filter(a => {
+                          return a.name !== this.state.selectedType;
+                        })
+                        .map((data, index) => {
+                          return (
+                            <DropdownItem
+                              key={index}
+                              onClick={() => this.handleType(data.name)}
+                            >
+                              {data.name}
+                            </DropdownItem>
+                          );
+                        })}
                     </DropdownMenu>
                   </ButtonDropdown>
-                  <Button onClick={this.toggleModal} size="sm">
-                    새 글 작성
-                  </Button>
                 </div>
               </div>
             </div>
             {isPostsLoading ? (
-              <div className="forumPage__content__news__lists-loading">
+              <div className="userPage__content__news__lists-loading">
                 <Dots color="#ffffff" size={30} />
               </div>
             ) : (
@@ -597,28 +533,68 @@ class UserPage extends Component {
                   this.lists = el;
                 }}
                 onScroll={this.handleScroll}
-                className="forumPage__content__news__lists"
+                className="userPage__content__news__lists"
               >
-                {posts.map((data, index) => {
-                  return (
-                    <List
-                      social
-                      index={index}
-                      isLoading={data.loading}
-                      selectedIndex={selectedIndex}
-                      key={index}
-                      username={data.username}
-                      title={data.title}
-                      point={data.point}
-                      createdAt={data.created_at}
-                      type={data.coins}
-                      view={data.view_cnt}
-                      onClick={() => this.handleDetail(index, data.id)}
-                    />
-                  );
-                })}
+                {selectedType === "게시글"
+                  ? posts &&
+                    posts.map((data, index) => {
+                      return (
+                        <List
+                          social
+                          index={index}
+                          me={me[0]}
+                          isLoading={data.loading}
+                          selectedIndex={selectedIndex}
+                          key={index}
+                          value={main}
+                          titleValue={title}
+                          username={data.username}
+                          title={data.title}
+                          point={data.point}
+                          createdAt={data.created_at}
+                          likeCount={data.like_cnt}
+                          type={data.coins}
+                          view={data.view_cnt}
+                          onClick={() =>
+                            this.handleDetail(index, data.id, data.username)
+                          }
+                          onEditClick={() =>
+                            this.handleEdit(
+                              data.title,
+                              data.content,
+                              data.coins,
+                              data.category,
+                              index,
+                              data.id
+                            )
+                          }
+                        />
+                      );
+                    })
+                  : removeDuplicates(comments, "forum_id").map(
+                    (data, index) => {
+                      return (
+                        <List
+                          index={index}
+                          isLoading={data.loading}
+                          selectedIndex={selectedCommentIndex}
+                          key={index}
+                          title={data.content}
+                          createdAt={data.created_at}
+                          type="댓글"
+                          onClick={() =>
+                            this.handleCommentDetail(
+                              index,
+                              data.forum_id,
+                              data.username
+                            )
+                          }
+                        />
+                      );
+                    }
+                  )}
                 {footerLoading === true ? (
-                  <div className="forumPage__content__news__lists__footer">
+                  <div className="userPage__content__news__lists__footer">
                     <Dots color="#ffffff" size={20} />
                   </div>
                 ) : null}
@@ -627,51 +603,61 @@ class UserPage extends Component {
           </div>
           <Switch>
             <Route
-              path={`${this.props.match.url}/:forum_id`}
-              component={PostPage}
+              path={`/@${this.props.match.params.user_id}/:forum_id`}
+              component={ProfilePost}
             />
             <Route
               exact
               path={`${this.props.match.url}`}
               render={() => {
                 return (
-                  <div className="forumPage__content__chart">
-                    <div className="forumPage__content__chart__intro">
-                      <div className="forumPage__content__chart__intro__logo">
-                        <img
-                          width={45}
-                          height={45}
-                          src="https://github.com/Hanyang-QuadJ/enhance/blob/master/public/icons/enhance_logo.png?raw=true"
-                        />
-                        <p className="forumPage__content__chart__intro__logo__text">
-                          ENHANCE
-                        </p>
-                      </div>
-                      <div className="forumPage__content__chart__intro__welcome">
-                        <p>
-                          <strong>환영합니다. </strong>
-                          {me && me[0].username + " 님"}
-                        </p>
-                        <p>
-                          인핸스는 가상화폐와 블록체인 기술에 대한 정보를
-                          실시간으로 모아서 한눈에 보기 쉽게 제공해 드리고
-                          있습니다. 인핸스와 함께 가상화폐의 역사를 함께 하세요.
-                        </p>
-                      </div>
-                      <div className="forumPage__content__chart__intro__desc">
-                        <strong>인핸스 포럼</strong>
-                        <p>
-                          로그인 후 + 버튼을 누르거나 좌측 상단 돋보기 아이콘을
-                          눌러 원하는 가상화폐 종목을 검색하실 수 있습니다.
-                        </p>
-                        <br />
-                        <p>
-                          원하는 가상화폐를 클릭하여 팔로우 하시면 우측 즐겨찾기
-                          목록에 저장되어 해당 가상 화폐의 정보를 계속 보실 수
-                          있습니다.
-                        </p>
-                        <br />
-                        <p>각 가상화폐의 종목의 커뮤니티에 참여하세요.</p>
+                  <div className="userPage__content__chart">
+                    <div className="userPage__content__chart__intro">
+                      <div className="userPage__content__chart__intro">
+                        <div className="userPage__content__chart__intro__content">
+                          <Thumb
+                            src={userImg}
+                            fontSize={75}
+                            size={90}
+                            point={userPoint}
+                          />
+                          <p className="userPage__content__chart__intro__content__username">
+                            {username}
+                          </p>
+                          <div className="userPage__content__chart__intro__content__area">
+                            <p className="userPage__content__chart__intro__content__area__number-border">
+                              {userPoint}
+                              <span className="userPage__content__chart__intro__content__area__text">
+                                포인트
+                              </span>
+                            </p>
+                            <p className="userPage__content__chart__intro__content__area__number-border">
+                              {posts.length}
+                              <span className="userPage__content__chart__intro__content__area__text">
+                                게시물
+                              </span>
+                            </p>
+                            <p className="userPage__content__chart__intro__content__area__number">
+                              {comments.length}
+                              <span className="userPage__content__chart__intro__content__area__text">
+                                댓글
+                              </span>
+                            </p>
+                          </div>
+
+                          <div className="userPage__content__chart__intro__content__coins">
+                            {favorite.map((data, index) => {
+                              return (
+                                <div
+                                  key={index}
+                                  className="userPage__content__chart__intro__content__coins__coin"
+                                >
+                                  {data.abbr}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>

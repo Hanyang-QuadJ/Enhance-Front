@@ -65,7 +65,8 @@ class PostPage extends Component {
       forumLength: 0,
       commentLength: 0,
       isLiked: false,
-      newLike: 0
+      newLike: 0,
+      userId: 0
     };
     moment.locale("ko");
   }
@@ -112,6 +113,7 @@ class PostPage extends Component {
               .dispatch(SocialAction.getForumByUser(params))
               .then(async forums => {
                 await this.setState({
+                  userId: user_id,
                   username: user.username,
                   userImg: user.profile_img,
                   userCoins: favs,
@@ -171,6 +173,14 @@ class PostPage extends Component {
         }));
       });
     }
+  };
+
+  handleUserDetail = () => {
+    const { userId, username, userPoint, userImg, userCoins } = this.state;
+    this.props.history.push({
+      pathname: "/@" + userId,
+      state: { userId, username, userPoint, userImg, userCoins }
+    });
   };
 
   onFocusComment = () => {

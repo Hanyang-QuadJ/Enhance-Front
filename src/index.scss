@@ -164,15 +164,20 @@ body {
     padding: 50px 15px;
     top: 50%;
     transform: translateY(-50%);
-
     &:focus {
       outline-style: none;
     }
   }
   .image-gallery-fullscreen-button::before,
   .image-gallery-play-button::before {
-    font-size: 2em;
+    font-size: 2em !important;
     padding: 15px 20px;
     text-shadow: 0 1px 1px #1a1a1a;
+  }
+  .image-gallery-fullscreen-button::after,
+  .image-gallery-play-button::after {
+    &:focus {
+      outline: none !important;
+    }
   }
 }

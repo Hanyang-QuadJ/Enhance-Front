@@ -694,7 +694,7 @@ class MyPage extends Component {
                 className="myPage__content__news__lists"
               >
                 {selectedType === "게시글"
-                  ? posts.map((data, index) => {
+                  ? posts && posts.map((data, index) => {
                     return (
                       <List
                         social

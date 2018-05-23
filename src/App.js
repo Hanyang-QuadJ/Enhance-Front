@@ -25,6 +25,7 @@ import {
   AuthPage,
   SignUpPage,
   MyPage,
+  UserPage,
   ForumPage
 } from "./Pages/";
 
@@ -80,6 +81,7 @@ class App extends Component {
             <Route exact path="/" component={HomePage} />
             <Route path="/forum" component={ForumPage} />
             <Route path="/profile" component={MyPage} />
+            <Route path="/@:user_id" component={UserPage} />
             <Route exact path="/auth" component={AuthPage} />
             <Route path="/auth/signup" component={SignUpPage} />
           </div>
