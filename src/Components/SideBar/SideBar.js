@@ -139,7 +139,9 @@ class SideBar extends Component {
                         key={index}
                         className="sideBar__content__items__item"
                       >
-                        <Sentry color="#ffffff" />
+                        <div style={{ marginTop: 10, marginBottom: 10 }}>
+                          <Sentry color="#ffffff" />
+                        </div>
                       </div>
                     );
                   } else {

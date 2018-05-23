@@ -47,6 +47,7 @@ class ForumPage extends Component {
       postLoading: false,
       isPostsLoading: false,
       forumLoading: false,
+      filterCoins: [],
       footerLoading: false,
       title: "",
       main: "",
@@ -200,16 +201,47 @@ class ForumPage extends Component {
   };
 
   handleFilter = (index, id, coin) => {
+    const requestCoins = this.state.filterCoins.slice();
     const newCoin = this.state.sideFavorite.slice();
     let result = newCoin.filter(a => {
       return a.clicked === true;
     });
+    this.setState({ isPostsLoading: true });
+
     if (result[index].selected) {
       result[index].selected = false;
-      this.setState({ sideFavorite: newCoin });
+      result[index].loading = true;
+      requestCoins.splice(requestCoins.indexOf(id), 1);
+      this.setState({ sideFavorite: result });
+      const params = { token: this.props.token, coins: requestCoins };
+      this.props.dispatch(SocialAction.filterForums(params)).then(forums => {
+        result[index].loading = false;
+        console.log(forums);
+        this.setState({
+          // posts: forums,
+          sideFavorite: newCoin,
+          filterCoins: requestCoins,
+          isPostsLoading: false
+        });
+      });
     } else {
       result[index].selected = true;
-      this.setState({ sideFavorite: newCoin });
+      result[index].loading = true;
+      requestCoins.push(id);
+      this.setState({ sideFavorite: result });
+      const params = { token: this.props.token, coins: requestCoins };
+      this.props.dispatch(SocialAction.filterForums(params)).then(forums => {
+        console.log(forums);
+        console.log(this.state.posts);
+
+        result[index].loading = false;
+        this.setState({
+          // posts: forums,
+          sideFavorite: newCoin,
+          filterCoins: requestCoins,
+          isPostsLoading: false
+        });
+      });
     }
   };
 
@@ -382,7 +414,7 @@ class ForumPage extends Component {
         coins: selectedCoinType,
         created_at: date,
         token: this.props.token,
-        base64 : imagePreview
+        base64: imagePreview
       };
 
       this.setState({ postLoading: true });
@@ -613,12 +645,14 @@ class ForumPage extends Component {
       selectedIndex,
       favorite,
       footerLoading,
+      filterCoins,
       sideFavorite,
       postButton,
       main,
       title
     } = this.state;
     const { me, isLogin } = this.props;
+    console.log(filterCoins);
     return (
       <div className="forumPage">
         <NavBar type="forum" />

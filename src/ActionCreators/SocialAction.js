@@ -3,6 +3,9 @@ import { ServerEndPoint } from "../Configs/Server";
 export const SUCCEED_TO_GET_ALL_FORUM = "SUCCEED_TO_GET_ALL_FORUM";
 export const FAILED_TO_GET_ALL_FORUM = "FAILED_TO_GET_ALL_FORUM";
 
+export const SUCCEED_TO_FILTER_FORUM = "SUCCEED_TO_FILTER_FORUM";
+export const FAILED_TO_FILTER_FORUM = "FAILED_TO_FILTER_FORUM";
+
 export const SUCCEED_TO_POST_FORUM = "SUCCEED_TO_POST_FORUM";
 export const FAILED_TO_POST_FORUM = "FAILED_TO_POST_FORUM";
 
@@ -65,6 +68,35 @@ export const getAllForums = params => {
     } catch (error) {
       dispatch({
         type: FAILED_TO_GET_ALL_FORUM,
+        payload: { data: "NETWORK_ERROR" }
+      });
+    }
+  };
+};
+
+export const filterForums = params => {
+  return async dispatch => {
+    try {
+      let response = await fetch(ServerEndPoint + "api/forum/coin", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "x-access-token": params.token
+        },
+        body: JSON.stringify({
+          coins: params.coins
+        })
+      });
+      let responseJson = await response.json();
+      await dispatch({
+        type: SUCCEED_TO_FILTER_FORUM,
+        payload: responseJson
+      });
+      return responseJson.result;
+    } catch (error) {
+      dispatch({
+        type: FAILED_TO_FILTER_FORUM,
         payload: { data: "NETWORK_ERROR" }
       });
     }
