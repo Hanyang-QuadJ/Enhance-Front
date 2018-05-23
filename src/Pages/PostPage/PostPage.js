@@ -9,11 +9,29 @@ import { withRouter } from "react-router-dom";
 import { Modal, ModalBody } from "reactstrap";
 import { Dots } from "react-activity";
 import NumericLabel from "react-pretty-numbers";
+import ImageGallery from "react-image-gallery";
 import Linkify from "react-linkify";
 import moment from "moment";
 
 const defaultProps = {};
 const propTypes = {};
+const images = [
+  {
+    original:
+      "https://postfiles.pstatic.net/20120315_193/leonjuhee_13317925245553SFz3_JPEG/%BE%EE%BA%A5%C1%AE%BD%BA.jpg?type=w2",
+    thumbnail: "http://lorempixel.com/250/150/nature/1/"
+  },
+  {
+    original:
+      "http://kinimage.naver.net/20180303_154/1520003835008lum9g_PNG/%A4%B7%A4%B2%A4%B8%A4%B5.png",
+    thumbnail: "http://lorempixel.com/250/150/nature/2/"
+  },
+  {
+    original:
+      "http://blogfiles5.naver.net/MjAxODA1MjNfMTIg/MDAxNTI3MDA2ODY4NTg3.QTYqJjYWl1IwDngZZh87x2tOEa5zE1_N_skakE_kqCcg.-aftVtOzj1Wf2EUUu3GVxeNqlaHx_90FLgQbzMJahLMg.JPEG.studio_queenmab/b0d779951bc97bf8b603ef99438ad16b_PqgHoMrpWRl.jpg",
+    thumbnail: "http://lorempixel.com/250/150/nature/3/"
+  }
+];
 let option = {
   title: true,
   shortFormat: true,
@@ -295,6 +313,14 @@ class PostPage extends Component {
                   <p>{forum.title}</p>
                 </div>
                 <div className="postPage__content__chart__intro__post__body">
+                  <div style={{ marginBottom: 10 }}>
+                    <ImageGallery
+                      items={images}
+                      showThumbnails={false}
+                      showPlayButton={false}
+                      showBullets={true}
+                    />
+                  </div>
                   <Linkify
                     properties={{
                       target: "_blank",

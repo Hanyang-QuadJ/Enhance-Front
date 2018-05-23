@@ -57,6 +57,7 @@
     "react-activity": "^1.2.2",
     "react-dom": "^16.2.0",
     "react-file-input-previews-base64": "^1.0.6",
+    "react-image-gallery": "^0.8.7",
     "react-linkify": "^0.2.2",
     "react-load-script": "0.0.6",
     "react-loading-overlay": "^0.3.0",

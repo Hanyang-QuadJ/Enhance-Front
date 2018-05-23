@@ -3,23 +3,12 @@
 
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  NavBar,
-  List,
-  SideBar,
-  RoundInput,
-  Thumb,
-  SocialInput
-} from "../../Components";
-import { PostPage, UserInfoPage } from "../";
+import { NavBar, List, SideBar, SocialInput } from "../../Components";
+import { PostPage } from "../";
 import { Route, Switch, withRouter } from "react-router-dom";
-import Textarea from "react-textarea-autosize";
 import { Dots } from "react-activity";
-import * as NewsAction from "../../ActionCreators/NewsAction";
 import * as PriceAction from "../../ActionCreators/PriceAction";
 import * as SocialAction from "../../ActionCreators/SocialAction";
-import * as AuthAction from "../../ActionCreators/AuthAction";
-import coinJson from "../../Json/coin";
 import { Modal, ModalBody, ModalHeader, ModalFooter } from "reactstrap";
 import Loadable from "react-loading-overlay";
 import "react-activity/dist/react-activity.css";
@@ -375,7 +364,8 @@ class ForumPage extends Component {
       title,
       selectedCoinType,
       selectedAbbr,
-      selectedPostType2
+      selectedPostType2,
+      imagePreview
     } = this.state;
     if (selectedCoinType.length === 0) {
       alert("해당하는 종목을 1개 이상 선택해주세요!");
@@ -391,7 +381,8 @@ class ForumPage extends Component {
         category: selectedPostType2,
         coins: selectedCoinType,
         created_at: date,
-        token: this.props.token
+        token: this.props.token,
+        base64 : imagePreview
       };
 
       this.setState({ postLoading: true });

@@ -6,6 +6,7 @@
 @import "Colors";
 @import "./Pages/index";
 @import "./Components/index";
+@import "node_modules/react-image-gallery/styles/scss/image-gallery.scss";
 @import url("https://fonts.googleapis.com/css?family=Biryani:700|Nanum+Gothic");
 body {
   ::placeholder {
@@ -155,5 +156,23 @@ body {
     float: left;
     padding: 5px 25px;
     background: transparent;
+  }
+  .image-gallery-left-nav,
+  .image-gallery-right-nav {
+    color: #fff;
+    font-size: 2em;
+    padding: 50px 15px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    &:focus {
+      outline-style: none;
+    }
+  }
+  .image-gallery-fullscreen-button::before,
+  .image-gallery-play-button::before {
+    font-size: 2em;
+    padding: 15px 20px;
+    text-shadow: 0 1px 1px #1a1a1a;
   }
 }
