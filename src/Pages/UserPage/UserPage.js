@@ -235,73 +235,6 @@ class UserPage extends Component {
     }
   };
 
-  handleFavorite = async(index, id, data) => {
-    const coin = this.state.sideFavorite.slice();
-    const favorite = this.state.favorite.slice();
-    const { token } = this.props;
-    const params = {
-      token: token,
-      coin_id: coin[index].id
-    };
-    //삭제
-    if (coin[index].clicked === true) {
-      coin[index].clicked = false;
-
-      for (let i = 0; i < favorite.length; i++) {
-        if (favorite[i].abbr === data) {
-          favorite.splice(i, 1);
-        }
-      }
-
-      let leftOver = [];
-      for (let i = 0; i < coin.length; i++) {
-        if (coin[i].clicked === true) {
-          leftOver.push(coin[i].abbr);
-        }
-      }
-      //한개 남았을 때
-      if (leftOver.length === 0) {
-        this.setState({ sideFavorite: coin, favorite });
-        this.props.dispatch(PriceAction.removeFav(params));
-      } else {
-        this.setState({ sideFavorite: coin, favorite });
-        this.props.dispatch(PriceAction.removeFav(params));
-      }
-    }
-    //추가
-    else {
-      coin[index].clicked = true;
-      coin[index].loading = true;
-      favorite.push({ coin_id: id, clicked: false, abbr: data });
-
-      this.setState({ sideFavorite: coin, favorite });
-
-      //즐겨찾기 한 코인들에게, 가격, 증감표시 key 추가
-      let result = coin.map(function(el) {
-        let o = Object.assign({}, el);
-        o.price = 0;
-        o.percent = "";
-        return o;
-      });
-
-      //즐겨찾기한 코인, 이름만 모으기
-      let abbrArray = [];
-      for (let i = 0; i < result.length; i++) {
-        abbrArray[i] = result[i].abbr;
-      }
-      this.props.dispatch(PriceAction.addFav(params)).then(x => {
-        this.props.dispatch(PriceAction.getPrice(abbrArray)).then(value => {
-          for (let i = 0; i < abbrArray.length; i++) {
-            result[i].price = value[abbrArray[i]].KRW.PRICE;
-            result[i].percent = value[abbrArray[i]].KRW.CHANGEPCT24HOUR;
-          }
-          result[index].loading = false;
-          this.setState(state => ({ sideFavorite: result }));
-        });
-      });
-    }
-  };
-
   handleDetail = (index, id, name) => {
     const params = {
       token: this.props.token,
@@ -342,34 +275,6 @@ class UserPage extends Component {
           });
       });
     });
-  };
-
-  handleCoinTag = (index, id, data) => {
-    let newFav = this.state.favorite.slice();
-    let coinType = this.state.selectedCoinType.slice();
-    let abbrType = this.state.selectedAbbr.slice();
-
-    if (!newFav[index].clicked) {
-      newFav[index].clicked = true;
-      coinType.push(id);
-      abbrType.push(data);
-      this.setState({
-        favorite: newFav,
-        selectedCoinType: coinType,
-        selectedAbbr: abbrType
-      });
-    } else {
-      newFav[index].clicked = false;
-      let coinIndex = coinType.indexOf(id);
-      let abbrIndex = abbrType.indexOf(data);
-      coinType.splice(coinIndex, 1);
-      abbrType.splice(abbrIndex, 1);
-      this.setState({
-        favorite: newFav,
-        selectedCoinType: coinType,
-        selectedAbbr: abbrType
-      });
-    }
   };
 
   handleCommentDetail = (index, id, name) => {
@@ -430,14 +335,6 @@ class UserPage extends Component {
     }
   };
 
-  handleSignOut = () => {
-    this.props.dispatch(AuthAction.signOut()).then(value => {
-      this.props.history.replace({
-        pathname: "/auth"
-      });
-    });
-  };
-
   render() {
     const {
       posts,
@@ -448,14 +345,8 @@ class UserPage extends Component {
       selectedIndex,
       selectedCommentIndex,
       favorite,
-      isFocus,
       footerLoading,
-      sideFavorite,
-      postLoading,
-      selectedType,
-      selectedPostType2,
-      selectedCoinType,
-      selectedAbbr
+      selectedType
     } = this.state;
     const {
       userId,
@@ -469,12 +360,6 @@ class UserPage extends Component {
     return (
       <div className="userPage">
         <NavBar type="forum" />
-        <SideBar
-          multiple
-          favorite={sideFavorite && sideFavorite}
-          onClick={this.handleFilter}
-          handleFavorite={this.handleFavorite}
-        />
         <div className="userPage__content">
           <div className="userPage__content__news">
             <div className="userPage__content__news__search">

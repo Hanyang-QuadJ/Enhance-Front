@@ -216,9 +216,8 @@ class ForumPage extends Component {
       const params = { token: this.props.token, coins: requestCoins };
       this.props.dispatch(SocialAction.filterForums(params)).then(forums => {
         result[index].loading = false;
-        console.log(forums);
         this.setState({
-          // posts: forums,
+          posts: forums,
           sideFavorite: newCoin,
           filterCoins: requestCoins,
           isPostsLoading: false
@@ -231,12 +230,9 @@ class ForumPage extends Component {
       this.setState({ sideFavorite: result });
       const params = { token: this.props.token, coins: requestCoins };
       this.props.dispatch(SocialAction.filterForums(params)).then(forums => {
-        console.log(forums);
-        console.log(this.state.posts);
-
         result[index].loading = false;
         this.setState({
-          // posts: forums,
+          posts: forums,
           sideFavorite: newCoin,
           filterCoins: requestCoins,
           isPostsLoading: false

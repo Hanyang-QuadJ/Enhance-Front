@@ -219,6 +219,10 @@
             &__count {
               font-size: 1rem;
               margin-right: 7px;
+
+              &-liked {
+                color: $active-color !important;
+              }
             }
 
             &__icon {

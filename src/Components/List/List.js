@@ -74,11 +74,19 @@ class List extends Component {
                   {username}
                 </span>
                 {me && me.username === username ? (
-                  <span
-                    className="list__content__textArea__edit"
-                    onClick={onEditClick}
-                  >
-                    <i className="xi-pen-o" />
+                  <span>
+                    <span
+                      className="list__content__textArea__edit"
+                      onClick={onEditClick}
+                    >
+                      <i className="xi-pen-o" />
+                    </span>
+                    <span
+                      className="list__content__textArea__edit"
+                      onClick={onEditClick}
+                    >
+                      <i className="xi-trash-o" />
+                    </span>
                   </span>
                 ) : null}
               </div>

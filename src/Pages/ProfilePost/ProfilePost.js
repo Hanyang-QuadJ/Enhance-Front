@@ -44,6 +44,7 @@ class ProfilePost extends Component {
       newComment: [],
       user: [],
       showModal: false,
+      userId: 0,
       username: "",
       userPoint: 0,
       userImg: "",
@@ -146,6 +147,7 @@ class ProfilePost extends Component {
               .dispatch(SocialAction.getForumByUser(params))
               .then(async forums => {
                 await this.setState({
+                  userId: user_id,
                   username: user.username,
                   userImg: user.profile_img,
                   userCoins: favs,
@@ -182,6 +184,14 @@ class ProfilePost extends Component {
   toggleModal = () => {
     this.setState({
       showModal: !this.state.showModal
+    });
+  };
+
+  handleUserDetail = () => {
+    const { userId, username, userPoint, userImg, userCoins } = this.state;
+    this.props.history.push({
+      pathname: "/@" + userId,
+      state: { userId, username, userPoint, userImg, userCoins }
     });
   };
 

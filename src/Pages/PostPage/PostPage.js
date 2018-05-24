@@ -12,6 +12,7 @@ import NumericLabel from "react-pretty-numbers";
 import ImageGallery from "react-image-gallery";
 import Linkify from "react-linkify";
 import moment from "moment";
+import * as base64 from "../../Assests/Icons/base64";
 
 const defaultProps = {};
 const propTypes = {};
@@ -355,11 +356,21 @@ class PostPage extends Component {
                 <div className="postPage__content__chart__intro__post__footer">
                   <span className="postPage__content__chart__intro__post__footer__count">
                     {!isLiked ? (
-                      <NumericLabel params={option}>
-                        {forum.like_cnt}
-                      </NumericLabel>
+                      liked ? (
+                        <span className="postPage__content__chart__intro__post__footer__count-liked">
+                          <NumericLabel params={option}>
+                            {forum.like_cnt}
+                          </NumericLabel>
+                        </span>
+                      ) : (
+                        <NumericLabel params={option}>
+                          {forum.like_cnt}
+                        </NumericLabel>
+                      )
                     ) : (
-                      <NumericLabel params={option}>{newLike}</NumericLabel>
+                      <span className="postPage__content__chart__intro__post__footer__count-liked">
+                        <NumericLabel params={option}>{newLike}</NumericLabel>
+                      </span>
                     )}
                   </span>
 
@@ -369,9 +380,15 @@ class PostPage extends Component {
                       onClick={!isLiked ? this.handleLike : this.handleDisLike}
                     >
                       {!isLiked ? (
-                        <i className="xi-heart-o" />
+                        <img
+                          src={base64.arrowUpWhite}
+                          style={{ width: 18, height: 18 }}
+                        />
                       ) : (
-                        <i className="xi-heart" />
+                        <img
+                          src={base64.arrowUpGreen}
+                          style={{ width: 18, height: 18 }}
+                        />
                       )}
                     </span>
                   ) : (
@@ -380,9 +397,15 @@ class PostPage extends Component {
                       onClick={isLiked ? this.handleLike : this.handleDisLike}
                     >
                       {isLiked ? (
-                        <i className="xi-heart-o" />
+                        <img
+                          src={base64.arrowUpWhite}
+                          style={{ width: 18, height: 18 }}
+                        />
                       ) : (
-                        <i className="xi-heart" />
+                        <img
+                          src={base64.arrowUpGreen}
+                          style={{ width: 18, height: 18 }}
+                        />
                       )}
                     </span>
                   )}
