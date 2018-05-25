@@ -19,12 +19,20 @@ class Button extends Component {
       width,
       height,
       isLoading,
-      marginBottom
+      marginBottom,
+      marginLeft,
+      marginTop
     } = this.props;
     return (
       <div
         className="button"
-        style={{ width: width, height: height, marginBottom: marginBottom }}
+        style={{
+          width: width,
+          height: height,
+          marginBottom: marginBottom,
+          marginLeft: marginLeft,
+          marginTop: marginTop
+        }}
       >
         <div className="button__content" onClick={onClick}>
           {isLoading ? (

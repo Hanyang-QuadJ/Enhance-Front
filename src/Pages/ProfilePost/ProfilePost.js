@@ -13,6 +13,7 @@ import { Dots } from "react-activity";
 import NumericLabel from "react-pretty-numbers";
 import Linkify from "react-linkify";
 import cx from "classnames";
+import ImageGallery from "react-image-gallery";
 
 import moment from "moment";
 
@@ -68,9 +69,9 @@ class ProfilePost extends Component {
     const date = new Date();
     const newComment = this.state.newComment.slice();
     const frontParams = {
-      username: me[0].username,
-      profile_img: me[0].profile_img,
-      point: me[0].point,
+      username: me.username,
+      profile_img: me.profile_img,
+      point: me.point,
       content: this.state.comment,
       date
     };
@@ -213,7 +214,14 @@ class ProfilePost extends Component {
         isLiked
       } = this.state;
       const { me, isLogin, onClick } = this.props;
-      const { forum, coins, comment, name, liked } = this.props.location.state;
+      const {
+        forum,
+        coins,
+        comment,
+        name,
+        liked,
+        images
+      } = this.props.location.state;
 
       return (
         <div className="postPage__content__chart">
@@ -311,6 +319,16 @@ class ProfilePost extends Component {
                   <p>{forum.title}</p>
                 </div>
                 <div className="postPage__content__chart__intro__post__body">
+                  <div style={{ marginBottom: 10 }}>
+                    {images.length === 0 ? null : (
+                      <ImageGallery
+                        items={images}
+                        showThumbnails={false}
+                        showPlayButton={false}
+                        showBullets={true}
+                      />
+                    )}
+                  </div>
                   <Linkify
                     properties={{
                       target: "_blank",
@@ -375,7 +393,7 @@ class ProfilePost extends Component {
                 </div>
               </div>
               <SocialInput
-                user={me && me[0]}
+                user={me && me}
                 isLogin={isLogin}
                 value={this.state.comment}
                 onChange={this.handleComment}

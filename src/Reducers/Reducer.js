@@ -17,6 +17,7 @@ import {
   SUCCEED_TO_SIGNIN,
   SUCCEED_TO_GET_ME,
   SUCCEED_TO_SIGNOUT,
+  SUCCEED_TO_UPDATE_USERNAME,
   FAILED_TO_SIGNIN
 } from "../ActionCreators/AuthAction";
 
@@ -52,11 +53,16 @@ const reducer = (state = initialState, action) => {
         token: action.payload,
         isLogin: true
       });
+    case SUCCEED_TO_UPDATE_USERNAME:
+      return Object.assign({}, state, {
+        me: { ...state.me, username: action.payload }
+      });
     case FAILED_TO_SIGNIN:
       return Object.assign({}, state, {
         token: "",
         isLogin: false
       });
+
     case SUCCEED_TO_SIGNOUT:
       localStorage.removeItem("token");
       return Object.assign({}, state, {

@@ -38,7 +38,8 @@ class RoundInput extends Component {
       rows,
       rowsMax,
       onKeyPress,
-      errorText
+      errorText,
+      value
     } = this.props;
     return (
       <div className="roundInput">
@@ -46,6 +47,7 @@ class RoundInput extends Component {
           hintText={placeholder}
           onChange={onChange}
           type={type}
+          defaultValue={value}
           style={styles.input}
           inputStyle={styles.inputText}
           hintStyle={styles.hint}

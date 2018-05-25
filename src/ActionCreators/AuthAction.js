@@ -3,6 +3,9 @@ import { ServerEndPoint } from "../Configs/Server";
 export const SUCCEED_TO_GET_ME = "SUCCEED_TO_GET_ME";
 export const FAILED_TO_GET_ME = "FAILED_TO_GET_ME";
 
+export const SUCCEED_TO_UPDATE_USERNAME = "SUCCEED_TO_UPDATE_USERNAME";
+export const FAILED_TO_UPDATE_USERNAME = "FAILED_TO_UPDATE_USERNAME";
+
 export const SUCCEED_TO_SIGNIN = "SUCCEED_TO_SIGNIN";
 export const FAILED_TO_SIGNIN = "FAILED_TO_SIGNIN";
 
@@ -19,15 +22,16 @@ export const getMe = params => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
           "x-access-token": params
         }
       });
       let responseJson = await response.json();
       await dispatch({
         type: SUCCEED_TO_GET_ME,
-        payload: responseJson.me
+        payload: responseJson.me[0]
       });
-      return responseJson.me;
+      return responseJson.me[0];
     } catch (error) {
       dispatch({
         type: FAILED_TO_GET_ME,
@@ -99,6 +103,35 @@ export const postSignIn = params => {
     } catch (error) {
       dispatch({
         type: FAILED_TO_SIGNIN,
+        payload: { data: "NETWORK_ERROR" }
+      });
+    }
+  };
+};
+
+export const updateUsername = params => {
+  return async dispatch => {
+    try {
+      let response = await fetch(ServerEndPoint + "api/user", {
+        method: "PATCH",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "x-access-token": params.token
+        },
+        body: JSON.stringify({
+          username: params.username
+        })
+      });
+      let responseJson = await response.json();
+      await dispatch({
+        type: SUCCEED_TO_UPDATE_USERNAME,
+        payload: params.username
+      });
+      return "succeed";
+    } catch (error) {
+      dispatch({
+        type: FAILED_TO_UPDATE_USERNAME,
         payload: { data: "NETWORK_ERROR" }
       });
     }

@@ -8,7 +8,6 @@ import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "react-image-crop-component/lib/style.css";
 import Reducer from "./Reducers/Reducer";
 
 const loggerMiddleware = createLogger();

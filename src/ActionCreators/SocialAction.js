@@ -120,9 +120,9 @@ export const getOneForum = params => {
       let responseJson = await response.json();
       await dispatch({
         type: SUCCEED_TO_GET_ONE_FORUM,
-        payload: responseJson.result[0]
+        payload: responseJson.result
       });
-      return responseJson.result[0];
+      return responseJson.result;
     } catch (error) {
       dispatch({
         type: FAILED_TO_GET_ONE_FORUM,
@@ -307,6 +307,7 @@ export const getOneForumComment = params => {
 };
 
 export const postForum = params => {
+  console.log(params);
   return async dispatch => {
     try {
       let response = await fetch(ServerEndPoint + "api/forum/create", {
@@ -320,7 +321,8 @@ export const postForum = params => {
           coin_list: params.coins,
           category: params.category,
           title: params.title,
-          content: params.content
+          content: params.content,
+          pic_list: params.base64
         })
       });
       let responseJson = await response.json();

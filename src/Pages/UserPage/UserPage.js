@@ -28,6 +28,7 @@ import {
 } from "reactstrap";
 import cx from "classnames";
 import Loadable from "react-loading-overlay";
+import ImageGallery from "react-image-gallery";
 
 const defaultProps = {};
 const propTypes = {};
@@ -244,6 +245,9 @@ class UserPage extends Component {
     newPosts[index].loading = true;
     this.setState({ posts: newPosts });
     this.props.dispatch(SocialAction.getOneForum(params)).then(forum => {
+      const images = forum.image.map((data, index) => {
+        return { original: data.img_url };
+      });
       this.setState({ selectedIndex: index });
       this.props.dispatch(SocialAction.getOneForumCoins(params)).then(coins => {
         this.props
@@ -268,6 +272,7 @@ class UserPage extends Component {
                     forum,
                     comment: comment.reverse(),
                     coins,
+                    images,
                     liked: isLiked
                   }
                 });

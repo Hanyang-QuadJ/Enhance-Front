@@ -7,6 +7,7 @@ import cx from "classnames";
 import { Dots } from "react-activity";
 import { Medal } from "../";
 import NumericLabel from "react-pretty-numbers";
+import * as base64 from "../../Assests/Icons/base64";
 
 let option = {
   title: true,
@@ -101,7 +102,7 @@ class List extends Component {
                         </NumericLabel>
                       </span>
                       <span className="list__content__textArea__social__item__icon">
-                        <i className="far fa-thumbs-up" />
+                        <img width={9} height={9} src={base64.arrowUpWhite} />
                       </span>
                     </div>
                     <div className="list__content__textArea__social__item">

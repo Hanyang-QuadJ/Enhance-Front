@@ -28,6 +28,7 @@ import {
 } from "reactstrap";
 import cx from "classnames";
 import Loadable from "react-loading-overlay";
+import ImageGallery from "react-image-gallery";
 
 const defaultProps = {};
 const propTypes = {};
@@ -82,7 +83,7 @@ class MyPage extends Component {
 
   componentWillMount() {
     const { me, token } = this.props;
-    const params = { user_id: me[0].id, token };
+    const params = { user_id: me.id, token };
     this.setState({ isPostsLoading: true });
     this.props.dispatch(SocialAction.getForumByUser(params)).then(forums => {
       this.props
@@ -218,20 +219,6 @@ class MyPage extends Component {
 
   handleType2 = (index, data) => {
     this.setState({ selectedPostType2: data });
-  };
-
-  handleFilter = (index, id, coin) => {
-    const newCoin = this.state.sideFavorite.slice();
-    let result = newCoin.filter(a => {
-      return a.clicked === true;
-    });
-    if (result[index].selected) {
-      result[index].selected = false;
-      this.setState({ sideFavorite: newCoin });
-    } else {
-      result[index].selected = true;
-      this.setState({ sideFavorite: newCoin });
-    }
   };
 
   handleEditPost = () => {
@@ -373,6 +360,9 @@ class MyPage extends Component {
     newPosts[index].loading = true;
     this.setState({ posts: newPosts });
     this.props.dispatch(SocialAction.getOneForum(params)).then(forum => {
+      const images = forum.image.map((data, index) => {
+        return { original: data.img_url };
+      });
       this.setState({ selectedIndex: index });
       this.props.dispatch(SocialAction.getOneForumCoins(params)).then(coins => {
         this.props
@@ -397,6 +387,7 @@ class MyPage extends Component {
                     forum,
                     comment: comment.reverse(),
                     coins,
+                    images,
                     liked: isLiked
                   }
                 });
@@ -534,6 +525,12 @@ class MyPage extends Component {
     });
   };
 
+  handleUserEdit = () => {
+    this.props.history.push({
+      pathname: "/settings"
+    });
+  };
+
   render() {
     const {
       posts,
@@ -554,15 +551,12 @@ class MyPage extends Component {
       selectedAbbr
     } = this.state;
     const { me, isLogin } = this.props;
-    console.log(selectedCoinType);
 
     return (
       <div className="myPage">
         <NavBar type="auth" />
         <SideBar
-          multiple
           favorite={sideFavorite && sideFavorite}
-          onClick={this.handleFilter}
           handleFavorite={this.handleFavorite}
         />
         <Modal
@@ -577,7 +571,7 @@ class MyPage extends Component {
             <ModalBody>
               <div className="forumPage__modal">
                 <SocialInput
-                  user={me && me[0]}
+                  user={me && me}
                   isTitle={true}
                   minRows={4}
                   maxRows={6}
@@ -694,40 +688,41 @@ class MyPage extends Component {
                 className="myPage__content__news__lists"
               >
                 {selectedType === "게시글"
-                  ? posts && posts.map((data, index) => {
-                    return (
-                      <List
-                        social
-                        index={index}
-                        me={me[0]}
-                        isLoading={data.loading}
-                        selectedIndex={selectedIndex}
-                        key={index}
-                        value={main}
-                        titleValue={title}
-                        username={data.username}
-                        title={data.title}
-                        point={data.point}
-                        createdAt={data.created_at}
-                        likeCount={data.like_cnt}
-                        type={data.coins}
-                        view={data.view_cnt}
-                        onClick={() =>
-                          this.handleDetail(index, data.id, data.username)
-                        }
-                        onEditClick={() =>
-                          this.handleEdit(
-                            data.title,
-                            data.content,
-                            data.coins,
-                            data.category,
-                            index,
-                            data.id
-                          )
-                        }
-                      />
-                    );
-                  })
+                  ? posts &&
+                    posts.map((data, index) => {
+                      return (
+                        <List
+                          social
+                          index={index}
+                          me={me}
+                          isLoading={data.loading}
+                          selectedIndex={selectedIndex}
+                          key={index}
+                          value={main}
+                          titleValue={title}
+                          username={data.username}
+                          title={data.title}
+                          point={data.point}
+                          createdAt={data.created_at}
+                          likeCount={data.like_cnt}
+                          type={data.coins}
+                          view={data.view_cnt}
+                          onClick={() =>
+                            this.handleDetail(index, data.id, data.username)
+                          }
+                          onEditClick={() =>
+                            this.handleEdit(
+                              data.title,
+                              data.content,
+                              data.coins,
+                              data.category,
+                              index,
+                              data.id
+                            )
+                          }
+                        />
+                      );
+                    })
                   : removeDuplicates(comments, "forum_id").map(
                     (data, index) => {
                       return (
@@ -773,17 +768,17 @@ class MyPage extends Component {
                       <div className="myPage__content__chart__intro">
                         <div className="myPage__content__chart__intro__content">
                           <Thumb
-                            src={me[0].profile_img}
+                            src={me.profile_img}
                             fontSize={75}
                             size={90}
-                            point={me[0].point}
+                            point={me.point}
                           />
                           <p className="myPage__content__chart__intro__content__username">
-                            {me[0].username}
+                            {me.username}
                           </p>
                           <div className="myPage__content__chart__intro__content__area">
                             <p className="myPage__content__chart__intro__content__area__number-border">
-                              {me[0].point}
+                              {me.point}
                               <span className="myPage__content__chart__intro__content__area__text">
                                 포인트
                               </span>
@@ -814,7 +809,6 @@ class MyPage extends Component {
                               );
                             })}
                           </div>
-
                           <Button
                             text="로그아웃"
                             width={100}
@@ -823,10 +817,10 @@ class MyPage extends Component {
                             onClick={this.handleSignOut}
                           />
                           <Button
-                            text="프로필 등록"
+                            text="내 정보 수정"
                             width={100}
                             height={40}
-                            onClick={this.handleSignOut}
+                            onClick={this.handleUserEdit}
                           />
                         </div>
                       </div>

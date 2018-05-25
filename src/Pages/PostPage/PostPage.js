@@ -16,23 +16,6 @@ import * as base64 from "../../Assests/Icons/base64";
 
 const defaultProps = {};
 const propTypes = {};
-const images = [
-  {
-    original:
-      "https://postfiles.pstatic.net/20120315_193/leonjuhee_13317925245553SFz3_JPEG/%BE%EE%BA%A5%C1%AE%BD%BA.jpg?type=w2",
-    thumbnail: "http://lorempixel.com/250/150/nature/1/"
-  },
-  {
-    original:
-      "http://kinimage.naver.net/20180303_154/1520003835008lum9g_PNG/%A4%B7%A4%B2%A4%B8%A4%B5.png",
-    thumbnail: "http://lorempixel.com/250/150/nature/2/"
-  },
-  {
-    original:
-      "http://blogfiles5.naver.net/MjAxODA1MjNfMTIg/MDAxNTI3MDA2ODY4NTg3.QTYqJjYWl1IwDngZZh87x2tOEa5zE1_N_skakE_kqCcg.-aftVtOzj1Wf2EUUu3GVxeNqlaHx_90FLgQbzMJahLMg.JPEG.studio_queenmab/b0d779951bc97bf8b603ef99438ad16b_PqgHoMrpWRl.jpg",
-    thumbnail: "http://lorempixel.com/250/150/nature/3/"
-  }
-];
 let option = {
   title: true,
   shortFormat: true,
@@ -81,9 +64,9 @@ class PostPage extends Component {
     const date = new Date();
     const newComment = this.state.newComment.slice();
     const frontParams = {
-      username: me[0].username,
-      profile_img: me[0].profile_img,
-      point: me[0].point,
+      username: me.username,
+      profile_img: me.profile_img,
+      point: me.point,
       content: this.state.comment,
       date
     };
@@ -226,8 +209,14 @@ class PostPage extends Component {
         userLoading
       } = this.state;
       const { me, isLogin, onClick } = this.props;
-      const { forum, coins, comment, name, liked } = this.props.location.state;
-
+      const {
+        forum,
+        coins,
+        comment,
+        name,
+        liked,
+        images
+      } = this.props.location.state;
       return (
         <div className="postPage__content__chart">
           <Modal
@@ -325,12 +314,14 @@ class PostPage extends Component {
                 </div>
                 <div className="postPage__content__chart__intro__post__body">
                   <div style={{ marginBottom: 10 }}>
-                    <ImageGallery
-                      items={images}
-                      showThumbnails={false}
-                      showPlayButton={false}
-                      showBullets={true}
-                    />
+                    {images.length === 0 ? null : (
+                      <ImageGallery
+                        items={images}
+                        showThumbnails={false}
+                        showPlayButton={false}
+                        showBullets={true}
+                      />
+                    )}
                   </div>
                   <Linkify
                     properties={{
@@ -419,7 +410,7 @@ class PostPage extends Component {
                 </div>
               </div>
               <SocialInput
-                user={me && me[0]}
+                user={me && me}
                 isLogin={isLogin}
                 value={this.state.comment}
                 onChange={this.handleComment}

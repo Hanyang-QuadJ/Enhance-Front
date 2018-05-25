@@ -19,14 +19,13 @@ import * as PriceAction from "./ActionCreators/PriceAction";
 
 // Own Modules
 import {
-  DefaultPage,
-  DefaultReduxPage,
   HomePage,
   AuthPage,
   SignUpPage,
   MyPage,
   UserPage,
-  ForumPage
+  ForumPage,
+  SettingsPage
 } from "./Pages/";
 
 const muiTheme = getMuiTheme({
@@ -81,6 +80,7 @@ class App extends Component {
             <Route exact path="/" component={HomePage} />
             <Route path="/forum" component={ForumPage} />
             <Route path="/profile" component={MyPage} />
+            <Route path="/settings" component={SettingsPage} />
             <Route path="/@:user_id" component={UserPage} />
             <Route exact path="/auth" component={AuthPage} />
             <Route path="/auth/signup" component={SignUpPage} />

@@ -16,7 +16,7 @@ import {
   DropdownMenu,
   DropdownItem
 } from "reactstrap";
-import { setTimeout, setInterval } from "timers";
+import { setInterval } from "timers";
 
 const defaultProps = {};
 const propTypes = {};
@@ -260,24 +260,36 @@ class HomePage extends Component {
     }));
   }
 
-  toggleBlog = () => {
-    this.setState(prevState => ({
-      isBlog: !prevState.isBlog
-    }));
-  };
-
-  handleSource = (id, name) => {
-    const { sourceId, coinId } = this.state;
+  toggleBlog = id => {
+    const { coinId } = this.state;
     const newsParams = {
       coinId,
       sourceId: id,
       newsCount: 30
+    };
+    this.setState({ sourceId: id, newsLoading: true });
+    this.props.dispatch(NewsAction.getNews(newsParams)).then(news => {
+      this.setState(prevState => ({
+        isBlog: !prevState.isBlog,
+        news: news.result,
+        newsLoading: false
+      }));
+    });
+  };
+
+  handleSource = (id, name) => {
+    const { coinId } = this.state;
+    const newsParams = {
+      coinId,
+      sourceId: id,
+      newsCount: 0
     };
     this.setState({ sourceName: name, sourceId: id, newsLoading: true });
     this.props.dispatch(NewsAction.getNews(newsParams)).then(news => {
       this.setState({ news: news.result, newsLoading: false });
     });
   };
+
   renderChart = type => {
     const baseUrl = "https://widgets.cryptocompare.com/";
     let appName = encodeURIComponent(window.location.hostname);
@@ -430,7 +442,7 @@ class HomePage extends Component {
             <div className="homePage__content__news__search">
               <div className="homePage__content__news__search__first">
                 <div
-                  onClick={this.toggleBlog}
+                  onClick={() => this.toggleBlog(0)}
                   className={cx(
                     "homePage__content__news__search__first__item",
                     {
@@ -441,7 +453,7 @@ class HomePage extends Component {
                   뉴스
                 </div>
                 <div
-                  onClick={this.toggleBlog}
+                  onClick={() => this.toggleBlog(1)}
                   className={cx(
                     "homePage__content__news__search__first__item",
                     {
@@ -544,7 +556,7 @@ class HomePage extends Component {
                 <div className="homePage__content__chart__intro__welcome">
                   <p>
                     <strong>환영합니다. </strong>
-                    {me && me[0].username + " 님"}
+                    {me && me.username + " 님"}
                   </p>
                   <p>
                     인핸스는 가상화폐와 블록체인 기술에 대한 정보를 실시간으로

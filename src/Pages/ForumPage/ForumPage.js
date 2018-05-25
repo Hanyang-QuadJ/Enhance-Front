@@ -214,15 +214,37 @@ class ForumPage extends Component {
       requestCoins.splice(requestCoins.indexOf(id), 1);
       this.setState({ sideFavorite: result });
       const params = { token: this.props.token, coins: requestCoins };
-      this.props.dispatch(SocialAction.filterForums(params)).then(forums => {
-        result[index].loading = false;
-        this.setState({
-          posts: forums,
-          sideFavorite: newCoin,
-          filterCoins: requestCoins,
-          isPostsLoading: false
+      if (requestCoins.length === 0) {
+        const params = { forumIndex: 0 };
+        this.props.dispatch(SocialAction.getAllForums(params)).then(forums => {
+          result[index].loading = false;
+          if (forums.forums.length < 30) {
+            this.setState({ endScroll: true });
+          }
+          let newForum = forums.forums.reverse().map(function(el) {
+            let o = Object.assign({}, el);
+            o.loading = false;
+            return o;
+          });
+          this.setState({
+            posts: newForum,
+            forumIndex: forums.nextIndex,
+            sideFavorite: newCoin,
+            filterCoins: requestCoins,
+            isPostsLoading: false
+          });
         });
-      });
+      } else {
+        this.props.dispatch(SocialAction.filterForums(params)).then(forums => {
+          result[index].loading = false;
+          this.setState({
+            posts: forums,
+            sideFavorite: newCoin,
+            filterCoins: requestCoins,
+            isPostsLoading: false
+          });
+        });
+      }
     } else {
       result[index].selected = true;
       result[index].loading = true;
@@ -343,6 +365,9 @@ class ForumPage extends Component {
       this.props.dispatch(SocialAction.getOneForum(params)).then(forum => {
         const newForum = Object.assign({}, forum);
         newForum.view_cnt = newForum.view_cnt + 1;
+        const images = forum.image.map((data, index) => {
+          return { original: data.img_url };
+        });
         this.setState({ selectedIndex: index });
         this.props.dispatch(SocialAction.postForumView(params)).then(view => {
           this.props
@@ -367,9 +392,10 @@ class ForumPage extends Component {
                       this.props.history.push({
                         pathname: "/forum/" + id,
                         state: {
-                          name: this.props.me[0].username,
+                          name: this.props.me.username,
                           forum: newForum,
                           comment: comment.reverse(),
+                          images,
                           coins,
                           liked: isLiked
                         }
@@ -427,7 +453,8 @@ class ForumPage extends Component {
           coins: coinArray,
           created_at: date,
           view_cnt: 0,
-          username: this.props.me[0].username,
+          like_cnt: 0,
+          username: this.props.me.username,
           me: this.props.me
         };
         this.props.dispatch(SocialAction.getOneForum(params)).then(forum => {
@@ -641,14 +668,12 @@ class ForumPage extends Component {
       selectedIndex,
       favorite,
       footerLoading,
-      filterCoins,
       sideFavorite,
       postButton,
       main,
       title
     } = this.state;
     const { me, isLogin } = this.props;
-    console.log(filterCoins);
     return (
       <div className="forumPage">
         <NavBar type="forum" />
@@ -673,7 +698,7 @@ class ForumPage extends Component {
             <ModalBody>
               <div className="forumPage__modal">
                 <SocialInput
-                  user={me && me[0]}
+                  user={me && me}
                   isTitle={true}
                   minRows={4}
                   maxRows={6}
@@ -788,7 +813,7 @@ class ForumPage extends Component {
                   return (
                     <List
                       social
-                      me={me[0]}
+                      me={me && me}
                       index={index}
                       isLoading={data.loading}
                       selectedIndex={selectedIndex}
@@ -847,7 +872,7 @@ class ForumPage extends Component {
                       <div className="forumPage__content__chart__intro__welcome">
                         <p>
                           <strong>환영합니다. </strong>
-                          {me && me[0].username + " 님"}
+                          {me && me.username + " 님"}
                         </p>
                         <p>
                           인핸스는 가상화폐와 블록체인 기술에 대한 정보를
