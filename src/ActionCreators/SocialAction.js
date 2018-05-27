@@ -6,11 +6,24 @@ export const FAILED_TO_GET_ALL_FORUM = "FAILED_TO_GET_ALL_FORUM";
 export const SUCCEED_TO_FILTER_FORUM = "SUCCEED_TO_FILTER_FORUM";
 export const FAILED_TO_FILTER_FORUM = "FAILED_TO_FILTER_FORUM";
 
+export const SUCCEED_TO_SEARCH_FORUM = "SUCCEED_TO_SEARCH_FORUM";
+export const FAILED_TO_SEARCH_FORUM = "FAILED_TO_SEARCH_FORUM";
+
+export const SUCCEED_TO_FILTER_FORUM_BY_TYPE =
+  "SUCCEED_TO_FILTER_FORUM_BY_TYPE";
+export const FAILED_TO_FILTER_FORUM_BY_TYPE = "FAILED_TO_FILTER_FORUM_BY_TYPE";
+
 export const SUCCEED_TO_POST_FORUM = "SUCCEED_TO_POST_FORUM";
 export const FAILED_TO_POST_FORUM = "FAILED_TO_POST_FORUM";
 
+export const SUCCEED_TO_DELETE_FORUM = "SUCCEED_TO_DELETE_FORUM";
+export const FAILED_TO_DELETE_FORUM = "FAILED_TO_DELETE_FORUM";
+
 export const SUCCEED_TO_GET_ONE_FORUM = "SUCCEED_TO_GET_ONE_FORUM";
 export const FAILED_TO_GET_ONE_FORUM = "FAILED_TO_GET_ONE_FORUM";
+
+export const SUCCEED_TO_GET_ONE_FORUM_COINS = "SUCCEED_TO_GET_ONE_FORUM_COINS";
+export const FAILED_TO_GET_ONE_FORUM_COINS = "FAILED_TO_GET_ONE_FORUM_COINS";
 
 export const SUCCEED_TO_GET_FORUM_BY_USER = "SUCCEED_TO_GET_FORUM_BY_USER";
 export const FAILED_TO_GET_FORUM_BY_USER = "FAILED_TO_GET_FORUM_BY_USER";
@@ -25,9 +38,6 @@ export const FAILED_TO_GET_COMMENTS_BY_USER = "FAILED_TO_GET_COMMENTS_BY_USER";
 export const SUCCEED_TO_GET_FAVS_BY_USER = "SUCCEED_TO_GET_FAVS_BY_USER";
 export const FAILED_TO_GET_FAVS_BY_USER = "FAILED_TO_GET_FAVS_BY_USER";
 
-export const SUCCEED_TO_GET_ONE_FORUM_COINS = "SUCCEED_TO_GET_ONE_FORUM_COINS";
-export const FAILED_TO_GET_ONE_FORUM_COINS = "FAILED_TO_GET_ONE_FORUM_COINS";
-
 export const SUCCEED_TO_GET_ONE_FORUM_COMMENT =
   "SUCCEED_TO_GET_ONE_FORUM_COMMENT";
 export const FAILED_TO_GET_ONE_FORUM_COMMENT =
@@ -37,8 +47,18 @@ export const SUCCEED_TO_GET_FORUM_LIKE_CHECK =
   "SUCCEED_TO_GET_FORUM_LIKE_CHECK";
 export const FAILED_TO_GET_FORUM_LIKE_CHECK = "FAILED_TO_GET_FORUM_LIKE_CHECK";
 
+export const SUCCEED_TO_GET_FORUM_HATE_CHECK =
+  "SUCCEED_TO_GET_FORUM_HATE_CHECK";
+export const FAILED_TO_GET_FORUM_HATE_CHECK = "FAILED_TO_GET_FORUM_HATE_CHECK";
+
 export const SUCCEED_TO_POST_FORUM_LIKE = "SUCCEED_TO_POST_FORUM_LIKE";
 export const FAILED_TO_POST_FORUM_LIKE = "FAILED_TO_POST_FORUM_LIKE";
+
+export const SUCCEED_TO_POST_FORUM_HATE = "SUCCEED_TO_POST_FORUM_HATE";
+export const FAILED_TO_POST_FORUM_HATE = "FAILED_TO_POST_FORUM_HATE";
+
+export const SUCCEED_TO_POST_FORUM_UNHATE = "SUCCEED_TO_POST_FORUM_UNHATE";
+export const FAILED_TO_POST_FORUM_UNHATE = "FAILED_TO_POST_FORUM_UNHATE";
 
 export const SUCCEED_TO_POST_FORUM_VIEW = "SUCCEED_TO_POST_FORUM_VIEW";
 export const FAILED_TO_POST_FORUM_VIEW = "FAILED_TO_POST_FORUM_VIEW";
@@ -55,6 +75,7 @@ export const getAllForums = params => {
           method: "GET",
           headers: {
             Accept: "application/json",
+            "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json"
           }
         }
@@ -75,25 +96,37 @@ export const getAllForums = params => {
 };
 
 export const filterForums = params => {
+  if (params.keyword === undefined) {
+    params.keyword = "";
+  }
   return async dispatch => {
     try {
-      let response = await fetch(ServerEndPoint + "api/forum/coin", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "x-access-token": params.token
-        },
-        body: JSON.stringify({
-          coins: params.coins
-        })
-      });
+      let response = await fetch(
+        ServerEndPoint +
+          `api/forum/coin?index=${params.index}&order=${params.order}&keyword=${
+            params.keyword
+          }`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+            "x-access-token": params.token
+          },
+          body: JSON.stringify({
+            coins: params.coins,
+            category: params.category
+          })
+        }
+      );
       let responseJson = await response.json();
+      console.log(responseJson);
       await dispatch({
         type: SUCCEED_TO_FILTER_FORUM,
         payload: responseJson
       });
-      return responseJson.result;
+      return responseJson;
     } catch (error) {
       dispatch({
         type: FAILED_TO_FILTER_FORUM,
@@ -113,6 +146,7 @@ export const getOneForum = params => {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
             "x-access-token": params.token
           }
         }
@@ -142,6 +176,7 @@ export const getUserById = params => {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
             "x-access-token": params.token
           }
         }
@@ -171,6 +206,7 @@ export const getForumByUser = params => {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
             "x-access-token": params.token
           }
         }
@@ -200,6 +236,7 @@ export const getFavByUser = params => {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
             "x-access-token": params.token
           }
         }
@@ -229,6 +266,7 @@ export const getCommentsByUser = params => {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
             "x-access-token": params.token
           }
         }
@@ -258,6 +296,7 @@ export const getOneForumCoins = params => {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
             "x-access-token": params.token
           }
         }
@@ -287,6 +326,7 @@ export const getOneForumComment = params => {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
             "x-access-token": params.token
           }
         }
@@ -307,7 +347,6 @@ export const getOneForumComment = params => {
 };
 
 export const postForum = params => {
-  console.log(params);
   return async dispatch => {
     try {
       let response = await fetch(ServerEndPoint + "api/forum/create", {
@@ -315,6 +354,7 @@ export const postForum = params => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
           "x-access-token": params.token
         },
         body: JSON.stringify({
@@ -348,11 +388,13 @@ export const editForum = params => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
           "x-access-token": params.token
         },
         body: JSON.stringify({
           id: params.id,
           coin_list: params.coins,
+          pic_list: params.pic_list,
           category: params.category,
           title: params.title,
           content: params.content
@@ -381,6 +423,7 @@ export const updateForum = params => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
           "x-access-token": params.token
         },
         body: JSON.stringify({
@@ -405,6 +448,36 @@ export const updateForum = params => {
   };
 };
 
+export const deleteForum = params => {
+  return async dispatch => {
+    try {
+      let response = await fetch(
+        ServerEndPoint + "api/forum/" + params.forum_id,
+        {
+          method: "DELETE",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "x-access-token": params.token
+          }
+        }
+      );
+      let responseJson = await response.json();
+      await dispatch({
+        type: SUCCEED_TO_DELETE_FORUM,
+        payload: responseJson
+      });
+      return responseJson;
+    } catch (error) {
+      dispatch({
+        type: FAILED_TO_DELETE_FORUM,
+        payload: { data: "NETWORK_ERROR" }
+      });
+    }
+  };
+};
+
 export const postForumView = params => {
   return async dispatch => {
     try {
@@ -415,6 +488,7 @@ export const postForumView = params => {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
             "x-access-token": params.token
           }
         }
@@ -444,6 +518,7 @@ export const getLikeCheck = params => {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
             "x-access-token": params.token
           }
         }
@@ -473,6 +548,7 @@ export const postForumLike = params => {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
             "x-access-token": params.token
           }
         }
@@ -492,6 +568,96 @@ export const postForumLike = params => {
   };
 };
 
+export const postHate = params => {
+  return async dispatch => {
+    try {
+      let response = await fetch(
+        ServerEndPoint + "api/forum/hate/" + params.forum_id,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "x-access-token": params.token
+          }
+        }
+      );
+      let responseJson = await response.json();
+      await dispatch({
+        type: SUCCEED_TO_POST_FORUM_HATE,
+        payload: responseJson
+      });
+      return responseJson;
+    } catch (error) {
+      dispatch({
+        type: FAILED_TO_POST_FORUM_HATE,
+        payload: { data: "NETWORK_ERROR" }
+      });
+    }
+  };
+};
+
+export const getHateCheck = params => {
+  return async dispatch => {
+    try {
+      let response = await fetch(
+        ServerEndPoint + "api/forum/hate/check/" + params.forum_id,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "x-access-token": params.token
+          }
+        }
+      );
+      let responseJson = await response.json();
+      await dispatch({
+        type: SUCCEED_TO_GET_FORUM_HATE_CHECK,
+        payload: responseJson
+      });
+      return responseJson;
+    } catch (error) {
+      dispatch({
+        type: FAILED_TO_GET_FORUM_HATE_CHECK,
+        payload: { data: "NETWORK_ERROR" }
+      });
+    }
+  };
+};
+
+export const postUnHate = params => {
+  return async dispatch => {
+    try {
+      let response = await fetch(
+        ServerEndPoint + "api/forum/unhate/" + params.forum_id,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "x-access-token": params.token
+          }
+        }
+      );
+      let responseJson = await response.json();
+      await dispatch({
+        type: SUCCEED_TO_POST_FORUM_UNHATE,
+        payload: responseJson
+      });
+      return responseJson;
+    } catch (error) {
+      dispatch({
+        type: FAILED_TO_POST_FORUM_UNHATE,
+        payload: { data: "NETWORK_ERROR" }
+      });
+    }
+  };
+};
+
 export const postForumDisLike = params => {
   return async dispatch => {
     try {
@@ -502,6 +668,7 @@ export const postForumDisLike = params => {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
             "x-access-token": params.token
           }
         }
@@ -531,6 +698,7 @@ export const postForumComment = params => {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
             "x-access-token": params.token
           },
           body: JSON.stringify({

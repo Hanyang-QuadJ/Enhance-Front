@@ -49,7 +49,9 @@ class PostPage extends Component {
       forumLength: 0,
       commentLength: 0,
       isLiked: false,
+      isHated: false,
       newLike: 0,
+      newHate: 0,
       userId: 0
     };
     moment.locale("ko");
@@ -120,19 +122,35 @@ class PostPage extends Component {
       forum_id: Number(this.props.match.params.forum_id)
     };
     if (liked) {
-      this.props.dispatch(SocialAction.postForumLike(params)).then(value => {
-        this.setState(prevState => ({
-          isLiked: false,
-          newLike: forum.like_cnt
-        }));
-      });
+      this.setState({ isLiked: false, newLike: forum.like_cnt });
+      this.props.dispatch(SocialAction.postForumLike(params)).then(value => {});
     } else {
-      this.props.dispatch(SocialAction.postForumLike(params)).then(value => {
-        this.setState(prevState => ({
-          isLiked: true,
-          newLike: forum.like_cnt + 1
-        }));
-      });
+      this.setState(prevState => ({
+        isLiked: true,
+        newLike: forum.like_cnt + 1
+      }));
+      this.props.dispatch(SocialAction.postForumLike(params)).then(value => {});
+    }
+  };
+
+  handleHate = () => {
+    const { forum, hated } = this.props.location.state;
+    const params = {
+      token: this.props.token,
+      forum_id: Number(this.props.match.params.forum_id)
+    };
+    if (hated) {
+      this.setState(prevState => ({
+        isHated: false,
+        newHate: forum.dislike_cnt
+      }));
+      this.props.dispatch(SocialAction.postHate(params)).then(value => {});
+    } else {
+      this.setState(prevState => ({
+        isHated: true,
+        newHate: forum.dislike_cnt + 1
+      }));
+      this.props.dispatch(SocialAction.postHate(params)).then(value => {});
     }
   };
 
@@ -143,19 +161,42 @@ class PostPage extends Component {
       forum_id: Number(this.props.match.params.forum_id)
     };
     if (liked) {
-      this.props.dispatch(SocialAction.postForumDisLike(params)).then(value => {
-        this.setState(prevState => ({
-          isLiked: true,
-          newLike: forum.like_cnt - 1
-        }));
-      });
+      this.setState(prevState => ({
+        isLiked: true,
+        newLike: forum.like_cnt - 1
+      }));
+      this.props
+        .dispatch(SocialAction.postForumDisLike(params))
+        .then(value => {});
     } else {
-      this.props.dispatch(SocialAction.postForumDisLike(params)).then(value => {
-        this.setState(prevState => ({
-          isLiked: false,
-          newLike: forum.like_cnt - 1
-        }));
-      });
+      this.setState(prevState => ({
+        isLiked: false,
+        newLike: forum.like_cnt - 1
+      }));
+      this.props
+        .dispatch(SocialAction.postForumDisLike(params))
+        .then(value => {});
+    }
+  };
+
+  handleUnHate = () => {
+    const { forum, hated } = this.props.location.state;
+    const params = {
+      token: this.props.token,
+      forum_id: Number(this.props.match.params.forum_id)
+    };
+    if (hated) {
+      this.setState(prevState => ({
+        isHated: true,
+        newHate: forum.dislike_cnt - 1
+      }));
+      this.props.dispatch(SocialAction.postUnHate(params)).then(value => {});
+    } else {
+      this.setState(prevState => ({
+        isHated: false,
+        newHate: forum.dislike_cnt - 1
+      }));
+      this.props.dispatch(SocialAction.postUnHate(params)).then(value => {});
     }
   };
 
@@ -180,7 +221,8 @@ class PostPage extends Component {
       this.setState({
         newComment: [],
         newLike: 0,
-        isLiked: false
+        isLiked: false,
+        isHated: false
       });
     }
   }
@@ -197,7 +239,9 @@ class PostPage extends Component {
     } else {
       const {
         isLiked,
+        isHated,
         newLike,
+        newHate,
         isFocusComment,
         newComment,
         username,
@@ -215,6 +259,7 @@ class PostPage extends Component {
         comment,
         name,
         liked,
+        hated,
         images
       } = this.props.location.state;
       return (
@@ -358,6 +403,8 @@ class PostPage extends Component {
                           {forum.like_cnt}
                         </NumericLabel>
                       )
+                    ) : liked ? (
+                      <NumericLabel params={option}>{newLike}</NumericLabel>
                     ) : (
                       <span className="postPage__content__chart__intro__post__footer__count-liked">
                         <NumericLabel params={option}>{newLike}</NumericLabel>
@@ -395,6 +442,64 @@ class PostPage extends Component {
                       ) : (
                         <img
                           src={base64.arrowUpGreen}
+                          style={{ width: 18, height: 18 }}
+                        />
+                      )}
+                    </span>
+                  )}
+
+                  <span className="postPage__content__chart__intro__post__footer__count">
+                    {!isHated ? (
+                      hated ? (
+                        <span className="postPage__content__chart__intro__post__footer__count-hated">
+                          <NumericLabel params={option}>
+                            {forum.dislike_cnt}
+                          </NumericLabel>
+                        </span>
+                      ) : (
+                        <NumericLabel params={option}>
+                          {forum.dislike_cnt}
+                        </NumericLabel>
+                      )
+                    ) : hated ? (
+                      <NumericLabel params={option}>{newHate}</NumericLabel>
+                    ) : (
+                      <span className="postPage__content__chart__intro__post__footer__count-hated">
+                        <NumericLabel params={option}>{newHate}</NumericLabel>
+                      </span>
+                    )}
+                  </span>
+
+                  {!hated ? (
+                    <span
+                      className="postPage__content__chart__intro__post__footer__icon"
+                      onClick={!isHated ? this.handleHate : this.handleUnHate}
+                    >
+                      {!isHated ? (
+                        <img
+                          src={base64.arrowDownWhite}
+                          style={{ width: 18, height: 18 }}
+                        />
+                      ) : (
+                        <img
+                          src={base64.arrowDownRed}
+                          style={{ width: 18, height: 18 }}
+                        />
+                      )}
+                    </span>
+                  ) : (
+                    <span
+                      className="postPage__content__chart__intro__post__footer__icon"
+                      onClick={isHated ? this.handleHate : this.handleUnHate}
+                    >
+                      {isHated ? (
+                        <img
+                          src={base64.arrowDownWhite}
+                          style={{ width: 18, height: 18 }}
+                        />
+                      ) : (
+                        <img
+                          src={base64.arrowDownRed}
                           style={{ width: 18, height: 18 }}
                         />
                       )}

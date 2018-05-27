@@ -9,8 +9,9 @@ import { Route, Switch, withRouter } from "react-router-dom";
 import { Dots } from "react-activity";
 import * as PriceAction from "../../ActionCreators/PriceAction";
 import * as SocialAction from "../../ActionCreators/SocialAction";
-import { Modal, ModalBody, ModalHeader, ModalFooter } from "reactstrap";
+import { Modal, ModalBody } from "reactstrap";
 import Loadable from "react-loading-overlay";
+import categoryJson from "../../Json/category";
 import "react-activity/dist/react-activity.css";
 import {
   ButtonDropdown,
@@ -34,11 +35,14 @@ const mapStateToProps = state => {
   };
 };
 
+const sortFilter = [{ id: 1, name: "최신순" }, { id: 0, name: "인기순" }];
+
 class ForumPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       dropdownOpen: false,
+      typeDropDown: false,
       posts: [],
       favorite: [],
       sideFavorite: [],
@@ -52,9 +56,12 @@ class ForumPage extends Component {
       title: "",
       main: "",
       endScroll: false,
+      sort: 1,
+      sortName: "최신순",
       showModal: false,
       selectedCoinType: [],
       selectedAbbr: [],
+      selectedPostType: "전체",
       selectedPostType2: "자유",
       selectedIndex: null,
       forum: [],
@@ -62,7 +69,8 @@ class ForumPage extends Component {
       postButton: "등록",
       editIndex: 0,
       editId: 0,
-      imagePreview: []
+      imagePreview: [],
+      search:""
     };
     this.toggle = this.toggle.bind(this);
   }
@@ -178,6 +186,12 @@ class ForumPage extends Component {
     }));
   }
 
+  toggleType = () => {
+    this.setState(prevState => ({
+      typeDropDown: !prevState.typeDropDown
+    }));
+  };
+
   toggleModal = () => {
     if (this.props.isLogin === false) {
       this.props.history.push({
@@ -201,19 +215,18 @@ class ForumPage extends Component {
   };
 
   handleFilter = (index, id, coin) => {
+    const { selectedPostType, sort, search } = this.state;
     const requestCoins = this.state.filterCoins.slice();
     const newCoin = this.state.sideFavorite.slice();
     let result = newCoin.filter(a => {
       return a.clicked === true;
     });
     this.setState({ isPostsLoading: true });
-
     if (result[index].selected) {
       result[index].selected = false;
       result[index].loading = true;
       requestCoins.splice(requestCoins.indexOf(id), 1);
       this.setState({ sideFavorite: result });
-      const params = { token: this.props.token, coins: requestCoins };
       if (requestCoins.length === 0) {
         const params = { forumIndex: 0 };
         this.props.dispatch(SocialAction.getAllForums(params)).then(forums => {
@@ -235,10 +248,18 @@ class ForumPage extends Component {
           });
         });
       } else {
+        const params = {
+          index: 0,
+          token: this.props.token,
+          coins: requestCoins,
+          category: selectedPostType,
+          order: sort
+        };
         this.props.dispatch(SocialAction.filterForums(params)).then(forums => {
           result[index].loading = false;
           this.setState({
-            posts: forums,
+            forumIndex: forums.nextIndex,
+            posts: forums.result,
             sideFavorite: newCoin,
             filterCoins: requestCoins,
             isPostsLoading: false
@@ -246,21 +267,67 @@ class ForumPage extends Component {
         });
       }
     } else {
+      const params = {
+        index: 0,
+        token: this.props.token,
+        coins: requestCoins,
+        category: selectedPostType,
+        order: sort
+      };
       result[index].selected = true;
       result[index].loading = true;
       requestCoins.push(id);
       this.setState({ sideFavorite: result });
-      const params = { token: this.props.token, coins: requestCoins };
       this.props.dispatch(SocialAction.filterForums(params)).then(forums => {
         result[index].loading = false;
         this.setState({
-          posts: forums,
+          forumIndex: forums.nextIndex,
+          posts: forums.result,
           sideFavorite: newCoin,
           filterCoins: requestCoins,
           isPostsLoading: false
         });
       });
     }
+  };
+
+  handleCategory = data => {
+    const { filterCoins } = this.state;
+    const params = {
+      index: 0,
+      category: data,
+      token: this.props.token,
+      order: this.state.sort,
+      coins: filterCoins
+    };
+    this.setState({ isPostsLoading: true, selectedPostType: data });
+    this.props.dispatch(SocialAction.filterForums(params)).then(forums => {
+      this.setState({
+        isPostsLoading: false,
+        forumIndex: forums.nextIndex,
+        posts: forums.result
+      });
+    });
+  };
+
+  handleSort = (id, data) => {
+    const { filterCoins } = this.state;
+    const params = {
+      index: 0,
+      category: this.state.selectedPostType,
+      token: this.props.token,
+      order: id,
+      coins: filterCoins
+    };
+    console.log(params);
+    this.setState({ isPostsLoading: true, sort: id, sortName: data });
+    this.props.dispatch(SocialAction.filterForums(params)).then(forums => {
+      this.setState({
+        isPostsLoading: false,
+        forumIndex: forums.nextIndex,
+        posts: forums.result
+      });
+    });
   };
 
   handlePreview = file_arr => {
@@ -361,45 +428,60 @@ class ForumPage extends Component {
       };
       const newPosts = this.state.posts.slice();
       newPosts[index].loading = true;
-      this.setState({ posts: newPosts });
+      this.setState({ posts: newPosts, selectedIndex: index });
       this.props.dispatch(SocialAction.getOneForum(params)).then(forum => {
         const newForum = Object.assign({}, forum);
         newForum.view_cnt = newForum.view_cnt + 1;
         const images = forum.image.map((data, index) => {
           return { original: data.img_url };
         });
-        this.setState({ selectedIndex: index });
         this.props.dispatch(SocialAction.postForumView(params)).then(view => {
+          const newPosts = this.state.posts.slice();
+          if (view.message === "already View") {
+            null;
+          } else {
+            newPosts[index].view_cnt = newPosts[index].view_cnt + 1;
+          }
           this.props
-            .dispatch(SocialAction.getLikeCheck(params))
+            .dispatch(SocialAction.getHateCheck(params))
             .then(result => {
-              let isLiked;
-              if (result.message === "You already liked this forum") {
-                isLiked = true;
+              let isHate;
+              if (result.message === "it's okay to dislike this forum") {
+                isHate = false;
               } else {
-                isLiked = false;
+                isHate = true;
               }
+
               this.props
-                .dispatch(SocialAction.getOneForumCoins(params))
-                .then(coins => {
+                .dispatch(SocialAction.getLikeCheck(params))
+                .then(result => {
+                  let isLiked;
+                  if (result.message === "You already liked this forum") {
+                    isLiked = true;
+                  } else {
+                    isLiked = false;
+                  }
                   this.props
-                    .dispatch(SocialAction.getOneForumComment(params))
-                    .then(comment => {
-                      const newPosts = this.state.posts.slice();
-                      newPosts[index].loading = false;
-                      newPosts[index].view_cnt = newPosts[index].view_cnt + 1;
-                      this.setState({ posts: newPosts });
-                      this.props.history.push({
-                        pathname: "/forum/" + id,
-                        state: {
-                          name: this.props.me.username,
-                          forum: newForum,
-                          comment: comment.reverse(),
-                          images,
-                          coins,
-                          liked: isLiked
-                        }
-                      });
+                    .dispatch(SocialAction.getOneForumCoins(params))
+                    .then(coins => {
+                      this.props
+                        .dispatch(SocialAction.getOneForumComment(params))
+                        .then(comment => {
+                          newPosts[index].loading = false;
+                          this.setState({ posts: newPosts });
+                          this.props.history.push({
+                            pathname: "/forum/" + id,
+                            state: {
+                              name: this.props.me.username,
+                              forum: newForum,
+                              comment: comment.reverse(),
+                              images,
+                              coins,
+                              liked: isLiked,
+                              hated: isHate
+                            }
+                          });
+                        });
                     });
                 });
             });
@@ -427,7 +509,7 @@ class ForumPage extends Component {
       let date = new Date();
       const coinArray = [];
       for (let i = 0; i < selectedAbbr.length; i++) {
-        coinArray.push({ abbr: selectedAbbr[i] });
+        coinArray.push({ id: selectedCoinType[i], abbr: selectedAbbr[i] });
       }
       const params = {
         title,
@@ -445,6 +527,10 @@ class ForumPage extends Component {
           token: this.props.token,
           forum_id: id
         };
+
+        let frontImages = imagePreview.map((data, index) => {
+          return { img_url: data };
+        });
         const frontParams = {
           title,
           id,
@@ -454,9 +540,16 @@ class ForumPage extends Component {
           created_at: date,
           view_cnt: 0,
           like_cnt: 0,
+          dislike_cnt: 0,
           username: this.props.me.username,
-          me: this.props.me
+          me: this.props.me,
+          images: frontImages
         };
+
+        let images = imagePreview.map((data, index) => {
+          return { original: data };
+        });
+
         this.props.dispatch(SocialAction.getOneForum(params)).then(forum => {
           this.props
             .dispatch(SocialAction.getOneForumCoins(params))
@@ -465,7 +558,7 @@ class ForumPage extends Component {
               newPosts.splice(0, 0, frontParams);
               await this.props.history.push({
                 pathname: "/forum/" + id,
-                state: { forum, coins, comment: [] }
+                state: { forum, coins, comment: [], images }
               });
               await this.setState({
                 posts: newPosts,
@@ -488,7 +581,8 @@ class ForumPage extends Component {
       selectedPostType2,
       posts,
       editIndex,
-      editId
+      editId,
+      imagePreview
     } = this.state;
     if (selectedCoinType.length === 0) {
       alert("해당하는 종목을 1개 이상 선택해주세요!");
@@ -504,6 +598,7 @@ class ForumPage extends Component {
         content: main,
         category: selectedPostType2,
         coins: selectedCoinType,
+        pic_list: imagePreview,
         created_at: date,
         token: this.props.token
       };
@@ -515,12 +610,20 @@ class ForumPage extends Component {
           forum_id: editId
         };
         //프론트 수정
+        let newImages = imagePreview.map((data, index) => {
+          return { original: data };
+        });
+
+        let frontImages = imagePreview.map((data, index) => {
+          return { img_url: data };
+        });
         const newPosts = posts.slice();
         const i = editIndex;
         newPosts[i].title = title;
         newPosts[i].main = main;
         newPosts[i].coins = coinArray;
         newPosts[i].category = selectedPostType2;
+        newPosts[i].images = frontImages;
 
         this.props.dispatch(SocialAction.getOneForum(params)).then(forum => {
           this.props
@@ -536,7 +639,7 @@ class ForumPage extends Component {
               await this.toggleModal();
               await this.props.history.push({
                 pathname: "/forum/" + editId,
-                state: { forum, coins, comment: [] }
+                state: { forum, coins, comment: [], images: newImages }
               });
             });
         });
@@ -603,7 +706,7 @@ class ForumPage extends Component {
     }
   };
 
-  handleEdit = async(title, main, coins, category, index, id) => {
+  handleEdit = async(title, main, coins, category, index, id, image) => {
     const { favorite } = this.state;
 
     let newFav = favorite.slice();
@@ -612,6 +715,11 @@ class ForumPage extends Component {
     });
     let type = [];
     let abbr = [];
+
+    let preview = image.map((data, index) => {
+      return data.img_url;
+    });
+
     for (let i = 0; i < coins.length; i++) {
       for (let j = 0; j < newFav.length; j++) {
         if (coins[i].abbr === newFav[j].abbr) {
@@ -633,9 +741,37 @@ class ForumPage extends Component {
       favorite: newFav,
       selectedAbbr: abbr,
       selectedCoinType: type,
-      selectedPostType2: category
+      selectedPostType2: category,
+      imagePreview: preview
     });
     await this.toggleModal();
+  };
+
+  handleDelete = () => {
+    const { editId } = this.state;
+
+    const params = {
+      token: this.props.token,
+      forum_id: editId
+    };
+
+    const newPosts = this.state.posts.slice();
+
+    let forumIndex;
+    for (let i = 0; i < newPosts.length; i++) {
+      if (newPosts[i].id === editId) {
+        forumIndex = i;
+      }
+    }
+    this.setState({ postLoading: true });
+    this.props.dispatch(SocialAction.deleteForum(params)).then(result => {
+      newPosts.splice(forumIndex, 1);
+      this.setState({ posts: newPosts, postLoading: false });
+      this.toggleModal();
+      this.props.history.replace({
+        pathname: "/forum"
+      });
+    });
   };
 
   handleOpenPost = async() => {
@@ -652,10 +788,33 @@ class ForumPage extends Component {
       selectedCoinType: [],
       selectedAbbr: [],
       selectedPostType2: "자유",
+      imagePreview: [],
       favorite: newFav
     });
     await this.toggleModal();
   };
+
+  handleSearchPost = () => {
+    const params = {
+      index: 0,
+      category: this.state.selectedPostType,
+      order: this.state.sort,
+      coins: this.state.filterCoins,
+      keyword : this.state.search
+    }; 
+    this.setState({ isPostsLoading : true });
+    this.props.dispatch(SocialAction.filterForums(params)).then(news => {
+      this.setState({
+        forumIndex : news.nextIndex,
+        posts: news.result,
+        isPostsLoading : false
+      });
+    });
+  }
+
+  handleSearchBar = (e) => {
+    this.setState({ search : e.target.value });
+  }
 
   render() {
     const {
@@ -664,6 +823,9 @@ class ForumPage extends Component {
       isPostsLoading,
       isFocus,
       imagePreview,
+      sort,
+      sortName,
+      selectedPostType,
       selectedPostType2,
       selectedIndex,
       favorite,
@@ -671,9 +833,11 @@ class ForumPage extends Component {
       sideFavorite,
       postButton,
       main,
-      title
+      title,
+      typeDropDown
     } = this.state;
     const { me, isLogin } = this.props;
+    const categoryType = categoryJson.all;
     return (
       <div className="forumPage">
         <NavBar type="forum" />
@@ -694,7 +858,7 @@ class ForumPage extends Component {
           backdropTransition={{ timeout: 10 }}
           // backdrop={false}
         >
-          <Loadable active={postLoading} spinner text="포스팅 중입니다">
+          <Loadable active={postLoading} spinner text="처리중 입니다">
             <ModalBody>
               <div className="forumPage__modal">
                 <SocialInput
@@ -714,6 +878,7 @@ class ForumPage extends Component {
                       ? this.handleEditPost
                       : this.handlePost
                   }
+                  onClickLeft={this.handleDelete}
                   postText={postButton}
                   handleDelete={this.handleBadge}
                   handleBase={this.handlePreview}
@@ -774,23 +939,74 @@ class ForumPage extends Component {
                   <input
                     className="forumPage__content__news__search__first__inputArea__input"
                     placeholder="무엇을 찾고싶으신가요?"
+                    onChange={this.handleSearchBar}
                   />
+                  <Button onClick={this.handleSearchPost} text="검색"/>
                 </div>
               </div>
               <div className="forumPage__content__news__search__second">
                 <div className="forumPage__content__news__search__second__content">
-                  <ButtonDropdown
-                    isOpen={this.state.dropdownOpen}
-                    style={{ marginRight: 10, backgroundColor: "transparent" }}
-                    toggle={this.toggle}
-                    size="sm"
-                    direction="down"
-                  >
-                    <DropdownToggle caret>최신 순</DropdownToggle>
-                    <DropdownMenu>
-                      <DropdownItem>인기 순</DropdownItem>
-                    </DropdownMenu>
-                  </ButtonDropdown>
+                  <div>
+                    <ButtonDropdown
+                      isOpen={this.state.dropdownOpen}
+                      style={{
+                        marginRight: 10,
+                        backgroundColor: "transparent"
+                      }}
+                      toggle={this.toggle}
+                      size="sm"
+                      direction="down"
+                    >
+                      <DropdownToggle caret>{sortName}</DropdownToggle>
+                      <DropdownMenu>
+                        {sortFilter
+                          .filter(a => {
+                            return a.id !== sort;
+                          })
+                          .map((data, index) => {
+                            return (
+                              <DropdownItem
+                                key={index}
+                                onClick={() =>
+                                  this.handleSort(data.id, data.name)
+                                }
+                              >
+                                {data.name}
+                              </DropdownItem>
+                            );
+                          })}
+                      </DropdownMenu>
+                    </ButtonDropdown>
+                    <ButtonDropdown
+                      isOpen={typeDropDown}
+                      style={{
+                        marginRight: 10,
+                        backgroundColor: "transparent"
+                      }}
+                      toggle={this.toggleType}
+                      size="sm"
+                      direction="down"
+                    >
+                      <DropdownToggle caret>{selectedPostType}</DropdownToggle>
+                      <DropdownMenu>
+                        {categoryType
+                          .filter(a => {
+                            return a !== selectedPostType;
+                          })
+                          .map((data, index) => {
+                            return (
+                              <DropdownItem
+                                key={index}
+                                onClick={() => this.handleCategory(data)}
+                              >
+                                {data}
+                              </DropdownItem>
+                            );
+                          })}
+                      </DropdownMenu>
+                    </ButtonDropdown>
+                  </div>
+
                   <Button onClick={this.handleOpenPost} size="sm">
                     새 글 작성
                   </Button>
@@ -822,6 +1038,7 @@ class ForumPage extends Component {
                       title={data.title}
                       point={data.point}
                       likeCount={data.like_cnt}
+                      disLikeCount={data.dislike_cnt}
                       createdAt={data.created_at}
                       type={data.coins}
                       view={data.view_cnt}
@@ -833,9 +1050,11 @@ class ForumPage extends Component {
                           data.coins,
                           data.category,
                           index,
-                          data.id
+                          data.id,
+                          data.images
                         )
                       }
+                      onDeleteClick={() => this.handleDelete(index, data.id)}
                     />
                   );
                 })}

@@ -30,7 +30,7 @@ const mapStateToProps = state => {
   };
 };
 
-const sourceFilter = [{ id: 0, name: "정확도" }, { id: 1, name: "최신순" }];
+const sourceFilter = [{ id: 1, name: "정확도" }, { id: 0, name: "최신순" }];
 
 class HomePage extends Component {
   constructor(props) {
@@ -47,9 +47,10 @@ class HomePage extends Component {
       isBlog: false,
       newsCount: 0,
       sourceId: 0,
-      sourceName: "정확도",
+      sourceName: "최신순",
       footerLoading: false,
-      newsLoading: true
+      newsLoading: true,
+      recent: 0
     };
     this.toggle = this.toggle.bind(this);
   }
@@ -75,11 +76,12 @@ class HomePage extends Component {
               favs === undefined
             ) {
               // 일반 뉴스
-              const { newsCount, coinId, sourceId } = this.state;
+              const { newsCount, coinId, sourceId, recent } = this.state;
               const newsParams = {
                 coinId,
                 sourceId,
-                newsCount
+                newsCount,
+                recent
               };
               this.props.dispatch(NewsAction.getNews(newsParams)).then(news => {
                 this.setState({
@@ -153,11 +155,12 @@ class HomePage extends Component {
                     }
                   }
 
-                  const { newsCount, sourceId } = this.state;
+                  const { newsCount, sourceId, recent } = this.state;
                   const newsParams = {
                     coinId: abbrArray[0].id,
                     sourceId,
-                    newsCount
+                    newsCount,
+                    recent
                   };
 
                   this.setState({ newsLoading: true, loadGraph: true });
@@ -172,6 +175,7 @@ class HomePage extends Component {
                         newsCount: news.nextIndex,
                         newsLoading: false,
                         favorite: final,
+                        coinId: abbrArray[0].id,
                         coinType: abbrArray[0].abbr
                       });
                     });
@@ -185,7 +189,8 @@ class HomePage extends Component {
       const newsParams = {
         coinId: 1,
         sourceId: 0,
-        newsCount: 0
+        newsCount: 0,
+        recent: this.state.recent
       };
       const defaultFav = [
         { id: 1, abbr: "BTC", price: 0, percent: "", clicked: true }
@@ -227,11 +232,12 @@ class HomePage extends Component {
     // const bottom =
     //   Math.floor(e.target.scrollHeight - e.target.scrollTop) ===
     //   e.target.clientHeight;
-    const { newsCount, coinId, sourceId } = this.state;
+    const { newsCount, coinId, sourceId, recent } = this.state;
     const newsParams = {
       coinId,
       sourceId,
-      newsCount
+      newsCount,
+      recent
     };
 
     if (scrollPercent > 0.95) {
@@ -261,32 +267,39 @@ class HomePage extends Component {
   }
 
   toggleBlog = id => {
-    const { coinId } = this.state;
+    const { coinId, recent } = this.state;
     const newsParams = {
       coinId,
       sourceId: id,
-      newsCount: 30
+      newsCount: 0,
+      recent
     };
     this.setState({ sourceId: id, newsLoading: true });
     this.props.dispatch(NewsAction.getNews(newsParams)).then(news => {
       this.setState(prevState => ({
         isBlog: !prevState.isBlog,
         news: news.result,
+        newsCount: news.nextIndex,
         newsLoading: false
       }));
     });
   };
 
-  handleSource = (id, name) => {
-    const { coinId } = this.state;
+  handleRecent = (id, name) => {
+    const { coinId, sourceId } = this.state;
     const newsParams = {
       coinId,
-      sourceId: id,
-      newsCount: 0
+      sourceId,
+      newsCount: 0,
+      recent: id
     };
-    this.setState({ sourceName: name, sourceId: id, newsLoading: true });
+    this.setState({ sourceName: name, recent: id, newsLoading: true });
     this.props.dispatch(NewsAction.getNews(newsParams)).then(news => {
-      this.setState({ news: news.result, newsLoading: false });
+      this.setState({
+        news: news.result,
+        newsLoading: false,
+        newsCount: news.nextIndex
+      });
     });
   };
 
@@ -309,11 +322,12 @@ class HomePage extends Component {
 
   handleChart = (index, id, coin) => {
     this.lists.scrollTop;
-    const { sourceId } = this.state;
+    const { sourceId, recent } = this.state;
     const newsParams = {
       coinId: id,
       sourceId,
-      newsCount: 0
+      newsCount: 0,
+      recent
     };
     this.setState({
       loadGraph: true,
@@ -353,7 +367,7 @@ class HomePage extends Component {
 
   handleFavorite = async(index, id, data) => {
     const coin = this.state.favorite.slice();
-    const { me, token } = this.props;
+    const { token } = this.props;
     const params = {
       token: token,
       coin_id: coin[index].id
@@ -485,7 +499,7 @@ class HomePage extends Component {
                             <DropdownItem
                               key={index}
                               onClick={() =>
-                                this.handleSource(data.id, data.name)
+                                this.handleRecent(data.id, data.name)
                               }
                             >
                               {data.name}

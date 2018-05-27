@@ -223,6 +223,10 @@
               &-liked {
                 color: $active-color !important;
               }
+
+              &-hated {
+                color: $price-color !important;
+              }
             }
 
             &__icon {

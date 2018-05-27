@@ -74,6 +74,7 @@ class SocialInput extends Component {
       imagePreview,
       handleDelete,
       onClick,
+      onClickLeft,
       value,
       className,
       postType,
@@ -200,6 +201,16 @@ class SocialInput extends Component {
                 </DropdownMenu>
               </ButtonDropdown>
             ) : null}
+
+            {postText === "수정" ? (
+              <span
+                onClick={onClickLeft}
+                className="socialInput__footer__postArea__postButton"
+              >
+                삭제
+              </span>
+            ) : null}
+
             <span
               onClick={onClick}
               className="socialInput__footer__postArea__postButton"

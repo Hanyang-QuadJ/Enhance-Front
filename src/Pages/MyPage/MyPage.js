@@ -28,7 +28,6 @@ import {
 } from "reactstrap";
 import cx from "classnames";
 import Loadable from "react-loading-overlay";
-import ImageGallery from "react-image-gallery";
 
 const defaultProps = {};
 const propTypes = {};
@@ -76,7 +75,8 @@ class MyPage extends Component {
       main: "",
       title: "",
       editIndex: 0,
-      editId: 0
+      editId: 0,
+      imagePreview: []
     };
     this.toggle = this.toggle.bind(this);
   }
@@ -221,6 +221,20 @@ class MyPage extends Component {
     this.setState({ selectedPostType2: data });
   };
 
+  handlePreview = file_arr => {
+    let imagePreview = this.state.imagePreview.slice();
+    for (let i = 0; i < file_arr.length; i++) {
+      imagePreview.push(file_arr[i].base64);
+    }
+    this.setState({ imagePreview });
+  };
+
+  handleBadge = value => {
+    let imagePreview = this.state.imagePreview.slice();
+    imagePreview.splice(imagePreview.indexOf(value), 1);
+    this.setState({ imagePreview });
+  };
+
   handleEditPost = () => {
     const {
       main,
@@ -358,12 +372,11 @@ class MyPage extends Component {
     };
     const newPosts = this.state.posts.slice();
     newPosts[index].loading = true;
-    this.setState({ posts: newPosts });
+    this.setState({ posts: newPosts, selectedIndex: index });
     this.props.dispatch(SocialAction.getOneForum(params)).then(forum => {
       const images = forum.image.map((data, index) => {
         return { original: data.img_url };
       });
-      this.setState({ selectedIndex: index });
       this.props.dispatch(SocialAction.getOneForumCoins(params)).then(coins => {
         this.props
           .dispatch(SocialAction.getOneForumComment(params))
@@ -456,7 +469,7 @@ class MyPage extends Component {
     });
   };
 
-  handleEdit = async(title, main, coins, category, index, id) => {
+  handleEdit = async(title, main, coins, category, index, id, images) => {
     const { favorite } = this.state;
     let newFav = favorite.slice();
     newFav.map((data, index) => {
@@ -705,6 +718,7 @@ class MyPage extends Component {
                           point={data.point}
                           createdAt={data.created_at}
                           likeCount={data.like_cnt}
+                          disLikeCount={data.dislike_cnt}
                           type={data.coins}
                           view={data.view_cnt}
                           onClick={() =>

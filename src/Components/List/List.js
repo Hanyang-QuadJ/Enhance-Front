@@ -36,12 +36,14 @@ class List extends Component {
       social,
       onClick,
       onEditClick,
+      onDeleteClick,
       active,
       index,
       isLoading,
       point,
       selectedIndex,
       likeCount,
+      disLikeCount,
       view
     } = this.props;
     return (
@@ -82,12 +84,6 @@ class List extends Component {
                     >
                       <i className="xi-pen-o" />
                     </span>
-                    <span
-                      className="list__content__textArea__edit"
-                      onClick={onEditClick}
-                    >
-                      <i className="xi-trash-o" />
-                    </span>
                   </span>
                 ) : null}
               </div>
@@ -103,6 +99,16 @@ class List extends Component {
                       </span>
                       <span className="list__content__textArea__social__item__icon">
                         <img width={9} height={9} src={base64.arrowUpWhite} />
+                      </span>
+                    </div>
+                    <div className="list__content__textArea__social__item">
+                      <span className="list__content__textArea__social__item__count">
+                        <NumericLabel params={option}>
+                          {disLikeCount && disLikeCount}
+                        </NumericLabel>
+                      </span>
+                      <span className="list__content__textArea__social__item__icon">
+                        <img width={9} height={9} src={base64.arrowDownWhite} />
                       </span>
                     </div>
                     <div className="list__content__textArea__social__item">

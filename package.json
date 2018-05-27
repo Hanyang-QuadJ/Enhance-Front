@@ -47,6 +47,7 @@
     "bootstrap": "^4.0.0",
     "classnames": "^2.2.5",
     "es6-promise": "^3.3.1",
+    "gm": "^1.23.1",
     "img-loader": "^3.0.0",
     "immutable": "^3.8.1",
     "isomorphic-fetch": "^2.2.1",
@@ -72,7 +73,8 @@
     "reactstrap": "^5.0.0",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
-    "scss-loader": "0.0.1"
+    "scss-loader": "0.0.1",
+    "stream": "0.0.2"
   },
   "scripts": {
     "start": "webpack-dev-server --hot --host 0.0.0.0",

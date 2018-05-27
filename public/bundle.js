@@ -34357,6 +34357,7 @@
 	                method: "GET",
 	                headers: {
 	                  Accept: "application/json",
+	                  "Access-Control-Allow-Origin": "*",
 	                  "Content-Type": "application/json"
 	                }
 	              });
@@ -34414,6 +34415,7 @@
 	                method: "POST",
 	                headers: {
 	                  Accept: "application/json",
+	                  "Access-Control-Allow-Origin": "*",
 	                  "Content-Type": "application/json",
 	                  "x-access-token": params.token
 	                },
@@ -34854,6 +34856,7 @@
 	                headers: {
 	                  Accept: "application/json",
 	                  "Content-Type": "application/json",
+	                  "Access-Control-Allow-Origin": "*",
 	                  "x-access-token": params
 	                }
 	              });
@@ -34911,6 +34914,7 @@
 	                method: "POST",
 	                headers: {
 	                  Accept: "application/json",
+	                  "Access-Control-Allow-Origin": "*",
 	                  "Content-Type": "application/json"
 	                },
 	                body: JSON.stringify({
@@ -34973,6 +34977,7 @@
 	                method: "POST",
 	                headers: {
 	                  Accept: "application/json",
+	                  "Access-Control-Allow-Origin": "*",
 	                  "Content-Type": "application/json"
 	                },
 	                body: JSON.stringify({
@@ -35057,6 +35062,7 @@
 	                headers: {
 	                  Accept: "application/json",
 	                  "Content-Type": "application/json",
+	                  "Access-Control-Allow-Origin": "*",
 	                  "x-access-token": params.token
 	                },
 	                body: JSON.stringify({
@@ -88368,6 +88374,7 @@
 	                method: "GET",
 	                headers: {
 	                  Accept: "application/json",
+	                  "Access-Control-Allow-Origin": "*",
 	                  "Content-Type": "application/json"
 	                }
 	              });
@@ -88425,6 +88432,7 @@
 	                method: "POST",
 	                headers: {
 	                  Accept: "application/json",
+	                  "Access-Control-Allow-Origin": "*",
 	                  "Content-Type": "application/json",
 	                  "x-access-token": params.token
 	                },
@@ -88487,6 +88495,7 @@
 	                headers: {
 	                  Accept: "application/json",
 	                  "Content-Type": "application/json",
+	                  "Access-Control-Allow-Origin": "*",
 	                  "x-access-token": params.token
 	                }
 	              });
@@ -88545,6 +88554,7 @@
 	                headers: {
 	                  Accept: "application/json",
 	                  "Content-Type": "application/json",
+	                  "Access-Control-Allow-Origin": "*",
 	                  "x-access-token": params.token
 	                }
 	              });
@@ -88603,6 +88613,7 @@
 	                headers: {
 	                  Accept: "application/json",
 	                  "Content-Type": "application/json",
+	                  "Access-Control-Allow-Origin": "*",
 	                  "x-access-token": params.token
 	                }
 	              });
@@ -88661,6 +88672,7 @@
 	                headers: {
 	                  Accept: "application/json",
 	                  "Content-Type": "application/json",
+	                  "Access-Control-Allow-Origin": "*",
 	                  "x-access-token": params.token
 	                }
 	              });
@@ -88719,6 +88731,7 @@
 	                headers: {
 	                  Accept: "application/json",
 	                  "Content-Type": "application/json",
+	                  "Access-Control-Allow-Origin": "*",
 	                  "x-access-token": params.token
 	                }
 	              });
@@ -88777,6 +88790,7 @@
 	                headers: {
 	                  Accept: "application/json",
 	                  "Content-Type": "application/json",
+	                  "Access-Control-Allow-Origin": "*",
 	                  "x-access-token": params.token
 	                }
 	              });
@@ -88835,6 +88849,7 @@
 	                headers: {
 	                  Accept: "application/json",
 	                  "Content-Type": "application/json",
+	                  "Access-Control-Allow-Origin": "*",
 	                  "x-access-token": params.token
 	                }
 	              });
@@ -88894,6 +88909,7 @@
 	                headers: {
 	                  Accept: "application/json",
 	                  "Content-Type": "application/json",
+	                  "Access-Control-Allow-Origin": "*",
 	                  "x-access-token": params.token
 	                },
 	                body: JSON.stringify({
@@ -88959,6 +88975,7 @@
 	                headers: {
 	                  Accept: "application/json",
 	                  "Content-Type": "application/json",
+	                  "Access-Control-Allow-Origin": "*",
 	                  "x-access-token": params.token
 	                },
 	                body: JSON.stringify({
@@ -89024,6 +89041,7 @@
 	                headers: {
 	                  Accept: "application/json",
 	                  "Content-Type": "application/json",
+	                  "Access-Control-Allow-Origin": "*",
 	                  "x-access-token": params.token
 	                },
 	                body: JSON.stringify({
@@ -89088,6 +89106,7 @@
 	                headers: {
 	                  Accept: "application/json",
 	                  "Content-Type": "application/json",
+	                  "Access-Control-Allow-Origin": "*",
 	                  "x-access-token": params.token
 	                }
 	              });
@@ -89146,6 +89165,7 @@
 	                headers: {
 	                  Accept: "application/json",
 	                  "Content-Type": "application/json",
+	                  "Access-Control-Allow-Origin": "*",
 	                  "x-access-token": params.token
 	                }
 	              });
@@ -89204,6 +89224,7 @@
 	                headers: {
 	                  Accept: "application/json",
 	                  "Content-Type": "application/json",
+	                  "Access-Control-Allow-Origin": "*",
 	                  "x-access-token": params.token
 	                }
 	              });
@@ -89262,6 +89283,7 @@
 	                headers: {
 	                  Accept: "application/json",
 	                  "Content-Type": "application/json",
+	                  "Access-Control-Allow-Origin": "*",
 	                  "x-access-token": params.token
 	                }
 	              });
@@ -89320,6 +89342,7 @@
 	                headers: {
 	                  Accept: "application/json",
 	                  "Content-Type": "application/json",
+	                  "Access-Control-Allow-Origin": "*",
 	                  "x-access-token": params.token
 	                },
 	                body: JSON.stringify({

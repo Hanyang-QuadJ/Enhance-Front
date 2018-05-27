@@ -48,6 +48,7 @@ export const postSignUp = params => {
         method: "POST",
         headers: {
           Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
@@ -78,6 +79,7 @@ export const postSignIn = params => {
         method: "POST",
         headers: {
           Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
@@ -117,6 +119,7 @@ export const updateUsername = params => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
           "x-access-token": params.token
         },
         body: JSON.stringify({

@@ -243,19 +243,17 @@ class UserPage extends Component {
     };
     const newPosts = this.state.posts.slice();
     newPosts[index].loading = true;
-    this.setState({ posts: newPosts });
+    this.setState({ posts: newPosts, selectedIndex: index });
     this.props.dispatch(SocialAction.getOneForum(params)).then(forum => {
       const images = forum.image.map((data, index) => {
         return { original: data.img_url };
       });
-      this.setState({ selectedIndex: index });
       this.props.dispatch(SocialAction.getOneForumCoins(params)).then(coins => {
         this.props
           .dispatch(SocialAction.getOneForumComment(params))
           .then(comment => {
             const newPosts = this.state.posts.slice();
             newPosts[index].loading = false;
-            this.setState({ posts: newPosts });
             this.props
               .dispatch(SocialAction.getLikeCheck(params))
               .then(result => {
@@ -265,17 +263,27 @@ class UserPage extends Component {
                 } else {
                   isLiked = false;
                 }
-                this.props.history.push({
-                  pathname: `/@${this.props.match.params.user_id}/${id}`,
-                  state: {
-                    name,
-                    forum,
-                    comment: comment.reverse(),
-                    coins,
-                    images,
-                    liked: isLiked
-                  }
-                });
+                this.props
+                  .dispatch(SocialAction.postForumView(params))
+                  .then(view => {
+                    if (view.message === "already View") {
+                      null;
+                    } else {
+                      newPosts[index].view_cnt += 1;
+                    }
+                    this.setState({ posts: newPosts });
+                    this.props.history.push({
+                      pathname: `/@${this.props.match.params.user_id}/${id}`,
+                      state: {
+                        name,
+                        forum,
+                        comment: comment.reverse(),
+                        coins,
+                        images,
+                        liked: isLiked
+                      }
+                    });
+                  });
               });
           });
       });
@@ -443,6 +451,7 @@ class UserPage extends Component {
                           point={data.point}
                           createdAt={data.created_at}
                           likeCount={data.like_cnt}
+                          disLikeCount={data.dislike_cnt}
                           type={data.coins}
                           view={data.view_cnt}
                           onClick={() =>

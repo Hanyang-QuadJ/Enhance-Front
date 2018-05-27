@@ -13,11 +13,12 @@ export const getNews = params => {
         ServerEndPoint +
           `api/naver/search/news?coin_id=${params.coinId}&source=${
             params.sourceId
-          }&index=${params.newsCount}`,
+          }&index=${params.newsCount}&recent=${params.recent}`,
         {
           method: "GET",
           headers: {
             Accept: "application/json",
+            "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json"
           }
         }
@@ -44,6 +45,7 @@ export const postFeed = params => {
         method: "POST",
         headers: {
           Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
           "x-access-token": params.token
         },
