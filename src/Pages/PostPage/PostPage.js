@@ -50,11 +50,38 @@ class PostPage extends Component {
       commentLength: 0,
       isLiked: false,
       isHated: false,
+      isRefreshed: false,
       newLike: 0,
       newHate: 0,
       userId: 0
     };
     moment.locale("ko");
+  }
+
+  componentWillMount() {
+    const { forum_id } = this.props.match.params;
+    const params = { token: this.props.token, forum_id };
+    this.props.dispatch(SocialAction.getLikeCheck(params)).then(value => {
+      this.props.dispatch(SocialAction.getHateCheck(params)).then(hate => {
+        this.props.dispatch(SocialAction.getOneForum(params)).then(result => {
+          this.props
+            .dispatch(SocialAction.getOneForumComment(params))
+            .then(comments => {
+              if (value.message === "You already liked this forum") {
+                this.setState({ isLiked: true, newLike: result.like_cnt });
+              }
+
+              if (hate.message !== "it's okay to dislike this forum") {
+                this.setState({ isHated: true, newHate: result.dislike_cnt });
+              }
+              this.setState({
+                isRefreshed: true,
+                newComment: comments.reverse()
+              });
+            });
+        });
+      });
+    });
   }
 
   handleComment = e => {
@@ -222,8 +249,10 @@ class PostPage extends Component {
       this.setState({
         newComment: [],
         newLike: 0,
+        newHate: 0,
         isLiked: false,
-        isHated: false
+        isHated: false,
+        isRefreshed: false
       });
     }
   }
@@ -251,7 +280,8 @@ class PostPage extends Component {
         userPoint,
         forumLength,
         commentLength,
-        userLoading
+        userLoading,
+        isRefreshed
       } = this.state;
       const { me, isLogin, onClick } = this.props;
       const {
@@ -535,24 +565,26 @@ class PostPage extends Component {
                       profileImg={data.profile_img}
                       userPoint={data.point}
                       createdAt={data.created_at}
-                      content={data.content}
-                    />
-                  );
-                })}
-                {comment.map((data, index) => {
-                  return (
-                    <Comment
-                      key={index}
-                      username={data.username}
-                      profileImg={data.profile_img}
-                      userPoint={data.point}
-                      onClick={() => this.handleUser(data.user_id)}
-                      createdAt={data.created_at}
                       checkName={name}
                       content={data.content}
                     />
                   );
                 })}
+                {!isRefreshed &&
+                  comment.map((data, index) => {
+                    return (
+                      <Comment
+                        key={index}
+                        username={data.username}
+                        profileImg={data.profile_img}
+                        userPoint={data.point}
+                        onClick={() => this.handleUser(data.user_id)}
+                        createdAt={data.created_at}
+                        checkName={name}
+                        content={data.content}
+                      />
+                    );
+                  })}
               </div>
             </div>
           )}
