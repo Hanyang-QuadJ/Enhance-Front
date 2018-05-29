@@ -70,7 +70,7 @@ class ForumPage extends Component {
       editIndex: 0,
       editId: 0,
       imagePreview: [],
-      search:""
+      search: ""
     };
     this.toggle = this.toggle.bind(this);
   }
@@ -253,7 +253,8 @@ class ForumPage extends Component {
           token: this.props.token,
           coins: requestCoins,
           category: selectedPostType,
-          order: sort
+          order: sort,
+          keyword: this.state.search
         };
         this.props.dispatch(SocialAction.filterForums(params)).then(forums => {
           result[index].loading = false;
@@ -272,7 +273,8 @@ class ForumPage extends Component {
         token: this.props.token,
         coins: requestCoins,
         category: selectedPostType,
-        order: sort
+        order: sort,
+        keyword: this.state.search
       };
       result[index].selected = true;
       result[index].loading = true;
@@ -298,7 +300,8 @@ class ForumPage extends Component {
       category: data,
       token: this.props.token,
       order: this.state.sort,
-      coins: filterCoins
+      coins: filterCoins,
+      keyword: this.state.search
     };
     this.setState({ isPostsLoading: true, selectedPostType: data });
     this.props.dispatch(SocialAction.filterForums(params)).then(forums => {
@@ -317,9 +320,9 @@ class ForumPage extends Component {
       category: this.state.selectedPostType,
       token: this.props.token,
       order: id,
-      coins: filterCoins
+      coins: filterCoins,
+      keyword: this.state.search
     };
-    console.log(params);
     this.setState({ isPostsLoading: true, sort: id, sortName: data });
     this.props.dispatch(SocialAction.filterForums(params)).then(forums => {
       this.setState({
@@ -800,21 +803,41 @@ class ForumPage extends Component {
       category: this.state.selectedPostType,
       order: this.state.sort,
       coins: this.state.filterCoins,
-      keyword : this.state.search
-    }; 
-    this.setState({ isPostsLoading : true });
+      keyword: this.state.search
+    };
+    this.setState({ isPostsLoading: true });
     this.props.dispatch(SocialAction.filterForums(params)).then(news => {
       this.setState({
-        forumIndex : news.nextIndex,
+        forumIndex: news.nextIndex,
         posts: news.result,
-        isPostsLoading : false
+        isPostsLoading: false
       });
     });
-  }
+  };
 
-  handleSearchBar = (e) => {
-    this.setState({ search : e.target.value });
-  }
+  handleKeySearchPost = event => {
+    if (event.key === "Enter") {
+      const params = {
+        index: 0,
+        category: this.state.selectedPostType,
+        order: this.state.sort,
+        coins: this.state.filterCoins,
+        keyword: this.state.search
+      };
+      this.setState({ isPostsLoading: true });
+      this.props.dispatch(SocialAction.filterForums(params)).then(news => {
+        this.setState({
+          forumIndex: news.nextIndex,
+          posts: news.result,
+          isPostsLoading: false
+        });
+      });
+    }
+  };
+
+  handleSearchBar = e => {
+    this.setState({ search: e.target.value });
+  };
 
   render() {
     const {
@@ -930,19 +953,24 @@ class ForumPage extends Component {
           <div className="forumPage__content__news">
             <div className="forumPage__content__news__search">
               <div className="forumPage__content__news__search__first">
-                <div className="forumPage__content__news__search__first__iconArea">
-                  <span className="forumPage__content__news__search__first__iconArea__icon">
-                    <i className="xi-search" />
-                  </span>
+                <div className="forumPage__content__news__search__first__container">
+                  <div className="forumPage__content__news__search__first__iconArea">
+                    <span className="forumPage__content__news__search__first__iconArea__icon">
+                      <i className="xi-search" />
+                    </span>
+                  </div>
+                  <div className="forumPage__content__news__search__first__inputArea">
+                    <input
+                      className="forumPage__content__news__search__first__inputArea__input"
+                      placeholder="무엇을 찾고싶으신가요?"
+                      onChange={this.handleSearchBar}
+                      onKeyPress={this.handleKeySearchPost}
+                    />
+                  </div>
                 </div>
-                <div className="forumPage__content__news__search__first__inputArea">
-                  <input
-                    className="forumPage__content__news__search__first__inputArea__input"
-                    placeholder="무엇을 찾고싶으신가요?"
-                    onChange={this.handleSearchBar}
-                  />
-                  <Button onClick={this.handleSearchPost} text="검색"/>
-                </div>
+                <Button onClick={this.handleSearchPost} size="sm">
+                  검색
+                </Button>
               </div>
               <div className="forumPage__content__news__search__second">
                 <div className="forumPage__content__news__search__second__content">

@@ -17,6 +17,7 @@ const styles = {
     paddingBottom: 20,
     paddingLeft: 10
   },
+
   hint: {
     marginBottom: 10,
     marginLeft: 10,

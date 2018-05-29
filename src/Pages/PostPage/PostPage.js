@@ -78,8 +78,9 @@ class PostPage extends Component {
       forum_id: this.props.match.params.forum_id
     };
     newComment.splice(0, 0, frontParams);
+    this.setState({ newComment });
     this.props.dispatch(SocialAction.postForumComment(params)).then(value => {
-      this.setState({ newComment, comment: "" });
+      this.setState({ comment: "" });
     });
   };
 

@@ -96,6 +96,7 @@ export const getAllForums = params => {
 };
 
 export const filterForums = params => {
+  console.log(params);
   if (params.keyword === undefined) {
     params.keyword = "";
   }

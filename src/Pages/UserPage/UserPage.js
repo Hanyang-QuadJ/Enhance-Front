@@ -263,6 +263,7 @@ class UserPage extends Component {
                 } else {
                   isLiked = false;
                 }
+
                 this.props
                   .dispatch(SocialAction.postForumView(params))
                   .then(view => {
@@ -271,18 +272,34 @@ class UserPage extends Component {
                     } else {
                       newPosts[index].view_cnt += 1;
                     }
-                    this.setState({ posts: newPosts });
-                    this.props.history.push({
-                      pathname: `/@${this.props.match.params.user_id}/${id}`,
-                      state: {
-                        name,
-                        forum,
-                        comment: comment.reverse(),
-                        coins,
-                        images,
-                        liked: isLiked
-                      }
-                    });
+
+                    this.props
+                      .dispatch(SocialAction.getHateCheck(params))
+                      .then(result => {
+                        let isHate;
+                        if (
+                          result.message === "it's okay to dislike this forum"
+                        ) {
+                          isHate = false;
+                        } else {
+                          isHate = true;
+                        }
+                        this.setState({ posts: newPosts });
+                        this.props.history.push({
+                          pathname: `/@${
+                            this.props.match.params.user_id
+                          }/${id}`,
+                          state: {
+                            name,
+                            forum,
+                            comment: comment.reverse(),
+                            coins,
+                            images,
+                            liked: isLiked,
+                            disliked: isHate
+                          }
+                        });
+                      });
                   });
               });
           });
