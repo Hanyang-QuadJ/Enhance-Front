@@ -742,9 +742,9 @@ export const postForumComment = params => {
       let responseJson = await response.json();
       await dispatch({
         type: SUCCEED_TO_POST_FORUM_COMMENT,
-        payload: responseJson.forum_id
+        payload: responseJson.comment_id
       });
-      return responseJson.forum_id;
+      return responseJson.comment_id;
     } catch (error) {
       dispatch({
         type: FAILED_TO_POST_FORUM_COMMENT,

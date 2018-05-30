@@ -13,7 +13,6 @@ import ImageGallery from "react-image-gallery";
 import Linkify from "react-linkify";
 import moment from "moment";
 import * as base64 from "../../Assests/Icons/base64";
-import { deleteComment } from "../../ActionCreators/SocialAction";
 
 const defaultProps = {};
 const propTypes = {};
@@ -108,22 +107,22 @@ class PostPage extends Component {
     const { me } = this.props;
     const date = new Date();
     const newComment = this.state.newComment.slice();
-    const frontParams = {
-      username: me.username,
-      profile_img: me.profile_img,
-      point: me.point,
-      content: this.state.comment,
-      date
-    };
     const params = {
       token: this.props.token,
       content: this.state.comment,
       forum_id: this.props.match.params.forum_id
     };
-    newComment.splice(0, 0, frontParams);
-    this.setState({ newComment });
     this.props.dispatch(SocialAction.postForumComment(params)).then(value => {
-      this.setState({ comment: "" });
+      const frontParams = {
+        username: me.username,
+        profile_img: me.profile_img,
+        point: me.point,
+        content: this.state.comment,
+        date,
+        id: value
+      };
+      newComment.splice(0, 0, frontParams);
+      this.setState({ newComment, comment: "" });
     });
   };
 

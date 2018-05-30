@@ -83401,7 +83401,8 @@
 	          createdAt = _props.createdAt,
 	          profileImg = _props.profileImg,
 	          onClick = _props.onClick,
-	          checkName = _props.checkName;
+	          checkName = _props.checkName,
+	          onDelete = _props.onDelete;
 	
 	      return _react2.default.createElement(
 	        "div",
@@ -83453,7 +83454,7 @@
 	            (0, _moment2.default)(createdAt).fromNow(),
 	            username === checkName ? _react2.default.createElement(
 	              "span",
-	              { className: "comment__content__delete" },
+	              { className: "comment__content__delete", onClick: onDelete },
 	              _react2.default.createElement("i", { className: "xi-close" })
 	            ) : null
 	          )
@@ -88632,7 +88633,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.postForumComment = exports.postForumDisLike = exports.postUnHate = exports.getHateCheck = exports.postHate = exports.postForumLike = exports.getLikeCheck = exports.postForumView = exports.deleteForum = exports.updateForum = exports.editForum = exports.postForum = exports.getOneForumComment = exports.getOneForumCoins = exports.getCommentsByUser = exports.getFavByUser = exports.getForumByUser = exports.getUserById = exports.getOneForum = exports.filterForums = exports.getAllForums = exports.FAILED_TO_POST_FORUM_COMMENT = exports.SUCCEED_TO_POST_FORUM_COMMENT = exports.FAILED_TO_POST_FORUM_VIEW = exports.SUCCEED_TO_POST_FORUM_VIEW = exports.FAILED_TO_POST_FORUM_UNHATE = exports.SUCCEED_TO_POST_FORUM_UNHATE = exports.FAILED_TO_POST_FORUM_HATE = exports.SUCCEED_TO_POST_FORUM_HATE = exports.FAILED_TO_POST_FORUM_LIKE = exports.SUCCEED_TO_POST_FORUM_LIKE = exports.FAILED_TO_GET_FORUM_HATE_CHECK = exports.SUCCEED_TO_GET_FORUM_HATE_CHECK = exports.FAILED_TO_GET_FORUM_LIKE_CHECK = exports.SUCCEED_TO_GET_FORUM_LIKE_CHECK = exports.FAILED_TO_GET_ONE_FORUM_COMMENT = exports.SUCCEED_TO_GET_ONE_FORUM_COMMENT = exports.FAILED_TO_GET_FAVS_BY_USER = exports.SUCCEED_TO_GET_FAVS_BY_USER = exports.FAILED_TO_GET_COMMENTS_BY_USER = exports.SUCCEED_TO_GET_COMMENTS_BY_USER = exports.FAILED_TO_GET_USER_BY_ID = exports.SUCCEED_TO_GET_USER_BY_ID = exports.FAILED_TO_GET_FORUM_BY_USER = exports.SUCCEED_TO_GET_FORUM_BY_USER = exports.FAILED_TO_GET_ONE_FORUM_COINS = exports.SUCCEED_TO_GET_ONE_FORUM_COINS = exports.FAILED_TO_GET_ONE_FORUM = exports.SUCCEED_TO_GET_ONE_FORUM = exports.FAILED_TO_DELETE_FORUM = exports.SUCCEED_TO_DELETE_FORUM = exports.FAILED_TO_POST_FORUM = exports.SUCCEED_TO_POST_FORUM = exports.FAILED_TO_FILTER_FORUM_BY_TYPE = exports.SUCCEED_TO_FILTER_FORUM_BY_TYPE = exports.FAILED_TO_SEARCH_FORUM = exports.SUCCEED_TO_SEARCH_FORUM = exports.FAILED_TO_FILTER_FORUM = exports.SUCCEED_TO_FILTER_FORUM = exports.FAILED_TO_GET_ALL_FORUM = exports.SUCCEED_TO_GET_ALL_FORUM = undefined;
+	exports.postForumComment = exports.postForumDisLike = exports.postUnHate = exports.getHateCheck = exports.postHate = exports.postForumLike = exports.getLikeCheck = exports.postForumView = exports.deleteForum = exports.updateForum = exports.editForum = exports.postForum = exports.deleteComment = exports.getOneForumComment = exports.getOneForumCoins = exports.getCommentsByUser = exports.getFavByUser = exports.getForumByUser = exports.getUserById = exports.getOneForum = exports.filterForums = exports.getAllForums = exports.FAILED_TO_POST_FORUM_COMMENT = exports.SUCCEED_TO_POST_FORUM_COMMENT = exports.FAILED_TO_POST_FORUM_VIEW = exports.SUCCEED_TO_POST_FORUM_VIEW = exports.FAILED_TO_POST_FORUM_UNHATE = exports.SUCCEED_TO_POST_FORUM_UNHATE = exports.FAILED_TO_POST_FORUM_HATE = exports.SUCCEED_TO_POST_FORUM_HATE = exports.FAILED_TO_POST_FORUM_LIKE = exports.SUCCEED_TO_POST_FORUM_LIKE = exports.FAILED_TO_GET_FORUM_HATE_CHECK = exports.SUCCEED_TO_GET_FORUM_HATE_CHECK = exports.FAILED_TO_GET_FORUM_LIKE_CHECK = exports.SUCCEED_TO_GET_FORUM_LIKE_CHECK = exports.FAILED_TO_GET_ONE_FORUM_COMMENT = exports.SUCCEED_TO_GET_ONE_FORUM_COMMENT = exports.FAILED_TO_GET_FAVS_BY_USER = exports.SUCCEED_TO_GET_FAVS_BY_USER = exports.FAILED_TO_GET_COMMENTS_BY_USER = exports.SUCCEED_TO_GET_COMMENTS_BY_USER = exports.FAILED_TO_GET_USER_BY_ID = exports.SUCCEED_TO_GET_USER_BY_ID = exports.FAILED_TO_GET_FORUM_BY_USER = exports.SUCCEED_TO_GET_FORUM_BY_USER = exports.FAILED_TO_GET_ONE_FORUM_COINS = exports.SUCCEED_TO_GET_ONE_FORUM_COINS = exports.FAILED_TO_GET_ONE_FORUM = exports.SUCCEED_TO_GET_ONE_FORUM = exports.FAILED_TO_DELETE_COMMENT = exports.SUCCEED_TO_DELETE_COMMENT = exports.FAILED_TO_DELETE_FORUM = exports.SUCCEED_TO_DELETE_FORUM = exports.FAILED_TO_POST_FORUM = exports.SUCCEED_TO_POST_FORUM = exports.FAILED_TO_FILTER_FORUM_BY_TYPE = exports.SUCCEED_TO_FILTER_FORUM_BY_TYPE = exports.FAILED_TO_SEARCH_FORUM = exports.SUCCEED_TO_SEARCH_FORUM = exports.FAILED_TO_FILTER_FORUM = exports.SUCCEED_TO_FILTER_FORUM = exports.FAILED_TO_GET_ALL_FORUM = exports.SUCCEED_TO_GET_ALL_FORUM = undefined;
 	
 	var _Server = __webpack_require__(437);
 	
@@ -88655,6 +88656,9 @@
 	
 	var SUCCEED_TO_DELETE_FORUM = exports.SUCCEED_TO_DELETE_FORUM = "SUCCEED_TO_DELETE_FORUM";
 	var FAILED_TO_DELETE_FORUM = exports.FAILED_TO_DELETE_FORUM = "FAILED_TO_DELETE_FORUM";
+	
+	var SUCCEED_TO_DELETE_COMMENT = exports.SUCCEED_TO_DELETE_COMMENT = "SUCCEED_TO_DELETE_COMMENT";
+	var FAILED_TO_DELETE_COMMENT = exports.FAILED_TO_DELETE_COMMENT = "FAILED_TO_DELETE_COMMENT";
 	
 	var SUCCEED_TO_GET_ONE_FORUM = exports.SUCCEED_TO_GET_ONE_FORUM = "SUCCEED_TO_GET_ONE_FORUM";
 	var FAILED_TO_GET_ONE_FORUM = exports.FAILED_TO_GET_ONE_FORUM = "FAILED_TO_GET_ONE_FORUM";
@@ -88757,7 +88761,6 @@
 	};
 	
 	var filterForums = exports.filterForums = function filterForums(params) {
-	  console.log(params);
 	  if (params.keyword === undefined) {
 	    params.keyword = "";
 	  }
@@ -88791,19 +88794,17 @@
 	
 	            case 6:
 	              responseJson = _context2.sent;
-	
-	              console.log(responseJson);
-	              _context2.next = 10;
+	              _context2.next = 9;
 	              return dispatch({
 	                type: SUCCEED_TO_FILTER_FORUM,
 	                payload: responseJson
 	              });
 	
-	            case 10:
+	            case 9:
 	              return _context2.abrupt("return", responseJson);
 	
-	            case 13:
-	              _context2.prev = 13;
+	            case 12:
+	              _context2.prev = 12;
 	              _context2.t0 = _context2["catch"](0);
 	
 	              dispatch({
@@ -88811,12 +88812,12 @@
 	                payload: { data: "NETWORK_ERROR" }
 	              });
 	
-	            case 16:
+	            case 15:
 	            case "end":
 	              return _context2.stop();
 	          }
 	        }
-	      }, _callee2, undefined, [[0, 13]]);
+	      }, _callee2, undefined, [[0, 12]]);
 	    }));
 	
 	    return function (_x2) {
@@ -89238,7 +89239,7 @@
 	  }();
 	};
 	
-	var postForum = exports.postForum = function postForum(params) {
+	var deleteComment = exports.deleteComment = function deleteComment(params) {
 	  return function () {
 	    var _ref10 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10(dispatch) {
 	      var response, responseJson;
@@ -89248,6 +89249,65 @@
 	            case 0:
 	              _context10.prev = 0;
 	              _context10.next = 3;
+	              return fetch(_Server.ServerEndPoint + ("api/forum/delete/comment?comment_id=" + params.comment_id), {
+	                method: "DELETE",
+	                headers: {
+	                  Accept: "application/json",
+	                  "Content-Type": "application/json",
+	                  "Access-Control-Allow-Origin": "*",
+	                  "x-access-token": params.token
+	                }
+	              });
+	
+	            case 3:
+	              response = _context10.sent;
+	              _context10.next = 6;
+	              return response.json();
+	
+	            case 6:
+	              responseJson = _context10.sent;
+	              _context10.next = 9;
+	              return dispatch({
+	                type: SUCCEED_TO_DELETE_COMMENT,
+	                payload: responseJson.result
+	              });
+	
+	            case 9:
+	              return _context10.abrupt("return", responseJson.result);
+	
+	            case 12:
+	              _context10.prev = 12;
+	              _context10.t0 = _context10["catch"](0);
+	
+	              dispatch({
+	                type: FAILED_TO_DELETE_COMMENT,
+	                payload: { data: "NETWORK_ERROR" }
+	              });
+	
+	            case 15:
+	            case "end":
+	              return _context10.stop();
+	          }
+	        }
+	      }, _callee10, undefined, [[0, 12]]);
+	    }));
+	
+	    return function (_x10) {
+	      return _ref10.apply(this, arguments);
+	    };
+	  }();
+	};
+	
+	var postForum = exports.postForum = function postForum(params) {
+	  return function () {
+	    var _ref11 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee11(dispatch) {
+	      var response, responseJson;
+	      return regeneratorRuntime.wrap(function _callee11$(_context11) {
+	        while (1) {
+	          switch (_context11.prev = _context11.next) {
+	            case 0:
+	              _context11.prev = 0;
+	              _context11.next = 3;
 	              return fetch(_Server.ServerEndPoint + "api/forum/create", {
 	                method: "POST",
 	                headers: {
@@ -89266,73 +89326,6 @@
 	              });
 	
 	            case 3:
-	              response = _context10.sent;
-	              _context10.next = 6;
-	              return response.json();
-	
-	            case 6:
-	              responseJson = _context10.sent;
-	              _context10.next = 9;
-	              return dispatch({
-	                type: SUCCEED_TO_POST_FORUM,
-	                payload: responseJson.forum_id
-	              });
-	
-	            case 9:
-	              return _context10.abrupt("return", responseJson.forum_id);
-	
-	            case 12:
-	              _context10.prev = 12;
-	              _context10.t0 = _context10["catch"](0);
-	
-	              dispatch({
-	                type: FAILED_TO_POST_FORUM,
-	                payload: { data: "NETWORK_ERROR" }
-	              });
-	
-	            case 15:
-	            case "end":
-	              return _context10.stop();
-	          }
-	        }
-	      }, _callee10, undefined, [[0, 12]]);
-	    }));
-	
-	    return function (_x10) {
-	      return _ref10.apply(this, arguments);
-	    };
-	  }();
-	};
-	
-	var editForum = exports.editForum = function editForum(params) {
-	  return function () {
-	    var _ref11 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee11(dispatch) {
-	      var response, responseJson;
-	      return regeneratorRuntime.wrap(function _callee11$(_context11) {
-	        while (1) {
-	          switch (_context11.prev = _context11.next) {
-	            case 0:
-	              _context11.prev = 0;
-	              _context11.next = 3;
-	              return fetch(_Server.ServerEndPoint + "api/forum/update", {
-	                method: "POST",
-	                headers: {
-	                  Accept: "application/json",
-	                  "Content-Type": "application/json",
-	                  "Access-Control-Allow-Origin": "*",
-	                  "x-access-token": params.token
-	                },
-	                body: JSON.stringify({
-	                  id: params.id,
-	                  coin_list: params.coins,
-	                  pic_list: params.pic_list,
-	                  category: params.category,
-	                  title: params.title,
-	                  content: params.content
-	                })
-	              });
-	
-	            case 3:
 	              response = _context11.sent;
 	              _context11.next = 6;
 	              return response.json();
@@ -89342,11 +89335,11 @@
 	              _context11.next = 9;
 	              return dispatch({
 	                type: SUCCEED_TO_POST_FORUM,
-	                payload: responseJson
+	                payload: responseJson.forum_id
 	              });
 	
 	            case 9:
-	              return _context11.abrupt("return", responseJson);
+	              return _context11.abrupt("return", responseJson.forum_id);
 	
 	            case 12:
 	              _context11.prev = 12;
@@ -89371,7 +89364,7 @@
 	  }();
 	};
 	
-	var updateForum = exports.updateForum = function updateForum(params) {
+	var editForum = exports.editForum = function editForum(params) {
 	  return function () {
 	    var _ref12 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee12(dispatch) {
 	      var response, responseJson;
@@ -89390,7 +89383,9 @@
 	                  "x-access-token": params.token
 	                },
 	                body: JSON.stringify({
+	                  id: params.id,
 	                  coin_list: params.coins,
+	                  pic_list: params.pic_list,
 	                  category: params.category,
 	                  title: params.title,
 	                  content: params.content
@@ -89407,11 +89402,11 @@
 	              _context12.next = 9;
 	              return dispatch({
 	                type: SUCCEED_TO_POST_FORUM,
-	                payload: responseJson.forum_id
+	                payload: responseJson
 	              });
 	
 	            case 9:
-	              return _context12.abrupt("return", responseJson.forum_id);
+	              return _context12.abrupt("return", responseJson);
 	
 	            case 12:
 	              _context12.prev = 12;
@@ -89436,7 +89431,7 @@
 	  }();
 	};
 	
-	var deleteForum = exports.deleteForum = function deleteForum(params) {
+	var updateForum = exports.updateForum = function updateForum(params) {
 	  return function () {
 	    var _ref13 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee13(dispatch) {
 	      var response, responseJson;
@@ -89446,14 +89441,20 @@
 	            case 0:
 	              _context13.prev = 0;
 	              _context13.next = 3;
-	              return fetch(_Server.ServerEndPoint + "api/forum/" + params.forum_id, {
-	                method: "DELETE",
+	              return fetch(_Server.ServerEndPoint + "api/forum/update", {
+	                method: "POST",
 	                headers: {
 	                  Accept: "application/json",
 	                  "Content-Type": "application/json",
 	                  "Access-Control-Allow-Origin": "*",
 	                  "x-access-token": params.token
-	                }
+	                },
+	                body: JSON.stringify({
+	                  coin_list: params.coins,
+	                  category: params.category,
+	                  title: params.title,
+	                  content: params.content
+	                })
 	              });
 	
 	            case 3:
@@ -89465,19 +89466,19 @@
 	              responseJson = _context13.sent;
 	              _context13.next = 9;
 	              return dispatch({
-	                type: SUCCEED_TO_DELETE_FORUM,
-	                payload: responseJson
+	                type: SUCCEED_TO_POST_FORUM,
+	                payload: responseJson.forum_id
 	              });
 	
 	            case 9:
-	              return _context13.abrupt("return", responseJson);
+	              return _context13.abrupt("return", responseJson.forum_id);
 	
 	            case 12:
 	              _context13.prev = 12;
 	              _context13.t0 = _context13["catch"](0);
 	
 	              dispatch({
-	                type: FAILED_TO_DELETE_FORUM,
+	                type: FAILED_TO_POST_FORUM,
 	                payload: { data: "NETWORK_ERROR" }
 	              });
 	
@@ -89495,7 +89496,7 @@
 	  }();
 	};
 	
-	var postForumView = exports.postForumView = function postForumView(params) {
+	var deleteForum = exports.deleteForum = function deleteForum(params) {
 	  return function () {
 	    var _ref14 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee14(dispatch) {
 	      var response, responseJson;
@@ -89505,8 +89506,8 @@
 	            case 0:
 	              _context14.prev = 0;
 	              _context14.next = 3;
-	              return fetch(_Server.ServerEndPoint + "api/forum/view/" + params.forum_id, {
-	                method: "POST",
+	              return fetch(_Server.ServerEndPoint + "api/forum/" + params.forum_id, {
+	                method: "DELETE",
 	                headers: {
 	                  Accept: "application/json",
 	                  "Content-Type": "application/json",
@@ -89524,7 +89525,7 @@
 	              responseJson = _context14.sent;
 	              _context14.next = 9;
 	              return dispatch({
-	                type: SUCCEED_TO_POST_FORUM_VIEW,
+	                type: SUCCEED_TO_DELETE_FORUM,
 	                payload: responseJson
 	              });
 	
@@ -89536,7 +89537,7 @@
 	              _context14.t0 = _context14["catch"](0);
 	
 	              dispatch({
-	                type: FAILED_TO_POST_FORUM_VIEW,
+	                type: FAILED_TO_DELETE_FORUM,
 	                payload: { data: "NETWORK_ERROR" }
 	              });
 	
@@ -89554,7 +89555,7 @@
 	  }();
 	};
 	
-	var getLikeCheck = exports.getLikeCheck = function getLikeCheck(params) {
+	var postForumView = exports.postForumView = function postForumView(params) {
 	  return function () {
 	    var _ref15 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee15(dispatch) {
 	      var response, responseJson;
@@ -89564,8 +89565,8 @@
 	            case 0:
 	              _context15.prev = 0;
 	              _context15.next = 3;
-	              return fetch(_Server.ServerEndPoint + "api/forum/like/check/" + params.forum_id, {
-	                method: "GET",
+	              return fetch(_Server.ServerEndPoint + "api/forum/view/" + params.forum_id, {
+	                method: "POST",
 	                headers: {
 	                  Accept: "application/json",
 	                  "Content-Type": "application/json",
@@ -89583,7 +89584,7 @@
 	              responseJson = _context15.sent;
 	              _context15.next = 9;
 	              return dispatch({
-	                type: SUCCEED_TO_GET_FORUM_LIKE_CHECK,
+	                type: SUCCEED_TO_POST_FORUM_VIEW,
 	                payload: responseJson
 	              });
 	
@@ -89595,7 +89596,7 @@
 	              _context15.t0 = _context15["catch"](0);
 	
 	              dispatch({
-	                type: FAILED_TO_GET_FORUM_LIKE_CHECK,
+	                type: FAILED_TO_POST_FORUM_VIEW,
 	                payload: { data: "NETWORK_ERROR" }
 	              });
 	
@@ -89613,7 +89614,7 @@
 	  }();
 	};
 	
-	var postForumLike = exports.postForumLike = function postForumLike(params) {
+	var getLikeCheck = exports.getLikeCheck = function getLikeCheck(params) {
 	  return function () {
 	    var _ref16 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee16(dispatch) {
 	      var response, responseJson;
@@ -89623,8 +89624,8 @@
 	            case 0:
 	              _context16.prev = 0;
 	              _context16.next = 3;
-	              return fetch(_Server.ServerEndPoint + "api/forum/like/" + params.forum_id, {
-	                method: "POST",
+	              return fetch(_Server.ServerEndPoint + "api/forum/like/check/" + params.forum_id, {
+	                method: "GET",
 	                headers: {
 	                  Accept: "application/json",
 	                  "Content-Type": "application/json",
@@ -89642,7 +89643,7 @@
 	              responseJson = _context16.sent;
 	              _context16.next = 9;
 	              return dispatch({
-	                type: SUCCEED_TO_POST_FORUM_LIKE,
+	                type: SUCCEED_TO_GET_FORUM_LIKE_CHECK,
 	                payload: responseJson
 	              });
 	
@@ -89654,7 +89655,7 @@
 	              _context16.t0 = _context16["catch"](0);
 	
 	              dispatch({
-	                type: FAILED_TO_POST_FORUM_LIKE,
+	                type: FAILED_TO_GET_FORUM_LIKE_CHECK,
 	                payload: { data: "NETWORK_ERROR" }
 	              });
 	
@@ -89672,7 +89673,7 @@
 	  }();
 	};
 	
-	var postHate = exports.postHate = function postHate(params) {
+	var postForumLike = exports.postForumLike = function postForumLike(params) {
 	  return function () {
 	    var _ref17 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee17(dispatch) {
 	      var response, responseJson;
@@ -89682,7 +89683,7 @@
 	            case 0:
 	              _context17.prev = 0;
 	              _context17.next = 3;
-	              return fetch(_Server.ServerEndPoint + "api/forum/hate/" + params.forum_id, {
+	              return fetch(_Server.ServerEndPoint + "api/forum/like/" + params.forum_id, {
 	                method: "POST",
 	                headers: {
 	                  Accept: "application/json",
@@ -89701,7 +89702,7 @@
 	              responseJson = _context17.sent;
 	              _context17.next = 9;
 	              return dispatch({
-	                type: SUCCEED_TO_POST_FORUM_HATE,
+	                type: SUCCEED_TO_POST_FORUM_LIKE,
 	                payload: responseJson
 	              });
 	
@@ -89713,7 +89714,7 @@
 	              _context17.t0 = _context17["catch"](0);
 	
 	              dispatch({
-	                type: FAILED_TO_POST_FORUM_HATE,
+	                type: FAILED_TO_POST_FORUM_LIKE,
 	                payload: { data: "NETWORK_ERROR" }
 	              });
 	
@@ -89731,7 +89732,7 @@
 	  }();
 	};
 	
-	var getHateCheck = exports.getHateCheck = function getHateCheck(params) {
+	var postHate = exports.postHate = function postHate(params) {
 	  return function () {
 	    var _ref18 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee18(dispatch) {
 	      var response, responseJson;
@@ -89741,8 +89742,8 @@
 	            case 0:
 	              _context18.prev = 0;
 	              _context18.next = 3;
-	              return fetch(_Server.ServerEndPoint + "api/forum/hate/check/" + params.forum_id, {
-	                method: "GET",
+	              return fetch(_Server.ServerEndPoint + "api/forum/hate/" + params.forum_id, {
+	                method: "POST",
 	                headers: {
 	                  Accept: "application/json",
 	                  "Content-Type": "application/json",
@@ -89760,7 +89761,7 @@
 	              responseJson = _context18.sent;
 	              _context18.next = 9;
 	              return dispatch({
-	                type: SUCCEED_TO_GET_FORUM_HATE_CHECK,
+	                type: SUCCEED_TO_POST_FORUM_HATE,
 	                payload: responseJson
 	              });
 	
@@ -89772,7 +89773,7 @@
 	              _context18.t0 = _context18["catch"](0);
 	
 	              dispatch({
-	                type: FAILED_TO_GET_FORUM_HATE_CHECK,
+	                type: FAILED_TO_POST_FORUM_HATE,
 	                payload: { data: "NETWORK_ERROR" }
 	              });
 	
@@ -89790,7 +89791,7 @@
 	  }();
 	};
 	
-	var postUnHate = exports.postUnHate = function postUnHate(params) {
+	var getHateCheck = exports.getHateCheck = function getHateCheck(params) {
 	  return function () {
 	    var _ref19 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee19(dispatch) {
 	      var response, responseJson;
@@ -89800,8 +89801,8 @@
 	            case 0:
 	              _context19.prev = 0;
 	              _context19.next = 3;
-	              return fetch(_Server.ServerEndPoint + "api/forum/unhate/" + params.forum_id, {
-	                method: "POST",
+	              return fetch(_Server.ServerEndPoint + "api/forum/hate/check/" + params.forum_id, {
+	                method: "GET",
 	                headers: {
 	                  Accept: "application/json",
 	                  "Content-Type": "application/json",
@@ -89819,7 +89820,7 @@
 	              responseJson = _context19.sent;
 	              _context19.next = 9;
 	              return dispatch({
-	                type: SUCCEED_TO_POST_FORUM_UNHATE,
+	                type: SUCCEED_TO_GET_FORUM_HATE_CHECK,
 	                payload: responseJson
 	              });
 	
@@ -89831,7 +89832,7 @@
 	              _context19.t0 = _context19["catch"](0);
 	
 	              dispatch({
-	                type: FAILED_TO_POST_FORUM_UNHATE,
+	                type: FAILED_TO_GET_FORUM_HATE_CHECK,
 	                payload: { data: "NETWORK_ERROR" }
 	              });
 	
@@ -89849,7 +89850,7 @@
 	  }();
 	};
 	
-	var postForumDisLike = exports.postForumDisLike = function postForumDisLike(params) {
+	var postUnHate = exports.postUnHate = function postUnHate(params) {
 	  return function () {
 	    var _ref20 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee20(dispatch) {
 	      var response, responseJson;
@@ -89859,7 +89860,7 @@
 	            case 0:
 	              _context20.prev = 0;
 	              _context20.next = 3;
-	              return fetch(_Server.ServerEndPoint + "api/forum/dislike/" + params.forum_id, {
+	              return fetch(_Server.ServerEndPoint + "api/forum/unhate/" + params.forum_id, {
 	                method: "POST",
 	                headers: {
 	                  Accept: "application/json",
@@ -89878,7 +89879,7 @@
 	              responseJson = _context20.sent;
 	              _context20.next = 9;
 	              return dispatch({
-	                type: SUCCEED_TO_POST_FORUM_LIKE,
+	                type: SUCCEED_TO_POST_FORUM_UNHATE,
 	                payload: responseJson
 	              });
 	
@@ -89890,7 +89891,7 @@
 	              _context20.t0 = _context20["catch"](0);
 	
 	              dispatch({
-	                type: FAILED_TO_POST_FORUM_LIKE,
+	                type: FAILED_TO_POST_FORUM_UNHATE,
 	                payload: { data: "NETWORK_ERROR" }
 	              });
 	
@@ -89908,7 +89909,7 @@
 	  }();
 	};
 	
-	var postForumComment = exports.postForumComment = function postForumComment(params) {
+	var postForumDisLike = exports.postForumDisLike = function postForumDisLike(params) {
 	  return function () {
 	    var _ref21 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee21(dispatch) {
 	      var response, responseJson;
@@ -89918,6 +89919,65 @@
 	            case 0:
 	              _context21.prev = 0;
 	              _context21.next = 3;
+	              return fetch(_Server.ServerEndPoint + "api/forum/dislike/" + params.forum_id, {
+	                method: "POST",
+	                headers: {
+	                  Accept: "application/json",
+	                  "Content-Type": "application/json",
+	                  "Access-Control-Allow-Origin": "*",
+	                  "x-access-token": params.token
+	                }
+	              });
+	
+	            case 3:
+	              response = _context21.sent;
+	              _context21.next = 6;
+	              return response.json();
+	
+	            case 6:
+	              responseJson = _context21.sent;
+	              _context21.next = 9;
+	              return dispatch({
+	                type: SUCCEED_TO_POST_FORUM_LIKE,
+	                payload: responseJson
+	              });
+	
+	            case 9:
+	              return _context21.abrupt("return", responseJson);
+	
+	            case 12:
+	              _context21.prev = 12;
+	              _context21.t0 = _context21["catch"](0);
+	
+	              dispatch({
+	                type: FAILED_TO_POST_FORUM_LIKE,
+	                payload: { data: "NETWORK_ERROR" }
+	              });
+	
+	            case 15:
+	            case "end":
+	              return _context21.stop();
+	          }
+	        }
+	      }, _callee21, undefined, [[0, 12]]);
+	    }));
+	
+	    return function (_x21) {
+	      return _ref21.apply(this, arguments);
+	    };
+	  }();
+	};
+	
+	var postForumComment = exports.postForumComment = function postForumComment(params) {
+	  return function () {
+	    var _ref22 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee22(dispatch) {
+	      var response, responseJson;
+	      return regeneratorRuntime.wrap(function _callee22$(_context22) {
+	        while (1) {
+	          switch (_context22.prev = _context22.next) {
+	            case 0:
+	              _context22.prev = 0;
+	              _context22.next = 3;
 	              return fetch(_Server.ServerEndPoint + ("api/forum/create/comment/" + params.forum_id), {
 	                method: "POST",
 	                headers: {
@@ -89932,24 +89992,24 @@
 	              });
 	
 	            case 3:
-	              response = _context21.sent;
-	              _context21.next = 6;
+	              response = _context22.sent;
+	              _context22.next = 6;
 	              return response.json();
 	
 	            case 6:
-	              responseJson = _context21.sent;
-	              _context21.next = 9;
+	              responseJson = _context22.sent;
+	              _context22.next = 9;
 	              return dispatch({
 	                type: SUCCEED_TO_POST_FORUM_COMMENT,
 	                payload: responseJson.forum_id
 	              });
 	
 	            case 9:
-	              return _context21.abrupt("return", responseJson.forum_id);
+	              return _context22.abrupt("return", responseJson.forum_id);
 	
 	            case 12:
-	              _context21.prev = 12;
-	              _context21.t0 = _context21["catch"](0);
+	              _context22.prev = 12;
+	              _context22.t0 = _context22["catch"](0);
 	
 	              dispatch({
 	                type: FAILED_TO_POST_FORUM_COMMENT,
@@ -89958,14 +90018,14 @@
 	
 	            case 15:
 	            case "end":
-	              return _context21.stop();
+	              return _context22.stop();
 	          }
 	        }
-	      }, _callee21, undefined, [[0, 12]]);
+	      }, _callee22, undefined, [[0, 12]]);
 	    }));
 	
-	    return function (_x21) {
-	      return _ref21.apply(this, arguments);
+	    return function (_x22) {
+	      return _ref22.apply(this, arguments);
 	    };
 	  }();
 	};
@@ -90302,6 +90362,38 @@
 	        pathname: "/@" + userId,
 	        state: { userId: userId, username: username, userPoint: userPoint, userImg: userImg, userCoins: userCoins }
 	      });
+	    };
+	
+	    _this.handleDelete = function (id) {
+	      if (_this.props.location.state === undefined) {
+	        var deletedComment = _this.state.newComment.slice();
+	        var result = deletedComment.filter(function (a) {
+	          return a.id !== id;
+	        });
+	        _this.setState({ newComment: result });
+	        var params = { comment_id: id, token: _this.props.token };
+	        _this.props.dispatch(SocialAction.deleteComment(params)).then(function (value) {});
+	      } else {
+	        var _deletedComment = _this.state.newComment.slice();
+	        var _params5 = { comment_id: id, token: _this.props.token };
+	        _this.setState({ isRefreshed: true });
+	        if (_deletedComment.length !== 0) {
+	          var _result = _deletedComment.filter(function (a) {
+	            return a.id !== id;
+	          });
+	          _this.setState({ newComment: _result });
+	          _this.props.dispatch(SocialAction.deleteComment(_params5)).then(function (value) {});
+	        } else {
+	          _this.props.dispatch(SocialAction.deleteComment(_params5)).then(function (value) {
+	            var forum_id = _this.props.match.params.forum_id;
+	
+	            var params = { token: _this.props.token, forum_id: forum_id };
+	            _this.props.dispatch(SocialAction.getOneForumComment(params)).then(function (comments) {
+	              _this.setState({ newComment: comments });
+	            });
+	          });
+	        }
+	      }
 	    };
 	
 	    _this.onFocusComment = function () {
@@ -90718,6 +90810,9 @@
 	                  onClick: function onClick() {
 	                    return _this4.handleUser(data.user_id);
 	                  },
+	                  onDelete: function onDelete() {
+	                    return _this4.handleDelete(data.id);
+	                  },
 	                  checkName: me.username,
 	                  content: data.content
 	                });
@@ -91095,6 +91190,9 @@
 	                  userPoint: data.point,
 	                  createdAt: data.created_at,
 	                  checkName: _me.username,
+	                  onDelete: function onDelete() {
+	                    return _this4.handleDelete(data.id);
+	                  },
 	                  content: data.content
 	                });
 	              }),
@@ -91106,6 +91204,9 @@
 	                  userPoint: data.point,
 	                  onClick: function onClick() {
 	                    return _this4.handleUser(data.user_id);
+	                  },
+	                  onDelete: function onDelete() {
+	                    return _this4.handleDelete(data.id);
 	                  },
 	                  createdAt: data.created_at,
 	                  checkName: _me.username,
