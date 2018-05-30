@@ -19,6 +19,9 @@ export const FAILED_TO_POST_FORUM = "FAILED_TO_POST_FORUM";
 export const SUCCEED_TO_DELETE_FORUM = "SUCCEED_TO_DELETE_FORUM";
 export const FAILED_TO_DELETE_FORUM = "FAILED_TO_DELETE_FORUM";
 
+export const SUCCEED_TO_DELETE_COMMENT = "SUCCEED_TO_DELETE_COMMENT";
+export const FAILED_TO_DELETE_COMMENT = "FAILED_TO_DELETE_COMMENT";
+
 export const SUCCEED_TO_GET_ONE_FORUM = "SUCCEED_TO_GET_ONE_FORUM";
 export const FAILED_TO_GET_ONE_FORUM = "FAILED_TO_GET_ONE_FORUM";
 
@@ -96,7 +99,6 @@ export const getAllForums = params => {
 };
 
 export const filterForums = params => {
-  console.log(params);
   if (params.keyword === undefined) {
     params.keyword = "";
   }
@@ -122,7 +124,6 @@ export const filterForums = params => {
         }
       );
       let responseJson = await response.json();
-      console.log(responseJson);
       await dispatch({
         type: SUCCEED_TO_FILTER_FORUM,
         payload: responseJson
@@ -341,6 +342,37 @@ export const getOneForumComment = params => {
     } catch (error) {
       dispatch({
         type: FAILED_TO_GET_ONE_FORUM_COMMENT,
+        payload: { data: "NETWORK_ERROR" }
+      });
+    }
+  };
+};
+
+export const deleteComment = params => {
+  return async dispatch => {
+    try {
+      let response = await fetch(
+        ServerEndPoint +
+          `api/forum/delete/comment?comment_id=${params.comment_id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "x-access-token": params.token
+          }
+        }
+      );
+      let responseJson = await response.json();
+      await dispatch({
+        type: SUCCEED_TO_DELETE_COMMENT,
+        payload: responseJson.result
+      });
+      return responseJson.result;
+    } catch (error) {
+      dispatch({
+        type: FAILED_TO_DELETE_COMMENT,
         payload: { data: "NETWORK_ERROR" }
       });
     }

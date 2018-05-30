@@ -13,6 +13,7 @@ import ImageGallery from "react-image-gallery";
 import Linkify from "react-linkify";
 import moment from "moment";
 import * as base64 from "../../Assests/Icons/base64";
+import { deleteComment } from "../../ActionCreators/SocialAction";
 
 const defaultProps = {};
 const propTypes = {};
@@ -297,6 +298,41 @@ class PostPage extends Component {
     });
   };
 
+  handleDelete = id => {
+    if (this.props.location.state === undefined) {
+      const deletedComment = this.state.newComment.slice();
+      let result = deletedComment.filter(a => {
+        return a.id !== id;
+      });
+      this.setState({ newComment: result });
+      const params = { comment_id: id, token: this.props.token };
+      this.props.dispatch(SocialAction.deleteComment(params)).then(value => {});
+    } else {
+      const deletedComment = this.state.newComment.slice();
+      const params = { comment_id: id, token: this.props.token };
+      this.setState({ isRefreshed: true });
+      if (deletedComment.length !== 0) {
+        let result = deletedComment.filter(a => {
+          return a.id !== id;
+        });
+        this.setState({ newComment: result });
+        this.props
+          .dispatch(SocialAction.deleteComment(params))
+          .then(value => {});
+      } else {
+        this.props.dispatch(SocialAction.deleteComment(params)).then(value => {
+          const { forum_id } = this.props.match.params;
+          const params = { token: this.props.token, forum_id };
+          this.props
+            .dispatch(SocialAction.getOneForumComment(params))
+            .then(comments => {
+              this.setState({ newComment: comments });
+            });
+        });
+      }
+    }
+  };
+
   onFocusComment = () => {
     this.setState(prevState => ({
       isFocusComment: !prevState.isFocusComment
@@ -554,6 +590,7 @@ class PostPage extends Component {
                       userPoint={data.point}
                       createdAt={data.created_at}
                       onClick={() => this.handleUser(data.user_id)}
+                      onDelete={() => this.handleDelete(data.id)}
                       checkName={me.username}
                       content={data.content}
                     />
@@ -864,6 +901,7 @@ class PostPage extends Component {
                       userPoint={data.point}
                       createdAt={data.created_at}
                       checkName={me.username}
+                      onDelete={() => this.handleDelete(data.id)}
                       content={data.content}
                     />
                   );
@@ -877,6 +915,7 @@ class PostPage extends Component {
                         profileImg={data.profile_img}
                         userPoint={data.point}
                         onClick={() => this.handleUser(data.user_id)}
+                        onDelete={() => this.handleDelete(data.id)}
                         createdAt={data.created_at}
                         checkName={me.username}
                         content={data.content}
