@@ -318,6 +318,9 @@ class HomePage extends Component {
     s.onload = () => {
       this.setState({ loadGraph: false });
     };
+    s.onerror = () => {
+      console.log("!!!!");
+    };
   };
 
   handleChart = (index, id, coin) => {

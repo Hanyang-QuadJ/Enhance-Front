@@ -43,11 +43,11 @@
         margin-left: 10px;
 
         &__name {
-          font-size: 13px;
+          font-size: 10px;
         }
 
         &__point {
-          font-size: 13px;
+          font-size: 10px;
         }
       }
     }
@@ -56,6 +56,7 @@
       word-wrap: break-word;
       overflow: auto;
       display: flex;
+      font-size: 13px;
       flex-direction: column;
       padding-right: 10px;
     }
@@ -65,8 +66,19 @@
       display: flex;
       justify-content: flex-end;
       align-items: center;
-      font-size: 13px;
+      font-size: 10px;
       color: $date-color;
+    }
+
+    &__delete {
+      color: $border-color;
+      margin-left: 5px;
+      cursor: pointer;
+
+      &:hover {
+        @include transition(0.3s);
+        color: $price-color;
+      }
     }
   }
 }

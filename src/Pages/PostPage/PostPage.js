@@ -46,6 +46,9 @@ class PostPage extends Component {
       userImg: "",
       userLoading: false,
       userCoins: [],
+      r_forum: {},
+      r_images: [],
+      r_coins: [],
       forumLength: 0,
       commentLength: 0,
       isLiked: false,
@@ -65,19 +68,31 @@ class PostPage extends Component {
       this.props.dispatch(SocialAction.getHateCheck(params)).then(hate => {
         this.props.dispatch(SocialAction.getOneForum(params)).then(result => {
           this.props
-            .dispatch(SocialAction.getOneForumComment(params))
-            .then(comments => {
-              if (value.message === "You already liked this forum") {
-                this.setState({ isLiked: true, newLike: result.like_cnt });
-              }
-
-              if (hate.message !== "it's okay to dislike this forum") {
-                this.setState({ isHated: true, newHate: result.dislike_cnt });
-              }
-              this.setState({
-                isRefreshed: true,
-                newComment: comments.reverse()
-              });
+            .dispatch(SocialAction.getOneForumCoins(params))
+            .then(coins => {
+              this.props
+                .dispatch(SocialAction.getOneForumComment(params))
+                .then(comments => {
+                  if (value.message === "You already liked this forum") {
+                    this.setState({ isLiked: true, newLike: result.like_cnt });
+                  }
+                  if (hate.message !== "it's okay to dislike this forum") {
+                    this.setState({
+                      isHated: true,
+                      newHate: result.dislike_cnt
+                    });
+                  }
+                  const images = result.image.map((data, index) => {
+                    return { original: data.img_url };
+                  });
+                  this.setState({
+                    r_forum: result,
+                    r_coins: coins,
+                    r_images: images,
+                    isRefreshed: true,
+                    newComment: comments.reverse()
+                  });
+                });
             });
         });
       });
@@ -144,87 +159,133 @@ class PostPage extends Component {
   };
 
   handleLike = () => {
-    const { forum, liked } = this.props.location.state;
-    const params = {
-      token: this.props.token,
-      forum_id: Number(this.props.match.params.forum_id)
-    };
-    if (liked) {
-      this.setState({ isLiked: false, newLike: forum.like_cnt });
+    if (this.props.location.state === undefined) {
+      const { r_forum } = this.state;
+      const params = {
+        token: this.props.token,
+        forum_id: Number(this.props.match.params.forum_id)
+      };
+      this.setState({ isLiked: true, newLike: r_forum.like_cnt + 1 });
       this.props.dispatch(SocialAction.postForumLike(params)).then(value => {});
     } else {
-      this.setState(prevState => ({
-        isLiked: true,
-        newLike: forum.like_cnt + 1
-      }));
-      this.props.dispatch(SocialAction.postForumLike(params)).then(value => {});
+      const { forum, liked } = this.props.location.state;
+      const params = {
+        token: this.props.token,
+        forum_id: Number(this.props.match.params.forum_id)
+      };
+      if (liked) {
+        this.setState({ isLiked: false, newLike: forum.like_cnt });
+        this.props
+          .dispatch(SocialAction.postForumLike(params))
+          .then(value => {});
+      } else {
+        this.setState(prevState => ({
+          isLiked: true,
+          newLike: forum.like_cnt + 1
+        }));
+        this.props
+          .dispatch(SocialAction.postForumLike(params))
+          .then(value => {});
+      }
     }
   };
 
   handleHate = () => {
-    const { forum, hated } = this.props.location.state;
-    const params = {
-      token: this.props.token,
-      forum_id: Number(this.props.match.params.forum_id)
-    };
-    if (hated) {
-      this.setState(prevState => ({
-        isHated: false,
-        newHate: forum.dislike_cnt
-      }));
+    if (this.props.location.state === undefined) {
+      const { r_forum } = this.state;
+      const params = {
+        token: this.props.token,
+        forum_id: Number(this.props.match.params.forum_id)
+      };
+      this.setState({ isHated: true, newHate: r_forum.dislike_cnt + 1 });
       this.props.dispatch(SocialAction.postHate(params)).then(value => {});
     } else {
-      this.setState(prevState => ({
-        isHated: true,
-        newHate: forum.dislike_cnt + 1
-      }));
-      this.props.dispatch(SocialAction.postHate(params)).then(value => {});
+      const { forum, hated } = this.props.location.state;
+      const params = {
+        token: this.props.token,
+        forum_id: Number(this.props.match.params.forum_id)
+      };
+      if (hated) {
+        this.setState(prevState => ({
+          isHated: false,
+          newHate: forum.dislike_cnt
+        }));
+        this.props.dispatch(SocialAction.postHate(params)).then(value => {});
+      } else {
+        this.setState(prevState => ({
+          isHated: true,
+          newHate: forum.dislike_cnt + 1
+        }));
+        this.props.dispatch(SocialAction.postHate(params)).then(value => {});
+      }
     }
   };
 
   handleDisLike = () => {
-    const { forum, liked } = this.props.location.state;
-    const params = {
-      token: this.props.token,
-      forum_id: Number(this.props.match.params.forum_id)
-    };
-    if (liked) {
-      this.setState(prevState => ({
-        isLiked: true,
-        newLike: forum.like_cnt - 1
-      }));
+    if (this.props.location.state === undefined) {
+      const { r_forum } = this.state;
+      const params = {
+        token: this.props.token,
+        forum_id: Number(this.props.match.params.forum_id)
+      };
+      this.setState({ isLiked: false, newLike: r_forum.like_cnt - 1 });
       this.props
         .dispatch(SocialAction.postForumDisLike(params))
         .then(value => {});
     } else {
-      this.setState(prevState => ({
-        isLiked: false,
-        newLike: forum.like_cnt - 1
-      }));
-      this.props
-        .dispatch(SocialAction.postForumDisLike(params))
-        .then(value => {});
+      const { forum, liked } = this.props.location.state;
+      const params = {
+        token: this.props.token,
+        forum_id: Number(this.props.match.params.forum_id)
+      };
+      if (liked) {
+        this.setState(prevState => ({
+          isLiked: true,
+          newLike: forum.like_cnt - 1
+        }));
+        this.props
+          .dispatch(SocialAction.postForumDisLike(params))
+          .then(value => {});
+      } else {
+        this.setState(prevState => ({
+          isLiked: false,
+          newLike: forum.like_cnt - 1
+        }));
+        this.props
+          .dispatch(SocialAction.postForumDisLike(params))
+          .then(value => {});
+      }
     }
   };
 
   handleUnHate = () => {
-    const { forum, hated } = this.props.location.state;
-    const params = {
-      token: this.props.token,
-      forum_id: Number(this.props.match.params.forum_id)
-    };
-    if (hated) {
-      this.setState(prevState => ({
-        isHated: true,
-        newHate: forum.dislike_cnt - 1
-      }));
+    if (this.props.location.state === undefined) {
+      const { r_forum } = this.state;
+      const params = {
+        token: this.props.token,
+        forum_id: Number(this.props.match.params.forum_id)
+      };
+      this.setState({ isHated: false, newHate: r_forum.dislike_cnt - 1 });
       this.props.dispatch(SocialAction.postUnHate(params)).then(value => {});
     } else {
-      this.setState(prevState => ({
-        isHated: false,
-        newHate: forum.dislike_cnt - 1
-      }));
-      this.props.dispatch(SocialAction.postUnHate(params)).then(value => {});
+      const { forum, hated } = this.props.location.state;
+      const params = {
+        token: this.props.token,
+        forum_id: Number(this.props.match.params.forum_id)
+      };
+      if (hated) {
+        this.setState(prevState => ({
+          isHated: true,
+          newHate: forum.dislike_cnt - 1
+        }));
+        this.props.dispatch(SocialAction.postUnHate(params)).then(value => {});
+      } else {
+        this.setState(prevState => ({
+          isHated: false,
+          newHate: forum.dislike_cnt - 1
+        }));
+        this.props.dispatch(SocialAction.postUnHate(params)).then(value => {});
+      }
     }
   };
 
@@ -243,9 +304,7 @@ class PostPage extends Component {
   };
 
   componentDidUpdate(previousProps, previousState) {
-    if (
-      previousProps.location.state.forum !== this.props.location.state.forum
-    ) {
+    if (previousProps.location.state !== this.props.location.state) {
       this.setState({
         newComment: [],
         newLike: 0,
@@ -264,8 +323,247 @@ class PostPage extends Component {
   };
 
   render() {
+    const {
+      isLiked,
+      isHated,
+      newLike,
+      newHate,
+      isFocusComment,
+      newComment,
+      username,
+      userImg,
+      userCoins,
+      userPoint,
+      forumLength,
+      commentLength,
+      userLoading,
+      r_forum,
+      r_images,
+      r_coins
+    } = this.state;
+    const { me, isLogin } = this.props;
     if (this.props.location.state === undefined) {
-      window.location.href = "/enhance/forum";
+      return (
+        <div className="postPage__content__chart">
+          <Modal
+            isOpen={this.state.showModal}
+            toggle={this.toggleModal}
+            size="lg"
+            centered
+            modalTransition={{ timeout: 20 }}
+            backdropTransition={{ timeout: 10 }}
+            // backdrop={false}
+          >
+            <ModalBody>
+              <div className="postPage__modal">
+                <div className="postPage__modal__content">
+                  <Thumb
+                    src={userImg}
+                    fontSize={75}
+                    size={90}
+                    point={userPoint}
+                    onClick={this.handleUserDetail}
+                  />
+                  <p className="postPage__modal__content__username">
+                    {username}
+                  </p>
+                  <div className="postPage__modal__content__area">
+                    <p className="postPage__modal__content__area__number-border">
+                      {userPoint}
+                      <span className="postPage__modal__content__area__text">
+                        포인트
+                      </span>
+                    </p>
+                    <p className="postPage__modal__content__area__number-border">
+                      {forumLength}
+                      <span className="postPage__modal__content__area__text">
+                        게시물
+                      </span>
+                    </p>
+                    <p className="postPage__modal__content__area__number">
+                      {commentLength}
+                      <span className="postPage__modal__content__area__text">
+                        댓글
+                      </span>
+                    </p>
+                  </div>
+                  <div className="postPage__modal__content__coins">
+                    {userCoins.map((data, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className="postPage__modal__content__coins__coin"
+                        >
+                          {data.abbr}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </ModalBody>
+          </Modal>
+          {userLoading ? (
+            <div className="postPage__content__chart__intro__loading">
+              <Dots size={30} color="#FFFFFF" />
+            </div>
+          ) : (
+            <div className="postPage__content__chart__intro">
+              <div className="postPage__content__chart__intro__post">
+                <div className="postPage__content__chart__intro__post__header">
+                  <div className="postPage__content__chart__intro__post__header__userInfo">
+                    <div className="postPage__content__chart__intro__post__header__userInfo__thumb">
+                      <Thumb
+                        src={r_forum.profile_img}
+                        fontSize={35}
+                        size={50}
+                        point={r_forum.point}
+                        onClick={() => this.handleUser(r_forum.user_id)}
+                      />
+                    </div>
+                    <div className="postPage__content__chart__intro__post__header__userInfo__name">
+                      <strong>{r_forum.username}</strong>
+                      <span className="postPage__content__chart__intro__post__header__userInfo__point">
+                        {`${r_forum.point} 포인트`}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="postPage__content__chart__intro__post__header__detail">
+                    <p>{r_forum.category}</p>
+                    <span className="postPage__content__chart__intro__post__header__userInfo__date">
+                      {moment(r_forum.created_at).fromNow()}
+                    </span>
+                  </div>
+                </div>
+                <div className="postPage__content__chart__intro__post__title">
+                  <p>{r_forum.title}</p>
+                </div>
+                <div className="postPage__content__chart__intro__post__body">
+                  <div style={{ marginBottom: 10 }}>
+                    {r_images.length === 0 ? null : (
+                      <ImageGallery
+                        items={r_images}
+                        showThumbnails={false}
+                        showPlayButton={false}
+                        showBullets={true}
+                      />
+                    )}
+                  </div>
+                  <Linkify
+                    properties={{
+                      target: "_blank",
+                      style: { color: "#56b1bf", fontWeight: "400" }
+                    }}
+                  >
+                    {r_forum.content}
+                  </Linkify>
+                </div>
+                <div className="postPage__content__chart__intro__post__coin">
+                  {r_coins.map((data, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className="postPage__content__chart__intro__post__coin__item"
+                      >
+                        {data.abbr}
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="postPage__content__chart__intro__post__footer">
+                  <span className="postPage__content__chart__intro__post__footer__count">
+                    {!isLiked ? (
+                      <NumericLabel params={option}>
+                        {r_forum.like_cnt}
+                      </NumericLabel>
+                    ) : (
+                      <span className="postPage__content__chart__intro__post__footer__count-liked">
+                        <NumericLabel params={option}>{newLike}</NumericLabel>
+                      </span>
+                    )}
+                  </span>
+                  <span
+                    className="postPage__content__chart__intro__post__footer__icon"
+                    onClick={!isLiked ? this.handleLike : this.handleDisLike}
+                  >
+                    {!isLiked ? (
+                      <img
+                        src={base64.arrowUpWhite}
+                        style={{ width: 18, height: 18 }}
+                      />
+                    ) : (
+                      <img
+                        src={base64.arrowUpGreen}
+                        style={{ width: 18, height: 18 }}
+                      />
+                    )}
+                  </span>
+                  <span className="postPage__content__chart__intro__post__footer__count">
+                    {!isHated ? (
+                      <NumericLabel params={option}>
+                        {r_forum.dislike_cnt}
+                      </NumericLabel>
+                    ) : (
+                      <span className="postPage__content__chart__intro__post__footer__count-hated">
+                        <NumericLabel params={option}>{newHate}</NumericLabel>
+                      </span>
+                    )}
+                  </span>
+                  <span
+                    className="postPage__content__chart__intro__post__footer__icon"
+                    onClick={!isHated ? this.handleHate : this.handleUnHate}
+                  >
+                    {!isHated ? (
+                      <img
+                        src={base64.arrowDownWhite}
+                        style={{ width: 18, height: 18 }}
+                      />
+                    ) : (
+                      <img
+                        src={base64.arrowDownRed}
+                        style={{ width: 18, height: 18 }}
+                      />
+                    )}
+                  </span>
+                  <span className="postPage__content__chart__intro__post__footer__count">
+                    {r_forum.view_cnt}
+                  </span>
+                  <span className="postPage__content__chart__intro__post__footer__icon">
+                    <i className="xi-eye" />
+                  </span>
+                </div>
+              </div>
+              <SocialInput
+                user={me && me}
+                isLogin={isLogin}
+                value={this.state.comment}
+                onChange={this.handleComment}
+                placeholder="댓글을 입력하세요"
+                onClick={this.handlePostComment}
+                postText="등록"
+                onFocus={this.onFocusComment}
+                isFocus={isFocusComment}
+              />
+              <div className="postPage__content__chart__intro__comments">
+                {newComment.map((data, index) => {
+                  return (
+                    <Comment
+                      key={index}
+                      username={data.username}
+                      profileImg={data.profile_img}
+                      userPoint={data.point}
+                      createdAt={data.created_at}
+                      onClick={() => this.handleUser(data.user_id)}
+                      checkName={me.username}
+                      content={data.content}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+      );
     } else {
       const {
         isLiked,
@@ -283,7 +581,7 @@ class PostPage extends Component {
         userLoading,
         isRefreshed
       } = this.state;
-      const { me, isLogin, onClick } = this.props;
+      const { me, isLogin } = this.props;
       const {
         forum,
         coins,
@@ -565,7 +863,7 @@ class PostPage extends Component {
                       profileImg={data.profile_img}
                       userPoint={data.point}
                       createdAt={data.created_at}
-                      checkName={name}
+                      checkName={me.username}
                       content={data.content}
                     />
                   );
@@ -580,7 +878,7 @@ class PostPage extends Component {
                         userPoint={data.point}
                         onClick={() => this.handleUser(data.user_id)}
                         createdAt={data.created_at}
-                        checkName={name}
+                        checkName={me.username}
                         content={data.content}
                       />
                     );

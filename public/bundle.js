@@ -34353,7 +34353,7 @@
 	            case 0:
 	              _context.prev = 0;
 	              _context.next = 3;
-	              return fetch(_Server.ServerEndPoint + ("api/naver/search/news?coin_id=" + params.coinId + "&source=" + params.sourceId + "&index=" + params.newsCount), {
+	              return fetch(_Server.ServerEndPoint + ("api/naver/search/news?coin_id=" + params.coinId + "&source=" + params.sourceId + "&index=" + params.newsCount + "&recent=" + params.recent), {
 	                method: "GET",
 	                headers: {
 	                  Accept: "application/json",
@@ -34482,9 +34482,10 @@
 	* Email: nayunhwan.dev@mgail.com
 	*/
 	
-	// export const ServerEndPoint = "http://localhost:3000/";
+	var ServerEndPoint = exports.ServerEndPoint = "http://localhost:3000/";
 	
-	var ServerEndPoint = exports.ServerEndPoint = "http://ec2-13-125-78-181.ap-northeast-2.compute.amazonaws.com:3000/";
+	// export const ServerEndPoint =
+	//   "http://ec2-13-125-78-181.ap-northeast-2.compute.amazonaws.com:3000/";
 
 /***/ }),
 /* 438 */
@@ -35168,7 +35169,7 @@
 	exports = module.exports = __webpack_require__(432)();
 	exports.push([module.id, "@import url(https://fonts.googleapis.com/css?family=Black+Han+Sans);", ""]);
 	exports.push([module.id, "@import url(https://fonts.googleapis.com/css?family=Biryani:700|Nanum+Gothic);", ""]);
-	exports.push([module.id, "@charset \"UTF-8\";\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n\n\n.homePage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .homePage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .homePage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .homePage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        border-bottom: 1px white solid; }\n        .homePage__content__news__search__first {\n          padding: 10px;\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid; }\n          .homePage__content__news__search__first__item {\n            font-size: 13px !important;\n            font-weight: 300 !important;\n            color: white;\n            margin-right: 1px;\n            font-weight: 600;\n            cursor: pointer;\n            float: left;\n            padding: 5px 25px;\n            background: transparent; }\n            .homePage__content__news__search__first__item:hover {\n              transition: 0.3s;\n              -webkit-transition: 0.3s;\n              -moz-transition: 0.3s;\n              -o-transition: 0.3s;\n              background-color: #536976; }\n            .homePage__content__news__search__first__item-active {\n              background-color: #536976; }\n        .homePage__content__news__search__second {\n          padding: 10px; }\n          .homePage__content__news__search__second__content {\n            display: flex;\n            flex-direction: row;\n            justify-content: space-between; }\n      .homePage__content__news__lists {\n        height: calc(100vh - 100px);\n        margin-top: 100px;\n        overflow-y: scroll; }\n        .homePage__content__news__lists-loading {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          height: 55vh;\n          color: white;\n          font-size: 1rem;\n          height: calc(100vh - 100px);\n          margin-top: 100px; }\n        .homePage__content__news__lists-none {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          height: 55vh;\n          color: white;\n          font-size: 1rem; }\n        .homePage__content__news__lists__footer {\n          height: 12vh;\n          display: flex;\n          align-items: center;\n          justify-content: center; }\n    .homePage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px; }\n      .homePage__content__chart__coin {\n        display: flex;\n        justify-content: center;\n        padding: 15px;\n        font-size: 13px;\n        top: 0;\n        color: #f4e7d7;\n        border-bottom: 1px solid white;\n        position: fixed;\n        right: 100px;\n        z-index: 500;\n        width: calc(50vw - 100px); }\n      .homePage__content__chart__wrapper {\n        height: calc(100vh - 50px);\n        background: transparent;\n        overflow-y: scroll;\n        padding-left: 1rem;\n        padding-right: 1rem;\n        margin-top: 50px; }\n        .homePage__content__chart__wrapper > div {\n          background-color: transparent !important; }\n      .homePage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        flex-direction: column;\n        justify-content: center;\n        height: 100vh; }\n      .homePage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .homePage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .homePage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n        .homePage__content__chart__intro__welcome {\n          margin-top: 6%; }\n        .homePage__content__chart__intro__desc {\n          margin-top: 6%; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.authPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .authPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .authPage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .authPage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        padding-top: 1.5rem;\n        height: 145px;\n        border-bottom: 1px white solid; }\n        .authPage__content__news__search__first {\n          display: flex;\n          flex-direction: row; }\n          .authPage__content__news__search__first__iconArea {\n            padding-left: 1rem;\n            display: flex;\n            justify-content: center;\n            margin-right: 1rem;\n            align-items: center; }\n            .authPage__content__news__search__first__iconArea__icon {\n              color: white;\n              font-size: 1.5rem; }\n          .authPage__content__news__search__first__inputArea {\n            display: flex;\n            align-items: center; }\n            .authPage__content__news__search__first__inputArea__input {\n              background-color: transparent;\n              outline-width: 0 !important;\n              color: white;\n              border: 0;\n              width: 35vw; }\n        .authPage__content__news__search__second__content {\n          padding-left: 1rem; }\n      .authPage__content__news__lists {\n        height: calc(100vh - 145px);\n        margin-top: 145px;\n        overflow-y: scroll; }\n    .authPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .authPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .authPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .authPage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .authPage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n        .authPage__content__chart__intro__welcome {\n          margin-top: 6%; }\n        .authPage__content__chart__intro__login {\n          margin-top: 15%;\n          width: 100%;\n          display: flex;\n          flex-direction: column;\n          align-items: center; }\n        .authPage__content__chart__intro__signUp {\n          margin-top: 5%;\n          width: 100%;\n          display: flex;\n          flex-direction: column;\n          align-items: center; }\n          .authPage__content__chart__intro__signUp__link {\n            cursor: pointer; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.signUpPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .signUpPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .signUpPage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .signUpPage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        padding-top: 1.5rem;\n        height: 145px;\n        border-bottom: 1px white solid; }\n        .signUpPage__content__news__search__first {\n          display: flex;\n          flex-direction: row; }\n          .signUpPage__content__news__search__first__iconArea {\n            padding-left: 1rem;\n            display: flex;\n            justify-content: center;\n            margin-right: 1rem;\n            align-items: center; }\n            .signUpPage__content__news__search__first__iconArea__icon {\n              color: white;\n              font-size: 1.5rem; }\n          .signUpPage__content__news__search__first__inputArea {\n            display: flex;\n            align-items: center; }\n            .signUpPage__content__news__search__first__inputArea__input {\n              background-color: transparent;\n              outline-width: 0 !important;\n              color: white;\n              border: 0;\n              width: 35vw; }\n        .signUpPage__content__news__search__second__content {\n          padding-left: 1rem; }\n      .signUpPage__content__news__lists {\n        height: calc(100vh - 145px);\n        margin-top: 145px;\n        overflow-y: scroll; }\n    .signUpPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .signUpPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .signUpPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .signUpPage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .signUpPage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n        .signUpPage__content__chart__intro__welcome {\n          margin-top: 6%; }\n        .signUpPage__content__chart__intro__login {\n          margin-top: 15%;\n          width: 100%;\n          display: flex;\n          flex-direction: column;\n          align-items: center; }\n        .signUpPage__content__chart__intro__signUp {\n          margin-top: 5%;\n          width: 100%;\n          display: flex;\n          flex-direction: column;\n          align-items: center; }\n          .signUpPage__content__chart__intro__signUp__link {\n            cursor: pointer; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.forumPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .forumPage__modal {\n    height: 90vh;\n    padding-left: 50px;\n    padding-right: 50px;\n    display: flex;\n    flex-direction: column; }\n    .forumPage__modal__favorite {\n      width: 100%;\n      padding-left: 1rem;\n      padding-right: 1rem;\n      display: flex;\n      flex-direction: row;\n      flex-wrap: wrap;\n      justify-content: center; }\n      .forumPage__modal__favorite__text {\n        margin-top: 2rem;\n        margin-bottom: 1rem;\n        text-align: center;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        align-items: center; }\n      .forumPage__modal__favorite__icon {\n        color: white;\n        font-size: 1.5rem;\n        margin-right: 5px;\n        vertical-align: center; }\n      .forumPage__modal__favorite__item {\n        border: 1px rgba(255, 255, 255, 0.2) solid;\n        padding-left: 10px;\n        padding-right: 10px;\n        padding-top: 5px;\n        padding-bottom: 5px;\n        margin-right: 5px;\n        margin-bottom: 5px;\n        cursor: pointer; }\n        .forumPage__modal__favorite__item:hover {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          border: 1px white solid; }\n        .forumPage__modal__favorite__item-active {\n          border: 1px #5cb85c solid; }\n          .forumPage__modal__favorite__item-active:hover {\n            transition: 0.3s;\n            -webkit-transition: 0.3s;\n            -moz-transition: 0.3s;\n            -o-transition: 0.3s;\n            border: 1px #5cb85c solid; }\n  .forumPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .forumPage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .forumPage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        border-bottom: 1px white solid; }\n        .forumPage__content__news__search__first {\n          display: flex;\n          flex-direction: row;\n          padding: 10px;\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid; }\n          .forumPage__content__news__search__first__iconArea {\n            padding-left: 5px;\n            display: flex;\n            justify-content: center;\n            margin-right: 1rem;\n            align-items: center; }\n            .forumPage__content__news__search__first__iconArea__icon {\n              color: white;\n              font-size: 1.5rem; }\n          .forumPage__content__news__search__first__inputArea {\n            display: flex;\n            align-items: center; }\n            .forumPage__content__news__search__first__inputArea__input {\n              background-color: transparent;\n              outline-width: 0 !important;\n              color: white;\n              border: 0;\n              width: 35vw; }\n        .forumPage__content__news__search__second {\n          padding: 10px; }\n          .forumPage__content__news__search__second__content {\n            display: flex;\n            flex-direction: row;\n            justify-content: space-between; }\n      .forumPage__content__news__lists {\n        height: calc(100vh - 110px);\n        margin-top: 110px;\n        overflow-y: scroll; }\n        .forumPage__content__news__lists-loading {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          height: 55vh;\n          color: white;\n          font-size: 1rem;\n          height: calc(100vh - 100px);\n          margin-top: 100px; }\n        .forumPage__content__news__lists__footer {\n          height: 12vh;\n          display: flex;\n          align-items: center;\n          justify-content: center; }\n    .forumPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .forumPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .forumPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .forumPage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .forumPage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n        .forumPage__content__chart__intro__welcome {\n          margin-top: 6%; }\n        .forumPage__content__chart__intro__desc {\n          margin-top: 6%; }\n        .forumPage__content__chart__intro__post {\n          height: 90vh; }\n          .forumPage__content__chart__intro__post__header {\n            border-bottom: 1px rgba(255, 255, 255, 0.2) solid;\n            display: flex;\n            height: 10vh;\n            flex-direction: row;\n            align-items: center;\n            justify-content: space-between;\n            padding-bottom: 1rem; }\n            .forumPage__content__chart__intro__post__header__userInfo {\n              display: flex;\n              width: 15vw;\n              flex-direction: row;\n              align-items: center; }\n              .forumPage__content__chart__intro__post__header__userInfo__thumb {\n                flex: 1; }\n              .forumPage__content__chart__intro__post__header__userInfo__name {\n                flex: 3;\n                margin-left: 10px;\n                display: flex;\n                flex-direction: column;\n                align-items: flex-start;\n                justify-content: center; }\n              .forumPage__content__chart__intro__post__header__userInfo__point {\n                font-size: 13px; }\n            .forumPage__content__chart__intro__post__header__detail {\n              display: flex;\n              flex-direction: column;\n              justify-content: flex-end;\n              align-items: flex-end; }\n          .forumPage__content__chart__intro__post__title {\n            margin-top: 1rem;\n            padding-bottom: 1rem;\n            border-bottom: rgba(255, 255, 255, 0.2) 1px solid;\n            font-weight: 400; }\n          .forumPage__content__chart__intro__post__body {\n            margin-top: 1rem;\n            padding-bottom: 1rem;\n            border-bottom: rgba(255, 255, 255, 0.2) 1px solid;\n            font-weight: 300; }\n          .forumPage__content__chart__intro__post__footer {\n            display: flex;\n            flex-direction: row;\n            justify-content: center;\n            padding-top: 1rem;\n            padding-bottom: 1rem; }\n            .forumPage__content__chart__intro__post__footer__icon {\n              display: inline-flex;\n              font-size: 1.5rem;\n              margin-right: 1rem; }\n        .forumPage__content__chart__intro__signUp {\n          margin-top: 5%;\n          width: 100%;\n          display: flex;\n          flex-direction: column;\n          align-items: center; }\n          .forumPage__content__chart__intro__signUp__link {\n            cursor: pointer; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.postPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .postPage__modal {\n    height: 60vh;\n    display: flex;\n    align-items: center;\n    justify-content: center; }\n    .postPage__modal__content {\n      margin-left: 1rem;\n      margin-right: 1rem;\n      display: flex;\n      flex-direction: column;\n      justify-content: center;\n      align-items: center; }\n      .postPage__modal__content__area {\n        display: flex;\n        flex-direction: row; }\n        .postPage__modal__content__area__number {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          padding-left: 1.5rem;\n          padding-right: 1.5rem;\n          flex-direction: column;\n          font-weight: 500; }\n          .postPage__modal__content__area__number-border {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            padding-left: 1.5rem;\n            padding-right: 1.5rem;\n            flex-direction: column;\n            font-weight: 500;\n            border-right: 1px rgba(255, 255, 255, 0.2) solid; }\n        .postPage__modal__content__area__text {\n          font-weight: 300 !important; }\n      .postPage__modal__content__coins {\n        margin-top: 2rem;\n        display: flex;\n        flex-wrap: wrap;\n        flex-direction: row;\n        font-size: 13px;\n        width: 80%;\n        justify-content: center;\n        flex-wrap: wrap;\n        margin-bottom: 5px;\n        color: #f4e7d7; }\n        .postPage__modal__content__coins__coin {\n          border: 1px #f4e7d7 solid;\n          padding-left: 5px;\n          padding-right: 5px;\n          margin-right: 5px; }\n      .postPage__modal__content__username {\n        margin-top: 1.5rem;\n        margin-bottom: 1.5rem;\n        font-size: 1.5rem; }\n  .postPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .postPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .postPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .postPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .postPage__content__chart__intro__loading {\n          padding: 2rem 2rem 2rem 2rem;\n          display: flex;\n          width: 100%;\n          height: 90vh;\n          justify-content: center;\n          align-items: center; }\n        .postPage__content__chart__intro__post__header {\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid;\n          display: flex;\n          height: 10vh;\n          flex-direction: row;\n          align-items: center;\n          justify-content: space-between;\n          padding-bottom: 1rem; }\n          .postPage__content__chart__intro__post__header__userInfo {\n            display: flex;\n            width: 15vw;\n            flex-direction: row;\n            align-items: center; }\n            .postPage__content__chart__intro__post__header__userInfo__thumb {\n              flex: 1; }\n            .postPage__content__chart__intro__post__header__userInfo__name {\n              flex: 3;\n              margin-left: 10px;\n              display: flex;\n              flex-direction: column;\n              align-items: flex-start;\n              justify-content: center; }\n            .postPage__content__chart__intro__post__header__userInfo__point {\n              font-size: 13px; }\n            .postPage__content__chart__intro__post__header__userInfo__date {\n              font-size: 13px;\n              color: rgba(255, 255, 255, 0.5); }\n          .postPage__content__chart__intro__post__header__detail {\n            display: flex;\n            flex-direction: column;\n            justify-content: flex-end;\n            align-items: flex-end; }\n        .postPage__content__chart__intro__post__title {\n          margin-top: 1rem;\n          padding-left: 10px;\n          padding-right: 10px;\n          font-size: 18px;\n          padding-bottom: 1rem;\n          border-bottom: rgba(255, 255, 255, 0.2) 1px solid;\n          font-weight: 400; }\n        .postPage__content__chart__intro__post__body {\n          margin-top: 1rem;\n          padding-left: 10px;\n          padding-right: 10px;\n          padding-bottom: 1rem;\n          font-weight: 300; }\n        .postPage__content__chart__intro__post__coin {\n          margin-top: 1rem;\n          display: flex;\n          flex-direction: row;\n          justify-content: flex-end;\n          font-size: 13px;\n          width: 100%;\n          flex-wrap: wrap;\n          margin-bottom: 5px;\n          color: #f4e7d7; }\n          .postPage__content__chart__intro__post__coin__item {\n            border: 1px #f4e7d7 solid;\n            padding-left: 5px;\n            padding-right: 5px;\n            margin-right: 5px; }\n        .postPage__content__chart__intro__post__footer {\n          display: flex;\n          flex-direction: row;\n          justify-content: center;\n          align-items: center;\n          padding-top: 1rem;\n          padding-bottom: 1rem;\n          cursor: pointer;\n          color: #a0c1b8; }\n          .postPage__content__chart__intro__post__footer__count {\n            font-size: 1rem;\n            margin-right: 7px; }\n            .postPage__content__chart__intro__post__footer__count-liked {\n              color: #5cb85c !important; }\n          .postPage__content__chart__intro__post__footer__icon {\n            display: inline-flex;\n            font-size: 1.5rem;\n            margin-right: 1rem; }\n        .postPage__content__chart__intro__comments {\n          margin-top: 10%; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.userPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .userPage__modal {\n    height: 90vh;\n    padding-left: 50px;\n    padding-right: 50px;\n    display: flex;\n    flex-direction: column; }\n    .userPage__modal__favorite {\n      width: 100%;\n      padding-left: 1rem;\n      padding-right: 1rem;\n      display: flex;\n      flex-direction: row;\n      flex-wrap: wrap;\n      justify-content: center; }\n      .userPage__modal__favorite__text {\n        margin-top: 2rem;\n        margin-bottom: 1rem;\n        text-align: center;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        align-items: center; }\n      .userPage__modal__favorite__icon {\n        color: white;\n        font-size: 1.5rem;\n        margin-right: 5px;\n        vertical-align: center; }\n      .userPage__modal__favorite__item {\n        border: 1px rgba(255, 255, 255, 0.2) solid;\n        padding-left: 10px;\n        padding-right: 10px;\n        padding-top: 5px;\n        padding-bottom: 5px;\n        margin-right: 5px;\n        margin-bottom: 5px;\n        cursor: pointer; }\n        .userPage__modal__favorite__item:hover {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          border: 1px white solid; }\n        .userPage__modal__favorite__item-active {\n          border: 1px #5cb85c solid; }\n          .userPage__modal__favorite__item-active:hover {\n            transition: 0.3s;\n            -webkit-transition: 0.3s;\n            -moz-transition: 0.3s;\n            -o-transition: 0.3s;\n            border: 1px #5cb85c solid; }\n  .userPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .userPage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .userPage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        border-bottom: 1px white solid; }\n        .userPage__content__news__search__first {\n          display: flex;\n          flex-direction: row;\n          padding: 10px;\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid; }\n          .userPage__content__news__search__first__iconArea {\n            padding-left: 5px;\n            display: flex;\n            justify-content: center;\n            margin-right: 1rem;\n            align-items: center; }\n            .userPage__content__news__search__first__iconArea__icon {\n              color: white;\n              font-size: 1.5rem; }\n          .userPage__content__news__search__first__inputArea {\n            display: flex;\n            align-items: center; }\n            .userPage__content__news__search__first__inputArea__input {\n              background-color: transparent;\n              outline-width: 0 !important;\n              color: white;\n              border: 0;\n              width: 35vw; }\n        .userPage__content__news__search__second {\n          padding: 10px; }\n          .userPage__content__news__search__second__content {\n            display: flex;\n            flex-direction: row;\n            justify-content: space-between; }\n      .userPage__content__news__lists {\n        height: calc(100vh - 110px);\n        margin-top: 110px;\n        overflow-y: scroll; }\n        .userPage__content__news__lists-loading {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          height: 55vh;\n          color: white;\n          font-size: 1rem;\n          height: calc(100vh - 100px);\n          margin-top: 100px; }\n        .userPage__content__news__lists__footer {\n          height: 12vh;\n          display: flex;\n          align-items: center;\n          justify-content: center; }\n    .userPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .userPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .userPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column;\n        align-items: center;\n        height: 100%;\n        justify-content: center; }\n        .userPage__content__chart__intro__content {\n          margin-left: 1rem;\n          margin-right: 1rem;\n          display: flex;\n          flex-direction: column;\n          justify-content: center;\n          align-items: center; }\n          .userPage__content__chart__intro__content__area {\n            display: flex;\n            flex-direction: row; }\n            .userPage__content__chart__intro__content__area__number {\n              display: flex;\n              justify-content: center;\n              align-items: center;\n              padding-left: 1.5rem;\n              padding-right: 1.5rem;\n              flex-direction: column;\n              font-weight: 500; }\n              .userPage__content__chart__intro__content__area__number-border {\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                padding-left: 1.5rem;\n                padding-right: 1.5rem;\n                flex-direction: column;\n                font-weight: 500;\n                border-right: 1px rgba(255, 255, 255, 0.2) solid; }\n            .userPage__content__chart__intro__content__area__text {\n              font-weight: 300 !important; }\n          .userPage__content__chart__intro__content__username {\n            margin-top: 1rem;\n            margin-bottom: 1rem;\n            font-size: 2rem; }\n          .userPage__content__chart__intro__content__coins {\n            margin-top: 1.5rem;\n            margin-bottom: 1.5rem;\n            width: 100%;\n            flex-wrap: wrap;\n            display: flex;\n            flex-direction: row;\n            justify-content: center;\n            font-size: 13px;\n            color: #f4e7d7; }\n            .userPage__content__chart__intro__content__coins__coin {\n              border: 1px #f4e7d7 solid;\n              padding-left: 5px;\n              padding-right: 5px;\n              margin-right: 5px;\n              margin-bottom: 5px; }\n        .userPage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .userPage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.myPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .myPage__modal {\n    height: 90vh;\n    padding-left: 50px;\n    padding-right: 50px;\n    display: flex;\n    flex-direction: column; }\n    .myPage__modal__favorite {\n      width: 100%;\n      padding-left: 1rem;\n      padding-right: 1rem;\n      display: flex;\n      flex-direction: row;\n      flex-wrap: wrap;\n      justify-content: center; }\n      .myPage__modal__favorite__text {\n        margin-top: 2rem;\n        margin-bottom: 1rem;\n        text-align: center;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        align-items: center; }\n      .myPage__modal__favorite__icon {\n        color: white;\n        font-size: 1.5rem;\n        margin-right: 5px;\n        vertical-align: center; }\n      .myPage__modal__favorite__item {\n        border: 1px rgba(255, 255, 255, 0.2) solid;\n        padding-left: 10px;\n        padding-right: 10px;\n        padding-top: 5px;\n        padding-bottom: 5px;\n        margin-right: 5px;\n        margin-bottom: 5px;\n        cursor: pointer; }\n        .myPage__modal__favorite__item:hover {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          border: 1px white solid; }\n        .myPage__modal__favorite__item-active {\n          border: 1px #5cb85c solid; }\n          .myPage__modal__favorite__item-active:hover {\n            transition: 0.3s;\n            -webkit-transition: 0.3s;\n            -moz-transition: 0.3s;\n            -o-transition: 0.3s;\n            border: 1px #5cb85c solid; }\n  .myPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .myPage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .myPage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        border-bottom: 1px white solid; }\n        .myPage__content__news__search__first {\n          display: flex;\n          flex-direction: row;\n          padding: 10px;\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid; }\n          .myPage__content__news__search__first__iconArea {\n            padding-left: 5px;\n            display: flex;\n            justify-content: center;\n            margin-right: 1rem;\n            align-items: center; }\n            .myPage__content__news__search__first__iconArea__icon {\n              color: white;\n              font-size: 1.5rem; }\n          .myPage__content__news__search__first__inputArea {\n            display: flex;\n            align-items: center; }\n            .myPage__content__news__search__first__inputArea__input {\n              background-color: transparent;\n              outline-width: 0 !important;\n              color: white;\n              border: 0;\n              width: 35vw; }\n        .myPage__content__news__search__second {\n          padding: 10px; }\n          .myPage__content__news__search__second__content {\n            display: flex;\n            flex-direction: row;\n            justify-content: space-between; }\n      .myPage__content__news__lists {\n        height: calc(100vh - 110px);\n        margin-top: 110px;\n        overflow-y: scroll; }\n        .myPage__content__news__lists-loading {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          height: 55vh;\n          color: white;\n          font-size: 1rem;\n          height: calc(100vh - 100px);\n          margin-top: 100px; }\n        .myPage__content__news__lists__footer {\n          height: 12vh;\n          display: flex;\n          align-items: center;\n          justify-content: center; }\n    .myPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .myPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .myPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column;\n        align-items: center;\n        height: 100%;\n        justify-content: center; }\n        .myPage__content__chart__intro__content {\n          margin-left: 1rem;\n          margin-right: 1rem;\n          display: flex;\n          flex-direction: column;\n          justify-content: center;\n          align-items: center; }\n          .myPage__content__chart__intro__content__area {\n            display: flex;\n            flex-direction: row; }\n            .myPage__content__chart__intro__content__area__number {\n              display: flex;\n              justify-content: center;\n              align-items: center;\n              padding-left: 1.5rem;\n              padding-right: 1.5rem;\n              flex-direction: column;\n              font-weight: 500; }\n              .myPage__content__chart__intro__content__area__number-border {\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                padding-left: 1.5rem;\n                padding-right: 1.5rem;\n                flex-direction: column;\n                font-weight: 500;\n                border-right: 1px rgba(255, 255, 255, 0.2) solid; }\n            .myPage__content__chart__intro__content__area__text {\n              font-weight: 300 !important; }\n          .myPage__content__chart__intro__content__username {\n            margin-top: 1rem;\n            margin-bottom: 1rem;\n            font-size: 2rem; }\n          .myPage__content__chart__intro__content__coins {\n            margin-top: 1.5rem;\n            margin-bottom: 1.5rem;\n            width: 100%;\n            flex-wrap: wrap;\n            display: flex;\n            flex-direction: row;\n            justify-content: center;\n            font-size: 13px;\n            color: #f4e7d7; }\n            .myPage__content__chart__intro__content__coins__coin {\n              border: 1px #f4e7d7 solid;\n              padding-left: 5px;\n              padding-right: 5px;\n              margin-right: 5px;\n              margin-bottom: 5px; }\n        .myPage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .myPage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.postPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .postPage__modal {\n    height: 60vh;\n    display: flex;\n    align-items: center;\n    justify-content: center; }\n    .postPage__modal__content {\n      margin-left: 1rem;\n      margin-right: 1rem;\n      display: flex;\n      flex-direction: column;\n      justify-content: center;\n      align-items: center; }\n      .postPage__modal__content__coins {\n        margin-top: 2rem;\n        display: flex;\n        flex-wrap: wrap;\n        flex-direction: row;\n        font-size: 13px;\n        width: 80%;\n        justify-content: center;\n        flex-wrap: wrap;\n        color: #f4e7d7; }\n        .postPage__modal__content__coins__coin {\n          border: 1px #f4e7d7 solid;\n          padding-left: 5px;\n          padding-right: 5px;\n          margin-right: 5px;\n          margin-bottom: 5px; }\n      .postPage__modal__content__area {\n        display: flex;\n        flex-direction: row; }\n        .postPage__modal__content__area__number {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          padding-left: 1.5rem;\n          padding-right: 1.5rem;\n          flex-direction: column;\n          font-weight: 500; }\n          .postPage__modal__content__area__number-border {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            padding-left: 1.5rem;\n            padding-right: 1.5rem;\n            flex-direction: column;\n            font-weight: 500;\n            border-right: 1px rgba(255, 255, 255, 0.2) solid; }\n        .postPage__modal__content__area__text {\n          font-weight: 300 !important; }\n      .postPage__modal__content__username {\n        margin-top: 1rem;\n        margin-bottom: 1rem;\n        font-size: 2rem; }\n  .postPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .postPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .postPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .postPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .postPage__content__chart__intro__loading {\n          padding: 2rem 2rem 2rem 2rem;\n          display: flex;\n          width: 100%;\n          height: 90vh;\n          justify-content: center;\n          align-items: center; }\n        .postPage__content__chart__intro__post__header {\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid;\n          display: flex;\n          height: 10vh;\n          flex-direction: row;\n          align-items: center;\n          justify-content: space-between;\n          padding-bottom: 1rem; }\n          .postPage__content__chart__intro__post__header__userInfo {\n            display: flex;\n            width: 15vw;\n            flex-direction: row;\n            align-items: center; }\n            .postPage__content__chart__intro__post__header__userInfo__thumb {\n              flex: 1; }\n            .postPage__content__chart__intro__post__header__userInfo__name {\n              flex: 3;\n              margin-left: 10px;\n              display: flex;\n              flex-direction: column;\n              align-items: flex-start;\n              justify-content: center; }\n            .postPage__content__chart__intro__post__header__userInfo__point {\n              font-size: 13px; }\n            .postPage__content__chart__intro__post__header__userInfo__date {\n              font-size: 13px;\n              color: rgba(255, 255, 255, 0.5); }\n          .postPage__content__chart__intro__post__header__detail {\n            display: flex;\n            flex-direction: column;\n            justify-content: flex-end;\n            align-items: flex-end; }\n        .postPage__content__chart__intro__post__title {\n          margin-top: 1rem;\n          padding-left: 10px;\n          padding-right: 10px;\n          font-size: 18px;\n          padding-bottom: 1rem;\n          border-bottom: rgba(255, 255, 255, 0.2) 1px solid;\n          font-weight: 400; }\n        .postPage__content__chart__intro__post__body {\n          margin-top: 1rem;\n          padding-left: 10px;\n          padding-right: 10px;\n          padding-bottom: 1rem;\n          font-weight: 300; }\n        .postPage__content__chart__intro__post__coin {\n          margin-top: 1rem;\n          display: flex;\n          flex-direction: row;\n          justify-content: flex-end;\n          font-size: 13px;\n          color: #f4e7d7; }\n          .postPage__content__chart__intro__post__coin__item {\n            border: 1px #f4e7d7 solid;\n            padding-left: 5px;\n            margin-bottom: 5px;\n            padding-right: 5px;\n            margin-right: 5px; }\n        .postPage__content__chart__intro__post__footer {\n          display: flex;\n          flex-direction: row;\n          justify-content: center;\n          align-items: center;\n          padding-top: 1rem;\n          padding-bottom: 1rem;\n          color: #a0c1b8; }\n          .postPage__content__chart__intro__post__footer__count {\n            font-size: 1rem;\n            margin-right: 7px; }\n          .postPage__content__chart__intro__post__footer__icon {\n            display: inline-flex;\n            font-size: 1.5rem;\n            margin-right: 1rem; }\n        .postPage__content__chart__intro__comments {\n          margin-top: 10%; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.settingsPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .settingsPage__modal {\n    height: 90vh;\n    padding-left: 50px;\n    padding-right: 50px;\n    display: flex;\n    flex-direction: column; }\n    .settingsPage__modal__favorite {\n      width: 100%;\n      padding-left: 1rem;\n      padding-right: 1rem;\n      display: flex;\n      flex-direction: row;\n      flex-wrap: wrap;\n      justify-content: center; }\n      .settingsPage__modal__favorite__text {\n        margin-top: 2rem;\n        margin-bottom: 1rem;\n        text-align: center;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        align-items: center; }\n      .settingsPage__modal__favorite__icon {\n        color: white;\n        font-size: 1.5rem;\n        margin-right: 5px;\n        vertical-align: center; }\n      .settingsPage__modal__favorite__item {\n        border: 1px rgba(255, 255, 255, 0.2) solid;\n        padding-left: 10px;\n        padding-right: 10px;\n        padding-top: 5px;\n        padding-bottom: 5px;\n        margin-right: 5px;\n        margin-bottom: 5px;\n        cursor: pointer; }\n        .settingsPage__modal__favorite__item:hover {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          border: 1px white solid; }\n        .settingsPage__modal__favorite__item-active {\n          border: 1px #5cb85c solid; }\n          .settingsPage__modal__favorite__item-active:hover {\n            transition: 0.3s;\n            -webkit-transition: 0.3s;\n            -moz-transition: 0.3s;\n            -o-transition: 0.3s;\n            border: 1px #5cb85c solid; }\n  .settingsPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .settingsPage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .settingsPage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        border-bottom: 1px white solid; }\n        .settingsPage__content__news__search__first {\n          display: flex;\n          flex-direction: row;\n          padding: 10px;\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid; }\n          .settingsPage__content__news__search__first__iconArea {\n            padding-left: 5px;\n            display: flex;\n            justify-content: center;\n            margin-right: 1rem;\n            align-items: center; }\n            .settingsPage__content__news__search__first__iconArea__icon {\n              color: white;\n              font-size: 1.5rem; }\n          .settingsPage__content__news__search__first__inputArea {\n            display: flex;\n            color: white;\n            align-items: center; }\n        .settingsPage__content__news__search__second {\n          padding: 10px; }\n          .settingsPage__content__news__search__second__content {\n            display: flex;\n            flex-direction: row;\n            justify-content: space-between; }\n      .settingsPage__content__news__lists {\n        height: calc(100vh - 70px);\n        margin-top: 70px;\n        overflow-y: scroll;\n        padding: 1rem; }\n        .settingsPage__content__news__lists__content {\n          display: flex;\n          flex-direction: column;\n          align-items: center;\n          color: white; }\n        .settingsPage__content__news__lists__footer {\n          height: 12vh;\n          display: flex;\n          align-items: center;\n          justify-content: center; }\n    .settingsPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .settingsPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .settingsPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column;\n        align-items: center;\n        height: 100%;\n        justify-content: center; }\n        .settingsPage__content__chart__intro__content {\n          margin-left: 1rem;\n          margin-right: 1rem;\n          display: flex;\n          flex-direction: column;\n          justify-content: center;\n          align-items: center; }\n          .settingsPage__content__chart__intro__content__area {\n            display: flex;\n            flex-direction: row; }\n            .settingsPage__content__chart__intro__content__area__number {\n              display: flex;\n              justify-content: center;\n              align-items: center;\n              padding-left: 1.5rem;\n              padding-right: 1.5rem;\n              flex-direction: column;\n              font-weight: 500; }\n              .settingsPage__content__chart__intro__content__area__number-border {\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                padding-left: 1.5rem;\n                padding-right: 1.5rem;\n                flex-direction: column;\n                font-weight: 500;\n                border-right: 1px rgba(255, 255, 255, 0.2) solid; }\n            .settingsPage__content__chart__intro__content__area__text {\n              font-weight: 300 !important; }\n          .settingsPage__content__chart__intro__content__username {\n            margin-top: 1rem;\n            margin-bottom: 1rem;\n            font-size: 2rem; }\n          .settingsPage__content__chart__intro__content__coins {\n            margin-top: 1.5rem;\n            margin-bottom: 1.5rem;\n            width: 100%;\n            flex-wrap: wrap;\n            display: flex;\n            flex-direction: row;\n            justify-content: center;\n            font-size: 13px;\n            color: #f4e7d7; }\n            .settingsPage__content__chart__intro__content__coins__coin {\n              border: 1px #f4e7d7 solid;\n              padding-left: 5px;\n              padding-right: 5px;\n              margin-right: 5px;\n              margin-bottom: 5px; }\n        .settingsPage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .settingsPage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.navBar {\n  background: transparent;\n  width: 100px;\n  height: 100vh;\n  position: fixed;\n  left: 0;\n  color: white;\n  border-right: 1px rgba(255, 255, 255, 0.1) solid; }\n  .navBar__signOut {\n    height: 40vh;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    flex-direction: column; }\n    .navBar__signOut__text {\n      margin-bottom: 10%; }\n  .navBar__content {\n    display: flex;\n    flex-direction: column;\n    align-items: center; }\n    .navBar__content__brand {\n      width: 100%;\n      display: flex;\n      align-items: center;\n      justify-content: center;\n      cursor: pointer;\n      font-family: \"Biryani\", sans-serif;\n      flex-direction: column;\n      height: 145px;\n      padding-right: 10px;\n      padding-left: 10px; }\n      .navBar__content__brand__logo {\n        width: 50px;\n        height: auto; }\n        .navBar__content__brand__logo__text {\n          margin-top: 5px;\n          font-size: 12px; }\n    .navBar__content__userArea {\n      height: 17vh;\n      width: 100%;\n      display: inline-flex;\n      align-items: center;\n      justify-content: center; }\n    .navBar__content__items {\n      width: 100%; }\n      .navBar__content__items__item {\n        display: flex;\n        height: 10vh;\n        flex-direction: column;\n        justify-content: center;\n        align-items: center;\n        margin-top: 1.5rem;\n        margin-bottom: 1.5rem;\n        cursor: pointer; }\n        .navBar__content__items__item:first-child {\n          margin-top: 0; }\n        .navBar__content__items__item-active {\n          color: #5cb85c;\n          font-weight: 500; }\n        .navBar__content__items__item-icon {\n          font-size: 2.2rem;\n          display: inline-flex;\n          margin-bottom: 5px; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.list {\n  color: white;\n  cursor: pointer; }\n  .list:hover {\n    transition: 0.3s;\n    -webkit-transition: 0.3s;\n    -moz-transition: 0.3s;\n    -o-transition: 0.3s;\n    background-color: rgba(83, 105, 118, 0.3); }\n  .list-active {\n    background-color: rgba(83, 105, 118, 0.7); }\n    .list-active:hover {\n      background-color: rgba(83, 105, 118, 0.7); }\n  .list__content {\n    display: flex;\n    width: 100%;\n    flex-direction: row;\n    align-items: center;\n    padding-top: 3%;\n    padding-bottom: 3%;\n    border-bottom: 1px solid rgba(83, 105, 118, 0.7); }\n    .list__content__date {\n      width: 12%;\n      padding-left: 10px;\n      padding-right: 10px;\n      color: rgba(255, 255, 255, 0.7);\n      display: flex;\n      font-size: 10px;\n      align-items: center;\n      justify-content: center; }\n    .list__content__textArea {\n      flex: 6;\n      word-wrap: break-word;\n      overflow: auto;\n      display: flex;\n      padding-right: 10px;\n      flex-direction: column; }\n      .list__content__textArea__text {\n        display: inline;\n        font-size: 14px; }\n      .list__content__textArea__username {\n        font-size: 11px;\n        color: #a0c1b8;\n        margin-left: 5px; }\n      .list__content__textArea__edit {\n        font-size: 13px;\n        margin-left: 5px;\n        cursor: pointer; }\n        .list__content__textArea__edit:hover {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          color: #a0c1b8; }\n      .list__content__textArea__social {\n        display: flex;\n        flex-direction: row;\n        align-items: center;\n        margin-top: 2px; }\n        .list__content__textArea__social__username {\n          font-size: 12px;\n          color: #a0c1b8; }\n        .list__content__textArea__social__items {\n          display: flex;\n          flex-direction: row; }\n        .list__content__textArea__social__item {\n          font-size: 12px;\n          display: flex;\n          flex-direction: row;\n          align-items: center;\n          margin-right: 5px;\n          color: #a0c1b8; }\n          .list__content__textArea__social__item__count {\n            margin-right: 5px; }\n          .list__content__textArea__social__item__icon {\n            display: inline-flex; }\n    .list__content__type {\n      flex: 1;\n      font-size: 10px;\n      display: flex;\n      color: #f4e7d7;\n      justify-content: center; }\n      .list__content__type-array {\n        color: #f4e7d7;\n        flex-wrap: wrap;\n        font-size: 10px;\n        padding-right: 10px;\n        display: flex;\n        justify-content: flex-end; }\n        .list__content__type-array__item {\n          margin-right: 5px; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.sideBar {\n  background: transparent;\n  width: 100px;\n  height: 100vh;\n  overflow-y: scroll;\n  position: fixed;\n  right: 0;\n  color: white;\n  border-left: 1px rgba(255, 255, 255, 0.1) solid; }\n  .sideBar__modal {\n    height: 60vh;\n    overflow-y: scroll; }\n    .sideBar__modal__close {\n      cursor: pointer; }\n    .sideBar__modal__header {\n      font-weight: 300 !important; }\n    .sideBar__modal__content {\n      display: flex;\n      justify-content: center;\n      color: white; }\n      .sideBar__modal__content__items {\n        width: 50vw;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        flex-wrap: wrap; }\n        .sideBar__modal__content__items__wrapper {\n          display: flex;\n          width: 25%;\n          margin-top: 1.5rem;\n          flex-direction: column;\n          align-items: center;\n          margin-right: 1rem; }\n          .sideBar__modal__content__items__wrapper:nth-child(3n) {\n            margin-right: 0; }\n          .sideBar__modal__content__items__wrapper__item {\n            display: flex;\n            padding: 5px 1.5rem 5px 1.5rem;\n            flex-direction: column;\n            width: 100%;\n            border: 1px rgba(255, 255, 255, 0.2) solid;\n            justify-content: center;\n            align-items: center; }\n            .sideBar__modal__content__items__wrapper__item:hover {\n              border: 1px white solid;\n              cursor: pointer; }\n            .sideBar__modal__content__items__wrapper__item-active {\n              border: 1px #5cb85c solid; }\n              .sideBar__modal__content__items__wrapper__item-active:hover {\n                border: 1px #5cb85c solid;\n                cursor: pointer; }\n            .sideBar__modal__content__items__wrapper__item__full {\n              width: 100%;\n              overflow: auto;\n              word-wrap: break-word;\n              text-align: center; }\n            .sideBar__modal__content__items__wrapper__item__abbr {\n              text-align: center;\n              color: #f4e7d7;\n              width: 100%;\n              overflow: auto;\n              word-wrap: break-word; }\n            .sideBar__modal__content__items__wrapper__item__kor {\n              width: 100%;\n              text-align: center;\n              overflow: auto;\n              word-wrap: break-word; }\n  .sideBar__content {\n    display: flex;\n    flex-direction: column;\n    width: 100%; }\n    .sideBar__content__items__item {\n      display: flex;\n      border-bottom: 1px rgba(255, 255, 255, 0.1) solid;\n      flex-direction: column;\n      justify-content: center;\n      padding-top: 10px;\n      padding-bottom: 10px;\n      align-items: center;\n      cursor: pointer; }\n      .sideBar__content__items__item-active {\n        border-left: 3px #5cb85c solid; }\n      .sideBar__content__items__item-disable {\n        cursor: not-allowed;\n        pointer-events: none; }\n      .sideBar__content__items__item-plus {\n        font-size: 2rem; }\n      .sideBar__content__items__item:hover {\n        background-color: #536976; }\n      .sideBar__content__items__item__title {\n        color: #f4e7d7; }\n      .sideBar__content__items__item__price {\n        font-size: 10px; }\n        .sideBar__content__items__item__price__icon {\n          display: inline-flex; }\n      .sideBar__content__items__item__percent {\n        font-size: 10px;\n        color: #5cb85c; }\n        .sideBar__content__items__item__percent__icon {\n          display: inline-flex; }\n      .sideBar__content__items__item__percent-down {\n        font-size: 10px;\n        color: #f26968; }\n        .sideBar__content__items__item__percent-down__icon {\n          display: inline-flex; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.roundInput__content {\n  padding-left: 1rem;\n  width: 300px !important;\n  height: 60px !important;\n  border: 1px rgba(255, 255, 255, 0.2) solid !important;\n  border-radius: 75px !important;\n  font-size: 1rem;\n  outline-width: 0 !important;\n  color: white; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.button__content {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  border: 1px white solid;\n  height: 100%;\n  padding-top: 10px;\n  padding-bottom: 10px; }\n  .button__content:hover {\n    border: 1px #5cb85c solid;\n    color: #5cb85c;\n    cursor: pointer; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.thumb {\n  display: inline-block;\n  position: relative;\n  justify-content: center;\n  align-items: center;\n  cursor: pointer; }\n  .thumb__image {\n    box-sizing: border-box;\n    border-radius: 50%;\n    border: 1px solid white; }\n  .thumb__classImage {\n    position: absolute;\n    box-sizing: border-box;\n    border-radius: 50%; }\n  .thumb__defaultImage {\n    position: absolute;\n    bottom: -8px;\n    right: -5px; }\n\n.thumb__default {\n  font-size: 2rem;\n  display: inline-flex;\n  position: relative;\n  justify-content: center;\n  align-items: center;\n  box-sizing: border-box;\n  border-radius: 50%;\n  border: 1px white solid;\n  color: white;\n  cursor: pointer; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.socialInput {\n  padding-top: 30px;\n  background-color: transparent;\n  padding-left: 20px;\n  padding-right: 20px;\n  padding-bottom: 5px; }\n  .socialInput hr {\n    background-color: rgba(255, 255, 255, 0.2); }\n  .socialInput__hr-active {\n    margin-top: 1rem;\n    margin-bottom: 1rem;\n    border: 0;\n    border-top: 1px white solid; }\n  .socialInput__body {\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    padding-bottom: 10px; }\n    .socialInput__body__thumbArea__thumb {\n      font-size: 2rem;\n      display: inline-flex;\n      width: 50px;\n      height: 50px;\n      justify-content: center;\n      align-items: center;\n      box-sizing: border-box;\n      border-radius: 50%;\n      border: 1px rgba(0, 0, 0, 0.2) solid;\n      color: white; }\n    .socialInput__body__inputArea {\n      width: 95%; }\n    .socialInput__body__input {\n      margin-right: 20px;\n      margin-left: 20px;\n      color: white;\n      font-size: 1rem;\n      background: transparent;\n      width: 95%;\n      padding-bottom: 10px;\n      padding-top: 10px;\n      word-break: break-all;\n      border: none; }\n      .socialInput__body__input:focus {\n        transition: 0.3s;\n        -webkit-transition: 0.3s;\n        -moz-transition: 0.3s;\n        -o-transition: 0.3s;\n        outline: none; }\n      .socialInput__body__input-title {\n        margin-right: 20px;\n        margin-left: 20px;\n        margin-bottom: 10px;\n        color: white;\n        font-size: 1rem;\n        background: transparent;\n        width: 60%;\n        padding-bottom: 10px;\n        padding-top: 10px;\n        word-break: break-all;\n        border-top: none;\n        border-left: none;\n        border-right: none;\n        border-bottom: 1px rgba(255, 255, 255, 0.2) solid !important; }\n        .socialInput__body__input-title:focus {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          outline: none;\n          border-bottom: 1px white solid !important; }\n  .socialInput__footer {\n    display: flex;\n    flex-direction: row;\n    justify-content: space-between;\n    align-items: center; }\n    .socialInput__footer__camera__icon {\n      font-size: 1.6rem;\n      color: white; }\n      .socialInput__footer__camera__icon:hover {\n        transition: 0.3s;\n        -webkit-transition: 0.3s;\n        -moz-transition: 0.3s;\n        -o-transition: 0.3s;\n        color: white;\n        cursor: pointer; }\n    .socialInput__footer__postArea {\n      display: inline-flex;\n      align-items: center;\n      justify-content: center; }\n      .socialInput__footer__postArea__postButton {\n        background-color: transparent;\n        color: white;\n        font-weight: 300;\n        padding-left: 10px;\n        padding-top: 3px;\n        border: 1px solid rgba(255, 255, 255, 0.2);\n        padding-bottom: 3px;\n        display: inline-flex;\n        padding-right: 10px;\n        cursor: pointer; }\n        .socialInput__footer__postArea__postButton:hover {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          color: white;\n          border: 1px solid white; }\n    .socialInput__footer__imagePreview {\n      display: flex;\n      flex-direction: row;\n      flex-wrap: wrap; }\n      .socialInput__footer__imagePreview__image {\n        transition: 0.3s;\n        -webkit-transition: 0.3s;\n        -moz-transition: 0.3s;\n        -o-transition: 0.3s;\n        height: 60px; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.comment__content {\n  transition: 0.3s;\n  -webkit-transition: 0.3s;\n  -moz-transition: 0.3s;\n  -o-transition: 0.3s;\n  display: flex;\n  padding-left: 20px;\n  padding-right: 20px;\n  box-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);\n  flex-direction: row;\n  align-items: center;\n  justify-content: space-between;\n  padding-top: 1rem;\n  padding-bottom: 1rem;\n  margin-bottom: 1rem; }\n  .comment__content-mine {\n    transition: 0.3s;\n    -webkit-transition: 0.3s;\n    -moz-transition: 0.3s;\n    -o-transition: 0.3s;\n    display: flex;\n    padding-left: 20px;\n    padding-right: 20px;\n    box-shadow: 0px !important;\n    border: 1px solid #a0c1b8;\n    flex-direction: row;\n    align-items: center;\n    justify-content: space-between;\n    padding-top: 1rem;\n    padding-bottom: 1rem;\n    margin-bottom: 1rem; }\n  .comment__content__userArea {\n    flex: 2;\n    display: flex;\n    flex-direction: row;\n    align-items: center; }\n    .comment__content__userArea__userInfo {\n      display: flex;\n      flex-direction: column;\n      margin-left: 10px; }\n      .comment__content__userArea__userInfo__name {\n        font-size: 13px; }\n      .comment__content__userArea__userInfo__point {\n        font-size: 13px; }\n  .comment__content__content {\n    flex: 4;\n    word-wrap: break-word;\n    overflow: auto;\n    display: flex;\n    flex-direction: column;\n    padding-right: 10px; }\n  .comment__content__date {\n    flex: 1;\n    display: flex;\n    justify-content: flex-end;\n    align-items: center;\n    font-size: 13px;\n    color: rgba(255, 255, 255, 0.3); }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.medal {\n  display: inline-block;\n  position: relative;\n  justify-content: center;\n  align-items: center;\n  cursor: pointer; }\n  .medal__image {\n    box-sizing: border-box;\n    border-radius: 50%;\n    border: 1px solid white; }\n  .medal__classImage {\n    margin-left: 10px; }\n\n.medal__default {\n  font-size: 2rem;\n  display: inline-flex;\n  justify-content: center;\n  align-items: center;\n  box-sizing: border-box;\n  border-radius: 50%;\n  border: 1px white solid;\n  color: white;\n  cursor: pointer; }\n  .medal__default__classImage {\n    position: absolute;\n    box-sizing: border-box;\n    border-radius: 50%; }\n\n/*!\n  Ionicons, v2.0.0\n  Created by Ben Sperry for the Ionic Framework, http://ionicons.com/\n  https://twitter.com/benjsperry  https://twitter.com/ionicframework\n  MIT License: https://github.com/driftyco/ionicons\n\n  Android-style icons originally built by Google’s\n  Material Design Icons: https://github.com/google/material-design-icons\n  used under CC BY http://creativecommons.org/licenses/by/4.0/\n  Modified icons to fit ionicon’s grid from original.\n*/\n@font-face {\n  font-family: \"Ionicons\";\n  src: url(\"https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/fonts/ionicons.eot?v=2.0.0\");\n  src: url(\"https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/fonts/ionicons.eot?v=2.0.0#iefix\") format(\"embedded-opentype\"), url(\"https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/fonts/ionicons.ttf?v=2.0.0\") format(\"truetype\"), url(\"https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/fonts/ionicons.woff?v=2.0.0\") format(\"woff\"), url(\"https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/fonts/ionicons.svg?v=2.0.0#Ionicons\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal; }\n\n.image-gallery-fullscreen-button::before,\n.image-gallery-play-button::before,\n.image-gallery-left-nav::before,\n.image-gallery-right-nav::before {\n  display: inline-block;\n  font-family: \"Ionicons\";\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  text-rendering: auto;\n  line-height: 1;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale; }\n\n.image-gallery {\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  -o-user-select: none;\n  user-select: none;\n  -webkit-tap-highlight-color: transparent; }\n  .image-gallery.fullscreen-modal {\n    background: #000;\n    bottom: 0;\n    height: 100%;\n    left: 0;\n    position: fixed;\n    right: 0;\n    top: 0;\n    width: 100%;\n    z-index: 5; }\n    .image-gallery.fullscreen-modal .image-gallery-content {\n      top: 50%;\n      transform: translateY(-50%); }\n\n.image-gallery-content {\n  position: relative;\n  line-height: 0;\n  top: 0; }\n  .image-gallery-content.fullscreen {\n    background: #000; }\n    .image-gallery-content.fullscreen .image-gallery-slide {\n      background: #000; }\n\n.image-gallery-slide-wrapper {\n  position: relative; }\n  .image-gallery-slide-wrapper.left, .image-gallery-slide-wrapper.right {\n    display: inline-block;\n    width: calc(100% - 113px); }\n    @media (max-width: 768px) {\n      .image-gallery-slide-wrapper.left, .image-gallery-slide-wrapper.right {\n        width: calc(100% - 84px); } }\n\n.image-gallery-fullscreen-button,\n.image-gallery-play-button,\n.image-gallery-left-nav,\n.image-gallery-right-nav {\n  appearance: none;\n  background-color: transparent;\n  border: 0;\n  cursor: pointer;\n  outline: none;\n  position: absolute;\n  z-index: 4; }\n  .image-gallery-fullscreen-button::before,\n  .image-gallery-play-button::before,\n  .image-gallery-left-nav::before,\n  .image-gallery-right-nav::before {\n    color: #fff;\n    line-height: .7;\n    text-shadow: 0 2px 2px #1a1a1a;\n    transition: color .2s ease-out; }\n  .image-gallery-fullscreen-button:hover::before,\n  .image-gallery-play-button:hover::before,\n  .image-gallery-left-nav:hover::before,\n  .image-gallery-right-nav:hover::before {\n    color: #337ab7; }\n    @media (max-width: 768px) {\n      .image-gallery-fullscreen-button:hover::before,\n      .image-gallery-play-button:hover::before,\n      .image-gallery-left-nav:hover::before,\n      .image-gallery-right-nav:hover::before {\n        color: #fff; } }\n\n.image-gallery-fullscreen-button,\n.image-gallery-play-button {\n  bottom: 0; }\n  .image-gallery-fullscreen-button::before,\n  .image-gallery-play-button::before {\n    font-size: 2.7em;\n    padding: 15px 20px;\n    text-shadow: 0 1px 1px #1a1a1a; }\n    @media (max-width: 768px) {\n      .image-gallery-fullscreen-button::before,\n      .image-gallery-play-button::before {\n        font-size: 2.4em; } }\n    @media (max-width: 480px) {\n      .image-gallery-fullscreen-button::before,\n      .image-gallery-play-button::before {\n        font-size: 2em; } }\n  .image-gallery-fullscreen-button:hover::before,\n  .image-gallery-play-button:hover::before {\n    color: #fff;\n    transform: scale(1.1); }\n    @media (max-width: 768px) {\n      .image-gallery-fullscreen-button:hover::before,\n      .image-gallery-play-button:hover::before {\n        transform: none; } }\n\n.image-gallery-fullscreen-button {\n  right: 0; }\n  .image-gallery-fullscreen-button::before {\n    content: \"\"; }\n  .image-gallery-fullscreen-button.active::before {\n    content: \"\"; }\n  .image-gallery-fullscreen-button.active:hover::before {\n    transform: scale(0.9); }\n\n.image-gallery-play-button {\n  left: 0; }\n  .image-gallery-play-button::before {\n    content: \"\"; }\n  .image-gallery-play-button.active::before {\n    content: \"\"; }\n\n.image-gallery-left-nav,\n.image-gallery-right-nav {\n  color: #fff;\n  font-size: 5em;\n  padding: 50px 15px;\n  top: 50%;\n  transform: translateY(-50%); }\n  .image-gallery-left-nav[disabled],\n  .image-gallery-right-nav[disabled] {\n    cursor: disabled;\n    opacity: .6;\n    pointer-events: none; }\n  @media (max-width: 768px) {\n    .image-gallery-left-nav,\n    .image-gallery-right-nav {\n      font-size: 3.4em;\n      padding: 20px 15px; } }\n  @media (max-width: 480px) {\n    .image-gallery-left-nav,\n    .image-gallery-right-nav {\n      font-size: 2.4em;\n      padding: 0 15px; } }\n\n.image-gallery-left-nav {\n  left: 0; }\n  .image-gallery-left-nav::before {\n    content: \"\"; }\n\n.image-gallery-right-nav {\n  right: 0; }\n  .image-gallery-right-nav::before {\n    content: \"\"; }\n\n.image-gallery-slides {\n  line-height: 0;\n  overflow: hidden;\n  position: relative;\n  white-space: nowrap; }\n\n.image-gallery-slide {\n  background: #fff;\n  left: 0;\n  position: absolute;\n  top: 0;\n  width: 100%; }\n  .image-gallery-slide.center {\n    position: relative; }\n  .image-gallery-slide img {\n    width: 100%; }\n  .image-gallery-slide .image-gallery-description {\n    background: rgba(0, 0, 0, 0.4);\n    bottom: 70px;\n    color: #fff;\n    left: 0;\n    line-height: 1;\n    padding: 10px 20px;\n    position: absolute;\n    white-space: normal; }\n    @media (max-width: 768px) {\n      .image-gallery-slide .image-gallery-description {\n        bottom: 45px;\n        font-size: .8em;\n        padding: 8px 15px; } }\n\n.image-gallery-bullets {\n  bottom: 20px;\n  left: 0;\n  margin: 0 auto;\n  position: absolute;\n  right: 0;\n  width: 80%;\n  z-index: 4; }\n  .image-gallery-bullets .image-gallery-bullets-container {\n    margin: 0;\n    padding: 0;\n    text-align: center; }\n  .image-gallery-bullets .image-gallery-bullet {\n    appearance: none;\n    background-color: transparent;\n    border: 1px solid #fff;\n    border-radius: 50%;\n    box-shadow: 0 1px 0 #1a1a1a;\n    cursor: pointer;\n    display: inline-block;\n    margin: 0 5px;\n    outline: none;\n    padding: 5px; }\n    @media (max-width: 768px) {\n      .image-gallery-bullets .image-gallery-bullet {\n        margin: 0 3px;\n        padding: 3px; } }\n    @media (max-width: 480px) {\n      .image-gallery-bullets .image-gallery-bullet {\n        padding: 2.7px; } }\n    .image-gallery-bullets .image-gallery-bullet.active {\n      background: #fff; }\n\n.image-gallery-thumbnails-wrapper {\n  position: relative; }\n  .image-gallery-thumbnails-wrapper.left, .image-gallery-thumbnails-wrapper.right {\n    display: inline-block;\n    vertical-align: top;\n    width: 108px; }\n    @media (max-width: 768px) {\n      .image-gallery-thumbnails-wrapper.left, .image-gallery-thumbnails-wrapper.right {\n        width: 81px; } }\n    .image-gallery-thumbnails-wrapper.left .image-gallery-thumbnails, .image-gallery-thumbnails-wrapper.right .image-gallery-thumbnails {\n      height: 100%;\n      width: 100%;\n      left: 0;\n      padding: 0;\n      position: absolute;\n      top: 0; }\n      .image-gallery-thumbnails-wrapper.left .image-gallery-thumbnails .image-gallery-thumbnail, .image-gallery-thumbnails-wrapper.right .image-gallery-thumbnails .image-gallery-thumbnail {\n        display: block;\n        margin-right: 0;\n        padding: 0; }\n        .image-gallery-thumbnails-wrapper.left .image-gallery-thumbnails .image-gallery-thumbnail + .image-gallery-thumbnail, .image-gallery-thumbnails-wrapper.right .image-gallery-thumbnails .image-gallery-thumbnail + .image-gallery-thumbnail {\n          margin-left: 0; }\n  .image-gallery-thumbnails-wrapper.left {\n    margin-right: 5px; }\n    @media (max-width: 768px) {\n      .image-gallery-thumbnails-wrapper.left {\n        margin-right: 3px; } }\n  .image-gallery-thumbnails-wrapper.right {\n    margin-left: 5px; }\n    @media (max-width: 768px) {\n      .image-gallery-thumbnails-wrapper.right {\n        margin-left: 3px; } }\n\n.image-gallery-thumbnails {\n  overflow: hidden;\n  padding: 5px 0; }\n  @media (max-width: 768px) {\n    .image-gallery-thumbnails {\n      padding: 3px 0; } }\n  .image-gallery-thumbnails .image-gallery-thumbnails-container {\n    cursor: pointer;\n    text-align: center;\n    transition: transform .45s ease-out;\n    white-space: nowrap; }\n\n.image-gallery-thumbnail {\n  display: inline-block;\n  border: 4px solid transparent;\n  transition: border .3s ease-out;\n  width: 100px; }\n  @media (max-width: 768px) {\n    .image-gallery-thumbnail {\n      border: 3px solid transparent;\n      width: 75px; } }\n  .image-gallery-thumbnail + .image-gallery-thumbnail {\n    margin-left: 2px; }\n  .image-gallery-thumbnail img {\n    vertical-align: middle;\n    width: 100%; }\n  .image-gallery-thumbnail.active {\n    border: 4px solid #337ab7; }\n    @media (max-width: 768px) {\n      .image-gallery-thumbnail.active {\n        border: 3px solid #337ab7; } }\n\n.image-gallery-thumbnail-label {\n  color: #1a1a1a;\n  font-size: 1em; }\n  @media (max-width: 768px) {\n    .image-gallery-thumbnail-label {\n      font-size: .8em; } }\n\n.image-gallery-index {\n  background: rgba(0, 0, 0, 0.4);\n  color: #fff;\n  line-height: 1;\n  padding: 10px 20px;\n  position: absolute;\n  right: 0;\n  top: 0;\n  z-index: 4; }\n  @media (max-width: 768px) {\n    .image-gallery-index {\n      font-size: .8em;\n      padding: 5px 10px; } }\n\n.ReactCrop {\n  position: relative;\n  display: inline-block;\n  cursor: crosshair;\n  overflow: hidden;\n  max-width: 100%;\n  background-color: #000; }\n  .ReactCrop:focus {\n    outline: none; }\n  .ReactCrop--disabled {\n    cursor: inherit; }\n  .ReactCrop__image {\n    display: block;\n    max-width: 100%;\n    max-height: -webkit-fill-available;\n    max-height: -moz-available;\n    max-height: stretch; }\n  .ReactCrop--crop-invisible .ReactCrop__image {\n    opacity: 0.5; }\n  .ReactCrop__crop-selection {\n    position: absolute;\n    top: 0;\n    left: 0;\n    transform: translate3d(0, 0, 0);\n    box-sizing: border-box;\n    cursor: move;\n    box-shadow: 0 0 0 9999em rgba(0, 0, 0, 0.5);\n    border: 1px solid;\n    border-image-source: url(\"data:image/gif;base64,R0lGODlhCgAKAJECAAAAAP///////wAAACH/C05FVFNDQVBFMi4wAwEAAAAh/wtYTVAgRGF0YVhNUDw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OEI5RDc5MTFDNkE2MTFFM0JCMDZEODI2QTI4MzJBOTIiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OEI5RDc5MTBDNkE2MTFFM0JCMDZEODI2QTI4MzJBOTIiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuZGlkOjAyODAxMTc0MDcyMDY4MTE4MDgzQzNDMjA5MzREQ0ZDIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjAyODAxMTc0MDcyMDY4MTE4MDgzQzNDMjA5MzREQ0ZDIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEgHx4dHBsaGRgXFhUUExIREA8ODQwLCgkIBwYFBAMCAQAAIfkEBQoAAgAsAAAAAAoACgAAAhWEERkn7W3ei7KlagMWF/dKgYeyGAUAIfkEBQoAAgAsAAAAAAoACgAAAg+UYwLJ7RnQm7QmsCyVKhUAIfkEBQoAAgAsAAAAAAoACgAAAhCUYgLJHdiinNSAVfOEKoUCACH5BAUKAAIALAAAAAAKAAoAAAIRVISAdusPo3RAzYtjaMIaUQAAIfkEBQoAAgAsAAAAAAoACgAAAg+MDiem7Q8bSLFaG5il6xQAIfkEBQoAAgAsAAAAAAoACgAAAg+UYRLJ7QnQm7SmsCyVKhUAIfkEBQoAAgAsAAAAAAoACgAAAhCUYBLJDdiinNSEVfOEKoECACH5BAUKAAIALAAAAAAKAAoAAAIRFISBdusPo3RBzYsjaMIaUQAAOw==\");\n    border-image-slice: 1;\n    border-image-repeat: repeat; }\n    .ReactCrop--disabled .ReactCrop__crop-selection {\n      cursor: inherit; }\n  .ReactCrop__drag-handle {\n    position: absolute;\n    width: 9px;\n    height: 9px;\n    background-color: rgba(0, 0, 0, 0.2);\n    border: 1px solid rgba(255, 255, 255, 0.7);\n    box-sizing: border-box;\n    outline: 1px solid transparent; }\n  .ReactCrop .ord-nw {\n    top: 0;\n    left: 0;\n    margin-top: -5px;\n    margin-left: -5px;\n    cursor: nw-resize; }\n  .ReactCrop .ord-n {\n    top: 0;\n    left: 50%;\n    margin-top: -5px;\n    margin-left: -5px;\n    cursor: n-resize; }\n  .ReactCrop .ord-ne {\n    top: 0;\n    right: 0;\n    margin-top: -5px;\n    margin-right: -5px;\n    cursor: ne-resize; }\n  .ReactCrop .ord-e {\n    top: 50%;\n    right: 0;\n    margin-top: -5px;\n    margin-right: -5px;\n    cursor: e-resize; }\n  .ReactCrop .ord-se {\n    bottom: 0;\n    right: 0;\n    margin-bottom: -5px;\n    margin-right: -5px;\n    cursor: se-resize; }\n  .ReactCrop .ord-s {\n    bottom: 0;\n    left: 50%;\n    margin-bottom: -5px;\n    margin-left: -5px;\n    cursor: s-resize; }\n  .ReactCrop .ord-sw {\n    bottom: 0;\n    left: 0;\n    margin-bottom: -5px;\n    margin-left: -5px;\n    cursor: sw-resize; }\n  .ReactCrop .ord-w {\n    top: 50%;\n    left: 0;\n    margin-top: -5px;\n    margin-left: -5px;\n    cursor: w-resize; }\n  .ReactCrop__disabled .ReactCrop__drag-handle {\n    cursor: inherit; }\n  .ReactCrop__drag-bar {\n    position: absolute; }\n    .ReactCrop__drag-bar.ord-n {\n      top: 0;\n      left: 0;\n      width: 100%;\n      height: 6px;\n      margin-top: -3px; }\n    .ReactCrop__drag-bar.ord-e {\n      right: 0;\n      top: 0;\n      width: 6px;\n      height: 100%;\n      margin-right: -3px; }\n    .ReactCrop__drag-bar.ord-s {\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      height: 6px;\n      margin-bottom: -3px; }\n    .ReactCrop__drag-bar.ord-w {\n      top: 0;\n      left: 0;\n      width: 6px;\n      height: 100%;\n      margin-left: -3px; }\n  .ReactCrop--new-crop .ReactCrop__drag-bar,\n  .ReactCrop--new-crop .ReactCrop__drag-handle,\n  .ReactCrop--fixed-aspect .ReactCrop__drag-bar {\n    display: none; }\n  .ReactCrop--fixed-aspect .ReactCrop__drag-handle.ord-n,\n  .ReactCrop--fixed-aspect .ReactCrop__drag-handle.ord-e,\n  .ReactCrop--fixed-aspect .ReactCrop__drag-handle.ord-s,\n  .ReactCrop--fixed-aspect .ReactCrop__drag-handle.ord-w {\n    display: none; }\n  @media (max-width: 768px), (pointer: coarse) {\n    .ReactCrop__drag-handle {\n      width: 17px;\n      height: 17px; }\n    .ReactCrop .ord-nw {\n      margin-top: -9px;\n      margin-left: -9px; }\n    .ReactCrop .ord-n {\n      margin-top: -9px;\n      margin-left: -9px; }\n    .ReactCrop .ord-ne {\n      margin-top: -9px;\n      margin-right: -9px; }\n    .ReactCrop .ord-e {\n      margin-top: -9px;\n      margin-right: -9px; }\n    .ReactCrop .ord-se {\n      margin-bottom: -9px;\n      margin-right: -9px; }\n    .ReactCrop .ord-s {\n      margin-bottom: -9px;\n      margin-left: -9px; }\n    .ReactCrop .ord-sw {\n      margin-bottom: -9px;\n      margin-left: -9px; }\n    .ReactCrop .ord-w {\n      margin-top: -9px;\n      margin-left: -9px; }\n    .ReactCrop__drag-bar.ord-n {\n      height: 14px;\n      margin-top: -7px; }\n    .ReactCrop__drag-bar.ord-e {\n      width: 14px;\n      margin-right: -7px; }\n    .ReactCrop__drag-bar.ord-s {\n      height: 14px;\n      margin-bottom: -7px; }\n    .ReactCrop__drag-bar.ord-w {\n      width: 14px;\n      margin-left: -7px; } }\n\nbody {\n  margin: 0 auto;\n  font-weight: 300; }\n  body ::placeholder {\n    /* Chrome, Firefox, Opera, Safari 10.1+ */\n    color: white;\n    opacity: 0.7;\n    font-size: 14px;\n    font-weight: 300 !important;\n    font-family: \"Nanum Gothic\", sans-serif;\n    /* Firefox */ }\n  body .app {\n    background: #536976;\n    /* fallback for old browsers */\n    background: -webkit-linear-gradient(to right, #292e49, #536976);\n    /* Chrome 10-25, Safari 5.1-6 */\n    background: linear-gradient(to right, #292e49, #536976);\n    height: 100vh; }\n  body .btn {\n    font-weight: 300 !important; }\n  body .btn-group-sm > .btn,\n  body .btn-sm {\n    padding: 5px 25px !important;\n    font-size: 13px !important;\n    font-weight: 300 !important;\n    color: white;\n    margin-right: 1px;\n    cursor: pointer;\n    float: left;\n    padding: 5px 13px !important;\n    border-radius: 0 !important; }\n  body a:hover {\n    text-decoration: none; }\n  body p {\n    margin: 0; }\n  body hr {\n    background-color: white; }\n  body .cTypeTabActive {\n    background: #536976 !important;\n    font-weight: 300; }\n  body .chartTypeTabLinks {\n    background: transparent;\n    font-weight: 300 !important; }\n  body text {\n    fill: white; }\n  body .ccc-widget > div {\n    background-color: transparent !important;\n    color: white !important;\n    border: 0 !important;\n    border-top: 0 !important;\n    font-weight: 300 !important;\n    padding: 10px !important; }\n  body .cccCustomRadioContainer > label {\n    color: white !important; }\n  body .tabperiods {\n    background: transparent !important;\n    font-weight: 300 !important; }\n  body .active {\n    border-color: #5cb85c !important; }\n  body .tabperiods_active {\n    font-weight: 900 !important;\n    color: #5cb85c !important; }\n  body .chartTypeTabLinks:hover {\n    background: #536976; }\n  body .modal-content {\n    font-weight: 300 !important;\n    border-radius: 0px !important;\n    background: #536976;\n    margin: 0 !important;\n    color: white;\n    padding: 0 !important;\n    /* fallback for old browsers */\n    background: -webkit-linear-gradient(to bottom, #292e49, #536976);\n    /* Chrome 10-25, Safari 5.1-6 */\n    background: linear-gradient(to bottom, #292e49, #536976);\n    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  body .modal-backdrop.show {\n    opacity: 0.1 !important; }\n  body .dropdown-menu {\n    position: absolute;\n    top: 100%;\n    left: 0;\n    z-index: 1000;\n    display: none;\n    float: left;\n    min-width: 10rem;\n    padding: 0.5rem 0;\n    margin: 0.125rem 0 0;\n    font-size: 1rem;\n    color: white !important;\n    text-align: left;\n    list-style: none;\n    background-color: #292e49 !important;\n    background-clip: padding-box;\n    border: 1px solid rgba(0, 0, 0, 0.15);\n    border-radius: 0px !important; }\n  body .dropdown-item {\n    display: block;\n    width: 100%;\n    cursor: pointer;\n    padding: 0.25rem 1.5rem;\n    clear: both;\n    font-weight: 400;\n    color: white !important;\n    text-align: inherit;\n    white-space: nowrap;\n    background-color: transparent;\n    border: 0; }\n    body .dropdown-item:hover {\n      background-color: transparent !important; }\n  body .chartTypeTabLinks {\n    font-size: 13px !important;\n    color: white;\n    margin-right: 1px;\n    font-weight: 600;\n    cursor: pointer;\n    float: left;\n    padding: 5px 25px;\n    background: transparent; }\n  body .image-gallery-left-nav,\n  body .image-gallery-right-nav {\n    color: #fff;\n    font-size: 2em;\n    padding: 50px 15px;\n    top: 50%;\n    transform: translateY(-50%); }\n    body .image-gallery-left-nav:focus,\n    body .image-gallery-right-nav:focus {\n      outline-style: none; }\n  body .image-gallery-fullscreen-button::before,\n  body .image-gallery-play-button::before {\n    font-size: 2em !important;\n    padding: 15px 20px;\n    text-shadow: 0 1px 1px #1a1a1a; }\n  body .image-gallery-fullscreen-button::after:focus,\n  body .image-gallery-play-button::after:focus {\n    outline: none !important; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n\n\n.homePage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .homePage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .homePage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .homePage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        border-bottom: 1px white solid; }\n        .homePage__content__news__search__first {\n          padding: 10px;\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid; }\n          .homePage__content__news__search__first__item {\n            font-size: 13px !important;\n            font-weight: 300 !important;\n            color: white;\n            margin-right: 1px;\n            font-weight: 600;\n            cursor: pointer;\n            float: left;\n            padding: 5px 25px;\n            background: transparent; }\n            .homePage__content__news__search__first__item:hover {\n              transition: 0.3s;\n              -webkit-transition: 0.3s;\n              -moz-transition: 0.3s;\n              -o-transition: 0.3s;\n              background-color: #536976; }\n            .homePage__content__news__search__first__item-active {\n              background-color: #536976; }\n        .homePage__content__news__search__second {\n          padding: 10px; }\n          .homePage__content__news__search__second__content {\n            display: flex;\n            flex-direction: row;\n            justify-content: space-between; }\n      .homePage__content__news__lists {\n        height: calc(100vh - 100px);\n        margin-top: 100px;\n        overflow-y: scroll; }\n        .homePage__content__news__lists-loading {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          height: 55vh;\n          color: white;\n          font-size: 1rem;\n          height: calc(100vh - 100px);\n          margin-top: 100px; }\n        .homePage__content__news__lists-none {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          height: 55vh;\n          color: white;\n          font-size: 1rem; }\n        .homePage__content__news__lists__footer {\n          height: 12vh;\n          display: flex;\n          align-items: center;\n          justify-content: center; }\n    .homePage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px; }\n      .homePage__content__chart__coin {\n        display: flex;\n        justify-content: center;\n        padding: 15px;\n        font-size: 13px;\n        top: 0;\n        color: #f4e7d7;\n        border-bottom: 1px solid white;\n        position: fixed;\n        right: 100px;\n        z-index: 500;\n        width: calc(50vw - 100px); }\n      .homePage__content__chart__wrapper {\n        height: calc(100vh - 50px);\n        background: transparent;\n        overflow-y: scroll;\n        padding-left: 1rem;\n        padding-right: 1rem;\n        margin-top: 50px; }\n        .homePage__content__chart__wrapper > div {\n          background-color: transparent !important; }\n      .homePage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        flex-direction: column;\n        justify-content: center;\n        height: 100vh; }\n      .homePage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .homePage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .homePage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n        .homePage__content__chart__intro__welcome {\n          margin-top: 6%; }\n        .homePage__content__chart__intro__desc {\n          margin-top: 6%; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.authPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .authPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .authPage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .authPage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        padding-top: 1.5rem;\n        height: 145px;\n        border-bottom: 1px white solid; }\n        .authPage__content__news__search__first {\n          display: flex;\n          flex-direction: row; }\n          .authPage__content__news__search__first__iconArea {\n            padding-left: 1rem;\n            display: flex;\n            justify-content: center;\n            margin-right: 1rem;\n            align-items: center; }\n            .authPage__content__news__search__first__iconArea__icon {\n              color: white;\n              font-size: 1.5rem; }\n          .authPage__content__news__search__first__inputArea {\n            display: flex;\n            align-items: center; }\n            .authPage__content__news__search__first__inputArea__input {\n              background-color: transparent;\n              outline-width: 0 !important;\n              color: white;\n              border: 0;\n              width: 35vw; }\n        .authPage__content__news__search__second__content {\n          padding-left: 1rem; }\n      .authPage__content__news__lists {\n        height: calc(100vh - 145px);\n        margin-top: 145px;\n        overflow-y: scroll; }\n    .authPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .authPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .authPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .authPage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .authPage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n        .authPage__content__chart__intro__welcome {\n          margin-top: 6%; }\n        .authPage__content__chart__intro__login {\n          margin-top: 15%;\n          width: 100%;\n          display: flex;\n          flex-direction: column;\n          align-items: center; }\n        .authPage__content__chart__intro__signUp {\n          margin-top: 5%;\n          width: 100%;\n          display: flex;\n          flex-direction: column;\n          align-items: center; }\n          .authPage__content__chart__intro__signUp__link {\n            cursor: pointer; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.signUpPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .signUpPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .signUpPage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .signUpPage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        padding-top: 1.5rem;\n        height: 145px;\n        border-bottom: 1px white solid; }\n        .signUpPage__content__news__search__first {\n          display: flex;\n          flex-direction: row; }\n          .signUpPage__content__news__search__first__iconArea {\n            padding-left: 1rem;\n            display: flex;\n            justify-content: center;\n            margin-right: 1rem;\n            align-items: center; }\n            .signUpPage__content__news__search__first__iconArea__icon {\n              color: white;\n              font-size: 1.5rem; }\n          .signUpPage__content__news__search__first__inputArea {\n            display: flex;\n            align-items: center; }\n            .signUpPage__content__news__search__first__inputArea__input {\n              background-color: transparent;\n              outline-width: 0 !important;\n              color: white;\n              border: 0;\n              width: 35vw; }\n        .signUpPage__content__news__search__second__content {\n          padding-left: 1rem; }\n      .signUpPage__content__news__lists {\n        height: calc(100vh - 145px);\n        margin-top: 145px;\n        overflow-y: scroll; }\n    .signUpPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .signUpPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .signUpPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .signUpPage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .signUpPage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n        .signUpPage__content__chart__intro__welcome {\n          margin-top: 6%; }\n        .signUpPage__content__chart__intro__login {\n          margin-top: 15%;\n          width: 100%;\n          display: flex;\n          flex-direction: column;\n          align-items: center; }\n        .signUpPage__content__chart__intro__signUp {\n          margin-top: 5%;\n          width: 100%;\n          display: flex;\n          flex-direction: column;\n          align-items: center; }\n          .signUpPage__content__chart__intro__signUp__link {\n            cursor: pointer; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.forumPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .forumPage__modal {\n    height: 90vh;\n    padding-left: 50px;\n    padding-right: 50px;\n    display: flex;\n    flex-direction: column; }\n    .forumPage__modal__favorite {\n      width: 100%;\n      padding-left: 1rem;\n      padding-right: 1rem;\n      display: flex;\n      flex-direction: row;\n      flex-wrap: wrap;\n      justify-content: center; }\n      .forumPage__modal__favorite__text {\n        margin-top: 2rem;\n        margin-bottom: 1rem;\n        text-align: center;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        align-items: center; }\n      .forumPage__modal__favorite__icon {\n        color: white;\n        font-size: 1.5rem;\n        margin-right: 5px;\n        vertical-align: center; }\n      .forumPage__modal__favorite__item {\n        border: 1px rgba(255, 255, 255, 0.2) solid;\n        padding-left: 10px;\n        padding-right: 10px;\n        padding-top: 5px;\n        padding-bottom: 5px;\n        margin-right: 5px;\n        margin-bottom: 5px;\n        cursor: pointer; }\n        .forumPage__modal__favorite__item:hover {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          border: 1px white solid; }\n        .forumPage__modal__favorite__item-active {\n          border: 1px #5cb85c solid; }\n          .forumPage__modal__favorite__item-active:hover {\n            transition: 0.3s;\n            -webkit-transition: 0.3s;\n            -moz-transition: 0.3s;\n            -o-transition: 0.3s;\n            border: 1px #5cb85c solid; }\n  .forumPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .forumPage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .forumPage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        border-bottom: 1px white solid; }\n        .forumPage__content__news__search__first {\n          display: flex;\n          flex-direction: row;\n          justify-content: space-between;\n          padding: 10px;\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid; }\n          .forumPage__content__news__search__first__container {\n            display: flex;\n            flex-direction: row; }\n          .forumPage__content__news__search__first__iconArea {\n            padding-left: 5px;\n            display: flex;\n            justify-content: center;\n            margin-right: 1rem;\n            align-items: center; }\n            .forumPage__content__news__search__first__iconArea__icon {\n              color: white;\n              font-size: 1.5rem; }\n          .forumPage__content__news__search__first__inputArea {\n            display: flex;\n            align-items: center; }\n            .forumPage__content__news__search__first__inputArea__input {\n              background-color: transparent;\n              outline-width: 0 !important;\n              color: white;\n              border: 0;\n              width: 23vw; }\n        .forumPage__content__news__search__second {\n          padding: 10px; }\n          .forumPage__content__news__search__second__content {\n            display: flex;\n            flex-direction: row;\n            justify-content: space-between; }\n      .forumPage__content__news__lists {\n        height: calc(100vh - 110px);\n        margin-top: 110px;\n        overflow-y: scroll; }\n        .forumPage__content__news__lists-loading {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          height: 55vh;\n          color: white;\n          font-size: 1rem;\n          height: calc(100vh - 100px);\n          margin-top: 100px; }\n        .forumPage__content__news__lists__footer {\n          height: 12vh;\n          display: flex;\n          align-items: center;\n          justify-content: center; }\n    .forumPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .forumPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .forumPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .forumPage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .forumPage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n        .forumPage__content__chart__intro__welcome {\n          margin-top: 6%; }\n        .forumPage__content__chart__intro__desc {\n          margin-top: 6%; }\n        .forumPage__content__chart__intro__post {\n          height: 90vh; }\n          .forumPage__content__chart__intro__post__header {\n            border-bottom: 1px rgba(255, 255, 255, 0.2) solid;\n            display: flex;\n            height: 10vh;\n            flex-direction: row;\n            align-items: center;\n            justify-content: space-between;\n            padding-bottom: 1rem; }\n            .forumPage__content__chart__intro__post__header__userInfo {\n              display: flex;\n              width: 15vw;\n              flex-direction: row;\n              align-items: center; }\n              .forumPage__content__chart__intro__post__header__userInfo__thumb {\n                flex: 1; }\n              .forumPage__content__chart__intro__post__header__userInfo__name {\n                flex: 3;\n                margin-left: 10px;\n                display: flex;\n                flex-direction: column;\n                align-items: flex-start;\n                justify-content: center; }\n              .forumPage__content__chart__intro__post__header__userInfo__point {\n                font-size: 13px; }\n            .forumPage__content__chart__intro__post__header__detail {\n              display: flex;\n              flex-direction: column;\n              justify-content: flex-end;\n              align-items: flex-end; }\n          .forumPage__content__chart__intro__post__title {\n            margin-top: 1rem;\n            padding-bottom: 1rem;\n            border-bottom: rgba(255, 255, 255, 0.2) 1px solid;\n            font-weight: 400; }\n          .forumPage__content__chart__intro__post__body {\n            margin-top: 1rem;\n            padding-bottom: 1rem;\n            border-bottom: rgba(255, 255, 255, 0.2) 1px solid;\n            font-weight: 300; }\n          .forumPage__content__chart__intro__post__footer {\n            display: flex;\n            flex-direction: row;\n            justify-content: center;\n            padding-top: 1rem;\n            padding-bottom: 1rem; }\n            .forumPage__content__chart__intro__post__footer__icon {\n              display: inline-flex;\n              font-size: 1.5rem;\n              margin-right: 1rem; }\n        .forumPage__content__chart__intro__signUp {\n          margin-top: 5%;\n          width: 100%;\n          display: flex;\n          flex-direction: column;\n          align-items: center; }\n          .forumPage__content__chart__intro__signUp__link {\n            cursor: pointer; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.postPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .postPage__modal {\n    height: 60vh;\n    display: flex;\n    align-items: center;\n    justify-content: center; }\n    .postPage__modal__content {\n      margin-left: 1rem;\n      margin-right: 1rem;\n      display: flex;\n      flex-direction: column;\n      justify-content: center;\n      align-items: center; }\n      .postPage__modal__content__area {\n        display: flex;\n        flex-direction: row; }\n        .postPage__modal__content__area__number {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          padding-left: 1.5rem;\n          padding-right: 1.5rem;\n          flex-direction: column;\n          font-weight: 500; }\n          .postPage__modal__content__area__number-border {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            padding-left: 1.5rem;\n            padding-right: 1.5rem;\n            flex-direction: column;\n            font-weight: 500;\n            border-right: 1px rgba(255, 255, 255, 0.2) solid; }\n        .postPage__modal__content__area__text {\n          font-weight: 300 !important; }\n      .postPage__modal__content__coins {\n        margin-top: 2rem;\n        display: flex;\n        flex-wrap: wrap;\n        flex-direction: row;\n        font-size: 13px;\n        width: 80%;\n        justify-content: center;\n        flex-wrap: wrap;\n        margin-bottom: 5px;\n        color: #f4e7d7; }\n        .postPage__modal__content__coins__coin {\n          border: 1px #f4e7d7 solid;\n          padding-left: 5px;\n          padding-right: 5px;\n          margin-right: 5px; }\n      .postPage__modal__content__username {\n        margin-top: 1.5rem;\n        margin-bottom: 1.5rem;\n        font-size: 1.5rem; }\n  .postPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .postPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .postPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .postPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .postPage__content__chart__intro__loading {\n          padding: 2rem 2rem 2rem 2rem;\n          display: flex;\n          width: 100%;\n          height: 90vh;\n          justify-content: center;\n          align-items: center; }\n        .postPage__content__chart__intro__post__header {\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid;\n          display: flex;\n          height: 10vh;\n          flex-direction: row;\n          align-items: center;\n          justify-content: space-between;\n          padding-bottom: 1rem; }\n          .postPage__content__chart__intro__post__header__userInfo {\n            display: flex;\n            width: 15vw;\n            flex-direction: row;\n            align-items: center; }\n            .postPage__content__chart__intro__post__header__userInfo__thumb {\n              flex: 1; }\n            .postPage__content__chart__intro__post__header__userInfo__name {\n              flex: 3;\n              margin-left: 10px;\n              display: flex;\n              flex-direction: column;\n              align-items: flex-start;\n              justify-content: center; }\n            .postPage__content__chart__intro__post__header__userInfo__point {\n              font-size: 13px; }\n            .postPage__content__chart__intro__post__header__userInfo__date {\n              font-size: 13px;\n              color: rgba(255, 255, 255, 0.5); }\n          .postPage__content__chart__intro__post__header__detail {\n            display: flex;\n            flex-direction: column;\n            justify-content: flex-end;\n            align-items: flex-end; }\n        .postPage__content__chart__intro__post__title {\n          margin-top: 1rem;\n          padding-left: 10px;\n          padding-right: 10px;\n          font-size: 18px;\n          padding-bottom: 1rem;\n          border-bottom: rgba(255, 255, 255, 0.2) 1px solid;\n          font-weight: 400; }\n        .postPage__content__chart__intro__post__body {\n          margin-top: 1rem;\n          padding-left: 10px;\n          padding-right: 10px;\n          padding-bottom: 1rem;\n          font-weight: 300; }\n        .postPage__content__chart__intro__post__coin {\n          margin-top: 1rem;\n          display: flex;\n          flex-direction: row;\n          justify-content: flex-end;\n          font-size: 13px;\n          width: 100%;\n          flex-wrap: wrap;\n          margin-bottom: 5px;\n          color: #f4e7d7; }\n          .postPage__content__chart__intro__post__coin__item {\n            border: 1px #f4e7d7 solid;\n            padding-left: 5px;\n            padding-right: 5px;\n            margin-right: 5px; }\n        .postPage__content__chart__intro__post__footer {\n          display: flex;\n          flex-direction: row;\n          justify-content: center;\n          align-items: center;\n          padding-top: 1rem;\n          padding-bottom: 1rem;\n          cursor: pointer;\n          color: #a0c1b8; }\n          .postPage__content__chart__intro__post__footer__count {\n            font-size: 1rem;\n            margin-right: 7px; }\n            .postPage__content__chart__intro__post__footer__count-liked {\n              color: #5cb85c !important; }\n            .postPage__content__chart__intro__post__footer__count-hated {\n              color: #f26968 !important; }\n          .postPage__content__chart__intro__post__footer__icon {\n            display: inline-flex;\n            font-size: 1.5rem;\n            margin-right: 1rem; }\n        .postPage__content__chart__intro__comments {\n          margin-top: 10%; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.userPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .userPage__modal {\n    height: 90vh;\n    padding-left: 50px;\n    padding-right: 50px;\n    display: flex;\n    flex-direction: column; }\n    .userPage__modal__favorite {\n      width: 100%;\n      padding-left: 1rem;\n      padding-right: 1rem;\n      display: flex;\n      flex-direction: row;\n      flex-wrap: wrap;\n      justify-content: center; }\n      .userPage__modal__favorite__text {\n        margin-top: 2rem;\n        margin-bottom: 1rem;\n        text-align: center;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        align-items: center; }\n      .userPage__modal__favorite__icon {\n        color: white;\n        font-size: 1.5rem;\n        margin-right: 5px;\n        vertical-align: center; }\n      .userPage__modal__favorite__item {\n        border: 1px rgba(255, 255, 255, 0.2) solid;\n        padding-left: 10px;\n        padding-right: 10px;\n        padding-top: 5px;\n        padding-bottom: 5px;\n        margin-right: 5px;\n        margin-bottom: 5px;\n        cursor: pointer; }\n        .userPage__modal__favorite__item:hover {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          border: 1px white solid; }\n        .userPage__modal__favorite__item-active {\n          border: 1px #5cb85c solid; }\n          .userPage__modal__favorite__item-active:hover {\n            transition: 0.3s;\n            -webkit-transition: 0.3s;\n            -moz-transition: 0.3s;\n            -o-transition: 0.3s;\n            border: 1px #5cb85c solid; }\n  .userPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .userPage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .userPage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        border-bottom: 1px white solid; }\n        .userPage__content__news__search__first {\n          display: flex;\n          flex-direction: row;\n          padding: 10px;\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid; }\n          .userPage__content__news__search__first__iconArea {\n            padding-left: 5px;\n            display: flex;\n            justify-content: center;\n            margin-right: 1rem;\n            align-items: center; }\n            .userPage__content__news__search__first__iconArea__icon {\n              color: white;\n              font-size: 1.5rem; }\n          .userPage__content__news__search__first__inputArea {\n            display: flex;\n            align-items: center; }\n            .userPage__content__news__search__first__inputArea__input {\n              background-color: transparent;\n              outline-width: 0 !important;\n              color: white;\n              border: 0;\n              width: 35vw; }\n        .userPage__content__news__search__second {\n          padding: 10px; }\n          .userPage__content__news__search__second__content {\n            display: flex;\n            flex-direction: row;\n            justify-content: space-between; }\n      .userPage__content__news__lists {\n        height: calc(100vh - 110px);\n        margin-top: 110px;\n        overflow-y: scroll; }\n        .userPage__content__news__lists-loading {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          height: 55vh;\n          color: white;\n          font-size: 1rem;\n          height: calc(100vh - 100px);\n          margin-top: 100px; }\n        .userPage__content__news__lists__footer {\n          height: 12vh;\n          display: flex;\n          align-items: center;\n          justify-content: center; }\n    .userPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .userPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .userPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column;\n        align-items: center;\n        height: 100%;\n        justify-content: center; }\n        .userPage__content__chart__intro__content {\n          margin-left: 1rem;\n          margin-right: 1rem;\n          display: flex;\n          flex-direction: column;\n          justify-content: center;\n          align-items: center; }\n          .userPage__content__chart__intro__content__area {\n            display: flex;\n            flex-direction: row; }\n            .userPage__content__chart__intro__content__area__number {\n              display: flex;\n              justify-content: center;\n              align-items: center;\n              padding-left: 1.5rem;\n              padding-right: 1.5rem;\n              flex-direction: column;\n              font-weight: 500; }\n              .userPage__content__chart__intro__content__area__number-border {\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                padding-left: 1.5rem;\n                padding-right: 1.5rem;\n                flex-direction: column;\n                font-weight: 500;\n                border-right: 1px rgba(255, 255, 255, 0.2) solid; }\n            .userPage__content__chart__intro__content__area__text {\n              font-weight: 300 !important; }\n          .userPage__content__chart__intro__content__username {\n            margin-top: 1rem;\n            margin-bottom: 1rem;\n            font-size: 2rem; }\n          .userPage__content__chart__intro__content__coins {\n            margin-top: 1.5rem;\n            margin-bottom: 1.5rem;\n            width: 100%;\n            flex-wrap: wrap;\n            display: flex;\n            flex-direction: row;\n            justify-content: center;\n            font-size: 13px;\n            color: #f4e7d7; }\n            .userPage__content__chart__intro__content__coins__coin {\n              border: 1px #f4e7d7 solid;\n              padding-left: 5px;\n              padding-right: 5px;\n              margin-right: 5px;\n              margin-bottom: 5px; }\n        .userPage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .userPage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.myPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .myPage__modal {\n    height: 90vh;\n    padding-left: 50px;\n    padding-right: 50px;\n    display: flex;\n    flex-direction: column; }\n    .myPage__modal__favorite {\n      width: 100%;\n      padding-left: 1rem;\n      padding-right: 1rem;\n      display: flex;\n      flex-direction: row;\n      flex-wrap: wrap;\n      justify-content: center; }\n      .myPage__modal__favorite__text {\n        margin-top: 2rem;\n        margin-bottom: 1rem;\n        text-align: center;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        align-items: center; }\n      .myPage__modal__favorite__icon {\n        color: white;\n        font-size: 1.5rem;\n        margin-right: 5px;\n        vertical-align: center; }\n      .myPage__modal__favorite__item {\n        border: 1px rgba(255, 255, 255, 0.2) solid;\n        padding-left: 10px;\n        padding-right: 10px;\n        padding-top: 5px;\n        padding-bottom: 5px;\n        margin-right: 5px;\n        margin-bottom: 5px;\n        cursor: pointer; }\n        .myPage__modal__favorite__item:hover {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          border: 1px white solid; }\n        .myPage__modal__favorite__item-active {\n          border: 1px #5cb85c solid; }\n          .myPage__modal__favorite__item-active:hover {\n            transition: 0.3s;\n            -webkit-transition: 0.3s;\n            -moz-transition: 0.3s;\n            -o-transition: 0.3s;\n            border: 1px #5cb85c solid; }\n  .myPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .myPage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .myPage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        border-bottom: 1px white solid; }\n        .myPage__content__news__search__first {\n          display: flex;\n          flex-direction: row;\n          padding: 10px;\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid; }\n          .myPage__content__news__search__first__iconArea {\n            padding-left: 5px;\n            display: flex;\n            justify-content: center;\n            margin-right: 1rem;\n            align-items: center; }\n            .myPage__content__news__search__first__iconArea__icon {\n              color: white;\n              font-size: 1.5rem; }\n          .myPage__content__news__search__first__inputArea {\n            display: flex;\n            align-items: center; }\n            .myPage__content__news__search__first__inputArea__input {\n              background-color: transparent;\n              outline-width: 0 !important;\n              color: white;\n              border: 0;\n              width: 35vw; }\n        .myPage__content__news__search__second {\n          padding: 10px; }\n          .myPage__content__news__search__second__content {\n            display: flex;\n            flex-direction: row;\n            justify-content: space-between; }\n      .myPage__content__news__lists {\n        height: calc(100vh - 110px);\n        margin-top: 110px;\n        overflow-y: scroll; }\n        .myPage__content__news__lists-loading {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          height: 55vh;\n          color: white;\n          font-size: 1rem;\n          height: calc(100vh - 100px);\n          margin-top: 100px; }\n        .myPage__content__news__lists__footer {\n          height: 12vh;\n          display: flex;\n          align-items: center;\n          justify-content: center; }\n    .myPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .myPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .myPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column;\n        align-items: center;\n        height: 100%;\n        justify-content: center; }\n        .myPage__content__chart__intro__content {\n          margin-left: 1rem;\n          margin-right: 1rem;\n          display: flex;\n          flex-direction: column;\n          justify-content: center;\n          align-items: center; }\n          .myPage__content__chart__intro__content__area {\n            display: flex;\n            flex-direction: row; }\n            .myPage__content__chart__intro__content__area__number {\n              display: flex;\n              justify-content: center;\n              align-items: center;\n              padding-left: 1.5rem;\n              padding-right: 1.5rem;\n              flex-direction: column;\n              font-weight: 500; }\n              .myPage__content__chart__intro__content__area__number-border {\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                padding-left: 1.5rem;\n                padding-right: 1.5rem;\n                flex-direction: column;\n                font-weight: 500;\n                border-right: 1px rgba(255, 255, 255, 0.2) solid; }\n            .myPage__content__chart__intro__content__area__text {\n              font-weight: 300 !important; }\n          .myPage__content__chart__intro__content__username {\n            margin-top: 1rem;\n            margin-bottom: 1rem;\n            font-size: 2rem; }\n          .myPage__content__chart__intro__content__coins {\n            margin-top: 1.5rem;\n            margin-bottom: 1.5rem;\n            width: 100%;\n            flex-wrap: wrap;\n            display: flex;\n            flex-direction: row;\n            justify-content: center;\n            font-size: 13px;\n            color: #f4e7d7; }\n            .myPage__content__chart__intro__content__coins__coin {\n              border: 1px #f4e7d7 solid;\n              padding-left: 5px;\n              padding-right: 5px;\n              margin-right: 5px;\n              margin-bottom: 5px; }\n        .myPage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .myPage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.postPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .postPage__modal {\n    height: 60vh;\n    display: flex;\n    align-items: center;\n    justify-content: center; }\n    .postPage__modal__content {\n      margin-left: 1rem;\n      margin-right: 1rem;\n      display: flex;\n      flex-direction: column;\n      justify-content: center;\n      align-items: center; }\n      .postPage__modal__content__coins {\n        margin-top: 2rem;\n        display: flex;\n        flex-wrap: wrap;\n        flex-direction: row;\n        font-size: 13px;\n        width: 80%;\n        justify-content: center;\n        flex-wrap: wrap;\n        color: #f4e7d7; }\n        .postPage__modal__content__coins__coin {\n          border: 1px #f4e7d7 solid;\n          padding-left: 5px;\n          padding-right: 5px;\n          margin-right: 5px;\n          margin-bottom: 5px; }\n      .postPage__modal__content__area {\n        display: flex;\n        flex-direction: row; }\n        .postPage__modal__content__area__number {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          padding-left: 1.5rem;\n          padding-right: 1.5rem;\n          flex-direction: column;\n          font-weight: 500; }\n          .postPage__modal__content__area__number-border {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            padding-left: 1.5rem;\n            padding-right: 1.5rem;\n            flex-direction: column;\n            font-weight: 500;\n            border-right: 1px rgba(255, 255, 255, 0.2) solid; }\n        .postPage__modal__content__area__text {\n          font-weight: 300 !important; }\n      .postPage__modal__content__username {\n        margin-top: 1rem;\n        margin-bottom: 1rem;\n        font-size: 2rem; }\n  .postPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .postPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .postPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .postPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .postPage__content__chart__intro__loading {\n          padding: 2rem 2rem 2rem 2rem;\n          display: flex;\n          width: 100%;\n          height: 90vh;\n          justify-content: center;\n          align-items: center; }\n        .postPage__content__chart__intro__post__header {\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid;\n          display: flex;\n          height: 10vh;\n          flex-direction: row;\n          align-items: center;\n          justify-content: space-between;\n          padding-bottom: 1rem; }\n          .postPage__content__chart__intro__post__header__userInfo {\n            display: flex;\n            width: 15vw;\n            flex-direction: row;\n            align-items: center; }\n            .postPage__content__chart__intro__post__header__userInfo__thumb {\n              flex: 1; }\n            .postPage__content__chart__intro__post__header__userInfo__name {\n              flex: 3;\n              margin-left: 10px;\n              display: flex;\n              flex-direction: column;\n              align-items: flex-start;\n              justify-content: center; }\n            .postPage__content__chart__intro__post__header__userInfo__point {\n              font-size: 13px; }\n            .postPage__content__chart__intro__post__header__userInfo__date {\n              font-size: 13px;\n              color: rgba(255, 255, 255, 0.5); }\n          .postPage__content__chart__intro__post__header__detail {\n            display: flex;\n            flex-direction: column;\n            justify-content: flex-end;\n            align-items: flex-end; }\n        .postPage__content__chart__intro__post__title {\n          margin-top: 1rem;\n          padding-left: 10px;\n          padding-right: 10px;\n          font-size: 18px;\n          padding-bottom: 1rem;\n          border-bottom: rgba(255, 255, 255, 0.2) 1px solid;\n          font-weight: 400; }\n        .postPage__content__chart__intro__post__body {\n          margin-top: 1rem;\n          padding-left: 10px;\n          padding-right: 10px;\n          padding-bottom: 1rem;\n          font-weight: 300; }\n        .postPage__content__chart__intro__post__coin {\n          margin-top: 1rem;\n          display: flex;\n          flex-direction: row;\n          justify-content: flex-end;\n          font-size: 13px;\n          color: #f4e7d7; }\n          .postPage__content__chart__intro__post__coin__item {\n            border: 1px #f4e7d7 solid;\n            padding-left: 5px;\n            margin-bottom: 5px;\n            padding-right: 5px;\n            margin-right: 5px; }\n        .postPage__content__chart__intro__post__footer {\n          display: flex;\n          flex-direction: row;\n          justify-content: center;\n          align-items: center;\n          padding-top: 1rem;\n          padding-bottom: 1rem;\n          color: #a0c1b8; }\n          .postPage__content__chart__intro__post__footer__count {\n            font-size: 1rem;\n            margin-right: 7px; }\n          .postPage__content__chart__intro__post__footer__icon {\n            display: inline-flex;\n            font-size: 1.5rem;\n            margin-right: 1rem; }\n        .postPage__content__chart__intro__comments {\n          margin-top: 10%; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.settingsPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .settingsPage__modal {\n    height: 90vh;\n    padding-left: 50px;\n    padding-right: 50px;\n    display: flex;\n    flex-direction: column; }\n    .settingsPage__modal__favorite {\n      width: 100%;\n      padding-left: 1rem;\n      padding-right: 1rem;\n      display: flex;\n      flex-direction: row;\n      flex-wrap: wrap;\n      justify-content: center; }\n      .settingsPage__modal__favorite__text {\n        margin-top: 2rem;\n        margin-bottom: 1rem;\n        text-align: center;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        align-items: center; }\n      .settingsPage__modal__favorite__icon {\n        color: white;\n        font-size: 1.5rem;\n        margin-right: 5px;\n        vertical-align: center; }\n      .settingsPage__modal__favorite__item {\n        border: 1px rgba(255, 255, 255, 0.2) solid;\n        padding-left: 10px;\n        padding-right: 10px;\n        padding-top: 5px;\n        padding-bottom: 5px;\n        margin-right: 5px;\n        margin-bottom: 5px;\n        cursor: pointer; }\n        .settingsPage__modal__favorite__item:hover {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          border: 1px white solid; }\n        .settingsPage__modal__favorite__item-active {\n          border: 1px #5cb85c solid; }\n          .settingsPage__modal__favorite__item-active:hover {\n            transition: 0.3s;\n            -webkit-transition: 0.3s;\n            -moz-transition: 0.3s;\n            -o-transition: 0.3s;\n            border: 1px #5cb85c solid; }\n  .settingsPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .settingsPage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .settingsPage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        border-bottom: 1px white solid; }\n        .settingsPage__content__news__search__first {\n          display: flex;\n          flex-direction: row;\n          padding: 10px;\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid; }\n          .settingsPage__content__news__search__first__iconArea {\n            padding-left: 5px;\n            display: flex;\n            justify-content: center;\n            margin-right: 1rem;\n            align-items: center; }\n            .settingsPage__content__news__search__first__iconArea__icon {\n              color: white;\n              font-size: 1.5rem; }\n          .settingsPage__content__news__search__first__inputArea {\n            display: flex;\n            color: white;\n            align-items: center; }\n        .settingsPage__content__news__search__second {\n          padding: 10px; }\n          .settingsPage__content__news__search__second__content {\n            display: flex;\n            flex-direction: row;\n            justify-content: space-between; }\n      .settingsPage__content__news__lists {\n        height: calc(100vh - 70px);\n        margin-top: 70px;\n        overflow-y: scroll;\n        padding: 1rem; }\n        .settingsPage__content__news__lists__content {\n          display: flex;\n          flex-direction: column;\n          align-items: center;\n          color: white; }\n        .settingsPage__content__news__lists__footer {\n          height: 12vh;\n          display: flex;\n          align-items: center;\n          justify-content: center; }\n    .settingsPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .settingsPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .settingsPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column;\n        align-items: center;\n        height: 100%;\n        justify-content: center; }\n        .settingsPage__content__chart__intro__content {\n          margin-left: 1rem;\n          margin-right: 1rem;\n          display: flex;\n          flex-direction: column;\n          justify-content: center;\n          align-items: center; }\n          .settingsPage__content__chart__intro__content__area {\n            display: flex;\n            flex-direction: row; }\n            .settingsPage__content__chart__intro__content__area__number {\n              display: flex;\n              justify-content: center;\n              align-items: center;\n              padding-left: 1.5rem;\n              padding-right: 1.5rem;\n              flex-direction: column;\n              font-weight: 500; }\n              .settingsPage__content__chart__intro__content__area__number-border {\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                padding-left: 1.5rem;\n                padding-right: 1.5rem;\n                flex-direction: column;\n                font-weight: 500;\n                border-right: 1px rgba(255, 255, 255, 0.2) solid; }\n            .settingsPage__content__chart__intro__content__area__text {\n              font-weight: 300 !important; }\n          .settingsPage__content__chart__intro__content__username {\n            margin-top: 1rem;\n            margin-bottom: 1rem;\n            font-size: 2rem; }\n          .settingsPage__content__chart__intro__content__coins {\n            margin-top: 1.5rem;\n            margin-bottom: 1.5rem;\n            width: 100%;\n            flex-wrap: wrap;\n            display: flex;\n            flex-direction: row;\n            justify-content: center;\n            font-size: 13px;\n            color: #f4e7d7; }\n            .settingsPage__content__chart__intro__content__coins__coin {\n              border: 1px #f4e7d7 solid;\n              padding-left: 5px;\n              padding-right: 5px;\n              margin-right: 5px;\n              margin-bottom: 5px; }\n        .settingsPage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .settingsPage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.navBar {\n  background: transparent;\n  width: 100px;\n  height: 100vh;\n  position: fixed;\n  left: 0;\n  color: white;\n  border-right: 1px rgba(255, 255, 255, 0.1) solid; }\n  .navBar__signOut {\n    height: 40vh;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    flex-direction: column; }\n    .navBar__signOut__text {\n      margin-bottom: 10%; }\n  .navBar__content {\n    display: flex;\n    flex-direction: column;\n    align-items: center; }\n    .navBar__content__brand {\n      width: 100%;\n      display: flex;\n      align-items: center;\n      justify-content: center;\n      cursor: pointer;\n      font-family: \"Biryani\", sans-serif;\n      flex-direction: column;\n      height: 145px;\n      padding-right: 10px;\n      padding-left: 10px; }\n      .navBar__content__brand__logo {\n        width: 50px;\n        height: auto; }\n        .navBar__content__brand__logo__text {\n          margin-top: 5px;\n          font-size: 12px; }\n    .navBar__content__userArea {\n      height: 17vh;\n      width: 100%;\n      display: inline-flex;\n      align-items: center;\n      justify-content: center; }\n    .navBar__content__items {\n      width: 100%; }\n      .navBar__content__items__item {\n        display: flex;\n        height: 10vh;\n        flex-direction: column;\n        justify-content: center;\n        align-items: center;\n        margin-top: 1.5rem;\n        margin-bottom: 1.5rem;\n        cursor: pointer; }\n        .navBar__content__items__item:first-child {\n          margin-top: 0; }\n        .navBar__content__items__item-active {\n          color: #5cb85c;\n          font-weight: 500; }\n        .navBar__content__items__item-icon {\n          font-size: 2.2rem;\n          display: inline-flex;\n          margin-bottom: 5px; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.list {\n  color: white;\n  cursor: pointer; }\n  .list:hover {\n    transition: 0.3s;\n    -webkit-transition: 0.3s;\n    -moz-transition: 0.3s;\n    -o-transition: 0.3s;\n    background-color: rgba(83, 105, 118, 0.3); }\n  .list-active {\n    background-color: rgba(83, 105, 118, 0.7); }\n    .list-active:hover {\n      background-color: rgba(83, 105, 118, 0.7); }\n  .list__content {\n    display: flex;\n    width: 100%;\n    flex-direction: row;\n    align-items: center;\n    padding-top: 3%;\n    padding-bottom: 3%;\n    border-bottom: 1px solid rgba(83, 105, 118, 0.7); }\n    .list__content__date {\n      width: 12%;\n      padding-left: 10px;\n      padding-right: 10px;\n      color: rgba(255, 255, 255, 0.7);\n      display: flex;\n      font-size: 10px;\n      align-items: center;\n      justify-content: center; }\n    .list__content__textArea {\n      flex: 6;\n      word-wrap: break-word;\n      overflow: auto;\n      display: flex;\n      padding-right: 10px;\n      flex-direction: column; }\n      .list__content__textArea__text {\n        display: inline;\n        font-size: 14px; }\n      .list__content__textArea__username {\n        font-size: 11px;\n        color: #a0c1b8;\n        margin-left: 5px; }\n      .list__content__textArea__edit {\n        font-size: 13px;\n        margin-left: 5px;\n        cursor: pointer; }\n        .list__content__textArea__edit:hover {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          color: #a0c1b8; }\n      .list__content__textArea__social {\n        display: flex;\n        flex-direction: row;\n        align-items: center;\n        margin-top: 2px; }\n        .list__content__textArea__social__username {\n          font-size: 12px;\n          color: #a0c1b8; }\n        .list__content__textArea__social__items {\n          display: flex;\n          flex-direction: row; }\n        .list__content__textArea__social__item {\n          font-size: 12px;\n          display: flex;\n          flex-direction: row;\n          align-items: center;\n          margin-right: 5px;\n          color: #a0c1b8; }\n          .list__content__textArea__social__item__count {\n            margin-right: 5px; }\n          .list__content__textArea__social__item__icon {\n            display: inline-flex; }\n    .list__content__type {\n      flex: 1;\n      font-size: 10px;\n      display: flex;\n      color: #f4e7d7;\n      justify-content: center; }\n      .list__content__type-array {\n        color: #f4e7d7;\n        flex-wrap: wrap;\n        font-size: 10px;\n        padding-right: 10px;\n        display: flex;\n        justify-content: flex-end; }\n        .list__content__type-array__item {\n          margin-right: 5px; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.sideBar {\n  background: transparent;\n  width: 100px;\n  height: 100vh;\n  overflow-y: scroll;\n  position: fixed;\n  right: 0;\n  color: white;\n  border-left: 1px rgba(255, 255, 255, 0.1) solid; }\n  .sideBar__modal {\n    height: 60vh;\n    overflow-y: scroll; }\n    .sideBar__modal__close {\n      cursor: pointer; }\n    .sideBar__modal__header {\n      font-weight: 300 !important; }\n    .sideBar__modal__content {\n      display: flex;\n      justify-content: center;\n      color: white; }\n      .sideBar__modal__content__items {\n        width: 50vw;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        flex-wrap: wrap; }\n        .sideBar__modal__content__items__wrapper {\n          display: flex;\n          width: 25%;\n          margin-top: 1.5rem;\n          flex-direction: column;\n          align-items: center;\n          margin-right: 1rem; }\n          .sideBar__modal__content__items__wrapper:nth-child(3n) {\n            margin-right: 0; }\n          .sideBar__modal__content__items__wrapper__item {\n            display: flex;\n            padding: 5px 1.5rem 5px 1.5rem;\n            flex-direction: column;\n            width: 100%;\n            border: 1px rgba(255, 255, 255, 0.2) solid;\n            justify-content: center;\n            align-items: center; }\n            .sideBar__modal__content__items__wrapper__item:hover {\n              border: 1px white solid;\n              cursor: pointer; }\n            .sideBar__modal__content__items__wrapper__item-active {\n              border: 1px #5cb85c solid; }\n              .sideBar__modal__content__items__wrapper__item-active:hover {\n                border: 1px #5cb85c solid;\n                cursor: pointer; }\n            .sideBar__modal__content__items__wrapper__item__full {\n              width: 100%;\n              overflow: auto;\n              word-wrap: break-word;\n              text-align: center; }\n            .sideBar__modal__content__items__wrapper__item__abbr {\n              text-align: center;\n              color: #f4e7d7;\n              width: 100%;\n              overflow: auto;\n              word-wrap: break-word; }\n            .sideBar__modal__content__items__wrapper__item__kor {\n              width: 100%;\n              text-align: center;\n              overflow: auto;\n              word-wrap: break-word; }\n  .sideBar__content {\n    display: flex;\n    flex-direction: column;\n    width: 100%; }\n    .sideBar__content__items__item {\n      display: flex;\n      border-bottom: 1px rgba(255, 255, 255, 0.1) solid;\n      flex-direction: column;\n      justify-content: center;\n      padding-top: 10px;\n      padding-bottom: 10px;\n      align-items: center;\n      cursor: pointer; }\n      .sideBar__content__items__item-active {\n        border-left: 3px #5cb85c solid; }\n      .sideBar__content__items__item-disable {\n        cursor: not-allowed;\n        pointer-events: none; }\n      .sideBar__content__items__item-plus {\n        font-size: 2rem; }\n      .sideBar__content__items__item:hover {\n        background-color: #536976; }\n      .sideBar__content__items__item__title {\n        color: #f4e7d7; }\n      .sideBar__content__items__item__price {\n        font-size: 10px; }\n        .sideBar__content__items__item__price__icon {\n          display: inline-flex; }\n      .sideBar__content__items__item__percent {\n        font-size: 10px;\n        color: #5cb85c; }\n        .sideBar__content__items__item__percent__icon {\n          display: inline-flex; }\n      .sideBar__content__items__item__percent-down {\n        font-size: 10px;\n        color: #f26968; }\n        .sideBar__content__items__item__percent-down__icon {\n          display: inline-flex; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.roundInput__content {\n  padding-left: 1rem;\n  width: 300px !important;\n  height: 60px !important;\n  border: 1px rgba(255, 255, 255, 0.2) solid !important;\n  border-radius: 75px !important;\n  font-size: 1rem;\n  outline-width: 0 !important;\n  color: white; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.button__content {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  border: 1px white solid;\n  height: 100%;\n  padding-top: 10px;\n  padding-bottom: 10px; }\n  .button__content:hover {\n    border: 1px #5cb85c solid;\n    color: #5cb85c;\n    cursor: pointer; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.thumb {\n  display: inline-block;\n  position: relative;\n  justify-content: center;\n  align-items: center;\n  cursor: pointer; }\n  .thumb__image {\n    box-sizing: border-box;\n    border-radius: 50%;\n    border: 1px solid white; }\n  .thumb__classImage {\n    position: absolute;\n    box-sizing: border-box;\n    border-radius: 50%; }\n  .thumb__defaultImage {\n    position: absolute;\n    bottom: -8px;\n    right: -5px; }\n\n.thumb__default {\n  font-size: 2rem;\n  display: inline-flex;\n  position: relative;\n  justify-content: center;\n  align-items: center;\n  box-sizing: border-box;\n  border-radius: 50%;\n  border: 1px white solid;\n  color: white;\n  cursor: pointer; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.socialInput {\n  padding-top: 30px;\n  background-color: transparent;\n  padding-left: 20px;\n  padding-right: 20px;\n  padding-bottom: 5px; }\n  .socialInput hr {\n    background-color: rgba(255, 255, 255, 0.2); }\n  .socialInput__hr-active {\n    margin-top: 1rem;\n    margin-bottom: 1rem;\n    border: 0;\n    border-top: 1px white solid; }\n  .socialInput__body {\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    padding-bottom: 10px; }\n    .socialInput__body__thumbArea__thumb {\n      font-size: 2rem;\n      display: inline-flex;\n      width: 50px;\n      height: 50px;\n      justify-content: center;\n      align-items: center;\n      box-sizing: border-box;\n      border-radius: 50%;\n      border: 1px rgba(0, 0, 0, 0.2) solid;\n      color: white; }\n    .socialInput__body__inputArea {\n      width: 95%; }\n    .socialInput__body__input {\n      margin-right: 20px;\n      margin-left: 20px;\n      color: white;\n      font-size: 1rem;\n      background: transparent;\n      width: 95%;\n      padding-bottom: 10px;\n      padding-top: 10px;\n      word-break: break-all;\n      border: none; }\n      .socialInput__body__input:focus {\n        transition: 0.3s;\n        -webkit-transition: 0.3s;\n        -moz-transition: 0.3s;\n        -o-transition: 0.3s;\n        outline: none; }\n      .socialInput__body__input-title {\n        margin-right: 20px;\n        margin-left: 20px;\n        margin-bottom: 10px;\n        color: white;\n        font-size: 1rem;\n        background: transparent;\n        width: 60%;\n        padding-bottom: 10px;\n        padding-top: 10px;\n        word-break: break-all;\n        border-top: none;\n        border-left: none;\n        border-right: none;\n        border-bottom: 1px rgba(255, 255, 255, 0.2) solid !important; }\n        .socialInput__body__input-title:focus {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          outline: none;\n          border-bottom: 1px white solid !important; }\n  .socialInput__footer {\n    display: flex;\n    flex-direction: row;\n    justify-content: space-between;\n    align-items: center; }\n    .socialInput__footer__camera__icon {\n      font-size: 1.6rem;\n      color: white; }\n      .socialInput__footer__camera__icon:hover {\n        transition: 0.3s;\n        -webkit-transition: 0.3s;\n        -moz-transition: 0.3s;\n        -o-transition: 0.3s;\n        color: white;\n        cursor: pointer; }\n    .socialInput__footer__postArea {\n      display: inline-flex;\n      align-items: center;\n      justify-content: center; }\n      .socialInput__footer__postArea__postButton {\n        background-color: transparent;\n        color: white;\n        margin-left: 10px;\n        font-weight: 300;\n        padding-left: 10px;\n        padding-top: 3px;\n        border: 1px solid rgba(255, 255, 255, 0.2);\n        padding-bottom: 3px;\n        display: inline-flex;\n        padding-right: 10px;\n        cursor: pointer; }\n        .socialInput__footer__postArea__postButton:hover {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          color: white;\n          border: 1px solid white; }\n    .socialInput__footer__imagePreview {\n      display: flex;\n      flex-direction: row;\n      flex-wrap: wrap; }\n      .socialInput__footer__imagePreview__image {\n        transition: 0.3s;\n        -webkit-transition: 0.3s;\n        -moz-transition: 0.3s;\n        -o-transition: 0.3s;\n        height: 60px; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.comment__content {\n  transition: 0.3s;\n  -webkit-transition: 0.3s;\n  -moz-transition: 0.3s;\n  -o-transition: 0.3s;\n  display: flex;\n  padding-left: 20px;\n  padding-right: 20px;\n  box-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);\n  flex-direction: row;\n  align-items: center;\n  justify-content: space-between;\n  padding-top: 1rem;\n  padding-bottom: 1rem;\n  margin-bottom: 1rem; }\n  .comment__content-mine {\n    transition: 0.3s;\n    -webkit-transition: 0.3s;\n    -moz-transition: 0.3s;\n    -o-transition: 0.3s;\n    display: flex;\n    padding-left: 20px;\n    padding-right: 20px;\n    box-shadow: 0px !important;\n    border: 1px solid #a0c1b8;\n    flex-direction: row;\n    align-items: center;\n    justify-content: space-between;\n    padding-top: 1rem;\n    padding-bottom: 1rem;\n    margin-bottom: 1rem; }\n  .comment__content__userArea {\n    flex: 2;\n    display: flex;\n    flex-direction: row;\n    align-items: center; }\n    .comment__content__userArea__userInfo {\n      display: flex;\n      flex-direction: column;\n      margin-left: 10px; }\n      .comment__content__userArea__userInfo__name {\n        font-size: 10px; }\n      .comment__content__userArea__userInfo__point {\n        font-size: 10px; }\n  .comment__content__content {\n    flex: 4;\n    word-wrap: break-word;\n    overflow: auto;\n    display: flex;\n    font-size: 13px;\n    flex-direction: column;\n    padding-right: 10px; }\n  .comment__content__date {\n    flex: 1;\n    display: flex;\n    justify-content: flex-end;\n    align-items: center;\n    font-size: 10px;\n    color: rgba(255, 255, 255, 0.3); }\n  .comment__content__delete {\n    color: rgba(255, 255, 255, 0.2);\n    margin-left: 5px;\n    cursor: pointer; }\n    .comment__content__delete:hover {\n      transition: 0.3s;\n      -webkit-transition: 0.3s;\n      -moz-transition: 0.3s;\n      -o-transition: 0.3s;\n      color: #f26968; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.medal {\n  display: inline-block;\n  position: relative;\n  justify-content: center;\n  align-items: center;\n  cursor: pointer; }\n  .medal__image {\n    box-sizing: border-box;\n    border-radius: 50%;\n    border: 1px solid white; }\n  .medal__classImage {\n    margin-left: 10px; }\n\n.medal__default {\n  font-size: 2rem;\n  display: inline-flex;\n  justify-content: center;\n  align-items: center;\n  box-sizing: border-box;\n  border-radius: 50%;\n  border: 1px white solid;\n  color: white;\n  cursor: pointer; }\n  .medal__default__classImage {\n    position: absolute;\n    box-sizing: border-box;\n    border-radius: 50%; }\n\n/*!\n  Ionicons, v2.0.0\n  Created by Ben Sperry for the Ionic Framework, http://ionicons.com/\n  https://twitter.com/benjsperry  https://twitter.com/ionicframework\n  MIT License: https://github.com/driftyco/ionicons\n\n  Android-style icons originally built by Google’s\n  Material Design Icons: https://github.com/google/material-design-icons\n  used under CC BY http://creativecommons.org/licenses/by/4.0/\n  Modified icons to fit ionicon’s grid from original.\n*/\n@font-face {\n  font-family: \"Ionicons\";\n  src: url(\"https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/fonts/ionicons.eot?v=2.0.0\");\n  src: url(\"https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/fonts/ionicons.eot?v=2.0.0#iefix\") format(\"embedded-opentype\"), url(\"https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/fonts/ionicons.ttf?v=2.0.0\") format(\"truetype\"), url(\"https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/fonts/ionicons.woff?v=2.0.0\") format(\"woff\"), url(\"https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/fonts/ionicons.svg?v=2.0.0#Ionicons\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal; }\n\n.image-gallery-fullscreen-button::before,\n.image-gallery-play-button::before,\n.image-gallery-left-nav::before,\n.image-gallery-right-nav::before {\n  display: inline-block;\n  font-family: \"Ionicons\";\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  text-rendering: auto;\n  line-height: 1;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale; }\n\n.image-gallery {\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  -o-user-select: none;\n  user-select: none;\n  -webkit-tap-highlight-color: transparent; }\n  .image-gallery.fullscreen-modal {\n    background: #000;\n    bottom: 0;\n    height: 100%;\n    left: 0;\n    position: fixed;\n    right: 0;\n    top: 0;\n    width: 100%;\n    z-index: 5; }\n    .image-gallery.fullscreen-modal .image-gallery-content {\n      top: 50%;\n      transform: translateY(-50%); }\n\n.image-gallery-content {\n  position: relative;\n  line-height: 0;\n  top: 0; }\n  .image-gallery-content.fullscreen {\n    background: #000; }\n    .image-gallery-content.fullscreen .image-gallery-slide {\n      background: #000; }\n\n.image-gallery-slide-wrapper {\n  position: relative; }\n  .image-gallery-slide-wrapper.left, .image-gallery-slide-wrapper.right {\n    display: inline-block;\n    width: calc(100% - 113px); }\n    @media (max-width: 768px) {\n      .image-gallery-slide-wrapper.left, .image-gallery-slide-wrapper.right {\n        width: calc(100% - 84px); } }\n\n.image-gallery-fullscreen-button,\n.image-gallery-play-button,\n.image-gallery-left-nav,\n.image-gallery-right-nav {\n  appearance: none;\n  background-color: transparent;\n  border: 0;\n  cursor: pointer;\n  outline: none;\n  position: absolute;\n  z-index: 4; }\n  .image-gallery-fullscreen-button::before,\n  .image-gallery-play-button::before,\n  .image-gallery-left-nav::before,\n  .image-gallery-right-nav::before {\n    color: #fff;\n    line-height: .7;\n    text-shadow: 0 2px 2px #1a1a1a;\n    transition: color .2s ease-out; }\n  .image-gallery-fullscreen-button:hover::before,\n  .image-gallery-play-button:hover::before,\n  .image-gallery-left-nav:hover::before,\n  .image-gallery-right-nav:hover::before {\n    color: #337ab7; }\n    @media (max-width: 768px) {\n      .image-gallery-fullscreen-button:hover::before,\n      .image-gallery-play-button:hover::before,\n      .image-gallery-left-nav:hover::before,\n      .image-gallery-right-nav:hover::before {\n        color: #fff; } }\n\n.image-gallery-fullscreen-button,\n.image-gallery-play-button {\n  bottom: 0; }\n  .image-gallery-fullscreen-button::before,\n  .image-gallery-play-button::before {\n    font-size: 2.7em;\n    padding: 15px 20px;\n    text-shadow: 0 1px 1px #1a1a1a; }\n    @media (max-width: 768px) {\n      .image-gallery-fullscreen-button::before,\n      .image-gallery-play-button::before {\n        font-size: 2.4em; } }\n    @media (max-width: 480px) {\n      .image-gallery-fullscreen-button::before,\n      .image-gallery-play-button::before {\n        font-size: 2em; } }\n  .image-gallery-fullscreen-button:hover::before,\n  .image-gallery-play-button:hover::before {\n    color: #fff;\n    transform: scale(1.1); }\n    @media (max-width: 768px) {\n      .image-gallery-fullscreen-button:hover::before,\n      .image-gallery-play-button:hover::before {\n        transform: none; } }\n\n.image-gallery-fullscreen-button {\n  right: 0; }\n  .image-gallery-fullscreen-button::before {\n    content: \"\"; }\n  .image-gallery-fullscreen-button.active::before {\n    content: \"\"; }\n  .image-gallery-fullscreen-button.active:hover::before {\n    transform: scale(0.9); }\n\n.image-gallery-play-button {\n  left: 0; }\n  .image-gallery-play-button::before {\n    content: \"\"; }\n  .image-gallery-play-button.active::before {\n    content: \"\"; }\n\n.image-gallery-left-nav,\n.image-gallery-right-nav {\n  color: #fff;\n  font-size: 5em;\n  padding: 50px 15px;\n  top: 50%;\n  transform: translateY(-50%); }\n  .image-gallery-left-nav[disabled],\n  .image-gallery-right-nav[disabled] {\n    cursor: disabled;\n    opacity: .6;\n    pointer-events: none; }\n  @media (max-width: 768px) {\n    .image-gallery-left-nav,\n    .image-gallery-right-nav {\n      font-size: 3.4em;\n      padding: 20px 15px; } }\n  @media (max-width: 480px) {\n    .image-gallery-left-nav,\n    .image-gallery-right-nav {\n      font-size: 2.4em;\n      padding: 0 15px; } }\n\n.image-gallery-left-nav {\n  left: 0; }\n  .image-gallery-left-nav::before {\n    content: \"\"; }\n\n.image-gallery-right-nav {\n  right: 0; }\n  .image-gallery-right-nav::before {\n    content: \"\"; }\n\n.image-gallery-slides {\n  line-height: 0;\n  overflow: hidden;\n  position: relative;\n  white-space: nowrap; }\n\n.image-gallery-slide {\n  background: #fff;\n  left: 0;\n  position: absolute;\n  top: 0;\n  width: 100%; }\n  .image-gallery-slide.center {\n    position: relative; }\n  .image-gallery-slide img {\n    width: 100%; }\n  .image-gallery-slide .image-gallery-description {\n    background: rgba(0, 0, 0, 0.4);\n    bottom: 70px;\n    color: #fff;\n    left: 0;\n    line-height: 1;\n    padding: 10px 20px;\n    position: absolute;\n    white-space: normal; }\n    @media (max-width: 768px) {\n      .image-gallery-slide .image-gallery-description {\n        bottom: 45px;\n        font-size: .8em;\n        padding: 8px 15px; } }\n\n.image-gallery-bullets {\n  bottom: 20px;\n  left: 0;\n  margin: 0 auto;\n  position: absolute;\n  right: 0;\n  width: 80%;\n  z-index: 4; }\n  .image-gallery-bullets .image-gallery-bullets-container {\n    margin: 0;\n    padding: 0;\n    text-align: center; }\n  .image-gallery-bullets .image-gallery-bullet {\n    appearance: none;\n    background-color: transparent;\n    border: 1px solid #fff;\n    border-radius: 50%;\n    box-shadow: 0 1px 0 #1a1a1a;\n    cursor: pointer;\n    display: inline-block;\n    margin: 0 5px;\n    outline: none;\n    padding: 5px; }\n    @media (max-width: 768px) {\n      .image-gallery-bullets .image-gallery-bullet {\n        margin: 0 3px;\n        padding: 3px; } }\n    @media (max-width: 480px) {\n      .image-gallery-bullets .image-gallery-bullet {\n        padding: 2.7px; } }\n    .image-gallery-bullets .image-gallery-bullet.active {\n      background: #fff; }\n\n.image-gallery-thumbnails-wrapper {\n  position: relative; }\n  .image-gallery-thumbnails-wrapper.left, .image-gallery-thumbnails-wrapper.right {\n    display: inline-block;\n    vertical-align: top;\n    width: 108px; }\n    @media (max-width: 768px) {\n      .image-gallery-thumbnails-wrapper.left, .image-gallery-thumbnails-wrapper.right {\n        width: 81px; } }\n    .image-gallery-thumbnails-wrapper.left .image-gallery-thumbnails, .image-gallery-thumbnails-wrapper.right .image-gallery-thumbnails {\n      height: 100%;\n      width: 100%;\n      left: 0;\n      padding: 0;\n      position: absolute;\n      top: 0; }\n      .image-gallery-thumbnails-wrapper.left .image-gallery-thumbnails .image-gallery-thumbnail, .image-gallery-thumbnails-wrapper.right .image-gallery-thumbnails .image-gallery-thumbnail {\n        display: block;\n        margin-right: 0;\n        padding: 0; }\n        .image-gallery-thumbnails-wrapper.left .image-gallery-thumbnails .image-gallery-thumbnail + .image-gallery-thumbnail, .image-gallery-thumbnails-wrapper.right .image-gallery-thumbnails .image-gallery-thumbnail + .image-gallery-thumbnail {\n          margin-left: 0; }\n  .image-gallery-thumbnails-wrapper.left {\n    margin-right: 5px; }\n    @media (max-width: 768px) {\n      .image-gallery-thumbnails-wrapper.left {\n        margin-right: 3px; } }\n  .image-gallery-thumbnails-wrapper.right {\n    margin-left: 5px; }\n    @media (max-width: 768px) {\n      .image-gallery-thumbnails-wrapper.right {\n        margin-left: 3px; } }\n\n.image-gallery-thumbnails {\n  overflow: hidden;\n  padding: 5px 0; }\n  @media (max-width: 768px) {\n    .image-gallery-thumbnails {\n      padding: 3px 0; } }\n  .image-gallery-thumbnails .image-gallery-thumbnails-container {\n    cursor: pointer;\n    text-align: center;\n    transition: transform .45s ease-out;\n    white-space: nowrap; }\n\n.image-gallery-thumbnail {\n  display: inline-block;\n  border: 4px solid transparent;\n  transition: border .3s ease-out;\n  width: 100px; }\n  @media (max-width: 768px) {\n    .image-gallery-thumbnail {\n      border: 3px solid transparent;\n      width: 75px; } }\n  .image-gallery-thumbnail + .image-gallery-thumbnail {\n    margin-left: 2px; }\n  .image-gallery-thumbnail img {\n    vertical-align: middle;\n    width: 100%; }\n  .image-gallery-thumbnail.active {\n    border: 4px solid #337ab7; }\n    @media (max-width: 768px) {\n      .image-gallery-thumbnail.active {\n        border: 3px solid #337ab7; } }\n\n.image-gallery-thumbnail-label {\n  color: #1a1a1a;\n  font-size: 1em; }\n  @media (max-width: 768px) {\n    .image-gallery-thumbnail-label {\n      font-size: .8em; } }\n\n.image-gallery-index {\n  background: rgba(0, 0, 0, 0.4);\n  color: #fff;\n  line-height: 1;\n  padding: 10px 20px;\n  position: absolute;\n  right: 0;\n  top: 0;\n  z-index: 4; }\n  @media (max-width: 768px) {\n    .image-gallery-index {\n      font-size: .8em;\n      padding: 5px 10px; } }\n\n.ReactCrop {\n  position: relative;\n  display: inline-block;\n  cursor: crosshair;\n  overflow: hidden;\n  max-width: 100%;\n  background-color: #000; }\n  .ReactCrop:focus {\n    outline: none; }\n  .ReactCrop--disabled {\n    cursor: inherit; }\n  .ReactCrop__image {\n    display: block;\n    max-width: 100%;\n    max-height: -webkit-fill-available;\n    max-height: -moz-available;\n    max-height: stretch; }\n  .ReactCrop--crop-invisible .ReactCrop__image {\n    opacity: 0.5; }\n  .ReactCrop__crop-selection {\n    position: absolute;\n    top: 0;\n    left: 0;\n    transform: translate3d(0, 0, 0);\n    box-sizing: border-box;\n    cursor: move;\n    box-shadow: 0 0 0 9999em rgba(0, 0, 0, 0.5);\n    border: 1px solid;\n    border-image-source: url(\"data:image/gif;base64,R0lGODlhCgAKAJECAAAAAP///////wAAACH/C05FVFNDQVBFMi4wAwEAAAAh/wtYTVAgRGF0YVhNUDw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OEI5RDc5MTFDNkE2MTFFM0JCMDZEODI2QTI4MzJBOTIiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OEI5RDc5MTBDNkE2MTFFM0JCMDZEODI2QTI4MzJBOTIiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuZGlkOjAyODAxMTc0MDcyMDY4MTE4MDgzQzNDMjA5MzREQ0ZDIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjAyODAxMTc0MDcyMDY4MTE4MDgzQzNDMjA5MzREQ0ZDIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEgHx4dHBsaGRgXFhUUExIREA8ODQwLCgkIBwYFBAMCAQAAIfkEBQoAAgAsAAAAAAoACgAAAhWEERkn7W3ei7KlagMWF/dKgYeyGAUAIfkEBQoAAgAsAAAAAAoACgAAAg+UYwLJ7RnQm7QmsCyVKhUAIfkEBQoAAgAsAAAAAAoACgAAAhCUYgLJHdiinNSAVfOEKoUCACH5BAUKAAIALAAAAAAKAAoAAAIRVISAdusPo3RAzYtjaMIaUQAAIfkEBQoAAgAsAAAAAAoACgAAAg+MDiem7Q8bSLFaG5il6xQAIfkEBQoAAgAsAAAAAAoACgAAAg+UYRLJ7QnQm7SmsCyVKhUAIfkEBQoAAgAsAAAAAAoACgAAAhCUYBLJDdiinNSEVfOEKoECACH5BAUKAAIALAAAAAAKAAoAAAIRFISBdusPo3RBzYsjaMIaUQAAOw==\");\n    border-image-slice: 1;\n    border-image-repeat: repeat; }\n    .ReactCrop--disabled .ReactCrop__crop-selection {\n      cursor: inherit; }\n  .ReactCrop__drag-handle {\n    position: absolute;\n    width: 9px;\n    height: 9px;\n    background-color: rgba(0, 0, 0, 0.2);\n    border: 1px solid rgba(255, 255, 255, 0.7);\n    box-sizing: border-box;\n    outline: 1px solid transparent; }\n  .ReactCrop .ord-nw {\n    top: 0;\n    left: 0;\n    margin-top: -5px;\n    margin-left: -5px;\n    cursor: nw-resize; }\n  .ReactCrop .ord-n {\n    top: 0;\n    left: 50%;\n    margin-top: -5px;\n    margin-left: -5px;\n    cursor: n-resize; }\n  .ReactCrop .ord-ne {\n    top: 0;\n    right: 0;\n    margin-top: -5px;\n    margin-right: -5px;\n    cursor: ne-resize; }\n  .ReactCrop .ord-e {\n    top: 50%;\n    right: 0;\n    margin-top: -5px;\n    margin-right: -5px;\n    cursor: e-resize; }\n  .ReactCrop .ord-se {\n    bottom: 0;\n    right: 0;\n    margin-bottom: -5px;\n    margin-right: -5px;\n    cursor: se-resize; }\n  .ReactCrop .ord-s {\n    bottom: 0;\n    left: 50%;\n    margin-bottom: -5px;\n    margin-left: -5px;\n    cursor: s-resize; }\n  .ReactCrop .ord-sw {\n    bottom: 0;\n    left: 0;\n    margin-bottom: -5px;\n    margin-left: -5px;\n    cursor: sw-resize; }\n  .ReactCrop .ord-w {\n    top: 50%;\n    left: 0;\n    margin-top: -5px;\n    margin-left: -5px;\n    cursor: w-resize; }\n  .ReactCrop__disabled .ReactCrop__drag-handle {\n    cursor: inherit; }\n  .ReactCrop__drag-bar {\n    position: absolute; }\n    .ReactCrop__drag-bar.ord-n {\n      top: 0;\n      left: 0;\n      width: 100%;\n      height: 6px;\n      margin-top: -3px; }\n    .ReactCrop__drag-bar.ord-e {\n      right: 0;\n      top: 0;\n      width: 6px;\n      height: 100%;\n      margin-right: -3px; }\n    .ReactCrop__drag-bar.ord-s {\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      height: 6px;\n      margin-bottom: -3px; }\n    .ReactCrop__drag-bar.ord-w {\n      top: 0;\n      left: 0;\n      width: 6px;\n      height: 100%;\n      margin-left: -3px; }\n  .ReactCrop--new-crop .ReactCrop__drag-bar,\n  .ReactCrop--new-crop .ReactCrop__drag-handle,\n  .ReactCrop--fixed-aspect .ReactCrop__drag-bar {\n    display: none; }\n  .ReactCrop--fixed-aspect .ReactCrop__drag-handle.ord-n,\n  .ReactCrop--fixed-aspect .ReactCrop__drag-handle.ord-e,\n  .ReactCrop--fixed-aspect .ReactCrop__drag-handle.ord-s,\n  .ReactCrop--fixed-aspect .ReactCrop__drag-handle.ord-w {\n    display: none; }\n  @media (max-width: 768px), (pointer: coarse) {\n    .ReactCrop__drag-handle {\n      width: 17px;\n      height: 17px; }\n    .ReactCrop .ord-nw {\n      margin-top: -9px;\n      margin-left: -9px; }\n    .ReactCrop .ord-n {\n      margin-top: -9px;\n      margin-left: -9px; }\n    .ReactCrop .ord-ne {\n      margin-top: -9px;\n      margin-right: -9px; }\n    .ReactCrop .ord-e {\n      margin-top: -9px;\n      margin-right: -9px; }\n    .ReactCrop .ord-se {\n      margin-bottom: -9px;\n      margin-right: -9px; }\n    .ReactCrop .ord-s {\n      margin-bottom: -9px;\n      margin-left: -9px; }\n    .ReactCrop .ord-sw {\n      margin-bottom: -9px;\n      margin-left: -9px; }\n    .ReactCrop .ord-w {\n      margin-top: -9px;\n      margin-left: -9px; }\n    .ReactCrop__drag-bar.ord-n {\n      height: 14px;\n      margin-top: -7px; }\n    .ReactCrop__drag-bar.ord-e {\n      width: 14px;\n      margin-right: -7px; }\n    .ReactCrop__drag-bar.ord-s {\n      height: 14px;\n      margin-bottom: -7px; }\n    .ReactCrop__drag-bar.ord-w {\n      width: 14px;\n      margin-left: -7px; } }\n\nbody {\n  margin: 0 auto;\n  font-weight: 300; }\n  body ::placeholder {\n    /* Chrome, Firefox, Opera, Safari 10.1+ */\n    color: white;\n    opacity: 0.7;\n    font-size: 14px;\n    font-weight: 300 !important;\n    font-family: \"Nanum Gothic\", sans-serif;\n    /* Firefox */ }\n  body .app {\n    background: #536976;\n    /* fallback for old browsers */\n    background: -webkit-linear-gradient(to right, #292e49, #536976);\n    /* Chrome 10-25, Safari 5.1-6 */\n    background: linear-gradient(to right, #292e49, #536976);\n    height: 100vh; }\n  body .btn {\n    font-weight: 300 !important; }\n  body .btn-group-sm > .btn,\n  body .btn-sm {\n    padding: 5px 25px !important;\n    font-size: 13px !important;\n    font-weight: 300 !important;\n    color: white;\n    margin-right: 1px;\n    cursor: pointer;\n    float: left;\n    padding: 5px 13px !important;\n    border-radius: 0 !important; }\n  body a:hover {\n    text-decoration: none; }\n  body p {\n    margin: 0; }\n  body hr {\n    background-color: white; }\n  body .cTypeTabActive {\n    background: #536976 !important;\n    font-weight: 300; }\n  body .chartTypeTabLinks {\n    background: transparent;\n    font-weight: 300 !important; }\n  body text {\n    fill: white; }\n  body .ccc-widget > div {\n    background-color: transparent !important;\n    color: white !important;\n    border: 0 !important;\n    border-top: 0 !important;\n    font-weight: 300 !important;\n    padding: 10px !important; }\n  body .cccCustomRadioContainer > label {\n    color: white !important; }\n  body .tabperiods {\n    background: transparent !important;\n    font-weight: 300 !important; }\n  body .active {\n    border-color: #5cb85c !important; }\n  body .tabperiods_active {\n    font-weight: 900 !important;\n    color: #5cb85c !important; }\n  body .chartTypeTabLinks:hover {\n    background: #536976; }\n  body .modal-content {\n    font-weight: 300 !important;\n    border-radius: 0px !important;\n    background: #536976;\n    margin: 0 !important;\n    color: white;\n    padding: 0 !important;\n    /* fallback for old browsers */\n    background: -webkit-linear-gradient(to bottom, #292e49, #536976);\n    /* Chrome 10-25, Safari 5.1-6 */\n    background: linear-gradient(to bottom, #292e49, #536976);\n    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  body .modal-backdrop.show {\n    opacity: 0.1 !important; }\n  body .dropdown-menu {\n    position: absolute;\n    top: 100%;\n    left: 0;\n    z-index: 1000;\n    display: none;\n    float: left;\n    min-width: 10rem;\n    padding: 0.5rem 0;\n    margin: 0.125rem 0 0;\n    font-size: 1rem;\n    color: white !important;\n    text-align: left;\n    list-style: none;\n    background-color: #292e49 !important;\n    background-clip: padding-box;\n    border: 1px solid rgba(0, 0, 0, 0.15);\n    border-radius: 0px !important; }\n  body .dropdown-item {\n    display: block;\n    width: 100%;\n    cursor: pointer;\n    padding: 0.25rem 1.5rem;\n    clear: both;\n    font-weight: 400;\n    color: white !important;\n    text-align: inherit;\n    white-space: nowrap;\n    background-color: transparent;\n    border: 0; }\n    body .dropdown-item:hover {\n      background-color: transparent !important; }\n  body .chartTypeTabLinks {\n    font-size: 13px !important;\n    color: white;\n    margin-right: 1px;\n    font-weight: 600;\n    cursor: pointer;\n    float: left;\n    padding: 5px 25px;\n    background: transparent; }\n  body .image-gallery-left-nav,\n  body .image-gallery-right-nav {\n    color: #fff;\n    font-size: 2em;\n    padding: 50px 15px;\n    top: 50%;\n    transform: translateY(-50%); }\n    body .image-gallery-left-nav:focus,\n    body .image-gallery-right-nav:focus {\n      outline-style: none; }\n  body .image-gallery-fullscreen-button::before,\n  body .image-gallery-play-button::before {\n    font-size: 2em !important;\n    padding: 15px 20px;\n    text-shadow: 0 1px 1px #1a1a1a; }\n  body .image-gallery-fullscreen-button::after:focus,\n  body .image-gallery-play-button::after:focus {\n    outline: none !important; }\n", ""]);
 
 /***/ }),
 /* 442 */
@@ -44980,7 +44981,7 @@
 	  };
 	};
 	
-	var sourceFilter = [{ id: 0, name: "정확도" }, { id: 1, name: "최신순" }];
+	var sourceFilter = [{ id: 1, name: "정확도" }, { id: 0, name: "최신순" }];
 	
 	var HomePage = function (_Component) {
 	  _inherits(HomePage, _Component);
@@ -45015,12 +45016,14 @@
 	      var _this$state2 = _this.state,
 	          newsCount = _this$state2.newsCount,
 	          coinId = _this$state2.coinId,
-	          sourceId = _this$state2.sourceId;
+	          sourceId = _this$state2.sourceId,
+	          recent = _this$state2.recent;
 	
 	      var newsParams = {
 	        coinId: coinId,
 	        sourceId: sourceId,
-	        newsCount: newsCount
+	        newsCount: newsCount,
+	        recent: recent
 	      };
 	
 	      if (scrollPercent > 0.95) {
@@ -45046,12 +45049,15 @@
 	    };
 	
 	    _this.toggleBlog = function (id) {
-	      var coinId = _this.state.coinId;
+	      var _this$state3 = _this.state,
+	          coinId = _this$state3.coinId,
+	          recent = _this$state3.recent;
 	
 	      var newsParams = {
 	        coinId: coinId,
 	        sourceId: id,
-	        newsCount: 30
+	        newsCount: 0,
+	        recent: recent
 	      };
 	      _this.setState({ sourceId: id, newsLoading: true });
 	      _this.props.dispatch(NewsAction.getNews(newsParams)).then(function (news) {
@@ -45059,23 +45065,31 @@
 	          return {
 	            isBlog: !prevState.isBlog,
 	            news: news.result,
+	            newsCount: news.nextIndex,
 	            newsLoading: false
 	          };
 	        });
 	      });
 	    };
 	
-	    _this.handleSource = function (id, name) {
-	      var coinId = _this.state.coinId;
+	    _this.handleRecent = function (id, name) {
+	      var _this$state4 = _this.state,
+	          coinId = _this$state4.coinId,
+	          sourceId = _this$state4.sourceId;
 	
 	      var newsParams = {
 	        coinId: coinId,
-	        sourceId: id,
-	        newsCount: 0
+	        sourceId: sourceId,
+	        newsCount: 0,
+	        recent: id
 	      };
-	      _this.setState({ sourceName: name, sourceId: id, newsLoading: true });
+	      _this.setState({ sourceName: name, recent: id, newsLoading: true });
 	      _this.props.dispatch(NewsAction.getNews(newsParams)).then(function (news) {
-	        _this.setState({ news: news.result, newsLoading: false });
+	        _this.setState({
+	          news: news.result,
+	          newsLoading: false,
+	          newsCount: news.nextIndex
+	        });
 	      });
 	    };
 	
@@ -45094,16 +45108,22 @@
 	      s.onload = function () {
 	        _this.setState({ loadGraph: false });
 	      };
+	      s.onerror = function () {
+	        console.log("!!!!");
+	      };
 	    };
 	
 	    _this.handleChart = function (index, id, coin) {
 	      _this.lists.scrollTop;
-	      var sourceId = _this.state.sourceId;
+	      var _this$state5 = _this.state,
+	          sourceId = _this$state5.sourceId,
+	          recent = _this$state5.recent;
 	
 	      var newsParams = {
 	        coinId: id,
 	        sourceId: sourceId,
-	        newsCount: 0
+	        newsCount: 0,
+	        recent: recent
 	      };
 	      _this.setState({
 	        loadGraph: true,
@@ -45143,14 +45163,14 @@
 	
 	    _this.handleFavorite = function () {
 	      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(index, id, data) {
-	        var coin, _this$props, me, token, params, leftOver, i, result, abbrArray, _i;
+	        var coin, token, params, leftOver, i, result, abbrArray, _i;
 	
 	        return regeneratorRuntime.wrap(function _callee$(_context) {
 	          while (1) {
 	            switch (_context.prev = _context.next) {
 	              case 0:
 	                coin = _this.state.favorite.slice();
-	                _this$props = _this.props, me = _this$props.me, token = _this$props.token;
+	                token = _this.props.token;
 	                params = {
 	                  token: token,
 	                  coin_id: coin[index].id
@@ -45241,9 +45261,10 @@
 	      isBlog: false,
 	      newsCount: 0,
 	      sourceId: 0,
-	      sourceName: "정확도",
+	      sourceName: "최신순",
 	      footerLoading: false,
-	      newsLoading: true
+	      newsLoading: true,
+	      recent: 0
 	    };
 	    _this.toggle = _this.toggle.bind(_this);
 	    return _this;
@@ -45272,12 +45293,14 @@
 	              var _state = _this3.state,
 	                  newsCount = _state.newsCount,
 	                  coinId = _state.coinId,
-	                  sourceId = _state.sourceId;
+	                  sourceId = _state.sourceId,
+	                  recent = _state.recent;
 	
 	              var newsParams = {
 	                coinId: coinId,
 	                sourceId: sourceId,
-	                newsCount: newsCount
+	                newsCount: newsCount,
+	                recent: recent
 	              };
 	              _this3.props.dispatch(NewsAction.getNews(newsParams)).then(function (news) {
 	                _this3.setState({
@@ -45346,12 +45369,14 @@
 	
 	                var _state2 = _this3.state,
 	                    newsCount = _state2.newsCount,
-	                    sourceId = _state2.sourceId;
+	                    sourceId = _state2.sourceId,
+	                    recent = _state2.recent;
 	
 	                var newsParams = {
 	                  coinId: abbrArray[0].id,
 	                  sourceId: sourceId,
-	                  newsCount: newsCount
+	                  newsCount: newsCount,
+	                  recent: recent
 	                };
 	
 	                _this3.setState({ newsLoading: true, loadGraph: true });
@@ -45364,6 +45389,7 @@
 	                    newsCount: news.nextIndex,
 	                    newsLoading: false,
 	                    favorite: final,
+	                    coinId: abbrArray[0].id,
 	                    coinType: abbrArray[0].abbr
 	                  });
 	                });
@@ -45377,7 +45403,8 @@
 	        var newsParams = {
 	          coinId: 1,
 	          sourceId: 0,
-	          newsCount: 0
+	          newsCount: 0,
+	          recent: this.state.recent
 	        };
 	        var defaultFav = [{ id: 1, abbr: "BTC", price: 0, percent: "", clicked: true }];
 	        this.props.dispatch(PriceAction.getPrice("BTC")).then(function (price) {
@@ -45508,7 +45535,7 @@
 	                          {
 	                            key: index,
 	                            onClick: function onClick() {
-	                              return _this4.handleSource(data.id, data.name);
+	                              return _this4.handleRecent(data.id, data.name);
 	                            }
 	                          },
 	                          data.name
@@ -55362,12 +55389,14 @@
 	          social = _props.social,
 	          onClick = _props.onClick,
 	          onEditClick = _props.onEditClick,
+	          onDeleteClick = _props.onDeleteClick,
 	          active = _props.active,
 	          index = _props.index,
 	          isLoading = _props.isLoading,
 	          point = _props.point,
 	          selectedIndex = _props.selectedIndex,
 	          likeCount = _props.likeCount,
+	          disLikeCount = _props.disLikeCount,
 	          view = _props.view;
 	
 	      return _react2.default.createElement(
@@ -55421,14 +55450,6 @@
 	                      onClick: onEditClick
 	                    },
 	                    _react2.default.createElement("i", { className: "xi-pen-o" })
-	                  ),
-	                  _react2.default.createElement(
-	                    "span",
-	                    {
-	                      className: "list__content__textArea__edit",
-	                      onClick: onEditClick
-	                    },
-	                    _react2.default.createElement("i", { className: "xi-trash-o" })
 	                  )
 	                ) : null
 	              ),
@@ -55454,6 +55475,24 @@
 	                      "span",
 	                      { className: "list__content__textArea__social__item__icon" },
 	                      _react2.default.createElement("img", { width: 9, height: 9, src: base64.arrowUpWhite })
+	                    )
+	                  ),
+	                  _react2.default.createElement(
+	                    "div",
+	                    { className: "list__content__textArea__social__item" },
+	                    _react2.default.createElement(
+	                      "span",
+	                      { className: "list__content__textArea__social__item__count" },
+	                      _react2.default.createElement(
+	                        _reactPrettyNumbers2.default,
+	                        { params: option },
+	                        disLikeCount && disLikeCount
+	                      )
+	                    ),
+	                    _react2.default.createElement(
+	                      "span",
+	                      { className: "list__content__textArea__social__item__icon" },
+	                      _react2.default.createElement("img", { width: 9, height: 9, src: base64.arrowDownWhite })
 	                    )
 	                  ),
 	                  _react2.default.createElement(
@@ -74285,6 +74324,8 @@
 	});
 	var arrowUpWhite = exports.arrowUpWhite = "data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDUxMi4xNzEgNTEyLjE3MSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTEyLjE3MSA1MTIuMTcxOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjEyOHB4IiBoZWlnaHQ9IjEyOHB4Ij4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNNDc2LjcyMywyMTYuNjRMMjYzLjMwNSwzLjExNUMyNjEuMjk5LDEuMTA5LDI1OC41OSwwLDI1NS43NTMsMGMtMi44MzcsMC01LjU0NywxLjEzMS03LjU1MiwzLjEzNkwzNS40MjIsMjE2LjY0ICAgIGMtMy4wNTEsMy4wNTEtMy45NDcsNy42MzctMi4zMDQsMTEuNjI3YzEuNjY0LDMuOTg5LDUuNTQ3LDYuNTcxLDkuODU2LDYuNTcxaDExNy4zMzN2MjY2LjY2N2MwLDUuODg4LDQuNzc5LDEwLjY2NywxMC42NjcsMTAuNjY3ICAgIGgxNzAuNjY3YzUuODg4LDAsMTAuNjY3LTQuNzc5LDEwLjY2Ny0xMC42NjdWMjM0LjgzN2gxMTYuODg1YzQuMzA5LDAsOC4xOTItMi42MDMsOS44NTYtNi41OTIgICAgQzQ4MC43MTMsMjI0LjI1Niw0NzkuNzc0LDIxOS42OTEsNDc2LjcyMywyMTYuNjR6IiBmaWxsPSIjYTBjMWI4Ii8+Cgk8L2c+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg==";
 	var arrowUpGreen = exports.arrowUpGreen = "data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDUxMi4xNzEgNTEyLjE3MSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTEyLjE3MSA1MTIuMTcxOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjEyOHB4IiBoZWlnaHQ9IjEyOHB4Ij4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNNDc2LjcyMywyMTYuNjRMMjYzLjMwNSwzLjExNUMyNjEuMjk5LDEuMTA5LDI1OC41OSwwLDI1NS43NTMsMGMtMi44MzcsMC01LjU0NywxLjEzMS03LjU1MiwzLjEzNkwzNS40MjIsMjE2LjY0ICAgIGMtMy4wNTEsMy4wNTEtMy45NDcsNy42MzctMi4zMDQsMTEuNjI3YzEuNjY0LDMuOTg5LDUuNTQ3LDYuNTcxLDkuODU2LDYuNTcxaDExNy4zMzN2MjY2LjY2N2MwLDUuODg4LDQuNzc5LDEwLjY2NywxMC42NjcsMTAuNjY3ICAgIGgxNzAuNjY3YzUuODg4LDAsMTAuNjY3LTQuNzc5LDEwLjY2Ny0xMC42NjdWMjM0LjgzN2gxMTYuODg1YzQuMzA5LDAsOC4xOTItMi42MDMsOS44NTYtNi41OTIgICAgQzQ4MC43MTMsMjI0LjI1Niw0NzkuNzc0LDIxOS42OTEsNDc2LjcyMywyMTYuNjR6IiBmaWxsPSIjNWNiODVjIi8+Cgk8L2c+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg==";
+	var arrowDownWhite = exports.arrowDownWhite = "data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDUxMi4xNzEgNTEyLjE3MSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTEyLjE3MSA1MTIuMTcxOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjEyOHB4IiBoZWlnaHQ9IjEyOHB4Ij4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNNDc5LjA0NiwyODMuOTI1Yy0xLjY2NC0zLjk4OS01LjU0Ny02LjU5Mi05Ljg1Ni02LjU5MkgzNTIuMzA1VjEwLjY2N0MzNTIuMzA1LDQuNzc5LDM0Ny41MjYsMCwzNDEuNjM4LDBIMTcwLjk3MSAgICBjLTUuODg4LDAtMTAuNjY3LDQuNzc5LTEwLjY2NywxMC42Njd2MjY2LjY2N0g0Mi45NzFjLTQuMzA5LDAtOC4xOTIsMi42MDMtOS44NTYsNi41NzFjLTEuNjQzLDMuOTg5LTAuNzQ3LDguNTc2LDIuMzA0LDExLjYyNyAgICBsMjEyLjgsMjEzLjUwNGMyLjAwNSwyLjAwNSw0LjcxNSwzLjEzNiw3LjU1MiwzLjEzNnM1LjU0Ny0xLjEzMSw3LjU1Mi0zLjExNWwyMTMuNDE5LTIxMy41MDQgICAgQzQ3OS43OTMsMjkyLjUwMSw0ODAuNzEsMjg3LjkxNSw0NzkuMDQ2LDI4My45MjV6IiBmaWxsPSIjYTBjMWI4Ii8+Cgk8L2c+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg==";
+	var arrowDownRed = exports.arrowDownRed = "data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDUxMi4xNzEgNTEyLjE3MSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTEyLjE3MSA1MTIuMTcxOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjEyOHB4IiBoZWlnaHQ9IjEyOHB4Ij4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNNDc5LjA0NiwyODMuOTI1Yy0xLjY2NC0zLjk4OS01LjU0Ny02LjU5Mi05Ljg1Ni02LjU5MkgzNTIuMzA1VjEwLjY2N0MzNTIuMzA1LDQuNzc5LDM0Ny41MjYsMCwzNDEuNjM4LDBIMTcwLjk3MSAgICBjLTUuODg4LDAtMTAuNjY3LDQuNzc5LTEwLjY2NywxMC42Njd2MjY2LjY2N0g0Mi45NzFjLTQuMzA5LDAtOC4xOTIsMi42MDMtOS44NTYsNi41NzFjLTEuNjQzLDMuOTg5LTAuNzQ3LDguNTc2LDIuMzA0LDExLjYyNyAgICBsMjEyLjgsMjEzLjUwNGMyLjAwNSwyLjAwNSw0LjcxNSwzLjEzNiw3LjU1MiwzLjEzNnM1LjU0Ny0xLjEzMSw3LjU1Mi0zLjExNWwyMTMuNDE5LTIxMy41MDQgICAgQzQ3OS43OTMsMjkyLjUwMSw0ODAuNzEsMjg3LjkxNSw0NzkuMDQ2LDI4My45MjV6IiBmaWxsPSIjZjI2OTY4Ii8+Cgk8L2c+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg==";
 
 /***/ }),
 /* 758 */
@@ -79974,6 +80015,7 @@
 	    paddingBottom: 20,
 	    paddingLeft: 10
 	  },
+	
 	  hint: {
 	    marginBottom: 10,
 	    marginLeft: 10,
@@ -82178,6 +82220,7 @@
 	          imagePreview = _props.imagePreview,
 	          handleDelete = _props.handleDelete,
 	          onClick = _props.onClick,
+	          onClickLeft = _props.onClickLeft,
 	          value = _props.value,
 	          className = _props.className,
 	          postType = _props.postType,
@@ -82325,6 +82368,14 @@
 	                  );
 	                })
 	              )
+	            ) : null,
+	            postText === "수정" ? _react2.default.createElement(
+	              "span",
+	              {
+	                onClick: onClickLeft,
+	                className: "socialInput__footer__postArea__postButton"
+	              },
+	              "\uC0AD\uC81C"
 	            ) : null,
 	            _react2.default.createElement(
 	              "span",
@@ -83006,7 +83057,7 @@
 /* 839 */
 /***/ (function(module, exports) {
 
-	module.exports = {"category":["자유","정보","유머","질문과 답","홍보"]}
+	module.exports = {"category":["자유","정보","유머","질문과 답","홍보"],"all":["전체","자유","정보","유머","질문과 답","홍보"]}
 
 /***/ }),
 /* 840 */
@@ -83399,7 +83450,12 @@
 	          _react2.default.createElement(
 	            "div",
 	            { className: "comment__content__date" },
-	            (0, _moment2.default)(createdAt).fromNow()
+	            (0, _moment2.default)(createdAt).fromNow(),
+	            username === checkName ? _react2.default.createElement(
+	              "span",
+	              { className: "comment__content__delete" },
+	              _react2.default.createElement("i", { className: "xi-close" })
+	            ) : null
 	          )
 	        )
 	      );
@@ -87201,6 +87257,10 @@
 	
 	var _reactLoadingOverlay2 = _interopRequireDefault(_reactLoadingOverlay);
 	
+	var _category = __webpack_require__(839);
+	
+	var _category2 = _interopRequireDefault(_category);
+	
 	__webpack_require__(759);
 	
 	var _classnames = __webpack_require__(624);
@@ -87235,6 +87295,8 @@
 	  };
 	};
 	
+	var sortFilter = [{ id: 1, name: "최신순" }, { id: 0, name: "인기순" }];
+	
 	var ForumPage = function (_Component) {
 	  _inherits(ForumPage, _Component);
 	
@@ -87244,6 +87306,14 @@
 	    _classCallCheck(this, ForumPage);
 	
 	    var _this = _possibleConstructorReturn(this, (ForumPage.__proto__ || Object.getPrototypeOf(ForumPage)).call(this, props));
+	
+	    _this.toggleType = function () {
+	      _this.setState(function (prevState) {
+	        return {
+	          typeDropDown: !prevState.typeDropDown
+	        };
+	      });
+	    };
 	
 	    _this.toggleModal = function () {
 	      if (_this.props.isLogin === false) {
@@ -87270,22 +87340,25 @@
 	    };
 	
 	    _this.handleFilter = function (index, id, coin) {
+	      var _this$state = _this.state,
+	          selectedPostType = _this$state.selectedPostType,
+	          sort = _this$state.sort,
+	          search = _this$state.search;
+	
 	      var requestCoins = _this.state.filterCoins.slice();
 	      var newCoin = _this.state.sideFavorite.slice();
 	      var result = newCoin.filter(function (a) {
 	        return a.clicked === true;
 	      });
 	      _this.setState({ isPostsLoading: true });
-	
 	      if (result[index].selected) {
 	        result[index].selected = false;
 	        result[index].loading = true;
 	        requestCoins.splice(requestCoins.indexOf(id), 1);
 	        _this.setState({ sideFavorite: result });
-	        var params = { token: _this.props.token, coins: requestCoins };
 	        if (requestCoins.length === 0) {
-	          var _params = { forumIndex: 0 };
-	          _this.props.dispatch(SocialAction.getAllForums(_params)).then(function (forums) {
+	          var params = { forumIndex: 0 };
+	          _this.props.dispatch(SocialAction.getAllForums(params)).then(function (forums) {
 	            result[index].loading = false;
 	            if (forums.forums.length < 30) {
 	              _this.setState({ endScroll: true });
@@ -87304,10 +87377,19 @@
 	            });
 	          });
 	        } else {
-	          _this.props.dispatch(SocialAction.filterForums(params)).then(function (forums) {
+	          var _params = {
+	            index: 0,
+	            token: _this.props.token,
+	            coins: requestCoins,
+	            category: selectedPostType,
+	            order: sort,
+	            keyword: _this.state.search
+	          };
+	          _this.props.dispatch(SocialAction.filterForums(_params)).then(function (forums) {
 	            result[index].loading = false;
 	            _this.setState({
-	              posts: forums,
+	              forumIndex: forums.nextIndex,
+	              posts: forums.result,
 	              sideFavorite: newCoin,
 	              filterCoins: requestCoins,
 	              isPostsLoading: false
@@ -87315,21 +87397,71 @@
 	          });
 	        }
 	      } else {
+	        var _params2 = {
+	          index: 0,
+	          token: _this.props.token,
+	          coins: requestCoins,
+	          category: selectedPostType,
+	          order: sort,
+	          keyword: _this.state.search
+	        };
 	        result[index].selected = true;
 	        result[index].loading = true;
 	        requestCoins.push(id);
 	        _this.setState({ sideFavorite: result });
-	        var _params2 = { token: _this.props.token, coins: requestCoins };
 	        _this.props.dispatch(SocialAction.filterForums(_params2)).then(function (forums) {
 	          result[index].loading = false;
 	          _this.setState({
-	            posts: forums,
+	            forumIndex: forums.nextIndex,
+	            posts: forums.result,
 	            sideFavorite: newCoin,
 	            filterCoins: requestCoins,
 	            isPostsLoading: false
 	          });
 	        });
 	      }
+	    };
+	
+	    _this.handleCategory = function (data) {
+	      var filterCoins = _this.state.filterCoins;
+	
+	      var params = {
+	        index: 0,
+	        category: data,
+	        token: _this.props.token,
+	        order: _this.state.sort,
+	        coins: filterCoins,
+	        keyword: _this.state.search
+	      };
+	      _this.setState({ isPostsLoading: true, selectedPostType: data });
+	      _this.props.dispatch(SocialAction.filterForums(params)).then(function (forums) {
+	        _this.setState({
+	          isPostsLoading: false,
+	          forumIndex: forums.nextIndex,
+	          posts: forums.result
+	        });
+	      });
+	    };
+	
+	    _this.handleSort = function (id, data) {
+	      var filterCoins = _this.state.filterCoins;
+	
+	      var params = {
+	        index: 0,
+	        category: _this.state.selectedPostType,
+	        token: _this.props.token,
+	        order: id,
+	        coins: filterCoins,
+	        keyword: _this.state.search
+	      };
+	      _this.setState({ isPostsLoading: true, sort: id, sortName: data });
+	      _this.props.dispatch(SocialAction.filterForums(params)).then(function (forums) {
+	        _this.setState({
+	          isPostsLoading: false,
+	          forumIndex: forums.nextIndex,
+	          posts: forums.result
+	        });
+	      });
 	    };
 	
 	    _this.handlePreview = function (file_arr) {
@@ -87456,38 +87588,51 @@
 	        };
 	        var newPosts = _this.state.posts.slice();
 	        newPosts[index].loading = true;
-	        _this.setState({ posts: newPosts });
+	        _this.setState({ posts: newPosts, selectedIndex: index });
 	        _this.props.dispatch(SocialAction.getOneForum(params)).then(function (forum) {
-	          var newForum = Object.assign({}, forum);
-	          newForum.view_cnt = newForum.view_cnt + 1;
 	          var images = forum.image.map(function (data, index) {
 	            return { original: data.img_url };
 	          });
-	          _this.setState({ selectedIndex: index });
 	          _this.props.dispatch(SocialAction.postForumView(params)).then(function (view) {
-	            _this.props.dispatch(SocialAction.getLikeCheck(params)).then(function (result) {
-	              var isLiked = void 0;
-	              if (result.message === "You already liked this forum") {
-	                isLiked = true;
+	            var newPosts = _this.state.posts.slice();
+	            var newForum = Object.assign({}, forum);
+	            if (view.message === "already View") {
+	              null;
+	            } else {
+	              newForum.view_cnt = newForum.view_cnt + 1;
+	              newPosts[index].view_cnt = newPosts[index].view_cnt + 1;
+	            }
+	            _this.props.dispatch(SocialAction.getHateCheck(params)).then(function (result) {
+	              var isHate = void 0;
+	              if (result.message === "it's okay to dislike this forum") {
+	                isHate = false;
 	              } else {
-	                isLiked = false;
+	                isHate = true;
 	              }
-	              _this.props.dispatch(SocialAction.getOneForumCoins(params)).then(function (coins) {
-	                _this.props.dispatch(SocialAction.getOneForumComment(params)).then(function (comment) {
-	                  var newPosts = _this.state.posts.slice();
-	                  newPosts[index].loading = false;
-	                  newPosts[index].view_cnt = newPosts[index].view_cnt + 1;
-	                  _this.setState({ posts: newPosts });
-	                  _this.props.history.push({
-	                    pathname: "/forum/" + id,
-	                    state: {
-	                      name: _this.props.me.username,
-	                      forum: newForum,
-	                      comment: comment.reverse(),
-	                      images: images,
-	                      coins: coins,
-	                      liked: isLiked
-	                    }
+	
+	              _this.props.dispatch(SocialAction.getLikeCheck(params)).then(function (result) {
+	                var isLiked = void 0;
+	                if (result.message === "You already liked this forum") {
+	                  isLiked = true;
+	                } else {
+	                  isLiked = false;
+	                }
+	                _this.props.dispatch(SocialAction.getOneForumCoins(params)).then(function (coins) {
+	                  _this.props.dispatch(SocialAction.getOneForumComment(params)).then(function (comment) {
+	                    newPosts[index].loading = false;
+	                    _this.setState({ posts: newPosts });
+	                    _this.props.history.push({
+	                      pathname: "/forum/" + id,
+	                      state: {
+	                        name: _this.props.me.username,
+	                        forum: newForum,
+	                        comment: comment.reverse(),
+	                        images: images,
+	                        coins: coins,
+	                        liked: isLiked,
+	                        hated: isHate
+	                      }
+	                    });
 	                  });
 	                });
 	              });
@@ -87502,13 +87647,13 @@
 	    };
 	
 	    _this.handlePost = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-	      var _this$state, main, title, selectedCoinType, selectedAbbr, selectedPostType2, imagePreview, date, coinArray, i, params;
+	      var _this$state2, main, title, selectedCoinType, selectedAbbr, selectedPostType2, imagePreview, date, coinArray, i, params;
 	
 	      return regeneratorRuntime.wrap(function _callee3$(_context3) {
 	        while (1) {
 	          switch (_context3.prev = _context3.next) {
 	            case 0:
-	              _this$state = _this.state, main = _this$state.main, title = _this$state.title, selectedCoinType = _this$state.selectedCoinType, selectedAbbr = _this$state.selectedAbbr, selectedPostType2 = _this$state.selectedPostType2, imagePreview = _this$state.imagePreview;
+	              _this$state2 = _this.state, main = _this$state2.main, title = _this$state2.title, selectedCoinType = _this$state2.selectedCoinType, selectedAbbr = _this$state2.selectedAbbr, selectedPostType2 = _this$state2.selectedPostType2, imagePreview = _this$state2.imagePreview;
 	
 	              if (selectedCoinType.length === 0) {
 	                alert("해당하는 종목을 1개 이상 선택해주세요!");
@@ -87517,7 +87662,7 @@
 	                coinArray = [];
 	
 	                for (i = 0; i < selectedAbbr.length; i++) {
-	                  coinArray.push({ abbr: selectedAbbr[i] });
+	                  coinArray.push({ id: selectedCoinType[i], abbr: selectedAbbr[i] });
 	                }
 	                params = {
 	                  title: title,
@@ -87536,6 +87681,10 @@
 	                    token: _this.props.token,
 	                    forum_id: id
 	                  };
+	
+	                  var frontImages = imagePreview.map(function (data, index) {
+	                    return { img_url: data };
+	                  });
 	                  var frontParams = {
 	                    title: title,
 	                    id: id,
@@ -87545,9 +87694,16 @@
 	                    created_at: date,
 	                    view_cnt: 0,
 	                    like_cnt: 0,
+	                    dislike_cnt: 0,
 	                    username: _this.props.me.username,
-	                    me: _this.props.me
+	                    me: _this.props.me,
+	                    images: frontImages
 	                  };
+	
+	                  var images = imagePreview.map(function (data, index) {
+	                    return { original: data };
+	                  });
+	
 	                  _this.props.dispatch(SocialAction.getOneForum(params)).then(function (forum) {
 	                    _this.props.dispatch(SocialAction.getOneForumCoins(params)).then(function () {
 	                      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(coins) {
@@ -87562,7 +87718,7 @@
 	                                _context2.next = 4;
 	                                return _this.props.history.push({
 	                                  pathname: "/forum/" + id,
-	                                  state: { forum: forum, coins: coins, comment: [] }
+	                                  state: { forum: forum, coins: coins, comment: [], images: images }
 	                                });
 	
 	                              case 4:
@@ -87602,15 +87758,16 @@
 	    }));
 	
 	    _this.handleEditPost = function () {
-	      var _this$state2 = _this.state,
-	          main = _this$state2.main,
-	          title = _this$state2.title,
-	          selectedCoinType = _this$state2.selectedCoinType,
-	          selectedAbbr = _this$state2.selectedAbbr,
-	          selectedPostType2 = _this$state2.selectedPostType2,
-	          posts = _this$state2.posts,
-	          editIndex = _this$state2.editIndex,
-	          editId = _this$state2.editId;
+	      var _this$state3 = _this.state,
+	          main = _this$state3.main,
+	          title = _this$state3.title,
+	          selectedCoinType = _this$state3.selectedCoinType,
+	          selectedAbbr = _this$state3.selectedAbbr,
+	          selectedPostType2 = _this$state3.selectedPostType2,
+	          posts = _this$state3.posts,
+	          editIndex = _this$state3.editIndex,
+	          editId = _this$state3.editId,
+	          imagePreview = _this$state3.imagePreview;
 	
 	      if (selectedCoinType.length === 0) {
 	        alert("해당하는 종목을 1개 이상 선택해주세요!");
@@ -87626,6 +87783,7 @@
 	          content: main,
 	          category: selectedPostType2,
 	          coins: selectedCoinType,
+	          pic_list: imagePreview,
 	          created_at: date,
 	          token: _this.props.token
 	        };
@@ -87637,12 +87795,20 @@
 	            forum_id: editId
 	          };
 	          //프론트 수정
+	          var newImages = imagePreview.map(function (data, index) {
+	            return { original: data };
+	          });
+	
+	          var frontImages = imagePreview.map(function (data, index) {
+	            return { img_url: data };
+	          });
 	          var newPosts = posts.slice();
 	          var i = editIndex;
 	          newPosts[i].title = title;
 	          newPosts[i].main = main;
 	          newPosts[i].coins = coinArray;
 	          newPosts[i].category = selectedPostType2;
+	          newPosts[i].images = frontImages;
 	
 	          _this.props.dispatch(SocialAction.getOneForum(params)).then(function (forum) {
 	            _this.props.dispatch(SocialAction.getOneForumCoins(params)).then(function () {
@@ -87668,7 +87834,7 @@
 	                        _context4.next = 6;
 	                        return _this.props.history.push({
 	                          pathname: "/forum/" + editId,
-	                          state: { forum: forum, coins: coins, comment: [] }
+	                          state: { forum: forum, coins: coins, comment: [], images: newImages }
 	                        });
 	
 	                      case 6:
@@ -87750,8 +87916,8 @@
 	    };
 	
 	    _this.handleEdit = function () {
-	      var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(title, main, coins, category, index, id) {
-	        var favorite, newFav, type, abbr, i, j, _i4;
+	      var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(title, main, coins, category, index, id, image) {
+	        var favorite, newFav, type, abbr, preview, i, j, _i4;
 	
 	        return regeneratorRuntime.wrap(function _callee5$(_context5) {
 	          while (1) {
@@ -87765,6 +87931,10 @@
 	                });
 	                type = [];
 	                abbr = [];
+	                preview = image.map(function (data, index) {
+	                  return data.img_url;
+	                });
+	
 	
 	                for (i = 0; i < coins.length; i++) {
 	                  for (j = 0; j < newFav.length; j++) {
@@ -87778,7 +87948,7 @@
 	                  abbr.push(coins[_i4].abbr);
 	                  type.push(coins[_i4].id);
 	                }
-	                _context5.next = 9;
+	                _context5.next = 10;
 	                return _this.setState({
 	                  title: title,
 	                  main: main,
@@ -87788,14 +87958,15 @@
 	                  favorite: newFav,
 	                  selectedAbbr: abbr,
 	                  selectedCoinType: type,
-	                  selectedPostType2: category
+	                  selectedPostType2: category,
+	                  imagePreview: preview
 	                });
 	
-	              case 9:
-	                _context5.next = 11;
+	              case 10:
+	                _context5.next = 12;
 	                return _this.toggleModal();
 	
-	              case 11:
+	              case 12:
 	              case "end":
 	                return _context5.stop();
 	            }
@@ -87803,10 +87974,38 @@
 	        }, _callee5, _this2);
 	      }));
 	
-	      return function (_x6, _x7, _x8, _x9, _x10, _x11) {
+	      return function (_x6, _x7, _x8, _x9, _x10, _x11, _x12) {
 	        return _ref5.apply(this, arguments);
 	      };
 	    }();
+	
+	    _this.handleDelete = function () {
+	      var editId = _this.state.editId;
+	
+	
+	      var params = {
+	        token: _this.props.token,
+	        forum_id: editId
+	      };
+	
+	      var newPosts = _this.state.posts.slice();
+	
+	      var forumIndex = void 0;
+	      for (var i = 0; i < newPosts.length; i++) {
+	        if (newPosts[i].id === editId) {
+	          forumIndex = i;
+	        }
+	      }
+	      _this.setState({ postLoading: true });
+	      _this.props.dispatch(SocialAction.deleteForum(params)).then(function (result) {
+	        newPosts.splice(forumIndex, 1);
+	        _this.setState({ posts: newPosts, postLoading: false });
+	        _this.toggleModal();
+	        _this.props.history.replace({
+	          pathname: "/forum"
+	        });
+	      });
+	    };
 	
 	    _this.handleOpenPost = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6() {
 	      var favorite, newFav;
@@ -87829,6 +88028,7 @@
 	                selectedCoinType: [],
 	                selectedAbbr: [],
 	                selectedPostType2: "자유",
+	                imagePreview: [],
 	                favorite: newFav
 	              });
 	
@@ -87844,8 +88044,51 @@
 	      }, _callee6, _this2);
 	    }));
 	
+	    _this.handleSearchPost = function () {
+	      var params = {
+	        index: 0,
+	        category: _this.state.selectedPostType,
+	        order: _this.state.sort,
+	        coins: _this.state.filterCoins,
+	        keyword: _this.state.search
+	      };
+	      _this.setState({ isPostsLoading: true });
+	      _this.props.dispatch(SocialAction.filterForums(params)).then(function (news) {
+	        _this.setState({
+	          forumIndex: news.nextIndex,
+	          posts: news.result,
+	          isPostsLoading: false
+	        });
+	      });
+	    };
+	
+	    _this.handleKeySearchPost = function (event) {
+	      if (event.key === "Enter") {
+	        var params = {
+	          index: 0,
+	          category: _this.state.selectedPostType,
+	          order: _this.state.sort,
+	          coins: _this.state.filterCoins,
+	          keyword: _this.state.search
+	        };
+	        _this.setState({ isPostsLoading: true });
+	        _this.props.dispatch(SocialAction.filterForums(params)).then(function (news) {
+	          _this.setState({
+	            forumIndex: news.nextIndex,
+	            posts: news.result,
+	            isPostsLoading: false
+	          });
+	        });
+	      }
+	    };
+	
+	    _this.handleSearchBar = function (e) {
+	      _this.setState({ search: e.target.value });
+	    };
+	
 	    _this.state = {
 	      dropdownOpen: false,
+	      typeDropDown: false,
 	      posts: [],
 	      favorite: [],
 	      sideFavorite: [],
@@ -87859,9 +88102,12 @@
 	      title: "",
 	      main: "",
 	      endScroll: false,
+	      sort: 1,
+	      sortName: "최신순",
 	      showModal: false,
 	      selectedCoinType: [],
 	      selectedAbbr: [],
+	      selectedPostType: "전체",
 	      selectedPostType2: "자유",
 	      selectedIndex: null,
 	      forum: [],
@@ -87869,7 +88115,8 @@
 	      postButton: "등록",
 	      editIndex: 0,
 	      editId: 0,
-	      imagePreview: []
+	      imagePreview: [],
+	      search: ""
 	    };
 	    _this.toggle = _this.toggle.bind(_this);
 	    return _this;
@@ -87995,6 +88242,9 @@
 	          isPostsLoading = _state.isPostsLoading,
 	          isFocus = _state.isFocus,
 	          imagePreview = _state.imagePreview,
+	          sort = _state.sort,
+	          sortName = _state.sortName,
+	          selectedPostType = _state.selectedPostType,
 	          selectedPostType2 = _state.selectedPostType2,
 	          selectedIndex = _state.selectedIndex,
 	          favorite = _state.favorite,
@@ -88002,11 +88252,13 @@
 	          sideFavorite = _state.sideFavorite,
 	          postButton = _state.postButton,
 	          main = _state.main,
-	          title = _state.title;
+	          title = _state.title,
+	          typeDropDown = _state.typeDropDown;
 	      var _props = this.props,
 	          me = _props.me,
 	          isLogin = _props.isLogin;
 	
+	      var categoryType = _category2.default.all;
 	      return _react2.default.createElement(
 	        "div",
 	        { className: "forumPage" },
@@ -88029,7 +88281,7 @@
 	          },
 	          _react2.default.createElement(
 	            _reactLoadingOverlay2.default,
-	            { active: postLoading, spinner: true, text: "\uD3EC\uC2A4\uD305 \uC911\uC785\uB2C8\uB2E4" },
+	            { active: postLoading, spinner: true, text: "\uCC98\uB9AC\uC911 \uC785\uB2C8\uB2E4" },
 	            _react2.default.createElement(
 	              _reactstrap.ModalBody,
 	              null,
@@ -88049,6 +88301,7 @@
 	                  imagePreview: imagePreview,
 	                  placeholder: "\uBCF8\uBB38\uC744 \uC785\uB825\uD558\uC138\uC694",
 	                  onClick: postButton === "수정" ? this.handleEditPost : this.handlePost,
+	                  onClickLeft: this.handleDelete,
 	                  postText: postButton,
 	                  handleDelete: this.handleBadge,
 	                  handleBase: this.handlePreview,
@@ -88112,20 +88365,31 @@
 	                { className: "forumPage__content__news__search__first" },
 	                _react2.default.createElement(
 	                  "div",
-	                  { className: "forumPage__content__news__search__first__iconArea" },
+	                  { className: "forumPage__content__news__search__first__container" },
 	                  _react2.default.createElement(
-	                    "span",
-	                    { className: "forumPage__content__news__search__first__iconArea__icon" },
-	                    _react2.default.createElement("i", { className: "xi-search" })
+	                    "div",
+	                    { className: "forumPage__content__news__search__first__iconArea" },
+	                    _react2.default.createElement(
+	                      "span",
+	                      { className: "forumPage__content__news__search__first__iconArea__icon" },
+	                      _react2.default.createElement("i", { className: "xi-search" })
+	                    )
+	                  ),
+	                  _react2.default.createElement(
+	                    "div",
+	                    { className: "forumPage__content__news__search__first__inputArea" },
+	                    _react2.default.createElement("input", {
+	                      className: "forumPage__content__news__search__first__inputArea__input",
+	                      placeholder: "\uBB34\uC5C7\uC744 \uCC3E\uACE0\uC2F6\uC73C\uC2E0\uAC00\uC694?",
+	                      onChange: this.handleSearchBar,
+	                      onKeyPress: this.handleKeySearchPost
+	                    })
 	                  )
 	                ),
 	                _react2.default.createElement(
-	                  "div",
-	                  { className: "forumPage__content__news__search__first__inputArea" },
-	                  _react2.default.createElement("input", {
-	                    className: "forumPage__content__news__search__first__inputArea__input",
-	                    placeholder: "\uBB34\uC5C7\uC744 \uCC3E\uACE0\uC2F6\uC73C\uC2E0\uAC00\uC694?"
-	                  })
+	                  _reactstrap.Button,
+	                  { onClick: this.handleSearchPost, size: "sm" },
+	                  "\uAC80\uC0C9"
 	                )
 	              ),
 	              _react2.default.createElement(
@@ -88135,26 +88399,78 @@
 	                  "div",
 	                  { className: "forumPage__content__news__search__second__content" },
 	                  _react2.default.createElement(
-	                    _reactstrap.ButtonDropdown,
-	                    {
-	                      isOpen: this.state.dropdownOpen,
-	                      style: { marginRight: 10, backgroundColor: "transparent" },
-	                      toggle: this.toggle,
-	                      size: "sm",
-	                      direction: "down"
-	                    },
+	                    "div",
+	                    null,
 	                    _react2.default.createElement(
-	                      _reactstrap.DropdownToggle,
-	                      { caret: true },
-	                      "\uCD5C\uC2E0 \uC21C"
+	                      _reactstrap.ButtonDropdown,
+	                      {
+	                        isOpen: this.state.dropdownOpen,
+	                        style: {
+	                          marginRight: 10,
+	                          backgroundColor: "transparent"
+	                        },
+	                        toggle: this.toggle,
+	                        size: "sm",
+	                        direction: "down"
+	                      },
+	                      _react2.default.createElement(
+	                        _reactstrap.DropdownToggle,
+	                        { caret: true },
+	                        sortName
+	                      ),
+	                      _react2.default.createElement(
+	                        _reactstrap.DropdownMenu,
+	                        null,
+	                        sortFilter.filter(function (a) {
+	                          return a.id !== sort;
+	                        }).map(function (data, index) {
+	                          return _react2.default.createElement(
+	                            _reactstrap.DropdownItem,
+	                            {
+	                              key: index,
+	                              onClick: function onClick() {
+	                                return _this4.handleSort(data.id, data.name);
+	                              }
+	                            },
+	                            data.name
+	                          );
+	                        })
+	                      )
 	                    ),
 	                    _react2.default.createElement(
-	                      _reactstrap.DropdownMenu,
-	                      null,
+	                      _reactstrap.ButtonDropdown,
+	                      {
+	                        isOpen: typeDropDown,
+	                        style: {
+	                          marginRight: 10,
+	                          backgroundColor: "transparent"
+	                        },
+	                        toggle: this.toggleType,
+	                        size: "sm",
+	                        direction: "down"
+	                      },
 	                      _react2.default.createElement(
-	                        _reactstrap.DropdownItem,
+	                        _reactstrap.DropdownToggle,
+	                        { caret: true },
+	                        selectedPostType
+	                      ),
+	                      _react2.default.createElement(
+	                        _reactstrap.DropdownMenu,
 	                        null,
-	                        "\uC778\uAE30 \uC21C"
+	                        categoryType.filter(function (a) {
+	                          return a !== selectedPostType;
+	                        }).map(function (data, index) {
+	                          return _react2.default.createElement(
+	                            _reactstrap.DropdownItem,
+	                            {
+	                              key: index,
+	                              onClick: function onClick() {
+	                                return _this4.handleCategory(data);
+	                              }
+	                            },
+	                            data
+	                          );
+	                        })
 	                      )
 	                    )
 	                  ),
@@ -88191,6 +88507,7 @@
 	                  title: data.title,
 	                  point: data.point,
 	                  likeCount: data.like_cnt,
+	                  disLikeCount: data.dislike_cnt,
 	                  createdAt: data.created_at,
 	                  type: data.coins,
 	                  view: data.view_cnt,
@@ -88198,7 +88515,10 @@
 	                    return _this4.handleDetail(index, data.id);
 	                  },
 	                  onEditClick: function onEditClick() {
-	                    return _this4.handleEdit(data.title, data.content, data.coins, data.category, index, data.id);
+	                    return _this4.handleEdit(data.title, data.content, data.coins, data.category, index, data.id, data.images);
+	                  },
+	                  onDeleteClick: function onDeleteClick() {
+	                    return _this4.handleDelete(index, data.id);
 	                  }
 	                });
 	              }),
@@ -88312,7 +88632,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.postForumComment = exports.postForumDisLike = exports.postForumLike = exports.getLikeCheck = exports.postForumView = exports.updateForum = exports.editForum = exports.postForum = exports.getOneForumComment = exports.getOneForumCoins = exports.getCommentsByUser = exports.getFavByUser = exports.getForumByUser = exports.getUserById = exports.getOneForum = exports.filterForums = exports.getAllForums = exports.FAILED_TO_POST_FORUM_COMMENT = exports.SUCCEED_TO_POST_FORUM_COMMENT = exports.FAILED_TO_POST_FORUM_VIEW = exports.SUCCEED_TO_POST_FORUM_VIEW = exports.FAILED_TO_POST_FORUM_LIKE = exports.SUCCEED_TO_POST_FORUM_LIKE = exports.FAILED_TO_GET_FORUM_LIKE_CHECK = exports.SUCCEED_TO_GET_FORUM_LIKE_CHECK = exports.FAILED_TO_GET_ONE_FORUM_COMMENT = exports.SUCCEED_TO_GET_ONE_FORUM_COMMENT = exports.FAILED_TO_GET_ONE_FORUM_COINS = exports.SUCCEED_TO_GET_ONE_FORUM_COINS = exports.FAILED_TO_GET_FAVS_BY_USER = exports.SUCCEED_TO_GET_FAVS_BY_USER = exports.FAILED_TO_GET_COMMENTS_BY_USER = exports.SUCCEED_TO_GET_COMMENTS_BY_USER = exports.FAILED_TO_GET_USER_BY_ID = exports.SUCCEED_TO_GET_USER_BY_ID = exports.FAILED_TO_GET_FORUM_BY_USER = exports.SUCCEED_TO_GET_FORUM_BY_USER = exports.FAILED_TO_GET_ONE_FORUM = exports.SUCCEED_TO_GET_ONE_FORUM = exports.FAILED_TO_POST_FORUM = exports.SUCCEED_TO_POST_FORUM = exports.FAILED_TO_FILTER_FORUM = exports.SUCCEED_TO_FILTER_FORUM = exports.FAILED_TO_GET_ALL_FORUM = exports.SUCCEED_TO_GET_ALL_FORUM = undefined;
+	exports.postForumComment = exports.postForumDisLike = exports.postUnHate = exports.getHateCheck = exports.postHate = exports.postForumLike = exports.getLikeCheck = exports.postForumView = exports.deleteForum = exports.updateForum = exports.editForum = exports.postForum = exports.getOneForumComment = exports.getOneForumCoins = exports.getCommentsByUser = exports.getFavByUser = exports.getForumByUser = exports.getUserById = exports.getOneForum = exports.filterForums = exports.getAllForums = exports.FAILED_TO_POST_FORUM_COMMENT = exports.SUCCEED_TO_POST_FORUM_COMMENT = exports.FAILED_TO_POST_FORUM_VIEW = exports.SUCCEED_TO_POST_FORUM_VIEW = exports.FAILED_TO_POST_FORUM_UNHATE = exports.SUCCEED_TO_POST_FORUM_UNHATE = exports.FAILED_TO_POST_FORUM_HATE = exports.SUCCEED_TO_POST_FORUM_HATE = exports.FAILED_TO_POST_FORUM_LIKE = exports.SUCCEED_TO_POST_FORUM_LIKE = exports.FAILED_TO_GET_FORUM_HATE_CHECK = exports.SUCCEED_TO_GET_FORUM_HATE_CHECK = exports.FAILED_TO_GET_FORUM_LIKE_CHECK = exports.SUCCEED_TO_GET_FORUM_LIKE_CHECK = exports.FAILED_TO_GET_ONE_FORUM_COMMENT = exports.SUCCEED_TO_GET_ONE_FORUM_COMMENT = exports.FAILED_TO_GET_FAVS_BY_USER = exports.SUCCEED_TO_GET_FAVS_BY_USER = exports.FAILED_TO_GET_COMMENTS_BY_USER = exports.SUCCEED_TO_GET_COMMENTS_BY_USER = exports.FAILED_TO_GET_USER_BY_ID = exports.SUCCEED_TO_GET_USER_BY_ID = exports.FAILED_TO_GET_FORUM_BY_USER = exports.SUCCEED_TO_GET_FORUM_BY_USER = exports.FAILED_TO_GET_ONE_FORUM_COINS = exports.SUCCEED_TO_GET_ONE_FORUM_COINS = exports.FAILED_TO_GET_ONE_FORUM = exports.SUCCEED_TO_GET_ONE_FORUM = exports.FAILED_TO_DELETE_FORUM = exports.SUCCEED_TO_DELETE_FORUM = exports.FAILED_TO_POST_FORUM = exports.SUCCEED_TO_POST_FORUM = exports.FAILED_TO_FILTER_FORUM_BY_TYPE = exports.SUCCEED_TO_FILTER_FORUM_BY_TYPE = exports.FAILED_TO_SEARCH_FORUM = exports.SUCCEED_TO_SEARCH_FORUM = exports.FAILED_TO_FILTER_FORUM = exports.SUCCEED_TO_FILTER_FORUM = exports.FAILED_TO_GET_ALL_FORUM = exports.SUCCEED_TO_GET_ALL_FORUM = undefined;
 	
 	var _Server = __webpack_require__(437);
 	
@@ -88324,11 +88644,23 @@
 	var SUCCEED_TO_FILTER_FORUM = exports.SUCCEED_TO_FILTER_FORUM = "SUCCEED_TO_FILTER_FORUM";
 	var FAILED_TO_FILTER_FORUM = exports.FAILED_TO_FILTER_FORUM = "FAILED_TO_FILTER_FORUM";
 	
+	var SUCCEED_TO_SEARCH_FORUM = exports.SUCCEED_TO_SEARCH_FORUM = "SUCCEED_TO_SEARCH_FORUM";
+	var FAILED_TO_SEARCH_FORUM = exports.FAILED_TO_SEARCH_FORUM = "FAILED_TO_SEARCH_FORUM";
+	
+	var SUCCEED_TO_FILTER_FORUM_BY_TYPE = exports.SUCCEED_TO_FILTER_FORUM_BY_TYPE = "SUCCEED_TO_FILTER_FORUM_BY_TYPE";
+	var FAILED_TO_FILTER_FORUM_BY_TYPE = exports.FAILED_TO_FILTER_FORUM_BY_TYPE = "FAILED_TO_FILTER_FORUM_BY_TYPE";
+	
 	var SUCCEED_TO_POST_FORUM = exports.SUCCEED_TO_POST_FORUM = "SUCCEED_TO_POST_FORUM";
 	var FAILED_TO_POST_FORUM = exports.FAILED_TO_POST_FORUM = "FAILED_TO_POST_FORUM";
 	
+	var SUCCEED_TO_DELETE_FORUM = exports.SUCCEED_TO_DELETE_FORUM = "SUCCEED_TO_DELETE_FORUM";
+	var FAILED_TO_DELETE_FORUM = exports.FAILED_TO_DELETE_FORUM = "FAILED_TO_DELETE_FORUM";
+	
 	var SUCCEED_TO_GET_ONE_FORUM = exports.SUCCEED_TO_GET_ONE_FORUM = "SUCCEED_TO_GET_ONE_FORUM";
 	var FAILED_TO_GET_ONE_FORUM = exports.FAILED_TO_GET_ONE_FORUM = "FAILED_TO_GET_ONE_FORUM";
+	
+	var SUCCEED_TO_GET_ONE_FORUM_COINS = exports.SUCCEED_TO_GET_ONE_FORUM_COINS = "SUCCEED_TO_GET_ONE_FORUM_COINS";
+	var FAILED_TO_GET_ONE_FORUM_COINS = exports.FAILED_TO_GET_ONE_FORUM_COINS = "FAILED_TO_GET_ONE_FORUM_COINS";
 	
 	var SUCCEED_TO_GET_FORUM_BY_USER = exports.SUCCEED_TO_GET_FORUM_BY_USER = "SUCCEED_TO_GET_FORUM_BY_USER";
 	var FAILED_TO_GET_FORUM_BY_USER = exports.FAILED_TO_GET_FORUM_BY_USER = "FAILED_TO_GET_FORUM_BY_USER";
@@ -88342,17 +88674,23 @@
 	var SUCCEED_TO_GET_FAVS_BY_USER = exports.SUCCEED_TO_GET_FAVS_BY_USER = "SUCCEED_TO_GET_FAVS_BY_USER";
 	var FAILED_TO_GET_FAVS_BY_USER = exports.FAILED_TO_GET_FAVS_BY_USER = "FAILED_TO_GET_FAVS_BY_USER";
 	
-	var SUCCEED_TO_GET_ONE_FORUM_COINS = exports.SUCCEED_TO_GET_ONE_FORUM_COINS = "SUCCEED_TO_GET_ONE_FORUM_COINS";
-	var FAILED_TO_GET_ONE_FORUM_COINS = exports.FAILED_TO_GET_ONE_FORUM_COINS = "FAILED_TO_GET_ONE_FORUM_COINS";
-	
 	var SUCCEED_TO_GET_ONE_FORUM_COMMENT = exports.SUCCEED_TO_GET_ONE_FORUM_COMMENT = "SUCCEED_TO_GET_ONE_FORUM_COMMENT";
 	var FAILED_TO_GET_ONE_FORUM_COMMENT = exports.FAILED_TO_GET_ONE_FORUM_COMMENT = "FAILED_TO_GET_ONE_FORUM_COMMENT";
 	
 	var SUCCEED_TO_GET_FORUM_LIKE_CHECK = exports.SUCCEED_TO_GET_FORUM_LIKE_CHECK = "SUCCEED_TO_GET_FORUM_LIKE_CHECK";
 	var FAILED_TO_GET_FORUM_LIKE_CHECK = exports.FAILED_TO_GET_FORUM_LIKE_CHECK = "FAILED_TO_GET_FORUM_LIKE_CHECK";
 	
+	var SUCCEED_TO_GET_FORUM_HATE_CHECK = exports.SUCCEED_TO_GET_FORUM_HATE_CHECK = "SUCCEED_TO_GET_FORUM_HATE_CHECK";
+	var FAILED_TO_GET_FORUM_HATE_CHECK = exports.FAILED_TO_GET_FORUM_HATE_CHECK = "FAILED_TO_GET_FORUM_HATE_CHECK";
+	
 	var SUCCEED_TO_POST_FORUM_LIKE = exports.SUCCEED_TO_POST_FORUM_LIKE = "SUCCEED_TO_POST_FORUM_LIKE";
 	var FAILED_TO_POST_FORUM_LIKE = exports.FAILED_TO_POST_FORUM_LIKE = "FAILED_TO_POST_FORUM_LIKE";
+	
+	var SUCCEED_TO_POST_FORUM_HATE = exports.SUCCEED_TO_POST_FORUM_HATE = "SUCCEED_TO_POST_FORUM_HATE";
+	var FAILED_TO_POST_FORUM_HATE = exports.FAILED_TO_POST_FORUM_HATE = "FAILED_TO_POST_FORUM_HATE";
+	
+	var SUCCEED_TO_POST_FORUM_UNHATE = exports.SUCCEED_TO_POST_FORUM_UNHATE = "SUCCEED_TO_POST_FORUM_UNHATE";
+	var FAILED_TO_POST_FORUM_UNHATE = exports.FAILED_TO_POST_FORUM_UNHATE = "FAILED_TO_POST_FORUM_UNHATE";
 	
 	var SUCCEED_TO_POST_FORUM_VIEW = exports.SUCCEED_TO_POST_FORUM_VIEW = "SUCCEED_TO_POST_FORUM_VIEW";
 	var FAILED_TO_POST_FORUM_VIEW = exports.FAILED_TO_POST_FORUM_VIEW = "FAILED_TO_POST_FORUM_VIEW";
@@ -88419,6 +88757,10 @@
 	};
 	
 	var filterForums = exports.filterForums = function filterForums(params) {
+	  console.log(params);
+	  if (params.keyword === undefined) {
+	    params.keyword = "";
+	  }
 	  return function () {
 	    var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(dispatch) {
 	      var response, responseJson;
@@ -88428,7 +88770,7 @@
 	            case 0:
 	              _context2.prev = 0;
 	              _context2.next = 3;
-	              return fetch(_Server.ServerEndPoint + "api/forum/coin", {
+	              return fetch(_Server.ServerEndPoint + ("api/forum/coin?index=" + params.index + "&order=" + params.order + "&keyword=" + params.keyword), {
 	                method: "POST",
 	                headers: {
 	                  Accept: "application/json",
@@ -88437,7 +88779,8 @@
 	                  "x-access-token": params.token
 	                },
 	                body: JSON.stringify({
-	                  coins: params.coins
+	                  coins: params.coins,
+	                  category: params.category
 	                })
 	              });
 	
@@ -88448,17 +88791,19 @@
 	
 	            case 6:
 	              responseJson = _context2.sent;
-	              _context2.next = 9;
+	
+	              console.log(responseJson);
+	              _context2.next = 10;
 	              return dispatch({
 	                type: SUCCEED_TO_FILTER_FORUM,
 	                payload: responseJson
 	              });
 	
-	            case 9:
-	              return _context2.abrupt("return", responseJson.result);
+	            case 10:
+	              return _context2.abrupt("return", responseJson);
 	
-	            case 12:
-	              _context2.prev = 12;
+	            case 13:
+	              _context2.prev = 13;
 	              _context2.t0 = _context2["catch"](0);
 	
 	              dispatch({
@@ -88466,12 +88811,12 @@
 	                payload: { data: "NETWORK_ERROR" }
 	              });
 	
-	            case 15:
+	            case 16:
 	            case "end":
 	              return _context2.stop();
 	          }
 	        }
-	      }, _callee2, undefined, [[0, 12]]);
+	      }, _callee2, undefined, [[0, 13]]);
 	    }));
 	
 	    return function (_x2) {
@@ -88894,7 +89239,6 @@
 	};
 	
 	var postForum = exports.postForum = function postForum(params) {
-	  console.log(params);
 	  return function () {
 	    var _ref10 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee10(dispatch) {
 	      var response, responseJson;
@@ -88981,6 +89325,7 @@
 	                body: JSON.stringify({
 	                  id: params.id,
 	                  coin_list: params.coins,
+	                  pic_list: params.pic_list,
 	                  category: params.category,
 	                  title: params.title,
 	                  content: params.content
@@ -89091,7 +89436,7 @@
 	  }();
 	};
 	
-	var postForumView = exports.postForumView = function postForumView(params) {
+	var deleteForum = exports.deleteForum = function deleteForum(params) {
 	  return function () {
 	    var _ref13 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee13(dispatch) {
 	      var response, responseJson;
@@ -89101,8 +89446,8 @@
 	            case 0:
 	              _context13.prev = 0;
 	              _context13.next = 3;
-	              return fetch(_Server.ServerEndPoint + "api/forum/view/" + params.forum_id, {
-	                method: "POST",
+	              return fetch(_Server.ServerEndPoint + "api/forum/" + params.forum_id, {
+	                method: "DELETE",
 	                headers: {
 	                  Accept: "application/json",
 	                  "Content-Type": "application/json",
@@ -89120,7 +89465,7 @@
 	              responseJson = _context13.sent;
 	              _context13.next = 9;
 	              return dispatch({
-	                type: SUCCEED_TO_POST_FORUM_VIEW,
+	                type: SUCCEED_TO_DELETE_FORUM,
 	                payload: responseJson
 	              });
 	
@@ -89132,7 +89477,7 @@
 	              _context13.t0 = _context13["catch"](0);
 	
 	              dispatch({
-	                type: FAILED_TO_POST_FORUM_VIEW,
+	                type: FAILED_TO_DELETE_FORUM,
 	                payload: { data: "NETWORK_ERROR" }
 	              });
 	
@@ -89150,7 +89495,7 @@
 	  }();
 	};
 	
-	var getLikeCheck = exports.getLikeCheck = function getLikeCheck(params) {
+	var postForumView = exports.postForumView = function postForumView(params) {
 	  return function () {
 	    var _ref14 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee14(dispatch) {
 	      var response, responseJson;
@@ -89160,8 +89505,8 @@
 	            case 0:
 	              _context14.prev = 0;
 	              _context14.next = 3;
-	              return fetch(_Server.ServerEndPoint + "api/forum/like/check/" + params.forum_id, {
-	                method: "GET",
+	              return fetch(_Server.ServerEndPoint + "api/forum/view/" + params.forum_id, {
+	                method: "POST",
 	                headers: {
 	                  Accept: "application/json",
 	                  "Content-Type": "application/json",
@@ -89179,7 +89524,7 @@
 	              responseJson = _context14.sent;
 	              _context14.next = 9;
 	              return dispatch({
-	                type: SUCCEED_TO_GET_FORUM_LIKE_CHECK,
+	                type: SUCCEED_TO_POST_FORUM_VIEW,
 	                payload: responseJson
 	              });
 	
@@ -89191,7 +89536,7 @@
 	              _context14.t0 = _context14["catch"](0);
 	
 	              dispatch({
-	                type: FAILED_TO_GET_FORUM_LIKE_CHECK,
+	                type: FAILED_TO_POST_FORUM_VIEW,
 	                payload: { data: "NETWORK_ERROR" }
 	              });
 	
@@ -89209,7 +89554,7 @@
 	  }();
 	};
 	
-	var postForumLike = exports.postForumLike = function postForumLike(params) {
+	var getLikeCheck = exports.getLikeCheck = function getLikeCheck(params) {
 	  return function () {
 	    var _ref15 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee15(dispatch) {
 	      var response, responseJson;
@@ -89219,8 +89564,8 @@
 	            case 0:
 	              _context15.prev = 0;
 	              _context15.next = 3;
-	              return fetch(_Server.ServerEndPoint + "api/forum/like/" + params.forum_id, {
-	                method: "POST",
+	              return fetch(_Server.ServerEndPoint + "api/forum/like/check/" + params.forum_id, {
+	                method: "GET",
 	                headers: {
 	                  Accept: "application/json",
 	                  "Content-Type": "application/json",
@@ -89238,7 +89583,7 @@
 	              responseJson = _context15.sent;
 	              _context15.next = 9;
 	              return dispatch({
-	                type: SUCCEED_TO_POST_FORUM_LIKE,
+	                type: SUCCEED_TO_GET_FORUM_LIKE_CHECK,
 	                payload: responseJson
 	              });
 	
@@ -89250,7 +89595,7 @@
 	              _context15.t0 = _context15["catch"](0);
 	
 	              dispatch({
-	                type: FAILED_TO_POST_FORUM_LIKE,
+	                type: FAILED_TO_GET_FORUM_LIKE_CHECK,
 	                payload: { data: "NETWORK_ERROR" }
 	              });
 	
@@ -89268,7 +89613,7 @@
 	  }();
 	};
 	
-	var postForumDisLike = exports.postForumDisLike = function postForumDisLike(params) {
+	var postForumLike = exports.postForumLike = function postForumLike(params) {
 	  return function () {
 	    var _ref16 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee16(dispatch) {
 	      var response, responseJson;
@@ -89278,7 +89623,7 @@
 	            case 0:
 	              _context16.prev = 0;
 	              _context16.next = 3;
-	              return fetch(_Server.ServerEndPoint + "api/forum/dislike/" + params.forum_id, {
+	              return fetch(_Server.ServerEndPoint + "api/forum/like/" + params.forum_id, {
 	                method: "POST",
 	                headers: {
 	                  Accept: "application/json",
@@ -89327,7 +89672,7 @@
 	  }();
 	};
 	
-	var postForumComment = exports.postForumComment = function postForumComment(params) {
+	var postHate = exports.postHate = function postHate(params) {
 	  return function () {
 	    var _ref17 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee17(dispatch) {
 	      var response, responseJson;
@@ -89337,6 +89682,242 @@
 	            case 0:
 	              _context17.prev = 0;
 	              _context17.next = 3;
+	              return fetch(_Server.ServerEndPoint + "api/forum/hate/" + params.forum_id, {
+	                method: "POST",
+	                headers: {
+	                  Accept: "application/json",
+	                  "Content-Type": "application/json",
+	                  "Access-Control-Allow-Origin": "*",
+	                  "x-access-token": params.token
+	                }
+	              });
+	
+	            case 3:
+	              response = _context17.sent;
+	              _context17.next = 6;
+	              return response.json();
+	
+	            case 6:
+	              responseJson = _context17.sent;
+	              _context17.next = 9;
+	              return dispatch({
+	                type: SUCCEED_TO_POST_FORUM_HATE,
+	                payload: responseJson
+	              });
+	
+	            case 9:
+	              return _context17.abrupt("return", responseJson);
+	
+	            case 12:
+	              _context17.prev = 12;
+	              _context17.t0 = _context17["catch"](0);
+	
+	              dispatch({
+	                type: FAILED_TO_POST_FORUM_HATE,
+	                payload: { data: "NETWORK_ERROR" }
+	              });
+	
+	            case 15:
+	            case "end":
+	              return _context17.stop();
+	          }
+	        }
+	      }, _callee17, undefined, [[0, 12]]);
+	    }));
+	
+	    return function (_x17) {
+	      return _ref17.apply(this, arguments);
+	    };
+	  }();
+	};
+	
+	var getHateCheck = exports.getHateCheck = function getHateCheck(params) {
+	  return function () {
+	    var _ref18 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee18(dispatch) {
+	      var response, responseJson;
+	      return regeneratorRuntime.wrap(function _callee18$(_context18) {
+	        while (1) {
+	          switch (_context18.prev = _context18.next) {
+	            case 0:
+	              _context18.prev = 0;
+	              _context18.next = 3;
+	              return fetch(_Server.ServerEndPoint + "api/forum/hate/check/" + params.forum_id, {
+	                method: "GET",
+	                headers: {
+	                  Accept: "application/json",
+	                  "Content-Type": "application/json",
+	                  "Access-Control-Allow-Origin": "*",
+	                  "x-access-token": params.token
+	                }
+	              });
+	
+	            case 3:
+	              response = _context18.sent;
+	              _context18.next = 6;
+	              return response.json();
+	
+	            case 6:
+	              responseJson = _context18.sent;
+	              _context18.next = 9;
+	              return dispatch({
+	                type: SUCCEED_TO_GET_FORUM_HATE_CHECK,
+	                payload: responseJson
+	              });
+	
+	            case 9:
+	              return _context18.abrupt("return", responseJson);
+	
+	            case 12:
+	              _context18.prev = 12;
+	              _context18.t0 = _context18["catch"](0);
+	
+	              dispatch({
+	                type: FAILED_TO_GET_FORUM_HATE_CHECK,
+	                payload: { data: "NETWORK_ERROR" }
+	              });
+	
+	            case 15:
+	            case "end":
+	              return _context18.stop();
+	          }
+	        }
+	      }, _callee18, undefined, [[0, 12]]);
+	    }));
+	
+	    return function (_x18) {
+	      return _ref18.apply(this, arguments);
+	    };
+	  }();
+	};
+	
+	var postUnHate = exports.postUnHate = function postUnHate(params) {
+	  return function () {
+	    var _ref19 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee19(dispatch) {
+	      var response, responseJson;
+	      return regeneratorRuntime.wrap(function _callee19$(_context19) {
+	        while (1) {
+	          switch (_context19.prev = _context19.next) {
+	            case 0:
+	              _context19.prev = 0;
+	              _context19.next = 3;
+	              return fetch(_Server.ServerEndPoint + "api/forum/unhate/" + params.forum_id, {
+	                method: "POST",
+	                headers: {
+	                  Accept: "application/json",
+	                  "Content-Type": "application/json",
+	                  "Access-Control-Allow-Origin": "*",
+	                  "x-access-token": params.token
+	                }
+	              });
+	
+	            case 3:
+	              response = _context19.sent;
+	              _context19.next = 6;
+	              return response.json();
+	
+	            case 6:
+	              responseJson = _context19.sent;
+	              _context19.next = 9;
+	              return dispatch({
+	                type: SUCCEED_TO_POST_FORUM_UNHATE,
+	                payload: responseJson
+	              });
+	
+	            case 9:
+	              return _context19.abrupt("return", responseJson);
+	
+	            case 12:
+	              _context19.prev = 12;
+	              _context19.t0 = _context19["catch"](0);
+	
+	              dispatch({
+	                type: FAILED_TO_POST_FORUM_UNHATE,
+	                payload: { data: "NETWORK_ERROR" }
+	              });
+	
+	            case 15:
+	            case "end":
+	              return _context19.stop();
+	          }
+	        }
+	      }, _callee19, undefined, [[0, 12]]);
+	    }));
+	
+	    return function (_x19) {
+	      return _ref19.apply(this, arguments);
+	    };
+	  }();
+	};
+	
+	var postForumDisLike = exports.postForumDisLike = function postForumDisLike(params) {
+	  return function () {
+	    var _ref20 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee20(dispatch) {
+	      var response, responseJson;
+	      return regeneratorRuntime.wrap(function _callee20$(_context20) {
+	        while (1) {
+	          switch (_context20.prev = _context20.next) {
+	            case 0:
+	              _context20.prev = 0;
+	              _context20.next = 3;
+	              return fetch(_Server.ServerEndPoint + "api/forum/dislike/" + params.forum_id, {
+	                method: "POST",
+	                headers: {
+	                  Accept: "application/json",
+	                  "Content-Type": "application/json",
+	                  "Access-Control-Allow-Origin": "*",
+	                  "x-access-token": params.token
+	                }
+	              });
+	
+	            case 3:
+	              response = _context20.sent;
+	              _context20.next = 6;
+	              return response.json();
+	
+	            case 6:
+	              responseJson = _context20.sent;
+	              _context20.next = 9;
+	              return dispatch({
+	                type: SUCCEED_TO_POST_FORUM_LIKE,
+	                payload: responseJson
+	              });
+	
+	            case 9:
+	              return _context20.abrupt("return", responseJson);
+	
+	            case 12:
+	              _context20.prev = 12;
+	              _context20.t0 = _context20["catch"](0);
+	
+	              dispatch({
+	                type: FAILED_TO_POST_FORUM_LIKE,
+	                payload: { data: "NETWORK_ERROR" }
+	              });
+	
+	            case 15:
+	            case "end":
+	              return _context20.stop();
+	          }
+	        }
+	      }, _callee20, undefined, [[0, 12]]);
+	    }));
+	
+	    return function (_x20) {
+	      return _ref20.apply(this, arguments);
+	    };
+	  }();
+	};
+	
+	var postForumComment = exports.postForumComment = function postForumComment(params) {
+	  return function () {
+	    var _ref21 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee21(dispatch) {
+	      var response, responseJson;
+	      return regeneratorRuntime.wrap(function _callee21$(_context21) {
+	        while (1) {
+	          switch (_context21.prev = _context21.next) {
+	            case 0:
+	              _context21.prev = 0;
+	              _context21.next = 3;
 	              return fetch(_Server.ServerEndPoint + ("api/forum/create/comment/" + params.forum_id), {
 	                method: "POST",
 	                headers: {
@@ -89351,24 +89932,24 @@
 	              });
 	
 	            case 3:
-	              response = _context17.sent;
-	              _context17.next = 6;
+	              response = _context21.sent;
+	              _context21.next = 6;
 	              return response.json();
 	
 	            case 6:
-	              responseJson = _context17.sent;
-	              _context17.next = 9;
+	              responseJson = _context21.sent;
+	              _context21.next = 9;
 	              return dispatch({
 	                type: SUCCEED_TO_POST_FORUM_COMMENT,
 	                payload: responseJson.forum_id
 	              });
 	
 	            case 9:
-	              return _context17.abrupt("return", responseJson.forum_id);
+	              return _context21.abrupt("return", responseJson.forum_id);
 	
 	            case 12:
-	              _context17.prev = 12;
-	              _context17.t0 = _context17["catch"](0);
+	              _context21.prev = 12;
+	              _context21.t0 = _context21["catch"](0);
 	
 	              dispatch({
 	                type: FAILED_TO_POST_FORUM_COMMENT,
@@ -89377,14 +89958,14 @@
 	
 	            case 15:
 	            case "end":
-	              return _context17.stop();
+	              return _context21.stop();
 	          }
 	        }
-	      }, _callee17, undefined, [[0, 12]]);
+	      }, _callee21, undefined, [[0, 12]]);
 	    }));
 	
-	    return function (_x17) {
-	      return _ref17.apply(this, arguments);
+	    return function (_x21) {
+	      return _ref21.apply(this, arguments);
 	    };
 	  }();
 	};
@@ -89502,8 +90083,9 @@
 	        forum_id: _this.props.match.params.forum_id
 	      };
 	      newComment.splice(0, 0, frontParams);
+	      _this.setState({ newComment: newComment });
 	      _this.props.dispatch(SocialAction.postForumComment(params)).then(function (value) {
-	        _this.setState({ newComment: newComment, comment: "" });
+	        _this.setState({ comment: "" });
 	      });
 	    };
 	
@@ -89558,62 +90140,153 @@
 	    };
 	
 	    _this.handleLike = function () {
-	      var _this$props$location$ = _this.props.location.state,
-	          forum = _this$props$location$.forum,
-	          liked = _this$props$location$.liked;
+	      if (_this.props.location.state === undefined) {
+	        var r_forum = _this.state.r_forum;
 	
-	      var params = {
-	        token: _this.props.token,
-	        forum_id: Number(_this.props.match.params.forum_id)
-	      };
-	      if (liked) {
-	        _this.props.dispatch(SocialAction.postForumLike(params)).then(function (value) {
-	          _this.setState(function (prevState) {
-	            return {
-	              isLiked: false,
-	              newLike: forum.like_cnt
-	            };
-	          });
-	        });
+	        var params = {
+	          token: _this.props.token,
+	          forum_id: Number(_this.props.match.params.forum_id)
+	        };
+	        _this.setState({ isLiked: true, newLike: r_forum.like_cnt + 1 });
+	        _this.props.dispatch(SocialAction.postForumLike(params)).then(function (value) {});
 	      } else {
-	        _this.props.dispatch(SocialAction.postForumLike(params)).then(function (value) {
+	        var _this$props$location$ = _this.props.location.state,
+	            forum = _this$props$location$.forum,
+	            liked = _this$props$location$.liked;
+	
+	        var _params = {
+	          token: _this.props.token,
+	          forum_id: Number(_this.props.match.params.forum_id)
+	        };
+	        if (liked) {
+	          _this.setState({ isLiked: false, newLike: forum.like_cnt });
+	          _this.props.dispatch(SocialAction.postForumLike(_params)).then(function (value) {});
+	        } else {
 	          _this.setState(function (prevState) {
 	            return {
 	              isLiked: true,
 	              newLike: forum.like_cnt + 1
 	            };
 	          });
-	        });
+	          _this.props.dispatch(SocialAction.postForumLike(_params)).then(function (value) {});
+	        }
+	      }
+	    };
+	
+	    _this.handleHate = function () {
+	      if (_this.props.location.state === undefined) {
+	        var r_forum = _this.state.r_forum;
+	
+	        var params = {
+	          token: _this.props.token,
+	          forum_id: Number(_this.props.match.params.forum_id)
+	        };
+	        _this.setState({ isHated: true, newHate: r_forum.dislike_cnt + 1 });
+	        _this.props.dispatch(SocialAction.postHate(params)).then(function (value) {});
+	      } else {
+	        var _this$props$location$2 = _this.props.location.state,
+	            forum = _this$props$location$2.forum,
+	            hated = _this$props$location$2.hated;
+	
+	        var _params2 = {
+	          token: _this.props.token,
+	          forum_id: Number(_this.props.match.params.forum_id)
+	        };
+	        if (hated) {
+	          _this.setState(function (prevState) {
+	            return {
+	              isHated: false,
+	              newHate: forum.dislike_cnt
+	            };
+	          });
+	          _this.props.dispatch(SocialAction.postHate(_params2)).then(function (value) {});
+	        } else {
+	          _this.setState(function (prevState) {
+	            return {
+	              isHated: true,
+	              newHate: forum.dislike_cnt + 1
+	            };
+	          });
+	          _this.props.dispatch(SocialAction.postHate(_params2)).then(function (value) {});
+	        }
 	      }
 	    };
 	
 	    _this.handleDisLike = function () {
-	      var _this$props$location$2 = _this.props.location.state,
-	          forum = _this$props$location$2.forum,
-	          liked = _this$props$location$2.liked;
+	      if (_this.props.location.state === undefined) {
+	        var r_forum = _this.state.r_forum;
 	
-	      var params = {
-	        token: _this.props.token,
-	        forum_id: Number(_this.props.match.params.forum_id)
-	      };
-	      if (liked) {
-	        _this.props.dispatch(SocialAction.postForumDisLike(params)).then(function (value) {
+	        var params = {
+	          token: _this.props.token,
+	          forum_id: Number(_this.props.match.params.forum_id)
+	        };
+	        _this.setState({ isLiked: false, newLike: r_forum.like_cnt - 1 });
+	        _this.props.dispatch(SocialAction.postForumDisLike(params)).then(function (value) {});
+	      } else {
+	        var _this$props$location$3 = _this.props.location.state,
+	            forum = _this$props$location$3.forum,
+	            liked = _this$props$location$3.liked;
+	
+	        var _params3 = {
+	          token: _this.props.token,
+	          forum_id: Number(_this.props.match.params.forum_id)
+	        };
+	        if (liked) {
 	          _this.setState(function (prevState) {
 	            return {
 	              isLiked: true,
 	              newLike: forum.like_cnt - 1
 	            };
 	          });
-	        });
-	      } else {
-	        _this.props.dispatch(SocialAction.postForumDisLike(params)).then(function (value) {
+	          _this.props.dispatch(SocialAction.postForumDisLike(_params3)).then(function (value) {});
+	        } else {
 	          _this.setState(function (prevState) {
 	            return {
 	              isLiked: false,
 	              newLike: forum.like_cnt - 1
 	            };
 	          });
-	        });
+	          _this.props.dispatch(SocialAction.postForumDisLike(_params3)).then(function (value) {});
+	        }
+	      }
+	    };
+	
+	    _this.handleUnHate = function () {
+	      if (_this.props.location.state === undefined) {
+	        var r_forum = _this.state.r_forum;
+	
+	        var params = {
+	          token: _this.props.token,
+	          forum_id: Number(_this.props.match.params.forum_id)
+	        };
+	        _this.setState({ isHated: false, newHate: r_forum.dislike_cnt - 1 });
+	        _this.props.dispatch(SocialAction.postUnHate(params)).then(function (value) {});
+	      } else {
+	        var _this$props$location$4 = _this.props.location.state,
+	            forum = _this$props$location$4.forum,
+	            hated = _this$props$location$4.hated;
+	
+	        var _params4 = {
+	          token: _this.props.token,
+	          forum_id: Number(_this.props.match.params.forum_id)
+	        };
+	        if (hated) {
+	          _this.setState(function (prevState) {
+	            return {
+	              isHated: true,
+	              newHate: forum.dislike_cnt - 1
+	            };
+	          });
+	          _this.props.dispatch(SocialAction.postUnHate(_params4)).then(function (value) {});
+	        } else {
+	          _this.setState(function (prevState) {
+	            return {
+	              isHated: false,
+	              newHate: forum.dislike_cnt - 1
+	            };
+	          });
+	          _this.props.dispatch(SocialAction.postUnHate(_params4)).then(function (value) {});
+	        }
 	      }
 	    };
 	
@@ -89656,10 +90329,16 @@
 	      userImg: "",
 	      userLoading: false,
 	      userCoins: [],
+	      r_forum: {},
+	      r_images: [],
+	      r_coins: [],
 	      forumLength: 0,
 	      commentLength: 0,
 	      isLiked: false,
+	      isHated: false,
+	      isRefreshed: false,
 	      newLike: 0,
+	      newHate: 0,
 	      userId: 0
 	    };
 	    _moment2.default.locale("ko");
@@ -89667,48 +90346,84 @@
 	  }
 	
 	  _createClass(PostPage, [{
+	    key: "componentWillMount",
+	    value: function componentWillMount() {
+	      var _this3 = this;
+	
+	      var forum_id = this.props.match.params.forum_id;
+	
+	      var params = { token: this.props.token, forum_id: forum_id };
+	      this.props.dispatch(SocialAction.getLikeCheck(params)).then(function (value) {
+	        _this3.props.dispatch(SocialAction.getHateCheck(params)).then(function (hate) {
+	          _this3.props.dispatch(SocialAction.getOneForum(params)).then(function (result) {
+	            _this3.props.dispatch(SocialAction.getOneForumCoins(params)).then(function (coins) {
+	              _this3.props.dispatch(SocialAction.getOneForumComment(params)).then(function (comments) {
+	                if (value.message === "You already liked this forum") {
+	                  _this3.setState({ isLiked: true, newLike: result.like_cnt });
+	                }
+	                if (hate.message !== "it's okay to dislike this forum") {
+	                  _this3.setState({
+	                    isHated: true,
+	                    newHate: result.dislike_cnt
+	                  });
+	                }
+	                var images = result.image.map(function (data, index) {
+	                  return { original: data.img_url };
+	                });
+	                _this3.setState({
+	                  r_forum: result,
+	                  r_coins: coins,
+	                  r_images: images,
+	                  isRefreshed: true,
+	                  newComment: comments.reverse()
+	                });
+	              });
+	            });
+	          });
+	        });
+	      });
+	    }
+	  }, {
 	    key: "componentDidUpdate",
 	    value: function componentDidUpdate(previousProps, previousState) {
-	      if (previousProps.location.state.forum !== this.props.location.state.forum) {
+	      if (previousProps.location.state !== this.props.location.state) {
 	        this.setState({
 	          newComment: [],
 	          newLike: 0,
-	          isLiked: false
+	          newHate: 0,
+	          isLiked: false,
+	          isHated: false,
+	          isRefreshed: false
 	        });
 	      }
 	    }
 	  }, {
 	    key: "render",
 	    value: function render() {
-	      var _this3 = this;
+	      var _this4 = this;
+	
+	      var _state = this.state,
+	          isLiked = _state.isLiked,
+	          isHated = _state.isHated,
+	          newLike = _state.newLike,
+	          newHate = _state.newHate,
+	          isFocusComment = _state.isFocusComment,
+	          newComment = _state.newComment,
+	          username = _state.username,
+	          userImg = _state.userImg,
+	          userCoins = _state.userCoins,
+	          userPoint = _state.userPoint,
+	          forumLength = _state.forumLength,
+	          commentLength = _state.commentLength,
+	          userLoading = _state.userLoading,
+	          r_forum = _state.r_forum,
+	          r_images = _state.r_images,
+	          r_coins = _state.r_coins;
+	      var _props = this.props,
+	          me = _props.me,
+	          isLogin = _props.isLogin;
 	
 	      if (this.props.location.state === undefined) {
-	        window.location.href = "/enhance/forum";
-	      } else {
-	        var _state = this.state,
-	            isLiked = _state.isLiked,
-	            newLike = _state.newLike,
-	            isFocusComment = _state.isFocusComment,
-	            newComment = _state.newComment,
-	            username = _state.username,
-	            userImg = _state.userImg,
-	            userCoins = _state.userCoins,
-	            userPoint = _state.userPoint,
-	            forumLength = _state.forumLength,
-	            commentLength = _state.commentLength,
-	            userLoading = _state.userLoading;
-	        var _props = this.props,
-	            me = _props.me,
-	            isLogin = _props.isLogin,
-	            onClick = _props.onClick;
-	        var _props$location$state = this.props.location.state,
-	            forum = _props$location$state.forum,
-	            coins = _props$location$state.coins,
-	            comment = _props$location$state.comment,
-	            name = _props$location$state.name,
-	            liked = _props$location$state.liked,
-	            images = _props$location$state.images;
-	
 	        return _react2.default.createElement(
 	          "div",
 	          { className: "postPage__content__chart" },
@@ -89816,12 +90531,341 @@
 	                    "div",
 	                    { className: "postPage__content__chart__intro__post__header__userInfo__thumb" },
 	                    _react2.default.createElement(_Components.Thumb, {
+	                      src: r_forum.profile_img,
+	                      fontSize: 35,
+	                      size: 50,
+	                      point: r_forum.point,
+	                      onClick: function onClick() {
+	                        return _this4.handleUser(r_forum.user_id);
+	                      }
+	                    })
+	                  ),
+	                  _react2.default.createElement(
+	                    "div",
+	                    { className: "postPage__content__chart__intro__post__header__userInfo__name" },
+	                    _react2.default.createElement(
+	                      "strong",
+	                      null,
+	                      r_forum.username
+	                    ),
+	                    _react2.default.createElement(
+	                      "span",
+	                      { className: "postPage__content__chart__intro__post__header__userInfo__point" },
+	                      r_forum.point + " \uD3EC\uC778\uD2B8"
+	                    )
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  "div",
+	                  { className: "postPage__content__chart__intro__post__header__detail" },
+	                  _react2.default.createElement(
+	                    "p",
+	                    null,
+	                    r_forum.category
+	                  ),
+	                  _react2.default.createElement(
+	                    "span",
+	                    { className: "postPage__content__chart__intro__post__header__userInfo__date" },
+	                    (0, _moment2.default)(r_forum.created_at).fromNow()
+	                  )
+	                )
+	              ),
+	              _react2.default.createElement(
+	                "div",
+	                { className: "postPage__content__chart__intro__post__title" },
+	                _react2.default.createElement(
+	                  "p",
+	                  null,
+	                  r_forum.title
+	                )
+	              ),
+	              _react2.default.createElement(
+	                "div",
+	                { className: "postPage__content__chart__intro__post__body" },
+	                _react2.default.createElement(
+	                  "div",
+	                  { style: { marginBottom: 10 } },
+	                  r_images.length === 0 ? null : _react2.default.createElement(_reactImageGallery2.default, {
+	                    items: r_images,
+	                    showThumbnails: false,
+	                    showPlayButton: false,
+	                    showBullets: true
+	                  })
+	                ),
+	                _react2.default.createElement(
+	                  _reactLinkify2.default,
+	                  {
+	                    properties: {
+	                      target: "_blank",
+	                      style: { color: "#56b1bf", fontWeight: "400" }
+	                    }
+	                  },
+	                  r_forum.content
+	                )
+	              ),
+	              _react2.default.createElement(
+	                "div",
+	                { className: "postPage__content__chart__intro__post__coin" },
+	                r_coins.map(function (data, index) {
+	                  return _react2.default.createElement(
+	                    "div",
+	                    {
+	                      key: index,
+	                      className: "postPage__content__chart__intro__post__coin__item"
+	                    },
+	                    data.abbr
+	                  );
+	                })
+	              ),
+	              _react2.default.createElement(
+	                "div",
+	                { className: "postPage__content__chart__intro__post__footer" },
+	                _react2.default.createElement(
+	                  "span",
+	                  { className: "postPage__content__chart__intro__post__footer__count" },
+	                  !isLiked ? _react2.default.createElement(
+	                    _reactPrettyNumbers2.default,
+	                    { params: option },
+	                    r_forum.like_cnt
+	                  ) : _react2.default.createElement(
+	                    "span",
+	                    { className: "postPage__content__chart__intro__post__footer__count-liked" },
+	                    _react2.default.createElement(
+	                      _reactPrettyNumbers2.default,
+	                      { params: option },
+	                      newLike
+	                    )
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  "span",
+	                  {
+	                    className: "postPage__content__chart__intro__post__footer__icon",
+	                    onClick: !isLiked ? this.handleLike : this.handleDisLike
+	                  },
+	                  !isLiked ? _react2.default.createElement("img", {
+	                    src: base64.arrowUpWhite,
+	                    style: { width: 18, height: 18 }
+	                  }) : _react2.default.createElement("img", {
+	                    src: base64.arrowUpGreen,
+	                    style: { width: 18, height: 18 }
+	                  })
+	                ),
+	                _react2.default.createElement(
+	                  "span",
+	                  { className: "postPage__content__chart__intro__post__footer__count" },
+	                  !isHated ? _react2.default.createElement(
+	                    _reactPrettyNumbers2.default,
+	                    { params: option },
+	                    r_forum.dislike_cnt
+	                  ) : _react2.default.createElement(
+	                    "span",
+	                    { className: "postPage__content__chart__intro__post__footer__count-hated" },
+	                    _react2.default.createElement(
+	                      _reactPrettyNumbers2.default,
+	                      { params: option },
+	                      newHate
+	                    )
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  "span",
+	                  {
+	                    className: "postPage__content__chart__intro__post__footer__icon",
+	                    onClick: !isHated ? this.handleHate : this.handleUnHate
+	                  },
+	                  !isHated ? _react2.default.createElement("img", {
+	                    src: base64.arrowDownWhite,
+	                    style: { width: 18, height: 18 }
+	                  }) : _react2.default.createElement("img", {
+	                    src: base64.arrowDownRed,
+	                    style: { width: 18, height: 18 }
+	                  })
+	                ),
+	                _react2.default.createElement(
+	                  "span",
+	                  { className: "postPage__content__chart__intro__post__footer__count" },
+	                  r_forum.view_cnt
+	                ),
+	                _react2.default.createElement(
+	                  "span",
+	                  { className: "postPage__content__chart__intro__post__footer__icon" },
+	                  _react2.default.createElement("i", { className: "xi-eye" })
+	                )
+	              )
+	            ),
+	            _react2.default.createElement(_Components.SocialInput, {
+	              user: me && me,
+	              isLogin: isLogin,
+	              value: this.state.comment,
+	              onChange: this.handleComment,
+	              placeholder: "\uB313\uAE00\uC744 \uC785\uB825\uD558\uC138\uC694",
+	              onClick: this.handlePostComment,
+	              postText: "\uB4F1\uB85D",
+	              onFocus: this.onFocusComment,
+	              isFocus: isFocusComment
+	            }),
+	            _react2.default.createElement(
+	              "div",
+	              { className: "postPage__content__chart__intro__comments" },
+	              newComment.map(function (data, index) {
+	                return _react2.default.createElement(_Components.Comment, {
+	                  key: index,
+	                  username: data.username,
+	                  profileImg: data.profile_img,
+	                  userPoint: data.point,
+	                  createdAt: data.created_at,
+	                  onClick: function onClick() {
+	                    return _this4.handleUser(data.user_id);
+	                  },
+	                  checkName: me.username,
+	                  content: data.content
+	                });
+	              })
+	            )
+	          )
+	        );
+	      } else {
+	        var _state2 = this.state,
+	            _isLiked = _state2.isLiked,
+	            _isHated = _state2.isHated,
+	            _newLike = _state2.newLike,
+	            _newHate = _state2.newHate,
+	            _isFocusComment = _state2.isFocusComment,
+	            _newComment = _state2.newComment,
+	            _username = _state2.username,
+	            _userImg = _state2.userImg,
+	            _userCoins = _state2.userCoins,
+	            _userPoint = _state2.userPoint,
+	            _forumLength = _state2.forumLength,
+	            _commentLength = _state2.commentLength,
+	            _userLoading = _state2.userLoading,
+	            isRefreshed = _state2.isRefreshed;
+	        var _props2 = this.props,
+	            _me = _props2.me,
+	            _isLogin = _props2.isLogin;
+	        var _props$location$state = this.props.location.state,
+	            forum = _props$location$state.forum,
+	            coins = _props$location$state.coins,
+	            comment = _props$location$state.comment,
+	            name = _props$location$state.name,
+	            liked = _props$location$state.liked,
+	            hated = _props$location$state.hated,
+	            images = _props$location$state.images;
+	
+	        return _react2.default.createElement(
+	          "div",
+	          { className: "postPage__content__chart" },
+	          _react2.default.createElement(
+	            _reactstrap.Modal,
+	            {
+	              isOpen: this.state.showModal,
+	              toggle: this.toggleModal,
+	              size: "lg",
+	              centered: true,
+	              modalTransition: { timeout: 20 },
+	              backdropTransition: { timeout: 10 }
+	              // backdrop={false}
+	            },
+	            _react2.default.createElement(
+	              _reactstrap.ModalBody,
+	              null,
+	              _react2.default.createElement(
+	                "div",
+	                { className: "postPage__modal" },
+	                _react2.default.createElement(
+	                  "div",
+	                  { className: "postPage__modal__content" },
+	                  _react2.default.createElement(_Components.Thumb, {
+	                    src: _userImg,
+	                    fontSize: 75,
+	                    size: 90,
+	                    point: _userPoint,
+	                    onClick: this.handleUserDetail
+	                  }),
+	                  _react2.default.createElement(
+	                    "p",
+	                    { className: "postPage__modal__content__username" },
+	                    _username
+	                  ),
+	                  _react2.default.createElement(
+	                    "div",
+	                    { className: "postPage__modal__content__area" },
+	                    _react2.default.createElement(
+	                      "p",
+	                      { className: "postPage__modal__content__area__number-border" },
+	                      _userPoint,
+	                      _react2.default.createElement(
+	                        "span",
+	                        { className: "postPage__modal__content__area__text" },
+	                        "\uD3EC\uC778\uD2B8"
+	                      )
+	                    ),
+	                    _react2.default.createElement(
+	                      "p",
+	                      { className: "postPage__modal__content__area__number-border" },
+	                      _forumLength,
+	                      _react2.default.createElement(
+	                        "span",
+	                        { className: "postPage__modal__content__area__text" },
+	                        "\uAC8C\uC2DC\uBB3C"
+	                      )
+	                    ),
+	                    _react2.default.createElement(
+	                      "p",
+	                      { className: "postPage__modal__content__area__number" },
+	                      _commentLength,
+	                      _react2.default.createElement(
+	                        "span",
+	                        { className: "postPage__modal__content__area__text" },
+	                        "\uB313\uAE00"
+	                      )
+	                    )
+	                  ),
+	                  _react2.default.createElement(
+	                    "div",
+	                    { className: "postPage__modal__content__coins" },
+	                    _userCoins.map(function (data, index) {
+	                      return _react2.default.createElement(
+	                        "div",
+	                        {
+	                          key: index,
+	                          className: "postPage__modal__content__coins__coin"
+	                        },
+	                        data.abbr
+	                      );
+	                    })
+	                  )
+	                )
+	              )
+	            )
+	          ),
+	          _userLoading ? _react2.default.createElement(
+	            "div",
+	            { className: "postPage__content__chart__intro__loading" },
+	            _react2.default.createElement(_reactActivity.Dots, { size: 30, color: "#FFFFFF" })
+	          ) : _react2.default.createElement(
+	            "div",
+	            { className: "postPage__content__chart__intro" },
+	            _react2.default.createElement(
+	              "div",
+	              { className: "postPage__content__chart__intro__post" },
+	              _react2.default.createElement(
+	                "div",
+	                { className: "postPage__content__chart__intro__post__header" },
+	                _react2.default.createElement(
+	                  "div",
+	                  { className: "postPage__content__chart__intro__post__header__userInfo" },
+	                  _react2.default.createElement(
+	                    "div",
+	                    { className: "postPage__content__chart__intro__post__header__userInfo__thumb" },
+	                    _react2.default.createElement(_Components.Thumb, {
 	                      src: forum.profile_img,
 	                      fontSize: 35,
 	                      size: 50,
 	                      point: forum.point,
 	                      onClick: function onClick() {
-	                        return _this3.handleUser(forum.user_id);
+	                        return _this4.handleUser(forum.user_id);
 	                      }
 	                    })
 	                  ),
@@ -89908,7 +90952,7 @@
 	                _react2.default.createElement(
 	                  "span",
 	                  { className: "postPage__content__chart__intro__post__footer__count" },
-	                  !isLiked ? liked ? _react2.default.createElement(
+	                  !_isLiked ? liked ? _react2.default.createElement(
 	                    "span",
 	                    { className: "postPage__content__chart__intro__post__footer__count-liked" },
 	                    _react2.default.createElement(
@@ -89920,13 +90964,17 @@
 	                    _reactPrettyNumbers2.default,
 	                    { params: option },
 	                    forum.like_cnt
+	                  ) : liked ? _react2.default.createElement(
+	                    _reactPrettyNumbers2.default,
+	                    { params: option },
+	                    _newLike
 	                  ) : _react2.default.createElement(
 	                    "span",
 	                    { className: "postPage__content__chart__intro__post__footer__count-liked" },
 	                    _react2.default.createElement(
 	                      _reactPrettyNumbers2.default,
 	                      { params: option },
-	                      newLike
+	                      _newLike
 	                    )
 	                  )
 	                ),
@@ -89934,9 +90982,9 @@
 	                  "span",
 	                  {
 	                    className: "postPage__content__chart__intro__post__footer__icon",
-	                    onClick: !isLiked ? this.handleLike : this.handleDisLike
+	                    onClick: !_isLiked ? this.handleLike : this.handleDisLike
 	                  },
-	                  !isLiked ? _react2.default.createElement("img", {
+	                  !_isLiked ? _react2.default.createElement("img", {
 	                    src: base64.arrowUpWhite,
 	                    style: { width: 18, height: 18 }
 	                  }) : _react2.default.createElement("img", {
@@ -89947,13 +90995,69 @@
 	                  "span",
 	                  {
 	                    className: "postPage__content__chart__intro__post__footer__icon",
-	                    onClick: isLiked ? this.handleLike : this.handleDisLike
+	                    onClick: _isLiked ? this.handleLike : this.handleDisLike
 	                  },
-	                  isLiked ? _react2.default.createElement("img", {
+	                  _isLiked ? _react2.default.createElement("img", {
 	                    src: base64.arrowUpWhite,
 	                    style: { width: 18, height: 18 }
 	                  }) : _react2.default.createElement("img", {
 	                    src: base64.arrowUpGreen,
+	                    style: { width: 18, height: 18 }
+	                  })
+	                ),
+	                _react2.default.createElement(
+	                  "span",
+	                  { className: "postPage__content__chart__intro__post__footer__count" },
+	                  !_isHated ? hated ? _react2.default.createElement(
+	                    "span",
+	                    { className: "postPage__content__chart__intro__post__footer__count-hated" },
+	                    _react2.default.createElement(
+	                      _reactPrettyNumbers2.default,
+	                      { params: option },
+	                      forum.dislike_cnt
+	                    )
+	                  ) : _react2.default.createElement(
+	                    _reactPrettyNumbers2.default,
+	                    { params: option },
+	                    forum.dislike_cnt
+	                  ) : hated ? _react2.default.createElement(
+	                    _reactPrettyNumbers2.default,
+	                    { params: option },
+	                    _newHate
+	                  ) : _react2.default.createElement(
+	                    "span",
+	                    { className: "postPage__content__chart__intro__post__footer__count-hated" },
+	                    _react2.default.createElement(
+	                      _reactPrettyNumbers2.default,
+	                      { params: option },
+	                      _newHate
+	                    )
+	                  )
+	                ),
+	                !hated ? _react2.default.createElement(
+	                  "span",
+	                  {
+	                    className: "postPage__content__chart__intro__post__footer__icon",
+	                    onClick: !_isHated ? this.handleHate : this.handleUnHate
+	                  },
+	                  !_isHated ? _react2.default.createElement("img", {
+	                    src: base64.arrowDownWhite,
+	                    style: { width: 18, height: 18 }
+	                  }) : _react2.default.createElement("img", {
+	                    src: base64.arrowDownRed,
+	                    style: { width: 18, height: 18 }
+	                  })
+	                ) : _react2.default.createElement(
+	                  "span",
+	                  {
+	                    className: "postPage__content__chart__intro__post__footer__icon",
+	                    onClick: _isHated ? this.handleHate : this.handleUnHate
+	                  },
+	                  _isHated ? _react2.default.createElement("img", {
+	                    src: base64.arrowDownWhite,
+	                    style: { width: 18, height: 18 }
+	                  }) : _react2.default.createElement("img", {
+	                    src: base64.arrowDownRed,
 	                    style: { width: 18, height: 18 }
 	                  })
 	                ),
@@ -89970,40 +91074,41 @@
 	              )
 	            ),
 	            _react2.default.createElement(_Components.SocialInput, {
-	              user: me && me,
-	              isLogin: isLogin,
+	              user: _me && _me,
+	              isLogin: _isLogin,
 	              value: this.state.comment,
 	              onChange: this.handleComment,
 	              placeholder: "\uB313\uAE00\uC744 \uC785\uB825\uD558\uC138\uC694",
 	              onClick: this.handlePostComment,
 	              postText: "\uB4F1\uB85D",
 	              onFocus: this.onFocusComment,
-	              isFocus: isFocusComment
+	              isFocus: _isFocusComment
 	            }),
 	            _react2.default.createElement(
 	              "div",
 	              { className: "postPage__content__chart__intro__comments" },
-	              newComment.map(function (data, index) {
+	              _newComment.map(function (data, index) {
 	                return _react2.default.createElement(_Components.Comment, {
 	                  key: index,
 	                  username: data.username,
 	                  profileImg: data.profile_img,
 	                  userPoint: data.point,
 	                  createdAt: data.created_at,
+	                  checkName: _me.username,
 	                  content: data.content
 	                });
 	              }),
-	              comment.map(function (data, index) {
+	              !isRefreshed && comment.map(function (data, index) {
 	                return _react2.default.createElement(_Components.Comment, {
 	                  key: index,
 	                  username: data.username,
 	                  profileImg: data.profile_img,
 	                  userPoint: data.point,
 	                  onClick: function onClick() {
-	                    return _this3.handleUser(data.user_id);
+	                    return _this4.handleUser(data.user_id);
 	                  },
 	                  createdAt: data.created_at,
-	                  checkName: name,
+	                  checkName: _me.username,
 	                  content: data.content
 	                });
 	              })
@@ -92559,6 +93664,10 @@
 	
 	var _reactImageGallery2 = _interopRequireDefault(_reactImageGallery);
 	
+	var _base = __webpack_require__(757);
+	
+	var base64 = _interopRequireWildcard(_base);
+	
 	var _moment = __webpack_require__(630);
 	
 	var _moment2 = _interopRequireDefault(_moment);
@@ -92627,8 +93736,9 @@
 	        forum_id: _this.props.match.params.forum_id
 	      };
 	      newComment.splice(0, 0, frontParams);
+	      _this.setState({ newComment: newComment });
 	      _this.props.dispatch(SocialAction.postForumComment(params)).then(function (value) {
-	        _this.setState({ newComment: newComment, comment: "" });
+	        _this.setState({ comment: "" });
 	      });
 	    };
 	
@@ -92642,53 +93752,105 @@
 	        forum_id: Number(_this.props.match.params.forum_id)
 	      };
 	      if (liked) {
-	        _this.props.dispatch(SocialAction.postForumLike(params)).then(function (value) {
-	          _this.setState(function (prevState) {
-	            return {
-	              isLiked: false,
-	              newLike: forum.like_cnt
-	            };
-	          });
+	        _this.setState(function (prevState) {
+	          return {
+	            isLiked: false,
+	            newLike: forum.like_cnt
+	          };
 	        });
+	        _this.props.dispatch(SocialAction.postForumLike(params)).then(function (value) {});
 	      } else {
-	        _this.props.dispatch(SocialAction.postForumLike(params)).then(function (value) {
-	          _this.setState(function (prevState) {
-	            return {
-	              isLiked: true,
-	              newLike: forum.like_cnt + 1
-	            };
-	          });
+	        _this.setState(function (prevState) {
+	          return {
+	            isLiked: true,
+	            newLike: forum.like_cnt + 1
+	          };
 	        });
+	        _this.props.dispatch(SocialAction.postForumLike(params)).then(function (value) {});
+	      }
+	    };
+	
+	    _this.handleHate = function () {
+	      var _this$props$location$2 = _this.props.location.state,
+	          forum = _this$props$location$2.forum,
+	          hated = _this$props$location$2.hated;
+	
+	      var params = {
+	        token: _this.props.token,
+	        forum_id: Number(_this.props.match.params.forum_id)
+	      };
+	      if (hated) {
+	        _this.setState(function (prevState) {
+	          return {
+	            isHated: false,
+	            newHate: forum.dislike_cnt
+	          };
+	        });
+	        _this.props.dispatch(SocialAction.postHate(params)).then(function (value) {});
+	      } else {
+	        _this.setState(function (prevState) {
+	          return {
+	            isHated: true,
+	            newHate: forum.dislike_cnt + 1
+	          };
+	        });
+	        _this.props.dispatch(SocialAction.postHate(params)).then(function (value) {});
+	      }
+	    };
+	
+	    _this.handleUnHate = function () {
+	      var _this$props$location$3 = _this.props.location.state,
+	          forum = _this$props$location$3.forum,
+	          hated = _this$props$location$3.hated;
+	
+	      var params = {
+	        token: _this.props.token,
+	        forum_id: Number(_this.props.match.params.forum_id)
+	      };
+	      if (hated) {
+	        _this.setState(function (prevState) {
+	          return {
+	            isHated: true,
+	            newHate: forum.dislike_cnt - 1
+	          };
+	        });
+	        _this.props.dispatch(SocialAction.postUnHate(params)).then(function (value) {});
+	      } else {
+	        _this.setState(function (prevState) {
+	          return {
+	            isHated: false,
+	            newHate: forum.dislike_cnt - 1
+	          };
+	        });
+	        _this.props.dispatch(SocialAction.postUnHate(params)).then(function (value) {});
 	      }
 	    };
 	
 	    _this.handleDisLike = function () {
-	      var _this$props$location$2 = _this.props.location.state,
-	          forum = _this$props$location$2.forum,
-	          liked = _this$props$location$2.liked;
+	      var _this$props$location$4 = _this.props.location.state,
+	          forum = _this$props$location$4.forum,
+	          liked = _this$props$location$4.liked;
 	
 	      var params = {
 	        token: _this.props.token,
 	        forum_id: Number(_this.props.match.params.forum_id)
 	      };
 	      if (liked) {
-	        _this.props.dispatch(SocialAction.postForumDisLike(params)).then(function (value) {
-	          _this.setState(function (prevState) {
-	            return {
-	              isLiked: true,
-	              newLike: forum.like_cnt - 1
-	            };
-	          });
+	        _this.setState(function (prevState) {
+	          return {
+	            isLiked: true,
+	            newLike: forum.like_cnt - 1
+	          };
 	        });
+	        _this.props.dispatch(SocialAction.postForumDisLike(params)).then(function (value) {});
 	      } else {
-	        _this.props.dispatch(SocialAction.postForumDisLike(params)).then(function (value) {
-	          _this.setState(function (prevState) {
-	            return {
-	              isLiked: false,
-	              newLike: forum.like_cnt - 1
-	            };
-	          });
+	        _this.setState(function (prevState) {
+	          return {
+	            isLiked: false,
+	            newLike: forum.like_cnt - 1
+	          };
 	        });
+	        _this.props.dispatch(SocialAction.postForumDisLike(params)).then(function (value) {});
 	      }
 	    };
 	
@@ -92785,7 +93947,10 @@
 	      forumLength: 0,
 	      commentLength: 0,
 	      isLiked: false,
-	      newLike: 0
+	      isHated: false,
+	      isRefreshed: false,
+	      newLike: 0,
+	      newHate: 0
 	    };
 	    _moment2.default.locale("ko");
 	    return _this;
@@ -92793,7 +93958,32 @@
 	
 	  _createClass(ProfilePost, [{
 	    key: "componentWillMount",
-	    value: function componentWillMount() {}
+	    value: function componentWillMount() {
+	      var _this3 = this;
+	
+	      var forum_id = this.props.match.params.forum_id;
+	
+	      var params = { token: this.props.token, forum_id: forum_id };
+	      this.props.dispatch(SocialAction.getLikeCheck(params)).then(function (value) {
+	        _this3.props.dispatch(SocialAction.getHateCheck(params)).then(function (hate) {
+	          _this3.props.dispatch(SocialAction.getOneForum(params)).then(function (result) {
+	            _this3.props.dispatch(SocialAction.getOneForumComment(params)).then(function (comments) {
+	              if (value.message === "You already liked this forum") {
+	                _this3.setState({ isLiked: true, newLike: result.like_cnt });
+	              }
+	
+	              if (hate.message !== "it's okay to dislike this forum") {
+	                _this3.setState({ isHated: true, newHate: result.dislike_cnt });
+	              }
+	              _this3.setState({
+	                isRefreshed: true,
+	                newComment: comments.reverse()
+	              });
+	            });
+	          });
+	        });
+	      });
+	    }
 	  }, {
 	    key: "componentDidUpdate",
 	    value: function componentDidUpdate(previousProps, previousState) {
@@ -92801,14 +93991,17 @@
 	        this.setState({
 	          newComment: [],
 	          newLike: 0,
-	          isLiked: false
+	          newHate: 0,
+	          isLiked: false,
+	          isRefreshed: false,
+	          isHated: false
 	        });
 	      }
 	    }
 	  }, {
 	    key: "render",
 	    value: function render() {
-	      var _this3 = this;
+	      var _this4 = this;
 	
 	      if (this.props.location.state === undefined) {
 	        window.location.href = "/enhance/profile";
@@ -92817,6 +94010,7 @@
 	            isFocusComment = _state.isFocusComment,
 	            newComment = _state.newComment,
 	            newLike = _state.newLike,
+	            newHate = _state.newHate,
 	            username = _state.username,
 	            userImg = _state.userImg,
 	            userCoins = _state.userCoins,
@@ -92824,7 +94018,9 @@
 	            forumLength = _state.forumLength,
 	            commentLength = _state.commentLength,
 	            userLoading = _state.userLoading,
-	            isLiked = _state.isLiked;
+	            isLiked = _state.isLiked,
+	            isHated = _state.isHated,
+	            isRefreshed = _state.isRefreshed;
 	        var _props = this.props,
 	            me = _props.me,
 	            isLogin = _props.isLogin,
@@ -92835,6 +94031,7 @@
 	            comment = _props$location$state.comment,
 	            name = _props$location$state.name,
 	            liked = _props$location$state.liked,
+	            hated = _props$location$state.hated,
 	            images = _props$location$state.images;
 	
 	
@@ -92950,7 +94147,7 @@
 	                      size: 50,
 	                      point: forum.point,
 	                      onClick: function onClick() {
-	                        return _this3.handleUser(forum.user_id);
+	                        return _this4.handleUser(forum.user_id);
 	                      }
 	                    })
 	                  ),
@@ -93037,14 +94234,30 @@
 	                _react2.default.createElement(
 	                  "span",
 	                  { className: "postPage__content__chart__intro__post__footer__count" },
-	                  !isLiked ? _react2.default.createElement(
-	                    _reactPrettyNumbers2.default,
-	                    { params: option },
-	                    forum.like_cnt
+	                  !isLiked ? liked ? _react2.default.createElement(
+	                    "span",
+	                    { className: "postPage__content__chart__intro__post__footer__count-liked" },
+	                    _react2.default.createElement(
+	                      _reactPrettyNumbers2.default,
+	                      { params: option },
+	                      forum.like_cnt
+	                    )
 	                  ) : _react2.default.createElement(
 	                    _reactPrettyNumbers2.default,
 	                    { params: option },
+	                    forum.like_cnt
+	                  ) : liked ? _react2.default.createElement(
+	                    _reactPrettyNumbers2.default,
+	                    { params: option },
 	                    newLike
+	                  ) : _react2.default.createElement(
+	                    "span",
+	                    { className: "postPage__content__chart__intro__post__footer__count-liked" },
+	                    _react2.default.createElement(
+	                      _reactPrettyNumbers2.default,
+	                      { params: option },
+	                      newLike
+	                    )
 	                  )
 	                ),
 	                !liked ? _react2.default.createElement(
@@ -93053,14 +94266,82 @@
 	                    className: "postPage__content__chart__intro__post__footer__icon",
 	                    onClick: !isLiked ? this.handleLike : this.handleDisLike
 	                  },
-	                  !isLiked ? _react2.default.createElement("i", { className: "xi-heart-o" }) : _react2.default.createElement("i", { className: "xi-heart" })
+	                  !isLiked ? _react2.default.createElement("img", {
+	                    src: base64.arrowUpWhite,
+	                    style: { width: 18, height: 18 }
+	                  }) : _react2.default.createElement("img", {
+	                    src: base64.arrowUpGreen,
+	                    style: { width: 18, height: 18 }
+	                  })
 	                ) : _react2.default.createElement(
 	                  "span",
 	                  {
 	                    className: "postPage__content__chart__intro__post__footer__icon",
 	                    onClick: isLiked ? this.handleLike : this.handleDisLike
 	                  },
-	                  isLiked ? _react2.default.createElement("i", { className: "xi-heart-o" }) : _react2.default.createElement("i", { className: "xi-heart" })
+	                  isLiked ? _react2.default.createElement("img", {
+	                    src: base64.arrowUpWhite,
+	                    style: { width: 18, height: 18 }
+	                  }) : _react2.default.createElement("img", {
+	                    src: base64.arrowUpGreen,
+	                    style: { width: 18, height: 18 }
+	                  })
+	                ),
+	                _react2.default.createElement(
+	                  "span",
+	                  { className: "postPage__content__chart__intro__post__footer__count" },
+	                  !isHated ? hated ? _react2.default.createElement(
+	                    "span",
+	                    { className: "postPage__content__chart__intro__post__footer__count-hated" },
+	                    _react2.default.createElement(
+	                      _reactPrettyNumbers2.default,
+	                      { params: option },
+	                      forum.dislike_cnt
+	                    )
+	                  ) : _react2.default.createElement(
+	                    _reactPrettyNumbers2.default,
+	                    { params: option },
+	                    forum.dislike_cnt
+	                  ) : hated ? _react2.default.createElement(
+	                    _reactPrettyNumbers2.default,
+	                    { params: option },
+	                    newHate
+	                  ) : _react2.default.createElement(
+	                    "span",
+	                    { className: "postPage__content__chart__intro__post__footer__count-hated" },
+	                    _react2.default.createElement(
+	                      _reactPrettyNumbers2.default,
+	                      { params: option },
+	                      newHate
+	                    )
+	                  )
+	                ),
+	                !hated ? _react2.default.createElement(
+	                  "span",
+	                  {
+	                    className: "postPage__content__chart__intro__post__footer__icon",
+	                    onClick: !isHated ? this.handleHate : this.handleUnHate
+	                  },
+	                  !isHated ? _react2.default.createElement("img", {
+	                    src: base64.arrowDownWhite,
+	                    style: { width: 18, height: 18 }
+	                  }) : _react2.default.createElement("img", {
+	                    src: base64.arrowDownRed,
+	                    style: { width: 18, height: 18 }
+	                  })
+	                ) : _react2.default.createElement(
+	                  "span",
+	                  {
+	                    className: "postPage__content__chart__intro__post__footer__icon",
+	                    onClick: isHated ? this.handleHate : this.handleUnHate
+	                  },
+	                  isHated ? _react2.default.createElement("img", {
+	                    src: base64.arrowDownWhite,
+	                    style: { width: 18, height: 18 }
+	                  }) : _react2.default.createElement("img", {
+	                    src: base64.arrowDownRed,
+	                    style: { width: 18, height: 18 }
+	                  })
 	                ),
 	                _react2.default.createElement(
 	                  "span",
@@ -93098,14 +94379,14 @@
 	                  content: data.content
 	                });
 	              }),
-	              comment.map(function (data, index) {
+	              !isRefreshed && comment.map(function (data, index) {
 	                return _react2.default.createElement(_Components.Comment, {
 	                  key: index,
 	                  username: data.username,
 	                  profileImg: data.profile_img,
 	                  userPoint: data.point,
 	                  onClick: function onClick() {
-	                    return _this3.handleUser(data.user_id);
+	                    return _this4.handleUser(data.user_id);
 	                  },
 	                  createdAt: data.created_at,
 	                  content: data.content,
@@ -93161,25 +94442,9 @@
 	
 	var SocialAction = _interopRequireWildcard(_SocialAction);
 	
-	var _AuthAction = __webpack_require__(439);
-	
-	var AuthAction = _interopRequireWildcard(_AuthAction);
-	
 	__webpack_require__(759);
 	
 	var _reactstrap = __webpack_require__(623);
-	
-	var _classnames = __webpack_require__(624);
-	
-	var _classnames2 = _interopRequireDefault(_classnames);
-	
-	var _reactLoadingOverlay = __webpack_require__(761);
-	
-	var _reactLoadingOverlay2 = _interopRequireDefault(_reactLoadingOverlay);
-	
-	var _reactImageGallery = __webpack_require__(861);
-	
-	var _reactImageGallery2 = _interopRequireDefault(_reactImageGallery);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -93275,17 +94540,17 @@
 	      };
 	      var newPosts = _this.state.posts.slice();
 	      newPosts[index].loading = true;
-	      _this.setState({ posts: newPosts });
+	      _this.setState({ posts: newPosts, selectedIndex: index });
 	      _this.props.dispatch(SocialAction.getOneForum(params)).then(function (forum) {
+	        var newForum = Object.assign({}, forum);
+	
 	        var images = forum.image.map(function (data, index) {
 	          return { original: data.img_url };
 	        });
-	        _this.setState({ selectedIndex: index });
 	        _this.props.dispatch(SocialAction.getOneForumCoins(params)).then(function (coins) {
 	          _this.props.dispatch(SocialAction.getOneForumComment(params)).then(function (comment) {
 	            var newPosts = _this.state.posts.slice();
 	            newPosts[index].loading = false;
-	            _this.setState({ posts: newPosts });
 	            _this.props.dispatch(SocialAction.getLikeCheck(params)).then(function (result) {
 	              var isLiked = void 0;
 	              if (result.message === "You already liked this forum") {
@@ -93293,16 +94558,36 @@
 	              } else {
 	                isLiked = false;
 	              }
-	              _this.props.history.push({
-	                pathname: "/@" + _this.props.match.params.user_id + "/" + id,
-	                state: {
-	                  name: name,
-	                  forum: forum,
-	                  comment: comment.reverse(),
-	                  coins: coins,
-	                  images: images,
-	                  liked: isLiked
+	
+	              _this.props.dispatch(SocialAction.postForumView(params)).then(function (view) {
+	                if (view.message === "already View") {
+	                  null;
+	                } else {
+	                  newPosts[index].view_cnt += 1;
+	                  newForum.view_cnt = newForum.view_cnt + 1;
 	                }
+	
+	                _this.props.dispatch(SocialAction.getHateCheck(params)).then(function (result) {
+	                  var isHate = void 0;
+	                  if (result.message === "it's okay to dislike this forum") {
+	                    isHate = false;
+	                  } else {
+	                    isHate = true;
+	                  }
+	                  _this.setState({ posts: newPosts });
+	                  _this.props.history.push({
+	                    pathname: "/@" + _this.props.match.params.user_id + "/" + id,
+	                    state: {
+	                      name: name,
+	                      forum: forum,
+	                      comment: comment.reverse(),
+	                      coins: coins,
+	                      images: images,
+	                      liked: isLiked,
+	                      disliked: isHate
+	                    }
+	                  });
+	                });
 	              });
 	            });
 	          });
@@ -93319,6 +94604,9 @@
 	      newPosts[index].loading = true;
 	      _this.setState({ comments: newPosts });
 	      _this.props.dispatch(SocialAction.getOneForum(params)).then(function (forum) {
+	        var images = forum.image.map(function (data, index) {
+	          return { original: data.img_url };
+	        });
 	        _this.setState({ selectedCommentIndex: index });
 	        _this.props.dispatch(SocialAction.getOneForumCoins(params)).then(function (coins) {
 	          _this.props.dispatch(SocialAction.getOneForumComment(params)).then(function (comment) {
@@ -93331,7 +94619,8 @@
 	                name: name,
 	                forum: forum,
 	                comment: comment.reverse(),
-	                coins: coins
+	                coins: coins,
+	                images: images
 	              }
 	            });
 	          });
@@ -93523,10 +94812,8 @@
 	          footerLoading = _state.footerLoading,
 	          selectedType = _state.selectedType;
 	      var _props$location$state = this.props.location.state,
-	          userId = _props$location$state.userId,
 	          userImg = _props$location$state.userImg,
 	          userPoint = _props$location$state.userPoint,
-	          userCoins = _props$location$state.userCoins,
 	          username = _props$location$state.username;
 	      var me = this.props.me;
 	
@@ -93635,6 +94922,7 @@
 	                  point: data.point,
 	                  createdAt: data.created_at,
 	                  likeCount: data.like_cnt,
+	                  disLikeCount: data.dislike_cnt,
 	                  type: data.coins,
 	                  view: data.view_cnt,
 	                  onClick: function onClick() {
@@ -93670,7 +94958,7 @@
 	            null,
 	            _react2.default.createElement(_reactRouterDom.Route, {
 	              path: "/@" + this.props.match.params.user_id + "/:forum_id",
-	              component: _.ProfilePost
+	              component: _.PostPage
 	            }),
 	            _react2.default.createElement(_reactRouterDom.Route, {
 	              exact: true,
@@ -93817,10 +95105,6 @@
 	
 	var _reactLoadingOverlay2 = _interopRequireDefault(_reactLoadingOverlay);
 	
-	var _reactImageGallery = __webpack_require__(861);
-	
-	var _reactImageGallery2 = _interopRequireDefault(_reactImageGallery);
-	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -93896,6 +95180,20 @@
 	
 	    _this.handleType2 = function (index, data) {
 	      _this.setState({ selectedPostType2: data });
+	    };
+	
+	    _this.handlePreview = function (file_arr) {
+	      var imagePreview = _this.state.imagePreview.slice();
+	      for (var i = 0; i < file_arr.length; i++) {
+	        imagePreview.push(file_arr[i].base64);
+	      }
+	      _this.setState({ imagePreview: imagePreview });
+	    };
+	
+	    _this.handleBadge = function (value) {
+	      var imagePreview = _this.state.imagePreview.slice();
+	      imagePreview.splice(imagePreview.indexOf(value), 1);
+	      _this.setState({ imagePreview: imagePreview });
 	    };
 	
 	    _this.handleEditPost = function () {
@@ -94082,12 +95380,11 @@
 	      };
 	      var newPosts = _this.state.posts.slice();
 	      newPosts[index].loading = true;
-	      _this.setState({ posts: newPosts });
+	      _this.setState({ posts: newPosts, selectedIndex: index });
 	      _this.props.dispatch(SocialAction.getOneForum(params)).then(function (forum) {
 	        var images = forum.image.map(function (data, index) {
 	          return { original: data.img_url };
 	        });
-	        _this.setState({ selectedIndex: index });
 	        _this.props.dispatch(SocialAction.getOneForumCoins(params)).then(function (coins) {
 	          _this.props.dispatch(SocialAction.getOneForumComment(params)).then(function (comment) {
 	            var newPosts = _this.state.posts.slice();
@@ -94154,6 +95451,9 @@
 	      newPosts[index].loading = true;
 	      _this.setState({ comments: newPosts });
 	      _this.props.dispatch(SocialAction.getOneForum(params)).then(function (forum) {
+	        var images = forum.image.map(function (data, index) {
+	          return { original: data.img_url };
+	        });
 	        _this.setState({ selectedCommentIndex: index });
 	        _this.props.dispatch(SocialAction.getOneForumCoins(params)).then(function (coins) {
 	          _this.props.dispatch(SocialAction.getOneForumComment(params)).then(function (comment) {
@@ -94166,7 +95466,8 @@
 	                name: name,
 	                forum: forum,
 	                comment: comment.reverse(),
-	                coins: coins
+	                coins: coins,
+	                images: images
 	              }
 	            });
 	          });
@@ -94175,7 +95476,7 @@
 	    };
 	
 	    _this.handleEdit = function () {
-	      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(title, main, coins, category, index, id) {
+	      var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(title, main, coins, category, index, id, images) {
 	        var favorite, newFav, type, abbr, i, j, _i4;
 	
 	        return regeneratorRuntime.wrap(function _callee3$(_context3) {
@@ -94228,7 +95529,7 @@
 	        }, _callee3, _this2);
 	      }));
 	
-	      return function (_x5, _x6, _x7, _x8, _x9, _x10) {
+	      return function (_x5, _x6, _x7, _x8, _x9, _x10, _x11) {
 	        return _ref3.apply(this, arguments);
 	      };
 	    }();
@@ -94299,7 +95600,8 @@
 	      main: "",
 	      title: "",
 	      editIndex: 0,
-	      editId: 0
+	      editId: 0,
+	      imagePreview: []
 	    };
 	    _this.toggle = _this.toggle.bind(_this);
 	    return _this;
@@ -94628,6 +95930,7 @@
 	                  point: data.point,
 	                  createdAt: data.created_at,
 	                  likeCount: data.like_cnt,
+	                  disLikeCount: data.dislike_cnt,
 	                  type: data.coins,
 	                  view: data.view_cnt,
 	                  onClick: function onClick() {
@@ -94663,7 +95966,7 @@
 	            null,
 	            _react2.default.createElement(_reactRouterDom.Route, {
 	              path: this.props.match.url + "/:forum_id",
-	              component: _.ProfilePost
+	              component: _.PostPage
 	            }),
 	            _react2.default.createElement(_reactRouterDom.Route, {
 	              exact: true,

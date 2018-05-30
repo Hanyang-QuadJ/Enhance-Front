@@ -11,7 +11,7 @@ import {
   Button,
   SocialInput
 } from "../../Components";
-import { ProfilePost } from "../";
+import { PostPage } from "../";
 import { Route, Switch, withRouter } from "react-router-dom";
 import { Dots } from "react-activity";
 import * as PriceAction from "../../ActionCreators/PriceAction";
@@ -447,6 +447,9 @@ class MyPage extends Component {
     newPosts[index].loading = true;
     this.setState({ comments: newPosts });
     this.props.dispatch(SocialAction.getOneForum(params)).then(forum => {
+      const images = forum.image.map((data, index) => {
+        return { original: data.img_url };
+      });
       this.setState({ selectedCommentIndex: index });
       this.props.dispatch(SocialAction.getOneForumCoins(params)).then(coins => {
         this.props
@@ -461,7 +464,8 @@ class MyPage extends Component {
                 name,
                 forum,
                 comment: comment.reverse(),
-                coins
+                coins,
+                images
               }
             });
           });
@@ -770,7 +774,7 @@ class MyPage extends Component {
           <Switch>
             <Route
               path={`${this.props.match.url}/:forum_id`}
-              component={ProfilePost}
+              component={PostPage}
             />
             <Route
               exact

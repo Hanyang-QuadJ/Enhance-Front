@@ -45,9 +45,6 @@ class Comment extends Component {
               <div className="comment__content__userArea__userInfo__name">
                 {username}
               </div>
-              {/* <div className="comment__content__userArea__userInfo__point">
-                {`${userPoint} 포인트`}
-              </div> */}
             </div>
           </div>
           <div className="comment__content__content">
@@ -62,6 +59,11 @@ class Comment extends Component {
           </div>
           <div className="comment__content__date">
             {moment(createdAt).fromNow()}
+            {username === checkName ? (
+              <span className="comment__content__delete">
+                <i className="xi-close" />
+              </span>
+            ) : null}
           </div>
         </div>
       </div>

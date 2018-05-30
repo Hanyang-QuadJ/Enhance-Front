@@ -433,16 +433,16 @@ class ForumPage extends Component {
       newPosts[index].loading = true;
       this.setState({ posts: newPosts, selectedIndex: index });
       this.props.dispatch(SocialAction.getOneForum(params)).then(forum => {
-        const newForum = Object.assign({}, forum);
-        newForum.view_cnt = newForum.view_cnt + 1;
         const images = forum.image.map((data, index) => {
           return { original: data.img_url };
         });
         this.props.dispatch(SocialAction.postForumView(params)).then(view => {
           const newPosts = this.state.posts.slice();
+          const newForum = Object.assign({}, forum);
           if (view.message === "already View") {
             null;
           } else {
+            newForum.view_cnt = newForum.view_cnt + 1;
             newPosts[index].view_cnt = newPosts[index].view_cnt + 1;
           }
           this.props

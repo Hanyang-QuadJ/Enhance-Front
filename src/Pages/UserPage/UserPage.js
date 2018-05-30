@@ -3,32 +3,19 @@
 
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  NavBar,
-  List,
-  SideBar,
-  Thumb,
-  Button,
-  SocialInput
-} from "../../Components";
-import { ProfilePost } from "../";
+import { NavBar, List, Thumb } from "../../Components";
+import { PostPage } from "../";
 import { Route, Switch, withRouter } from "react-router-dom";
 import { Dots } from "react-activity";
 import * as PriceAction from "../../ActionCreators/PriceAction";
 import * as SocialAction from "../../ActionCreators/SocialAction";
-import * as AuthAction from "../../ActionCreators/AuthAction";
 import "react-activity/dist/react-activity.css";
 import {
   ButtonDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem,
-  Modal,
-  ModalBody
+  DropdownItem
 } from "reactstrap";
-import cx from "classnames";
-import Loadable from "react-loading-overlay";
-import ImageGallery from "react-image-gallery";
 
 const defaultProps = {};
 const propTypes = {};
@@ -245,6 +232,8 @@ class UserPage extends Component {
     newPosts[index].loading = true;
     this.setState({ posts: newPosts, selectedIndex: index });
     this.props.dispatch(SocialAction.getOneForum(params)).then(forum => {
+      const newForum = Object.assign({}, forum);
+
       const images = forum.image.map((data, index) => {
         return { original: data.img_url };
       });
@@ -271,6 +260,7 @@ class UserPage extends Component {
                       null;
                     } else {
                       newPosts[index].view_cnt += 1;
+                      newForum.view_cnt = newForum.view_cnt + 1;
                     }
 
                     this.props
@@ -316,6 +306,9 @@ class UserPage extends Component {
     newPosts[index].loading = true;
     this.setState({ comments: newPosts });
     this.props.dispatch(SocialAction.getOneForum(params)).then(forum => {
+      const images = forum.image.map((data, index) => {
+        return { original: data.img_url };
+      });
       this.setState({ selectedCommentIndex: index });
       this.props.dispatch(SocialAction.getOneForumCoins(params)).then(coins => {
         this.props
@@ -330,7 +323,8 @@ class UserPage extends Component {
                 name,
                 forum,
                 comment: comment.reverse(),
-                coins
+                coins,
+                images
               }
             });
           });
@@ -378,13 +372,7 @@ class UserPage extends Component {
       footerLoading,
       selectedType
     } = this.state;
-    const {
-      userId,
-      userImg,
-      userPoint,
-      userCoins,
-      username
-    } = this.props.location.state;
+    const { userImg, userPoint, username } = this.props.location.state;
     const { me } = this.props;
 
     return (
@@ -520,7 +508,7 @@ class UserPage extends Component {
           <Switch>
             <Route
               path={`/@${this.props.match.params.user_id}/:forum_id`}
-              component={ProfilePost}
+              component={PostPage}
             />
             <Route
               exact
