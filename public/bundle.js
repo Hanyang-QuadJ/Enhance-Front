@@ -34259,6 +34259,10 @@
 	      return Object.assign({}, state, {
 	        me: _extends({}, state.me, { username: action.payload })
 	      });
+	    case _AuthAction.SUCCEED_TO_UPDATE_PROFILE:
+	      return Object.assign({}, state, {
+	        me: _extends({}, state.me, { profile_img: action.payload })
+	      });
 	    case _AuthAction.FAILED_TO_SIGNIN:
 	      return Object.assign({}, state, {
 	        token: "",
@@ -34270,7 +34274,7 @@
 	      return Object.assign({}, state, {
 	        isLogin: false,
 	        token: null,
-	        user: []
+	        me: null
 	      });
 	    case _NewsAction.SUCCEED_TO_GET_NEWS:
 	      return Object.assign({}, state, {
@@ -34821,7 +34825,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.signOut = exports.updateEmail = exports.updateUsername = exports.postSignIn = exports.postSignUp = exports.getMe = exports.SUCCEED_TO_SIGNOUT = exports.FAILED_TO_SIGNUP = exports.SUCCEED_TO_SIGNUP = exports.FAILED_TO_SIGNIN = exports.SUCCEED_TO_SIGNIN = exports.FAILED_TO_UPDATE_USERNAME = exports.SUCCEED_TO_UPDATE_USERNAME = exports.FAILED_TO_UPDATE_EMAIL = exports.SUCCEED_TO_UPDATE_EMAIL = exports.FAILED_TO_GET_ME = exports.SUCCEED_TO_GET_ME = undefined;
+	exports.signOut = exports.updateEmail = exports.updateProfile = exports.updatePassword = exports.updateUsername = exports.postSignIn = exports.postSignUp = exports.getMe = exports.SUCCEED_TO_SIGNOUT = exports.FAILED_TO_SIGNUP = exports.SUCCEED_TO_SIGNUP = exports.FAILED_TO_SIGNIN = exports.SUCCEED_TO_SIGNIN = exports.FAILED_TO_UPDATE_PASSWORD = exports.SUCCEED_TO_UPDATE_PASSWORD = exports.FAILED_TO_UPDATE_PROFILE = exports.SUCCEED_TO_UPDATE_PROFILE = exports.FAILED_TO_UPDATE_USERNAME = exports.SUCCEED_TO_UPDATE_USERNAME = exports.FAILED_TO_UPDATE_EMAIL = exports.SUCCEED_TO_UPDATE_EMAIL = exports.FAILED_TO_GET_ME = exports.SUCCEED_TO_GET_ME = undefined;
 	
 	var _Server = __webpack_require__(437);
 	
@@ -34835,6 +34839,12 @@
 	
 	var SUCCEED_TO_UPDATE_USERNAME = exports.SUCCEED_TO_UPDATE_USERNAME = "SUCCEED_TO_UPDATE_USERNAME";
 	var FAILED_TO_UPDATE_USERNAME = exports.FAILED_TO_UPDATE_USERNAME = "FAILED_TO_UPDATE_USERNAME";
+	
+	var SUCCEED_TO_UPDATE_PROFILE = exports.SUCCEED_TO_UPDATE_PROFILE = "SUCCEED_TO_UPDATE_PROFILE";
+	var FAILED_TO_UPDATE_PROFILE = exports.FAILED_TO_UPDATE_PROFILE = "FAILED_TO_UPDATE_PROFILE";
+	
+	var SUCCEED_TO_UPDATE_PASSWORD = exports.SUCCEED_TO_UPDATE_PASSWORD = "SUCCEED_TO_UPDATE_PASSWORD";
+	var FAILED_TO_UPDATE_PASSWORD = exports.FAILED_TO_UPDATE_PASSWORD = "FAILED_TO_UPDATE_PASSWORD";
 	
 	var SUCCEED_TO_SIGNIN = exports.SUCCEED_TO_SIGNIN = "SUCCEED_TO_SIGNIN";
 	var FAILED_TO_SIGNIN = exports.FAILED_TO_SIGNIN = "FAILED_TO_SIGNIN";
@@ -34934,17 +34944,37 @@
 	
 	            case 6:
 	              responseJson = _context2.sent;
-	              _context2.next = 9;
+	
+	              if (!(response.status === 406)) {
+	                _context2.next = 13;
+	                break;
+	              }
+	
+	              _context2.next = 10;
+	              return dispatch({
+	                type: FAILED_TO_SIGNUP,
+	                payload: responseJson
+	              });
+	
+	            case 10:
+	              return _context2.abrupt("return", responseJson.message);
+	
+	            case 13:
+	              _context2.next = 15;
 	              return dispatch({
 	                type: SUCCEED_TO_SIGNUP,
 	                payload: responseJson.token
 	              });
 	
-	            case 9:
+	            case 15:
 	              return _context2.abrupt("return", responseJson.token);
 	
-	            case 12:
-	              _context2.prev = 12;
+	            case 16:
+	              _context2.next = 21;
+	              break;
+	
+	            case 18:
+	              _context2.prev = 18;
 	              _context2.t0 = _context2["catch"](0);
 	
 	              dispatch({
@@ -34952,12 +34982,12 @@
 	                payload: { data: "NETWORK_ERROR" }
 	              });
 	
-	            case 15:
+	            case 21:
 	            case "end":
 	              return _context2.stop();
 	          }
 	        }
-	      }, _callee2, undefined, [[0, 12]]);
+	      }, _callee2, undefined, [[0, 18]]);
 	    }));
 	
 	    return function (_x2) {
@@ -35012,23 +35042,21 @@
 	
 	            case 12:
 	              responseJson = _context3.sent;
-	
-	              console.log(responseJson);
-	              _context3.next = 16;
+	              _context3.next = 15;
 	              return dispatch({
 	                type: SUCCEED_TO_SIGNIN,
 	                payload: responseJson.token
 	              });
 	
-	            case 16:
+	            case 15:
 	              return _context3.abrupt("return", responseJson.token);
 	
-	            case 17:
-	              _context3.next = 22;
+	            case 16:
+	              _context3.next = 21;
 	              break;
 	
-	            case 19:
-	              _context3.prev = 19;
+	            case 18:
+	              _context3.prev = 18;
 	              _context3.t0 = _context3["catch"](0);
 	
 	              dispatch({
@@ -35036,12 +35064,12 @@
 	                payload: { data: "NETWORK_ERROR" }
 	              });
 	
-	            case 22:
+	            case 21:
 	            case "end":
 	              return _context3.stop();
 	          }
 	        }
-	      }, _callee3, undefined, [[0, 19]]);
+	      }, _callee3, undefined, [[0, 18]]);
 	    }));
 	
 	    return function (_x3) {
@@ -35069,6 +35097,7 @@
 	                  "x-access-token": params.token
 	                },
 	                body: JSON.stringify({
+	                  email: params.email,
 	                  username: params.username
 	                })
 	              });
@@ -35112,7 +35141,7 @@
 	  }();
 	};
 	
-	var updateEmail = exports.updateEmail = function updateEmail(params) {
+	var updatePassword = exports.updatePassword = function updatePassword(params) {
 	  return function () {
 	    var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(dispatch) {
 	      var response, responseJson;
@@ -35122,7 +35151,7 @@
 	            case 0:
 	              _context5.prev = 0;
 	              _context5.next = 3;
-	              return fetch(_Server.ServerEndPoint + "api/user/email", {
+	              return fetch(_Server.ServerEndPoint + "api/user/password", {
 	                method: "PATCH",
 	                headers: {
 	                  Accept: "application/json",
@@ -35131,7 +35160,8 @@
 	                  "x-access-token": params.token
 	                },
 	                body: JSON.stringify({
-	                  email: params.email
+	                  old_password: params.old_password,
+	                  new_password: params.new_password
 	                })
 	              });
 	
@@ -35144,8 +35174,8 @@
 	              responseJson = _context5.sent;
 	              _context5.next = 9;
 	              return dispatch({
-	                type: SUCCEED_TO_UPDATE_EMAIL,
-	                payload: params.EMAIL
+	                type: SUCCEED_TO_UPDATE_PASSWORD,
+	                payload: responseJson
 	              });
 	
 	            case 9:
@@ -35156,7 +35186,7 @@
 	              _context5.t0 = _context5["catch"](0);
 	
 	              dispatch({
-	                type: FAILED_TO_UPDATE_EMAIL,
+	                type: FAILED_TO_UPDATE_PASSWORD,
 	                payload: { data: "NETWORK_ERROR" }
 	              });
 	
@@ -35174,28 +35204,152 @@
 	  }();
 	};
 	
-	var signOut = exports.signOut = function signOut() {
+	var updateProfile = exports.updateProfile = function updateProfile(params) {
 	  return function () {
 	    var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(dispatch) {
+	      var response, responseJson;
 	      return regeneratorRuntime.wrap(function _callee6$(_context6) {
 	        while (1) {
 	          switch (_context6.prev = _context6.next) {
 	            case 0:
-	              dispatch({
-	                type: SUCCEED_TO_SIGNOUT
+	              _context6.prev = 0;
+	              _context6.next = 3;
+	              return fetch(_Server.ServerEndPoint + "api/user/profile", {
+	                method: "PATCH",
+	                headers: {
+	                  Accept: "application/json",
+	                  "Content-Type": "application/json",
+	                  "Access-Control-Allow-Origin": "*",
+	                  "x-access-token": params.token
+	                },
+	                body: JSON.stringify({
+	                  base64: params.base64
+	                })
 	              });
-	              return _context6.abrupt("return", "signOut");
 	
-	            case 2:
+	            case 3:
+	              response = _context6.sent;
+	              _context6.next = 6;
+	              return response.json();
+	
+	            case 6:
+	              responseJson = _context6.sent;
+	              _context6.next = 9;
+	              return dispatch({
+	                type: SUCCEED_TO_UPDATE_PROFILE,
+	                payload: params.base64
+	              });
+	
+	            case 9:
+	              return _context6.abrupt("return", "succeed");
+	
+	            case 12:
+	              _context6.prev = 12;
+	              _context6.t0 = _context6["catch"](0);
+	
+	              dispatch({
+	                type: FAILED_TO_UPDATE_PROFILE,
+	                payload: { data: "NETWORK_ERROR" }
+	              });
+	
+	            case 15:
 	            case "end":
 	              return _context6.stop();
 	          }
 	        }
-	      }, _callee6, undefined);
+	      }, _callee6, undefined, [[0, 12]]);
 	    }));
 	
 	    return function (_x6) {
 	      return _ref6.apply(this, arguments);
+	    };
+	  }();
+	};
+	
+	var updateEmail = exports.updateEmail = function updateEmail(params) {
+	  return function () {
+	    var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(dispatch) {
+	      var response, responseJson;
+	      return regeneratorRuntime.wrap(function _callee7$(_context7) {
+	        while (1) {
+	          switch (_context7.prev = _context7.next) {
+	            case 0:
+	              _context7.prev = 0;
+	              _context7.next = 3;
+	              return fetch(_Server.ServerEndPoint + "api/user/email", {
+	                method: "PATCH",
+	                headers: {
+	                  Accept: "application/json",
+	                  "Content-Type": "application/json",
+	                  "Access-Control-Allow-Origin": "*",
+	                  "x-access-token": params.token
+	                },
+	                body: JSON.stringify({
+	                  email: params.email
+	                })
+	              });
+	
+	            case 3:
+	              response = _context7.sent;
+	              _context7.next = 6;
+	              return response.json();
+	
+	            case 6:
+	              responseJson = _context7.sent;
+	              _context7.next = 9;
+	              return dispatch({
+	                type: SUCCEED_TO_UPDATE_EMAIL,
+	                payload: params.EMAIL
+	              });
+	
+	            case 9:
+	              return _context7.abrupt("return", "succeed");
+	
+	            case 12:
+	              _context7.prev = 12;
+	              _context7.t0 = _context7["catch"](0);
+	
+	              dispatch({
+	                type: FAILED_TO_UPDATE_EMAIL,
+	                payload: { data: "NETWORK_ERROR" }
+	              });
+	
+	            case 15:
+	            case "end":
+	              return _context7.stop();
+	          }
+	        }
+	      }, _callee7, undefined, [[0, 12]]);
+	    }));
+	
+	    return function (_x7) {
+	      return _ref7.apply(this, arguments);
+	    };
+	  }();
+	};
+	
+	var signOut = exports.signOut = function signOut() {
+	  return function () {
+	    var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(dispatch) {
+	      return regeneratorRuntime.wrap(function _callee8$(_context8) {
+	        while (1) {
+	          switch (_context8.prev = _context8.next) {
+	            case 0:
+	              dispatch({
+	                type: SUCCEED_TO_SIGNOUT
+	              });
+	              return _context8.abrupt("return", "signOut");
+	
+	            case 2:
+	            case "end":
+	              return _context8.stop();
+	          }
+	        }
+	      }, _callee8, undefined);
+	    }));
+	
+	    return function (_x8) {
+	      return _ref8.apply(this, arguments);
 	    };
 	  }();
 	};
@@ -35233,7 +35387,7 @@
 	exports = module.exports = __webpack_require__(432)();
 	exports.push([module.id, "@import url(https://fonts.googleapis.com/css?family=Black+Han+Sans);", ""]);
 	exports.push([module.id, "@import url(https://fonts.googleapis.com/css?family=Biryani:700|Nanum+Gothic);", ""]);
-	exports.push([module.id, "@charset \"UTF-8\";\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n\n\n.homePage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .homePage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .homePage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .homePage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        border-bottom: 1px white solid; }\n        .homePage__content__news__search__first {\n          padding: 10px;\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid; }\n          .homePage__content__news__search__first__item {\n            font-size: 13px !important;\n            font-weight: 300 !important;\n            color: white;\n            margin-right: 1px;\n            font-weight: 600;\n            cursor: pointer;\n            float: left;\n            padding: 5px 25px;\n            background: transparent; }\n            .homePage__content__news__search__first__item:hover {\n              transition: 0.3s;\n              -webkit-transition: 0.3s;\n              -moz-transition: 0.3s;\n              -o-transition: 0.3s;\n              background-color: #536976; }\n            .homePage__content__news__search__first__item-active {\n              background-color: #536976; }\n        .homePage__content__news__search__second {\n          padding: 10px; }\n          .homePage__content__news__search__second__content {\n            display: flex;\n            flex-direction: row;\n            justify-content: space-between; }\n      .homePage__content__news__lists {\n        height: calc(100vh - 100px);\n        margin-top: 100px;\n        overflow-y: scroll; }\n        .homePage__content__news__lists-loading {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          height: 55vh;\n          color: white;\n          font-size: 1rem;\n          height: calc(100vh - 100px);\n          margin-top: 100px; }\n        .homePage__content__news__lists-none {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          height: 55vh;\n          color: white;\n          font-size: 1rem; }\n        .homePage__content__news__lists__footer {\n          height: 12vh;\n          display: flex;\n          align-items: center;\n          justify-content: center; }\n    .homePage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px; }\n      .homePage__content__chart__coin {\n        display: flex;\n        justify-content: center;\n        padding: 15px;\n        font-size: 13px;\n        top: 0;\n        color: #f4e7d7;\n        border-bottom: 1px solid white;\n        position: fixed;\n        right: 100px;\n        z-index: 500;\n        width: calc(50vw - 100px); }\n      .homePage__content__chart__wrapper {\n        height: calc(100vh - 50px);\n        background: transparent;\n        overflow-y: scroll;\n        padding-left: 1rem;\n        padding-right: 1rem;\n        margin-top: 50px; }\n        .homePage__content__chart__wrapper > div {\n          background-color: transparent !important; }\n      .homePage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        flex-direction: column;\n        justify-content: center;\n        height: 100vh; }\n      .homePage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .homePage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .homePage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n        .homePage__content__chart__intro__welcome {\n          margin-top: 6%; }\n        .homePage__content__chart__intro__desc {\n          margin-top: 6%; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.authPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .authPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .authPage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .authPage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        padding-top: 1.5rem;\n        height: 145px;\n        border-bottom: 1px white solid; }\n        .authPage__content__news__search__first {\n          display: flex;\n          flex-direction: row; }\n          .authPage__content__news__search__first__iconArea {\n            padding-left: 1rem;\n            display: flex;\n            justify-content: center;\n            margin-right: 1rem;\n            align-items: center; }\n            .authPage__content__news__search__first__iconArea__icon {\n              color: white;\n              font-size: 1.5rem; }\n          .authPage__content__news__search__first__inputArea {\n            display: flex;\n            align-items: center; }\n            .authPage__content__news__search__first__inputArea__input {\n              background-color: transparent;\n              outline-width: 0 !important;\n              color: white;\n              border: 0;\n              width: 35vw; }\n        .authPage__content__news__search__second__content {\n          padding-left: 1rem; }\n      .authPage__content__news__lists {\n        height: calc(100vh - 145px);\n        margin-top: 145px;\n        overflow-y: scroll; }\n    .authPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .authPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .authPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .authPage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .authPage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n        .authPage__content__chart__intro__welcome {\n          margin-top: 6%; }\n        .authPage__content__chart__intro__login {\n          margin-top: 15%;\n          width: 100%;\n          display: flex;\n          flex-direction: column;\n          align-items: center; }\n        .authPage__content__chart__intro__signUp {\n          margin-top: 5%;\n          width: 100%;\n          display: flex;\n          flex-direction: column;\n          align-items: center; }\n          .authPage__content__chart__intro__signUp__link {\n            cursor: pointer; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.signUpPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .signUpPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .signUpPage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .signUpPage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        padding-top: 1.5rem;\n        height: 145px;\n        border-bottom: 1px white solid; }\n        .signUpPage__content__news__search__first {\n          display: flex;\n          flex-direction: row; }\n          .signUpPage__content__news__search__first__iconArea {\n            padding-left: 1rem;\n            display: flex;\n            justify-content: center;\n            margin-right: 1rem;\n            align-items: center; }\n            .signUpPage__content__news__search__first__iconArea__icon {\n              color: white;\n              font-size: 1.5rem; }\n          .signUpPage__content__news__search__first__inputArea {\n            display: flex;\n            align-items: center; }\n            .signUpPage__content__news__search__first__inputArea__input {\n              background-color: transparent;\n              outline-width: 0 !important;\n              color: white;\n              border: 0;\n              width: 35vw; }\n        .signUpPage__content__news__search__second__content {\n          padding-left: 1rem; }\n      .signUpPage__content__news__lists {\n        height: calc(100vh - 145px);\n        margin-top: 145px;\n        overflow-y: scroll; }\n    .signUpPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .signUpPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .signUpPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .signUpPage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .signUpPage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n        .signUpPage__content__chart__intro__welcome {\n          margin-top: 6%; }\n        .signUpPage__content__chart__intro__login {\n          margin-top: 15%;\n          width: 100%;\n          display: flex;\n          flex-direction: column;\n          align-items: center; }\n        .signUpPage__content__chart__intro__signUp {\n          margin-top: 5%;\n          width: 100%;\n          display: flex;\n          flex-direction: column;\n          align-items: center; }\n          .signUpPage__content__chart__intro__signUp__link {\n            cursor: pointer; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.forumPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .forumPage__modal {\n    height: 90vh;\n    padding-left: 50px;\n    padding-right: 50px;\n    display: flex;\n    flex-direction: column; }\n    .forumPage__modal__favorite {\n      width: 100%;\n      padding-left: 1rem;\n      padding-right: 1rem;\n      display: flex;\n      flex-direction: row;\n      flex-wrap: wrap;\n      justify-content: center; }\n      .forumPage__modal__favorite__text {\n        margin-top: 2rem;\n        margin-bottom: 1rem;\n        text-align: center;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        align-items: center; }\n      .forumPage__modal__favorite__icon {\n        color: white;\n        font-size: 1.5rem;\n        margin-right: 5px;\n        vertical-align: center; }\n      .forumPage__modal__favorite__item {\n        border: 1px rgba(255, 255, 255, 0.2) solid;\n        padding-left: 10px;\n        padding-right: 10px;\n        padding-top: 5px;\n        padding-bottom: 5px;\n        margin-right: 5px;\n        margin-bottom: 5px;\n        cursor: pointer; }\n        .forumPage__modal__favorite__item:hover {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          border: 1px white solid; }\n        .forumPage__modal__favorite__item-active {\n          border: 1px #5cb85c solid; }\n          .forumPage__modal__favorite__item-active:hover {\n            transition: 0.3s;\n            -webkit-transition: 0.3s;\n            -moz-transition: 0.3s;\n            -o-transition: 0.3s;\n            border: 1px #5cb85c solid; }\n  .forumPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .forumPage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .forumPage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        border-bottom: 1px white solid; }\n        .forumPage__content__news__search__first {\n          display: flex;\n          flex-direction: row;\n          justify-content: space-between;\n          padding: 10px;\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid; }\n          .forumPage__content__news__search__first__container {\n            display: flex;\n            flex-direction: row; }\n          .forumPage__content__news__search__first__iconArea {\n            padding-left: 5px;\n            display: flex;\n            justify-content: center;\n            margin-right: 1rem;\n            align-items: center; }\n            .forumPage__content__news__search__first__iconArea__icon {\n              color: white;\n              font-size: 1.5rem; }\n          .forumPage__content__news__search__first__inputArea {\n            display: flex;\n            align-items: center; }\n            .forumPage__content__news__search__first__inputArea__input {\n              background-color: transparent;\n              outline-width: 0 !important;\n              color: white;\n              border: 0;\n              width: 23vw; }\n        .forumPage__content__news__search__second {\n          padding: 10px; }\n          .forumPage__content__news__search__second__content {\n            display: flex;\n            flex-direction: row;\n            justify-content: space-between; }\n      .forumPage__content__news__lists {\n        height: calc(100vh - 110px);\n        margin-top: 110px;\n        overflow-y: scroll; }\n        .forumPage__content__news__lists-loading {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          height: 55vh;\n          color: white;\n          font-size: 1rem;\n          height: calc(100vh - 100px);\n          margin-top: 100px; }\n        .forumPage__content__news__lists__footer {\n          height: 12vh;\n          display: flex;\n          align-items: center;\n          justify-content: center; }\n    .forumPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .forumPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .forumPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .forumPage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .forumPage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n        .forumPage__content__chart__intro__welcome {\n          margin-top: 6%; }\n        .forumPage__content__chart__intro__desc {\n          margin-top: 6%; }\n        .forumPage__content__chart__intro__post {\n          height: 90vh; }\n          .forumPage__content__chart__intro__post__header {\n            border-bottom: 1px rgba(255, 255, 255, 0.2) solid;\n            display: flex;\n            height: 10vh;\n            flex-direction: row;\n            align-items: center;\n            justify-content: space-between;\n            padding-bottom: 1rem; }\n            .forumPage__content__chart__intro__post__header__userInfo {\n              display: flex;\n              width: 15vw;\n              flex-direction: row;\n              align-items: center; }\n              .forumPage__content__chart__intro__post__header__userInfo__thumb {\n                flex: 1; }\n              .forumPage__content__chart__intro__post__header__userInfo__name {\n                flex: 3;\n                margin-left: 10px;\n                display: flex;\n                flex-direction: column;\n                align-items: flex-start;\n                justify-content: center; }\n              .forumPage__content__chart__intro__post__header__userInfo__point {\n                font-size: 13px; }\n            .forumPage__content__chart__intro__post__header__detail {\n              display: flex;\n              flex-direction: column;\n              justify-content: flex-end;\n              align-items: flex-end; }\n          .forumPage__content__chart__intro__post__title {\n            margin-top: 1rem;\n            padding-bottom: 1rem;\n            border-bottom: rgba(255, 255, 255, 0.2) 1px solid;\n            font-weight: 400; }\n          .forumPage__content__chart__intro__post__body {\n            margin-top: 1rem;\n            padding-bottom: 1rem;\n            border-bottom: rgba(255, 255, 255, 0.2) 1px solid;\n            font-weight: 300; }\n          .forumPage__content__chart__intro__post__footer {\n            display: flex;\n            flex-direction: row;\n            justify-content: center;\n            padding-top: 1rem;\n            padding-bottom: 1rem; }\n            .forumPage__content__chart__intro__post__footer__icon {\n              display: inline-flex;\n              font-size: 1.5rem;\n              margin-right: 1rem; }\n        .forumPage__content__chart__intro__signUp {\n          margin-top: 5%;\n          width: 100%;\n          display: flex;\n          flex-direction: column;\n          align-items: center; }\n          .forumPage__content__chart__intro__signUp__link {\n            cursor: pointer; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.postPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .postPage__modal {\n    height: 60vh;\n    display: flex;\n    align-items: center;\n    justify-content: center; }\n    .postPage__modal__content {\n      margin-left: 1rem;\n      margin-right: 1rem;\n      display: flex;\n      flex-direction: column;\n      justify-content: center;\n      align-items: center; }\n      .postPage__modal__content__area {\n        display: flex;\n        flex-direction: row; }\n        .postPage__modal__content__area__number {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          padding-left: 1.5rem;\n          padding-right: 1.5rem;\n          flex-direction: column;\n          font-weight: 500; }\n          .postPage__modal__content__area__number-border {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            padding-left: 1.5rem;\n            padding-right: 1.5rem;\n            flex-direction: column;\n            font-weight: 500;\n            border-right: 1px rgba(255, 255, 255, 0.2) solid; }\n        .postPage__modal__content__area__text {\n          font-weight: 300 !important; }\n      .postPage__modal__content__coins {\n        margin-top: 2rem;\n        display: flex;\n        flex-wrap: wrap;\n        flex-direction: row;\n        font-size: 13px;\n        width: 80%;\n        justify-content: center;\n        flex-wrap: wrap;\n        margin-bottom: 5px;\n        color: #f4e7d7; }\n        .postPage__modal__content__coins__coin {\n          border: 1px #f4e7d7 solid;\n          padding-left: 5px;\n          padding-right: 5px;\n          margin-right: 5px; }\n      .postPage__modal__content__username {\n        margin-top: 1.5rem;\n        margin-bottom: 1.5rem;\n        font-size: 1.5rem; }\n  .postPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .postPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .postPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .postPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .postPage__content__chart__intro__loading {\n          padding: 2rem 2rem 2rem 2rem;\n          display: flex;\n          width: 100%;\n          height: 90vh;\n          justify-content: center;\n          align-items: center; }\n        .postPage__content__chart__intro__post__header {\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid;\n          display: flex;\n          height: 10vh;\n          flex-direction: row;\n          align-items: center;\n          justify-content: space-between;\n          padding-bottom: 1rem; }\n          .postPage__content__chart__intro__post__header__userInfo {\n            display: flex;\n            width: 15vw;\n            flex-direction: row;\n            align-items: center; }\n            .postPage__content__chart__intro__post__header__userInfo__thumb {\n              flex: 1; }\n            .postPage__content__chart__intro__post__header__userInfo__name {\n              flex: 3;\n              margin-left: 10px;\n              display: flex;\n              flex-direction: column;\n              align-items: flex-start;\n              justify-content: center; }\n            .postPage__content__chart__intro__post__header__userInfo__point {\n              font-size: 13px; }\n            .postPage__content__chart__intro__post__header__userInfo__date {\n              font-size: 13px;\n              color: rgba(255, 255, 255, 0.5); }\n          .postPage__content__chart__intro__post__header__detail {\n            display: flex;\n            flex-direction: column;\n            justify-content: flex-end;\n            align-items: flex-end; }\n        .postPage__content__chart__intro__post__title {\n          margin-top: 1rem;\n          padding-left: 10px;\n          padding-right: 10px;\n          font-size: 18px;\n          padding-bottom: 1rem;\n          border-bottom: rgba(255, 255, 255, 0.2) 1px solid;\n          font-weight: 400; }\n        .postPage__content__chart__intro__post__body {\n          margin-top: 1rem;\n          padding-left: 10px;\n          padding-right: 10px;\n          padding-bottom: 1rem;\n          font-weight: 300; }\n        .postPage__content__chart__intro__post__coin {\n          margin-top: 1rem;\n          display: flex;\n          flex-direction: row;\n          justify-content: flex-end;\n          font-size: 13px;\n          width: 100%;\n          flex-wrap: wrap;\n          margin-bottom: 5px;\n          color: #f4e7d7; }\n          .postPage__content__chart__intro__post__coin__item {\n            border: 1px #f4e7d7 solid;\n            padding-left: 5px;\n            padding-right: 5px;\n            margin-right: 5px; }\n        .postPage__content__chart__intro__post__footer {\n          display: flex;\n          flex-direction: row;\n          justify-content: center;\n          align-items: center;\n          padding-top: 1rem;\n          padding-bottom: 1rem;\n          cursor: pointer;\n          color: #a0c1b8; }\n          .postPage__content__chart__intro__post__footer__count {\n            font-size: 1rem;\n            margin-right: 7px; }\n            .postPage__content__chart__intro__post__footer__count-liked {\n              color: #5cb85c !important; }\n            .postPage__content__chart__intro__post__footer__count-hated {\n              color: #f26968 !important; }\n          .postPage__content__chart__intro__post__footer__icon {\n            display: inline-flex;\n            font-size: 1.5rem;\n            margin-right: 1rem; }\n        .postPage__content__chart__intro__comments {\n          margin-top: 10%; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.userPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .userPage__modal {\n    height: 90vh;\n    padding-left: 50px;\n    padding-right: 50px;\n    display: flex;\n    flex-direction: column; }\n    .userPage__modal__favorite {\n      width: 100%;\n      padding-left: 1rem;\n      padding-right: 1rem;\n      display: flex;\n      flex-direction: row;\n      flex-wrap: wrap;\n      justify-content: center; }\n      .userPage__modal__favorite__text {\n        margin-top: 2rem;\n        margin-bottom: 1rem;\n        text-align: center;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        align-items: center; }\n      .userPage__modal__favorite__icon {\n        color: white;\n        font-size: 1.5rem;\n        margin-right: 5px;\n        vertical-align: center; }\n      .userPage__modal__favorite__item {\n        border: 1px rgba(255, 255, 255, 0.2) solid;\n        padding-left: 10px;\n        padding-right: 10px;\n        padding-top: 5px;\n        padding-bottom: 5px;\n        margin-right: 5px;\n        margin-bottom: 5px;\n        cursor: pointer; }\n        .userPage__modal__favorite__item:hover {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          border: 1px white solid; }\n        .userPage__modal__favorite__item-active {\n          border: 1px #5cb85c solid; }\n          .userPage__modal__favorite__item-active:hover {\n            transition: 0.3s;\n            -webkit-transition: 0.3s;\n            -moz-transition: 0.3s;\n            -o-transition: 0.3s;\n            border: 1px #5cb85c solid; }\n  .userPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .userPage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .userPage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        border-bottom: 1px white solid; }\n        .userPage__content__news__search__first {\n          display: flex;\n          flex-direction: row;\n          padding: 10px;\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid; }\n          .userPage__content__news__search__first__iconArea {\n            padding-left: 5px;\n            display: flex;\n            justify-content: center;\n            margin-right: 1rem;\n            align-items: center; }\n            .userPage__content__news__search__first__iconArea__icon {\n              color: white;\n              font-size: 1.5rem; }\n          .userPage__content__news__search__first__inputArea {\n            display: flex;\n            align-items: center; }\n            .userPage__content__news__search__first__inputArea__input {\n              background-color: transparent;\n              outline-width: 0 !important;\n              color: white;\n              border: 0;\n              width: 35vw; }\n        .userPage__content__news__search__second {\n          padding: 10px; }\n          .userPage__content__news__search__second__content {\n            display: flex;\n            flex-direction: row;\n            justify-content: space-between; }\n      .userPage__content__news__lists {\n        height: calc(100vh - 110px);\n        margin-top: 110px;\n        overflow-y: scroll; }\n        .userPage__content__news__lists-loading {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          height: 55vh;\n          color: white;\n          font-size: 1rem;\n          height: calc(100vh - 100px);\n          margin-top: 100px; }\n        .userPage__content__news__lists__footer {\n          height: 12vh;\n          display: flex;\n          align-items: center;\n          justify-content: center; }\n    .userPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .userPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .userPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column;\n        align-items: center;\n        height: 100%;\n        justify-content: center; }\n        .userPage__content__chart__intro__content {\n          margin-left: 1rem;\n          margin-right: 1rem;\n          display: flex;\n          flex-direction: column;\n          justify-content: center;\n          align-items: center; }\n          .userPage__content__chart__intro__content__area {\n            display: flex;\n            flex-direction: row; }\n            .userPage__content__chart__intro__content__area__number {\n              display: flex;\n              justify-content: center;\n              align-items: center;\n              padding-left: 1.5rem;\n              padding-right: 1.5rem;\n              flex-direction: column;\n              font-weight: 500; }\n              .userPage__content__chart__intro__content__area__number-border {\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                padding-left: 1.5rem;\n                padding-right: 1.5rem;\n                flex-direction: column;\n                font-weight: 500;\n                border-right: 1px rgba(255, 255, 255, 0.2) solid; }\n            .userPage__content__chart__intro__content__area__text {\n              font-weight: 300 !important; }\n          .userPage__content__chart__intro__content__username {\n            margin-top: 1rem;\n            margin-bottom: 1rem;\n            font-size: 2rem; }\n          .userPage__content__chart__intro__content__coins {\n            margin-top: 1.5rem;\n            margin-bottom: 1.5rem;\n            width: 100%;\n            flex-wrap: wrap;\n            display: flex;\n            flex-direction: row;\n            justify-content: center;\n            font-size: 13px;\n            color: #f4e7d7; }\n            .userPage__content__chart__intro__content__coins__coin {\n              border: 1px #f4e7d7 solid;\n              padding-left: 5px;\n              padding-right: 5px;\n              margin-right: 5px;\n              margin-bottom: 5px; }\n        .userPage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .userPage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.myPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .myPage__modal {\n    height: 90vh;\n    padding-left: 50px;\n    padding-right: 50px;\n    display: flex;\n    flex-direction: column; }\n    .myPage__modal__favorite {\n      width: 100%;\n      padding-left: 1rem;\n      padding-right: 1rem;\n      display: flex;\n      flex-direction: row;\n      flex-wrap: wrap;\n      justify-content: center; }\n      .myPage__modal__favorite__text {\n        margin-top: 2rem;\n        margin-bottom: 1rem;\n        text-align: center;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        align-items: center; }\n      .myPage__modal__favorite__icon {\n        color: white;\n        font-size: 1.5rem;\n        margin-right: 5px;\n        vertical-align: center; }\n      .myPage__modal__favorite__item {\n        border: 1px rgba(255, 255, 255, 0.2) solid;\n        padding-left: 10px;\n        padding-right: 10px;\n        padding-top: 5px;\n        padding-bottom: 5px;\n        margin-right: 5px;\n        margin-bottom: 5px;\n        cursor: pointer; }\n        .myPage__modal__favorite__item:hover {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          border: 1px white solid; }\n        .myPage__modal__favorite__item-active {\n          border: 1px #5cb85c solid; }\n          .myPage__modal__favorite__item-active:hover {\n            transition: 0.3s;\n            -webkit-transition: 0.3s;\n            -moz-transition: 0.3s;\n            -o-transition: 0.3s;\n            border: 1px #5cb85c solid; }\n  .myPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .myPage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .myPage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        border-bottom: 1px white solid; }\n        .myPage__content__news__search__first {\n          display: flex;\n          flex-direction: row;\n          padding: 10px;\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid; }\n          .myPage__content__news__search__first__iconArea {\n            padding-left: 5px;\n            display: flex;\n            justify-content: center;\n            margin-right: 1rem;\n            align-items: center; }\n            .myPage__content__news__search__first__iconArea__icon {\n              color: white;\n              font-size: 1.5rem; }\n          .myPage__content__news__search__first__inputArea {\n            display: flex;\n            align-items: center; }\n            .myPage__content__news__search__first__inputArea__input {\n              background-color: transparent;\n              outline-width: 0 !important;\n              color: white;\n              border: 0;\n              width: 35vw; }\n        .myPage__content__news__search__second {\n          padding: 10px; }\n          .myPage__content__news__search__second__content {\n            display: flex;\n            flex-direction: row;\n            justify-content: space-between; }\n      .myPage__content__news__lists {\n        height: calc(100vh - 110px);\n        margin-top: 110px;\n        overflow-y: scroll; }\n        .myPage__content__news__lists-loading {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          height: 55vh;\n          color: white;\n          font-size: 1rem;\n          height: calc(100vh - 100px);\n          margin-top: 100px; }\n        .myPage__content__news__lists__footer {\n          height: 12vh;\n          display: flex;\n          align-items: center;\n          justify-content: center; }\n    .myPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .myPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .myPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column;\n        align-items: center;\n        height: 100%;\n        justify-content: center; }\n        .myPage__content__chart__intro__content {\n          margin-left: 1rem;\n          margin-right: 1rem;\n          display: flex;\n          flex-direction: column;\n          justify-content: center;\n          align-items: center; }\n          .myPage__content__chart__intro__content__area {\n            display: flex;\n            flex-direction: row; }\n            .myPage__content__chart__intro__content__area__number {\n              display: flex;\n              justify-content: center;\n              align-items: center;\n              padding-left: 1.5rem;\n              padding-right: 1.5rem;\n              flex-direction: column;\n              font-weight: 500; }\n              .myPage__content__chart__intro__content__area__number-border {\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                padding-left: 1.5rem;\n                padding-right: 1.5rem;\n                flex-direction: column;\n                font-weight: 500;\n                border-right: 1px rgba(255, 255, 255, 0.2) solid; }\n            .myPage__content__chart__intro__content__area__text {\n              font-weight: 300 !important; }\n          .myPage__content__chart__intro__content__username {\n            margin-top: 1rem;\n            margin-bottom: 1rem;\n            font-size: 2rem; }\n          .myPage__content__chart__intro__content__coins {\n            margin-top: 1.5rem;\n            margin-bottom: 1.5rem;\n            width: 100%;\n            flex-wrap: wrap;\n            display: flex;\n            flex-direction: row;\n            justify-content: center;\n            font-size: 13px;\n            color: #f4e7d7; }\n            .myPage__content__chart__intro__content__coins__coin {\n              border: 1px #f4e7d7 solid;\n              padding-left: 5px;\n              padding-right: 5px;\n              margin-right: 5px;\n              margin-bottom: 5px; }\n        .myPage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .myPage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.postPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .postPage__modal {\n    height: 60vh;\n    display: flex;\n    align-items: center;\n    justify-content: center; }\n    .postPage__modal__content {\n      margin-left: 1rem;\n      margin-right: 1rem;\n      display: flex;\n      flex-direction: column;\n      justify-content: center;\n      align-items: center; }\n      .postPage__modal__content__coins {\n        margin-top: 2rem;\n        display: flex;\n        flex-wrap: wrap;\n        flex-direction: row;\n        font-size: 13px;\n        width: 80%;\n        justify-content: center;\n        flex-wrap: wrap;\n        color: #f4e7d7; }\n        .postPage__modal__content__coins__coin {\n          border: 1px #f4e7d7 solid;\n          padding-left: 5px;\n          padding-right: 5px;\n          margin-right: 5px;\n          margin-bottom: 5px; }\n      .postPage__modal__content__area {\n        display: flex;\n        flex-direction: row; }\n        .postPage__modal__content__area__number {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          padding-left: 1.5rem;\n          padding-right: 1.5rem;\n          flex-direction: column;\n          font-weight: 500; }\n          .postPage__modal__content__area__number-border {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            padding-left: 1.5rem;\n            padding-right: 1.5rem;\n            flex-direction: column;\n            font-weight: 500;\n            border-right: 1px rgba(255, 255, 255, 0.2) solid; }\n        .postPage__modal__content__area__text {\n          font-weight: 300 !important; }\n      .postPage__modal__content__username {\n        margin-top: 1rem;\n        margin-bottom: 1rem;\n        font-size: 2rem; }\n  .postPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .postPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .postPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .postPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .postPage__content__chart__intro__loading {\n          padding: 2rem 2rem 2rem 2rem;\n          display: flex;\n          width: 100%;\n          height: 90vh;\n          justify-content: center;\n          align-items: center; }\n        .postPage__content__chart__intro__post__header {\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid;\n          display: flex;\n          height: 10vh;\n          flex-direction: row;\n          align-items: center;\n          justify-content: space-between;\n          padding-bottom: 1rem; }\n          .postPage__content__chart__intro__post__header__userInfo {\n            display: flex;\n            width: 15vw;\n            flex-direction: row;\n            align-items: center; }\n            .postPage__content__chart__intro__post__header__userInfo__thumb {\n              flex: 1; }\n            .postPage__content__chart__intro__post__header__userInfo__name {\n              flex: 3;\n              margin-left: 10px;\n              display: flex;\n              flex-direction: column;\n              align-items: flex-start;\n              justify-content: center; }\n            .postPage__content__chart__intro__post__header__userInfo__point {\n              font-size: 13px; }\n            .postPage__content__chart__intro__post__header__userInfo__date {\n              font-size: 13px;\n              color: rgba(255, 255, 255, 0.5); }\n          .postPage__content__chart__intro__post__header__detail {\n            display: flex;\n            flex-direction: column;\n            justify-content: flex-end;\n            align-items: flex-end; }\n        .postPage__content__chart__intro__post__title {\n          margin-top: 1rem;\n          padding-left: 10px;\n          padding-right: 10px;\n          font-size: 18px;\n          padding-bottom: 1rem;\n          border-bottom: rgba(255, 255, 255, 0.2) 1px solid;\n          font-weight: 400; }\n        .postPage__content__chart__intro__post__body {\n          margin-top: 1rem;\n          padding-left: 10px;\n          padding-right: 10px;\n          padding-bottom: 1rem;\n          font-weight: 300; }\n        .postPage__content__chart__intro__post__coin {\n          margin-top: 1rem;\n          display: flex;\n          flex-direction: row;\n          justify-content: flex-end;\n          font-size: 13px;\n          color: #f4e7d7; }\n          .postPage__content__chart__intro__post__coin__item {\n            border: 1px #f4e7d7 solid;\n            padding-left: 5px;\n            margin-bottom: 5px;\n            padding-right: 5px;\n            margin-right: 5px; }\n        .postPage__content__chart__intro__post__footer {\n          display: flex;\n          flex-direction: row;\n          justify-content: center;\n          align-items: center;\n          padding-top: 1rem;\n          padding-bottom: 1rem;\n          color: #a0c1b8; }\n          .postPage__content__chart__intro__post__footer__count {\n            font-size: 1rem;\n            margin-right: 7px; }\n          .postPage__content__chart__intro__post__footer__icon {\n            display: inline-flex;\n            font-size: 1.5rem;\n            margin-right: 1rem; }\n        .postPage__content__chart__intro__comments {\n          margin-top: 10%; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.settingsPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .settingsPage__modal {\n    height: 90vh;\n    padding-left: 50px;\n    padding-right: 50px;\n    display: flex;\n    flex-direction: column; }\n    .settingsPage__modal__favorite {\n      width: 100%;\n      padding-left: 1rem;\n      padding-right: 1rem;\n      display: flex;\n      flex-direction: row;\n      flex-wrap: wrap;\n      justify-content: center; }\n      .settingsPage__modal__favorite__text {\n        margin-top: 2rem;\n        margin-bottom: 1rem;\n        text-align: center;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        align-items: center; }\n      .settingsPage__modal__favorite__icon {\n        color: white;\n        font-size: 1.5rem;\n        margin-right: 5px;\n        vertical-align: center; }\n      .settingsPage__modal__favorite__item {\n        border: 1px rgba(255, 255, 255, 0.2) solid;\n        padding-left: 10px;\n        padding-right: 10px;\n        padding-top: 5px;\n        padding-bottom: 5px;\n        margin-right: 5px;\n        margin-bottom: 5px;\n        cursor: pointer; }\n        .settingsPage__modal__favorite__item:hover {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          border: 1px white solid; }\n        .settingsPage__modal__favorite__item-active {\n          border: 1px #5cb85c solid; }\n          .settingsPage__modal__favorite__item-active:hover {\n            transition: 0.3s;\n            -webkit-transition: 0.3s;\n            -moz-transition: 0.3s;\n            -o-transition: 0.3s;\n            border: 1px #5cb85c solid; }\n  .settingsPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .settingsPage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .settingsPage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        border-bottom: 1px white solid; }\n        .settingsPage__content__news__search__first {\n          display: flex;\n          flex-direction: row;\n          padding: 10px;\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid; }\n          .settingsPage__content__news__search__first__iconArea {\n            padding-left: 5px;\n            display: flex;\n            justify-content: center;\n            margin-right: 1rem;\n            align-items: center; }\n            .settingsPage__content__news__search__first__iconArea__icon {\n              color: white;\n              font-size: 1.5rem; }\n          .settingsPage__content__news__search__first__inputArea {\n            display: flex;\n            color: white;\n            align-items: center; }\n        .settingsPage__content__news__search__second {\n          padding: 10px; }\n          .settingsPage__content__news__search__second__content {\n            display: flex;\n            flex-direction: row;\n            justify-content: space-between; }\n      .settingsPage__content__news__lists {\n        height: calc(100vh - 70px);\n        margin-top: 70px;\n        overflow-y: scroll;\n        padding: 1rem; }\n        .settingsPage__content__news__lists__content {\n          display: flex;\n          flex-direction: column;\n          align-items: center;\n          color: white; }\n        .settingsPage__content__news__lists__footer {\n          height: 12vh;\n          display: flex;\n          align-items: center;\n          justify-content: center; }\n    .settingsPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .settingsPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .settingsPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column;\n        align-items: center;\n        height: 100%;\n        justify-content: center; }\n        .settingsPage__content__chart__intro__content {\n          margin-left: 1rem;\n          margin-right: 1rem;\n          display: flex;\n          flex-direction: column;\n          justify-content: center;\n          align-items: center; }\n          .settingsPage__content__chart__intro__content__area {\n            display: flex;\n            flex-direction: row; }\n            .settingsPage__content__chart__intro__content__area__number {\n              display: flex;\n              justify-content: center;\n              align-items: center;\n              padding-left: 1.5rem;\n              padding-right: 1.5rem;\n              flex-direction: column;\n              font-weight: 500; }\n              .settingsPage__content__chart__intro__content__area__number-border {\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                padding-left: 1.5rem;\n                padding-right: 1.5rem;\n                flex-direction: column;\n                font-weight: 500;\n                border-right: 1px rgba(255, 255, 255, 0.2) solid; }\n            .settingsPage__content__chart__intro__content__area__text {\n              font-weight: 300 !important; }\n          .settingsPage__content__chart__intro__content__username {\n            margin-top: 1rem;\n            margin-bottom: 1rem;\n            font-size: 2rem; }\n          .settingsPage__content__chart__intro__content__coins {\n            margin-top: 1.5rem;\n            margin-bottom: 1.5rem;\n            width: 100%;\n            flex-wrap: wrap;\n            display: flex;\n            flex-direction: row;\n            justify-content: center;\n            font-size: 13px;\n            color: #f4e7d7; }\n            .settingsPage__content__chart__intro__content__coins__coin {\n              border: 1px #f4e7d7 solid;\n              padding-left: 5px;\n              padding-right: 5px;\n              margin-right: 5px;\n              margin-bottom: 5px; }\n        .settingsPage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .settingsPage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.navBar {\n  background: transparent;\n  width: 100px;\n  height: 100vh;\n  position: fixed;\n  left: 0;\n  color: white;\n  border-right: 1px rgba(255, 255, 255, 0.1) solid; }\n  .navBar__signOut {\n    height: 40vh;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    flex-direction: column; }\n    .navBar__signOut__text {\n      margin-bottom: 10%; }\n  .navBar__content {\n    display: flex;\n    flex-direction: column;\n    align-items: center; }\n    .navBar__content__brand {\n      width: 100%;\n      display: flex;\n      align-items: center;\n      justify-content: center;\n      cursor: pointer;\n      font-family: \"Biryani\", sans-serif;\n      flex-direction: column;\n      height: 145px;\n      padding-right: 10px;\n      padding-left: 10px; }\n      .navBar__content__brand__logo {\n        width: 50px;\n        height: auto; }\n        .navBar__content__brand__logo__text {\n          margin-top: 5px;\n          font-size: 12px; }\n    .navBar__content__userArea {\n      height: 17vh;\n      width: 100%;\n      display: inline-flex;\n      align-items: center;\n      justify-content: center; }\n    .navBar__content__items {\n      width: 100%; }\n      .navBar__content__items__item {\n        display: flex;\n        height: 10vh;\n        flex-direction: column;\n        justify-content: center;\n        align-items: center;\n        margin-top: 1.5rem;\n        margin-bottom: 1.5rem;\n        cursor: pointer; }\n        .navBar__content__items__item:first-child {\n          margin-top: 0; }\n        .navBar__content__items__item-active {\n          color: #5cb85c;\n          font-weight: 500; }\n        .navBar__content__items__item-icon {\n          font-size: 2.2rem;\n          display: inline-flex;\n          margin-bottom: 5px; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.list {\n  color: white;\n  cursor: pointer; }\n  .list:hover {\n    transition: 0.3s;\n    -webkit-transition: 0.3s;\n    -moz-transition: 0.3s;\n    -o-transition: 0.3s;\n    background-color: rgba(83, 105, 118, 0.3); }\n  .list-active {\n    background-color: rgba(83, 105, 118, 0.7); }\n    .list-active:hover {\n      background-color: rgba(83, 105, 118, 0.7); }\n  .list__content {\n    display: flex;\n    width: 100%;\n    flex-direction: row;\n    align-items: center;\n    padding-top: 3%;\n    padding-bottom: 3%;\n    border-bottom: 1px solid rgba(83, 105, 118, 0.7); }\n    .list__content__date {\n      width: 12%;\n      padding-left: 10px;\n      padding-right: 10px;\n      color: rgba(255, 255, 255, 0.7);\n      display: flex;\n      font-size: 10px;\n      align-items: center;\n      justify-content: center; }\n    .list__content__textArea {\n      flex: 6;\n      word-wrap: break-word;\n      overflow: auto;\n      display: flex;\n      padding-right: 10px;\n      flex-direction: column; }\n      .list__content__textArea__text {\n        display: inline;\n        font-size: 14px; }\n      .list__content__textArea__username {\n        font-size: 11px;\n        color: #a0c1b8;\n        margin-left: 5px; }\n      .list__content__textArea__edit {\n        font-size: 13px;\n        margin-left: 5px;\n        cursor: pointer; }\n        .list__content__textArea__edit:hover {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          color: #a0c1b8; }\n      .list__content__textArea__social {\n        display: flex;\n        flex-direction: row;\n        align-items: center;\n        margin-top: 2px; }\n        .list__content__textArea__social__username {\n          font-size: 12px;\n          color: #a0c1b8; }\n        .list__content__textArea__social__items {\n          display: flex;\n          flex-direction: row; }\n        .list__content__textArea__social__item {\n          font-size: 12px;\n          display: flex;\n          flex-direction: row;\n          align-items: center;\n          margin-right: 5px;\n          color: #a0c1b8; }\n          .list__content__textArea__social__item__count {\n            margin-right: 5px; }\n          .list__content__textArea__social__item__icon {\n            display: inline-flex; }\n    .list__content__type {\n      flex: 1;\n      font-size: 10px;\n      display: flex;\n      color: #f4e7d7;\n      justify-content: center; }\n      .list__content__type-array {\n        color: #f4e7d7;\n        flex-wrap: wrap;\n        font-size: 10px;\n        padding-right: 10px;\n        display: flex;\n        justify-content: flex-end; }\n        .list__content__type-array__item {\n          margin-right: 5px; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.sideBar {\n  background: transparent;\n  width: 100px;\n  height: 100vh;\n  overflow-y: scroll;\n  position: fixed;\n  right: 0;\n  color: white;\n  border-left: 1px rgba(255, 255, 255, 0.1) solid; }\n  .sideBar__modal {\n    height: 60vh;\n    overflow-y: scroll; }\n    .sideBar__modal__close {\n      cursor: pointer; }\n    .sideBar__modal__header {\n      font-weight: 300 !important; }\n    .sideBar__modal__content {\n      display: flex;\n      justify-content: center;\n      color: white; }\n      .sideBar__modal__content__items {\n        width: 50vw;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        flex-wrap: wrap; }\n        .sideBar__modal__content__items__wrapper {\n          display: flex;\n          width: 25%;\n          margin-top: 1.5rem;\n          flex-direction: column;\n          align-items: center;\n          margin-right: 1rem; }\n          .sideBar__modal__content__items__wrapper:nth-child(3n) {\n            margin-right: 0; }\n          .sideBar__modal__content__items__wrapper__item {\n            display: flex;\n            padding: 5px 1.5rem 5px 1.5rem;\n            flex-direction: column;\n            width: 100%;\n            border: 1px rgba(255, 255, 255, 0.2) solid;\n            justify-content: center;\n            align-items: center; }\n            .sideBar__modal__content__items__wrapper__item:hover {\n              border: 1px white solid;\n              cursor: pointer; }\n            .sideBar__modal__content__items__wrapper__item-active {\n              border: 1px #5cb85c solid; }\n              .sideBar__modal__content__items__wrapper__item-active:hover {\n                border: 1px #5cb85c solid;\n                cursor: pointer; }\n            .sideBar__modal__content__items__wrapper__item__full {\n              width: 100%;\n              overflow: auto;\n              word-wrap: break-word;\n              text-align: center; }\n            .sideBar__modal__content__items__wrapper__item__abbr {\n              text-align: center;\n              color: #f4e7d7;\n              width: 100%;\n              overflow: auto;\n              word-wrap: break-word; }\n            .sideBar__modal__content__items__wrapper__item__kor {\n              width: 100%;\n              text-align: center;\n              overflow: auto;\n              word-wrap: break-word; }\n  .sideBar__content {\n    display: flex;\n    flex-direction: column;\n    width: 100%; }\n    .sideBar__content__items__item {\n      display: flex;\n      border-bottom: 1px rgba(255, 255, 255, 0.1) solid;\n      flex-direction: column;\n      justify-content: center;\n      padding-top: 10px;\n      padding-bottom: 10px;\n      align-items: center;\n      cursor: pointer; }\n      .sideBar__content__items__item-active {\n        border-left: 3px #5cb85c solid; }\n      .sideBar__content__items__item-disable {\n        cursor: not-allowed;\n        pointer-events: none; }\n      .sideBar__content__items__item-plus {\n        font-size: 2rem; }\n      .sideBar__content__items__item:hover {\n        background-color: #536976; }\n      .sideBar__content__items__item__title {\n        color: #f4e7d7; }\n      .sideBar__content__items__item__price {\n        font-size: 10px; }\n        .sideBar__content__items__item__price__icon {\n          display: inline-flex; }\n      .sideBar__content__items__item__percent {\n        font-size: 10px;\n        color: #5cb85c; }\n        .sideBar__content__items__item__percent__icon {\n          display: inline-flex; }\n      .sideBar__content__items__item__percent-down {\n        font-size: 10px;\n        color: #f26968; }\n        .sideBar__content__items__item__percent-down__icon {\n          display: inline-flex; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.roundInput__content {\n  padding-left: 1rem;\n  width: 300px !important;\n  height: 60px !important;\n  border: 1px rgba(255, 255, 255, 0.2) solid !important;\n  border-radius: 75px !important;\n  font-size: 1rem;\n  outline-width: 0 !important;\n  color: white; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.button__content {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  border: 1px white solid;\n  height: 100%;\n  padding-top: 10px;\n  padding-bottom: 10px; }\n  .button__content:hover {\n    border: 1px #5cb85c solid;\n    color: #5cb85c;\n    cursor: pointer; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.thumb {\n  display: inline-block;\n  position: relative;\n  justify-content: center;\n  align-items: center;\n  cursor: pointer; }\n  .thumb__image {\n    box-sizing: border-box;\n    border-radius: 50%;\n    border: 1px solid white; }\n  .thumb__classImage {\n    position: absolute;\n    box-sizing: border-box;\n    border-radius: 50%; }\n  .thumb__defaultImage {\n    position: absolute;\n    bottom: -8px;\n    right: -5px; }\n\n.thumb__default {\n  font-size: 2rem;\n  display: inline-flex;\n  position: relative;\n  justify-content: center;\n  align-items: center;\n  box-sizing: border-box;\n  border-radius: 50%;\n  border: 1px white solid;\n  color: white;\n  cursor: pointer; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.socialInput {\n  padding-top: 30px;\n  background-color: transparent;\n  padding-left: 20px;\n  padding-right: 20px;\n  padding-bottom: 5px; }\n  .socialInput hr {\n    background-color: rgba(255, 255, 255, 0.2); }\n  .socialInput__hr-active {\n    margin-top: 1rem;\n    margin-bottom: 1rem;\n    border: 0;\n    border-top: 1px white solid; }\n  .socialInput__body {\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    padding-bottom: 10px; }\n    .socialInput__body__thumbArea__thumb {\n      font-size: 2rem;\n      display: inline-flex;\n      width: 50px;\n      height: 50px;\n      justify-content: center;\n      align-items: center;\n      box-sizing: border-box;\n      border-radius: 50%;\n      border: 1px rgba(0, 0, 0, 0.2) solid;\n      color: white; }\n    .socialInput__body__inputArea {\n      width: 95%; }\n    .socialInput__body__input {\n      margin-right: 20px;\n      margin-left: 20px;\n      color: white;\n      font-size: 1rem;\n      background: transparent;\n      width: 95%;\n      padding-bottom: 10px;\n      padding-top: 10px;\n      word-break: break-all;\n      border: none; }\n      .socialInput__body__input:focus {\n        transition: 0.3s;\n        -webkit-transition: 0.3s;\n        -moz-transition: 0.3s;\n        -o-transition: 0.3s;\n        outline: none; }\n      .socialInput__body__input-title {\n        margin-right: 20px;\n        margin-left: 20px;\n        margin-bottom: 10px;\n        color: white;\n        font-size: 1rem;\n        background: transparent;\n        width: 60%;\n        padding-bottom: 10px;\n        padding-top: 10px;\n        word-break: break-all;\n        border-top: none;\n        border-left: none;\n        border-right: none;\n        border-bottom: 1px rgba(255, 255, 255, 0.2) solid !important; }\n        .socialInput__body__input-title:focus {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          outline: none;\n          border-bottom: 1px white solid !important; }\n  .socialInput__footer {\n    display: flex;\n    flex-direction: row;\n    justify-content: space-between;\n    align-items: center; }\n    .socialInput__footer__camera__icon {\n      font-size: 1.6rem;\n      color: white; }\n      .socialInput__footer__camera__icon:hover {\n        transition: 0.3s;\n        -webkit-transition: 0.3s;\n        -moz-transition: 0.3s;\n        -o-transition: 0.3s;\n        color: white;\n        cursor: pointer; }\n    .socialInput__footer__postArea {\n      display: inline-flex;\n      align-items: center;\n      justify-content: center; }\n      .socialInput__footer__postArea__postButton {\n        background-color: transparent;\n        color: white;\n        margin-left: 10px;\n        font-weight: 300;\n        padding-left: 10px;\n        padding-top: 3px;\n        border: 1px solid rgba(255, 255, 255, 0.2);\n        padding-bottom: 3px;\n        display: inline-flex;\n        padding-right: 10px;\n        cursor: pointer; }\n        .socialInput__footer__postArea__postButton:hover {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          color: white;\n          border: 1px solid white; }\n    .socialInput__footer__imagePreview {\n      display: flex;\n      flex-direction: row;\n      flex-wrap: wrap; }\n      .socialInput__footer__imagePreview__image {\n        transition: 0.3s;\n        -webkit-transition: 0.3s;\n        -moz-transition: 0.3s;\n        -o-transition: 0.3s;\n        height: 60px; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.comment__content {\n  transition: 0.3s;\n  -webkit-transition: 0.3s;\n  -moz-transition: 0.3s;\n  -o-transition: 0.3s;\n  display: flex;\n  padding-left: 20px;\n  padding-right: 20px;\n  box-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);\n  flex-direction: row;\n  align-items: center;\n  justify-content: space-between;\n  padding-top: 1rem;\n  padding-bottom: 1rem;\n  margin-bottom: 1rem; }\n  .comment__content-mine {\n    transition: 0.3s;\n    -webkit-transition: 0.3s;\n    -moz-transition: 0.3s;\n    -o-transition: 0.3s;\n    display: flex;\n    padding-left: 20px;\n    padding-right: 20px;\n    box-shadow: 0px !important;\n    border: 1px solid #a0c1b8;\n    flex-direction: row;\n    align-items: center;\n    justify-content: space-between;\n    padding-top: 1rem;\n    padding-bottom: 1rem;\n    margin-bottom: 1rem; }\n  .comment__content__userArea {\n    flex: 2;\n    display: flex;\n    flex-direction: row;\n    align-items: center; }\n    .comment__content__userArea__userInfo {\n      display: flex;\n      flex-direction: column;\n      margin-left: 10px; }\n      .comment__content__userArea__userInfo__name {\n        font-size: 10px; }\n      .comment__content__userArea__userInfo__point {\n        font-size: 10px; }\n  .comment__content__content {\n    flex: 4;\n    word-wrap: break-word;\n    overflow: auto;\n    display: flex;\n    font-size: 13px;\n    flex-direction: column;\n    padding-right: 10px; }\n  .comment__content__date {\n    flex: 1;\n    display: flex;\n    justify-content: flex-end;\n    align-items: center;\n    font-size: 10px;\n    color: rgba(255, 255, 255, 0.3); }\n  .comment__content__delete {\n    color: rgba(255, 255, 255, 0.2);\n    margin-left: 5px;\n    cursor: pointer; }\n    .comment__content__delete:hover {\n      transition: 0.3s;\n      -webkit-transition: 0.3s;\n      -moz-transition: 0.3s;\n      -o-transition: 0.3s;\n      color: #f26968; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.medal {\n  display: inline-block;\n  position: relative;\n  justify-content: center;\n  align-items: center;\n  cursor: pointer; }\n  .medal__image {\n    box-sizing: border-box;\n    border-radius: 50%;\n    border: 1px solid white; }\n  .medal__classImage {\n    margin-left: 10px; }\n\n.medal__default {\n  font-size: 2rem;\n  display: inline-flex;\n  justify-content: center;\n  align-items: center;\n  box-sizing: border-box;\n  border-radius: 50%;\n  border: 1px white solid;\n  color: white;\n  cursor: pointer; }\n  .medal__default__classImage {\n    position: absolute;\n    box-sizing: border-box;\n    border-radius: 50%; }\n\n/*!\n  Ionicons, v2.0.0\n  Created by Ben Sperry for the Ionic Framework, http://ionicons.com/\n  https://twitter.com/benjsperry  https://twitter.com/ionicframework\n  MIT License: https://github.com/driftyco/ionicons\n\n  Android-style icons originally built by Google’s\n  Material Design Icons: https://github.com/google/material-design-icons\n  used under CC BY http://creativecommons.org/licenses/by/4.0/\n  Modified icons to fit ionicon’s grid from original.\n*/\n@font-face {\n  font-family: \"Ionicons\";\n  src: url(\"https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/fonts/ionicons.eot?v=2.0.0\");\n  src: url(\"https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/fonts/ionicons.eot?v=2.0.0#iefix\") format(\"embedded-opentype\"), url(\"https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/fonts/ionicons.ttf?v=2.0.0\") format(\"truetype\"), url(\"https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/fonts/ionicons.woff?v=2.0.0\") format(\"woff\"), url(\"https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/fonts/ionicons.svg?v=2.0.0#Ionicons\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal; }\n\n.image-gallery-fullscreen-button::before,\n.image-gallery-play-button::before,\n.image-gallery-left-nav::before,\n.image-gallery-right-nav::before {\n  display: inline-block;\n  font-family: \"Ionicons\";\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  text-rendering: auto;\n  line-height: 1;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale; }\n\n.image-gallery {\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  -o-user-select: none;\n  user-select: none;\n  -webkit-tap-highlight-color: transparent; }\n  .image-gallery.fullscreen-modal {\n    background: #000;\n    bottom: 0;\n    height: 100%;\n    left: 0;\n    position: fixed;\n    right: 0;\n    top: 0;\n    width: 100%;\n    z-index: 5; }\n    .image-gallery.fullscreen-modal .image-gallery-content {\n      top: 50%;\n      transform: translateY(-50%); }\n\n.image-gallery-content {\n  position: relative;\n  line-height: 0;\n  top: 0; }\n  .image-gallery-content.fullscreen {\n    background: #000; }\n    .image-gallery-content.fullscreen .image-gallery-slide {\n      background: #000; }\n\n.image-gallery-slide-wrapper {\n  position: relative; }\n  .image-gallery-slide-wrapper.left, .image-gallery-slide-wrapper.right {\n    display: inline-block;\n    width: calc(100% - 113px); }\n    @media (max-width: 768px) {\n      .image-gallery-slide-wrapper.left, .image-gallery-slide-wrapper.right {\n        width: calc(100% - 84px); } }\n\n.image-gallery-fullscreen-button,\n.image-gallery-play-button,\n.image-gallery-left-nav,\n.image-gallery-right-nav {\n  appearance: none;\n  background-color: transparent;\n  border: 0;\n  cursor: pointer;\n  outline: none;\n  position: absolute;\n  z-index: 4; }\n  .image-gallery-fullscreen-button::before,\n  .image-gallery-play-button::before,\n  .image-gallery-left-nav::before,\n  .image-gallery-right-nav::before {\n    color: #fff;\n    line-height: .7;\n    text-shadow: 0 2px 2px #1a1a1a;\n    transition: color .2s ease-out; }\n  .image-gallery-fullscreen-button:hover::before,\n  .image-gallery-play-button:hover::before,\n  .image-gallery-left-nav:hover::before,\n  .image-gallery-right-nav:hover::before {\n    color: #337ab7; }\n    @media (max-width: 768px) {\n      .image-gallery-fullscreen-button:hover::before,\n      .image-gallery-play-button:hover::before,\n      .image-gallery-left-nav:hover::before,\n      .image-gallery-right-nav:hover::before {\n        color: #fff; } }\n\n.image-gallery-fullscreen-button,\n.image-gallery-play-button {\n  bottom: 0; }\n  .image-gallery-fullscreen-button::before,\n  .image-gallery-play-button::before {\n    font-size: 2.7em;\n    padding: 15px 20px;\n    text-shadow: 0 1px 1px #1a1a1a; }\n    @media (max-width: 768px) {\n      .image-gallery-fullscreen-button::before,\n      .image-gallery-play-button::before {\n        font-size: 2.4em; } }\n    @media (max-width: 480px) {\n      .image-gallery-fullscreen-button::before,\n      .image-gallery-play-button::before {\n        font-size: 2em; } }\n  .image-gallery-fullscreen-button:hover::before,\n  .image-gallery-play-button:hover::before {\n    color: #fff;\n    transform: scale(1.1); }\n    @media (max-width: 768px) {\n      .image-gallery-fullscreen-button:hover::before,\n      .image-gallery-play-button:hover::before {\n        transform: none; } }\n\n.image-gallery-fullscreen-button {\n  right: 0; }\n  .image-gallery-fullscreen-button::before {\n    content: \"\"; }\n  .image-gallery-fullscreen-button.active::before {\n    content: \"\"; }\n  .image-gallery-fullscreen-button.active:hover::before {\n    transform: scale(0.9); }\n\n.image-gallery-play-button {\n  left: 0; }\n  .image-gallery-play-button::before {\n    content: \"\"; }\n  .image-gallery-play-button.active::before {\n    content: \"\"; }\n\n.image-gallery-left-nav,\n.image-gallery-right-nav {\n  color: #fff;\n  font-size: 5em;\n  padding: 50px 15px;\n  top: 50%;\n  transform: translateY(-50%); }\n  .image-gallery-left-nav[disabled],\n  .image-gallery-right-nav[disabled] {\n    cursor: disabled;\n    opacity: .6;\n    pointer-events: none; }\n  @media (max-width: 768px) {\n    .image-gallery-left-nav,\n    .image-gallery-right-nav {\n      font-size: 3.4em;\n      padding: 20px 15px; } }\n  @media (max-width: 480px) {\n    .image-gallery-left-nav,\n    .image-gallery-right-nav {\n      font-size: 2.4em;\n      padding: 0 15px; } }\n\n.image-gallery-left-nav {\n  left: 0; }\n  .image-gallery-left-nav::before {\n    content: \"\"; }\n\n.image-gallery-right-nav {\n  right: 0; }\n  .image-gallery-right-nav::before {\n    content: \"\"; }\n\n.image-gallery-slides {\n  line-height: 0;\n  overflow: hidden;\n  position: relative;\n  white-space: nowrap; }\n\n.image-gallery-slide {\n  background: #fff;\n  left: 0;\n  position: absolute;\n  top: 0;\n  width: 100%; }\n  .image-gallery-slide.center {\n    position: relative; }\n  .image-gallery-slide img {\n    width: 100%; }\n  .image-gallery-slide .image-gallery-description {\n    background: rgba(0, 0, 0, 0.4);\n    bottom: 70px;\n    color: #fff;\n    left: 0;\n    line-height: 1;\n    padding: 10px 20px;\n    position: absolute;\n    white-space: normal; }\n    @media (max-width: 768px) {\n      .image-gallery-slide .image-gallery-description {\n        bottom: 45px;\n        font-size: .8em;\n        padding: 8px 15px; } }\n\n.image-gallery-bullets {\n  bottom: 20px;\n  left: 0;\n  margin: 0 auto;\n  position: absolute;\n  right: 0;\n  width: 80%;\n  z-index: 4; }\n  .image-gallery-bullets .image-gallery-bullets-container {\n    margin: 0;\n    padding: 0;\n    text-align: center; }\n  .image-gallery-bullets .image-gallery-bullet {\n    appearance: none;\n    background-color: transparent;\n    border: 1px solid #fff;\n    border-radius: 50%;\n    box-shadow: 0 1px 0 #1a1a1a;\n    cursor: pointer;\n    display: inline-block;\n    margin: 0 5px;\n    outline: none;\n    padding: 5px; }\n    @media (max-width: 768px) {\n      .image-gallery-bullets .image-gallery-bullet {\n        margin: 0 3px;\n        padding: 3px; } }\n    @media (max-width: 480px) {\n      .image-gallery-bullets .image-gallery-bullet {\n        padding: 2.7px; } }\n    .image-gallery-bullets .image-gallery-bullet.active {\n      background: #fff; }\n\n.image-gallery-thumbnails-wrapper {\n  position: relative; }\n  .image-gallery-thumbnails-wrapper.left, .image-gallery-thumbnails-wrapper.right {\n    display: inline-block;\n    vertical-align: top;\n    width: 108px; }\n    @media (max-width: 768px) {\n      .image-gallery-thumbnails-wrapper.left, .image-gallery-thumbnails-wrapper.right {\n        width: 81px; } }\n    .image-gallery-thumbnails-wrapper.left .image-gallery-thumbnails, .image-gallery-thumbnails-wrapper.right .image-gallery-thumbnails {\n      height: 100%;\n      width: 100%;\n      left: 0;\n      padding: 0;\n      position: absolute;\n      top: 0; }\n      .image-gallery-thumbnails-wrapper.left .image-gallery-thumbnails .image-gallery-thumbnail, .image-gallery-thumbnails-wrapper.right .image-gallery-thumbnails .image-gallery-thumbnail {\n        display: block;\n        margin-right: 0;\n        padding: 0; }\n        .image-gallery-thumbnails-wrapper.left .image-gallery-thumbnails .image-gallery-thumbnail + .image-gallery-thumbnail, .image-gallery-thumbnails-wrapper.right .image-gallery-thumbnails .image-gallery-thumbnail + .image-gallery-thumbnail {\n          margin-left: 0; }\n  .image-gallery-thumbnails-wrapper.left {\n    margin-right: 5px; }\n    @media (max-width: 768px) {\n      .image-gallery-thumbnails-wrapper.left {\n        margin-right: 3px; } }\n  .image-gallery-thumbnails-wrapper.right {\n    margin-left: 5px; }\n    @media (max-width: 768px) {\n      .image-gallery-thumbnails-wrapper.right {\n        margin-left: 3px; } }\n\n.image-gallery-thumbnails {\n  overflow: hidden;\n  padding: 5px 0; }\n  @media (max-width: 768px) {\n    .image-gallery-thumbnails {\n      padding: 3px 0; } }\n  .image-gallery-thumbnails .image-gallery-thumbnails-container {\n    cursor: pointer;\n    text-align: center;\n    transition: transform .45s ease-out;\n    white-space: nowrap; }\n\n.image-gallery-thumbnail {\n  display: inline-block;\n  border: 4px solid transparent;\n  transition: border .3s ease-out;\n  width: 100px; }\n  @media (max-width: 768px) {\n    .image-gallery-thumbnail {\n      border: 3px solid transparent;\n      width: 75px; } }\n  .image-gallery-thumbnail + .image-gallery-thumbnail {\n    margin-left: 2px; }\n  .image-gallery-thumbnail img {\n    vertical-align: middle;\n    width: 100%; }\n  .image-gallery-thumbnail.active {\n    border: 4px solid #337ab7; }\n    @media (max-width: 768px) {\n      .image-gallery-thumbnail.active {\n        border: 3px solid #337ab7; } }\n\n.image-gallery-thumbnail-label {\n  color: #1a1a1a;\n  font-size: 1em; }\n  @media (max-width: 768px) {\n    .image-gallery-thumbnail-label {\n      font-size: .8em; } }\n\n.image-gallery-index {\n  background: rgba(0, 0, 0, 0.4);\n  color: #fff;\n  line-height: 1;\n  padding: 10px 20px;\n  position: absolute;\n  right: 0;\n  top: 0;\n  z-index: 4; }\n  @media (max-width: 768px) {\n    .image-gallery-index {\n      font-size: .8em;\n      padding: 5px 10px; } }\n\n.ReactCrop {\n  position: relative;\n  display: inline-block;\n  cursor: crosshair;\n  overflow: hidden;\n  max-width: 100%;\n  background-color: #000; }\n  .ReactCrop:focus {\n    outline: none; }\n  .ReactCrop--disabled {\n    cursor: inherit; }\n  .ReactCrop__image {\n    display: block;\n    max-width: 100%;\n    max-height: -webkit-fill-available;\n    max-height: -moz-available;\n    max-height: stretch; }\n  .ReactCrop--crop-invisible .ReactCrop__image {\n    opacity: 0.5; }\n  .ReactCrop__crop-selection {\n    position: absolute;\n    top: 0;\n    left: 0;\n    transform: translate3d(0, 0, 0);\n    box-sizing: border-box;\n    cursor: move;\n    box-shadow: 0 0 0 9999em rgba(0, 0, 0, 0.5);\n    border: 1px solid;\n    border-image-source: url(\"data:image/gif;base64,R0lGODlhCgAKAJECAAAAAP///////wAAACH/C05FVFNDQVBFMi4wAwEAAAAh/wtYTVAgRGF0YVhNUDw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OEI5RDc5MTFDNkE2MTFFM0JCMDZEODI2QTI4MzJBOTIiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OEI5RDc5MTBDNkE2MTFFM0JCMDZEODI2QTI4MzJBOTIiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuZGlkOjAyODAxMTc0MDcyMDY4MTE4MDgzQzNDMjA5MzREQ0ZDIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjAyODAxMTc0MDcyMDY4MTE4MDgzQzNDMjA5MzREQ0ZDIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEgHx4dHBsaGRgXFhUUExIREA8ODQwLCgkIBwYFBAMCAQAAIfkEBQoAAgAsAAAAAAoACgAAAhWEERkn7W3ei7KlagMWF/dKgYeyGAUAIfkEBQoAAgAsAAAAAAoACgAAAg+UYwLJ7RnQm7QmsCyVKhUAIfkEBQoAAgAsAAAAAAoACgAAAhCUYgLJHdiinNSAVfOEKoUCACH5BAUKAAIALAAAAAAKAAoAAAIRVISAdusPo3RAzYtjaMIaUQAAIfkEBQoAAgAsAAAAAAoACgAAAg+MDiem7Q8bSLFaG5il6xQAIfkEBQoAAgAsAAAAAAoACgAAAg+UYRLJ7QnQm7SmsCyVKhUAIfkEBQoAAgAsAAAAAAoACgAAAhCUYBLJDdiinNSEVfOEKoECACH5BAUKAAIALAAAAAAKAAoAAAIRFISBdusPo3RBzYsjaMIaUQAAOw==\");\n    border-image-slice: 1;\n    border-image-repeat: repeat; }\n    .ReactCrop--disabled .ReactCrop__crop-selection {\n      cursor: inherit; }\n  .ReactCrop__drag-handle {\n    position: absolute;\n    width: 9px;\n    height: 9px;\n    background-color: rgba(0, 0, 0, 0.2);\n    border: 1px solid rgba(255, 255, 255, 0.7);\n    box-sizing: border-box;\n    outline: 1px solid transparent; }\n  .ReactCrop .ord-nw {\n    top: 0;\n    left: 0;\n    margin-top: -5px;\n    margin-left: -5px;\n    cursor: nw-resize; }\n  .ReactCrop .ord-n {\n    top: 0;\n    left: 50%;\n    margin-top: -5px;\n    margin-left: -5px;\n    cursor: n-resize; }\n  .ReactCrop .ord-ne {\n    top: 0;\n    right: 0;\n    margin-top: -5px;\n    margin-right: -5px;\n    cursor: ne-resize; }\n  .ReactCrop .ord-e {\n    top: 50%;\n    right: 0;\n    margin-top: -5px;\n    margin-right: -5px;\n    cursor: e-resize; }\n  .ReactCrop .ord-se {\n    bottom: 0;\n    right: 0;\n    margin-bottom: -5px;\n    margin-right: -5px;\n    cursor: se-resize; }\n  .ReactCrop .ord-s {\n    bottom: 0;\n    left: 50%;\n    margin-bottom: -5px;\n    margin-left: -5px;\n    cursor: s-resize; }\n  .ReactCrop .ord-sw {\n    bottom: 0;\n    left: 0;\n    margin-bottom: -5px;\n    margin-left: -5px;\n    cursor: sw-resize; }\n  .ReactCrop .ord-w {\n    top: 50%;\n    left: 0;\n    margin-top: -5px;\n    margin-left: -5px;\n    cursor: w-resize; }\n  .ReactCrop__disabled .ReactCrop__drag-handle {\n    cursor: inherit; }\n  .ReactCrop__drag-bar {\n    position: absolute; }\n    .ReactCrop__drag-bar.ord-n {\n      top: 0;\n      left: 0;\n      width: 100%;\n      height: 6px;\n      margin-top: -3px; }\n    .ReactCrop__drag-bar.ord-e {\n      right: 0;\n      top: 0;\n      width: 6px;\n      height: 100%;\n      margin-right: -3px; }\n    .ReactCrop__drag-bar.ord-s {\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      height: 6px;\n      margin-bottom: -3px; }\n    .ReactCrop__drag-bar.ord-w {\n      top: 0;\n      left: 0;\n      width: 6px;\n      height: 100%;\n      margin-left: -3px; }\n  .ReactCrop--new-crop .ReactCrop__drag-bar,\n  .ReactCrop--new-crop .ReactCrop__drag-handle,\n  .ReactCrop--fixed-aspect .ReactCrop__drag-bar {\n    display: none; }\n  .ReactCrop--fixed-aspect .ReactCrop__drag-handle.ord-n,\n  .ReactCrop--fixed-aspect .ReactCrop__drag-handle.ord-e,\n  .ReactCrop--fixed-aspect .ReactCrop__drag-handle.ord-s,\n  .ReactCrop--fixed-aspect .ReactCrop__drag-handle.ord-w {\n    display: none; }\n  @media (max-width: 768px), (pointer: coarse) {\n    .ReactCrop__drag-handle {\n      width: 17px;\n      height: 17px; }\n    .ReactCrop .ord-nw {\n      margin-top: -9px;\n      margin-left: -9px; }\n    .ReactCrop .ord-n {\n      margin-top: -9px;\n      margin-left: -9px; }\n    .ReactCrop .ord-ne {\n      margin-top: -9px;\n      margin-right: -9px; }\n    .ReactCrop .ord-e {\n      margin-top: -9px;\n      margin-right: -9px; }\n    .ReactCrop .ord-se {\n      margin-bottom: -9px;\n      margin-right: -9px; }\n    .ReactCrop .ord-s {\n      margin-bottom: -9px;\n      margin-left: -9px; }\n    .ReactCrop .ord-sw {\n      margin-bottom: -9px;\n      margin-left: -9px; }\n    .ReactCrop .ord-w {\n      margin-top: -9px;\n      margin-left: -9px; }\n    .ReactCrop__drag-bar.ord-n {\n      height: 14px;\n      margin-top: -7px; }\n    .ReactCrop__drag-bar.ord-e {\n      width: 14px;\n      margin-right: -7px; }\n    .ReactCrop__drag-bar.ord-s {\n      height: 14px;\n      margin-bottom: -7px; }\n    .ReactCrop__drag-bar.ord-w {\n      width: 14px;\n      margin-left: -7px; } }\n\nbody {\n  margin: 0 auto;\n  font-weight: 300; }\n  body ::placeholder {\n    /* Chrome, Firefox, Opera, Safari 10.1+ */\n    color: white;\n    opacity: 0.7;\n    font-size: 14px;\n    font-weight: 300 !important;\n    font-family: \"Nanum Gothic\", sans-serif;\n    /* Firefox */ }\n  body .app {\n    background: #536976;\n    /* fallback for old browsers */\n    background: -webkit-linear-gradient(to right, #292e49, #536976);\n    /* Chrome 10-25, Safari 5.1-6 */\n    background: linear-gradient(to right, #292e49, #536976);\n    height: 100vh; }\n  body .btn {\n    font-weight: 300 !important; }\n  body .btn-group-sm > .btn,\n  body .btn-sm {\n    padding: 5px 25px !important;\n    font-size: 13px !important;\n    font-weight: 300 !important;\n    color: white;\n    margin-right: 1px;\n    cursor: pointer;\n    float: left;\n    padding: 5px 13px !important;\n    border-radius: 0 !important; }\n  body a:hover {\n    text-decoration: none; }\n  body p {\n    margin: 0; }\n  body hr {\n    background-color: white; }\n  body .cTypeTabActive {\n    background: #536976 !important;\n    font-weight: 300; }\n  body .chartTypeTabLinks {\n    background: transparent;\n    font-weight: 300 !important; }\n  body text {\n    fill: white; }\n  body .ccc-widget > div {\n    background-color: transparent !important;\n    color: white !important;\n    border: 0 !important;\n    border-top: 0 !important;\n    font-weight: 300 !important;\n    padding: 10px !important; }\n  body .cccCustomRadioContainer > label {\n    color: white !important; }\n  body .tabperiods {\n    background: transparent !important;\n    font-weight: 300 !important; }\n  body .active {\n    border-color: #5cb85c !important; }\n  body .tabperiods_active {\n    font-weight: 900 !important;\n    color: #5cb85c !important; }\n  body .chartTypeTabLinks:hover {\n    background: #536976; }\n  body .modal-content {\n    font-weight: 300 !important;\n    border-radius: 0px !important;\n    background: #536976;\n    margin: 0 !important;\n    color: white;\n    padding: 0 !important;\n    /* fallback for old browsers */\n    background: -webkit-linear-gradient(to bottom, #292e49, #536976);\n    /* Chrome 10-25, Safari 5.1-6 */\n    background: linear-gradient(to bottom, #292e49, #536976);\n    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  body .modal-backdrop.show {\n    opacity: 0.1 !important; }\n  body .dropdown-menu {\n    position: absolute;\n    top: 100%;\n    left: 0;\n    z-index: 1000;\n    display: none;\n    float: left;\n    min-width: 10rem;\n    padding: 0.5rem 0;\n    margin: 0.125rem 0 0;\n    font-size: 1rem;\n    color: white !important;\n    text-align: left;\n    list-style: none;\n    background-color: #292e49 !important;\n    background-clip: padding-box;\n    border: 1px solid rgba(0, 0, 0, 0.15);\n    border-radius: 0px !important; }\n  body .dropdown-item {\n    display: block;\n    width: 100%;\n    cursor: pointer;\n    padding: 0.25rem 1.5rem;\n    clear: both;\n    font-weight: 400;\n    color: white !important;\n    text-align: inherit;\n    white-space: nowrap;\n    background-color: transparent;\n    border: 0; }\n    body .dropdown-item:hover {\n      background-color: transparent !important; }\n  body .chartTypeTabLinks {\n    font-size: 13px !important;\n    color: white;\n    margin-right: 1px;\n    font-weight: 600;\n    cursor: pointer;\n    float: left;\n    padding: 5px 25px;\n    background: transparent; }\n  body .image-gallery-left-nav,\n  body .image-gallery-right-nav {\n    color: #fff;\n    font-size: 2em;\n    padding: 50px 15px;\n    top: 50%;\n    transform: translateY(-50%); }\n    body .image-gallery-left-nav:focus,\n    body .image-gallery-right-nav:focus {\n      outline-style: none; }\n  body .image-gallery-fullscreen-button::before,\n  body .image-gallery-play-button::before {\n    font-size: 2em !important;\n    padding: 15px 20px;\n    text-shadow: 0 1px 1px #1a1a1a; }\n  body .image-gallery-fullscreen-button::after:focus,\n  body .image-gallery-play-button::after:focus {\n    outline: none !important; }\n", ""]);
+	exports.push([module.id, "@charset \"UTF-8\";\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n\n\n.homePage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .homePage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .homePage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .homePage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        border-bottom: 1px white solid; }\n        .homePage__content__news__search__first {\n          padding: 10px;\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid; }\n          .homePage__content__news__search__first__item {\n            font-size: 13px !important;\n            font-weight: 300 !important;\n            color: white;\n            margin-right: 1px;\n            font-weight: 600;\n            cursor: pointer;\n            float: left;\n            padding: 5px 25px;\n            background: transparent; }\n            .homePage__content__news__search__first__item:hover {\n              transition: 0.3s;\n              -webkit-transition: 0.3s;\n              -moz-transition: 0.3s;\n              -o-transition: 0.3s;\n              background-color: #536976; }\n            .homePage__content__news__search__first__item-active {\n              background-color: #536976; }\n        .homePage__content__news__search__second {\n          padding: 10px; }\n          .homePage__content__news__search__second__content {\n            display: flex;\n            flex-direction: row;\n            justify-content: space-between; }\n      .homePage__content__news__lists {\n        height: calc(100vh - 100px);\n        margin-top: 100px;\n        overflow-y: scroll; }\n        .homePage__content__news__lists-loading {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          height: 55vh;\n          color: white;\n          font-size: 1rem;\n          height: calc(100vh - 100px);\n          margin-top: 100px; }\n        .homePage__content__news__lists-none {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          height: 55vh;\n          color: white;\n          font-size: 1rem; }\n        .homePage__content__news__lists__footer {\n          height: 12vh;\n          display: flex;\n          align-items: center;\n          justify-content: center; }\n    .homePage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px; }\n      .homePage__content__chart__coin {\n        display: flex;\n        justify-content: center;\n        padding: 15px;\n        font-size: 13px;\n        top: 0;\n        color: #f4e7d7;\n        border-bottom: 1px solid white;\n        position: fixed;\n        right: 100px;\n        z-index: 500;\n        width: calc(50vw - 100px); }\n      .homePage__content__chart__wrapper {\n        height: calc(100vh - 50px);\n        background: transparent;\n        overflow-y: scroll;\n        padding-left: 1rem;\n        padding-right: 1rem;\n        margin-top: 50px; }\n        .homePage__content__chart__wrapper > div {\n          background-color: transparent !important; }\n      .homePage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        flex-direction: column;\n        justify-content: center;\n        height: 100vh; }\n      .homePage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .homePage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .homePage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n        .homePage__content__chart__intro__welcome {\n          margin-top: 6%; }\n        .homePage__content__chart__intro__desc {\n          margin-top: 6%; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.authPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .authPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .authPage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .authPage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        padding-top: 1.5rem;\n        height: 145px;\n        border-bottom: 1px white solid; }\n        .authPage__content__news__search__first {\n          display: flex;\n          flex-direction: row; }\n          .authPage__content__news__search__first__iconArea {\n            padding-left: 1rem;\n            display: flex;\n            justify-content: center;\n            margin-right: 1rem;\n            align-items: center; }\n            .authPage__content__news__search__first__iconArea__icon {\n              color: white;\n              font-size: 1.5rem; }\n          .authPage__content__news__search__first__inputArea {\n            display: flex;\n            align-items: center; }\n            .authPage__content__news__search__first__inputArea__input {\n              background-color: transparent;\n              outline-width: 0 !important;\n              color: white;\n              border: 0;\n              width: 35vw; }\n        .authPage__content__news__search__second__content {\n          padding-left: 1rem; }\n      .authPage__content__news__lists {\n        height: calc(100vh - 145px);\n        margin-top: 145px;\n        overflow-y: scroll; }\n    .authPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .authPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .authPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .authPage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .authPage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n        .authPage__content__chart__intro__welcome {\n          margin-top: 6%; }\n        .authPage__content__chart__intro__login {\n          margin-top: 15%;\n          width: 100%;\n          display: flex;\n          flex-direction: column;\n          align-items: center; }\n        .authPage__content__chart__intro__signUp {\n          margin-top: 5%;\n          width: 100%;\n          display: flex;\n          flex-direction: column;\n          align-items: center; }\n          .authPage__content__chart__intro__signUp__link {\n            cursor: pointer; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.signUpPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .signUpPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .signUpPage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .signUpPage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        padding-top: 1.5rem;\n        height: 145px;\n        border-bottom: 1px white solid; }\n        .signUpPage__content__news__search__first {\n          display: flex;\n          flex-direction: row; }\n          .signUpPage__content__news__search__first__iconArea {\n            padding-left: 1rem;\n            display: flex;\n            justify-content: center;\n            margin-right: 1rem;\n            align-items: center; }\n            .signUpPage__content__news__search__first__iconArea__icon {\n              color: white;\n              font-size: 1.5rem; }\n          .signUpPage__content__news__search__first__inputArea {\n            display: flex;\n            align-items: center; }\n            .signUpPage__content__news__search__first__inputArea__input {\n              background-color: transparent;\n              outline-width: 0 !important;\n              color: white;\n              border: 0;\n              width: 35vw; }\n        .signUpPage__content__news__search__second__content {\n          padding-left: 1rem; }\n      .signUpPage__content__news__lists {\n        height: calc(100vh - 145px);\n        margin-top: 145px;\n        overflow-y: scroll; }\n    .signUpPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .signUpPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .signUpPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .signUpPage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .signUpPage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n        .signUpPage__content__chart__intro__welcome {\n          margin-top: 6%; }\n        .signUpPage__content__chart__intro__login {\n          margin-top: 15%;\n          width: 100%;\n          display: flex;\n          flex-direction: column;\n          align-items: center; }\n        .signUpPage__content__chart__intro__signUp {\n          margin-top: 5%;\n          width: 100%;\n          display: flex;\n          flex-direction: column;\n          align-items: center; }\n          .signUpPage__content__chart__intro__signUp__link {\n            cursor: pointer; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.forumPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .forumPage__modal {\n    height: 90vh;\n    padding-left: 50px;\n    padding-right: 50px;\n    display: flex;\n    flex-direction: column; }\n    .forumPage__modal__favorite {\n      width: 100%;\n      padding-left: 1rem;\n      padding-right: 1rem;\n      display: flex;\n      flex-direction: row;\n      flex-wrap: wrap;\n      justify-content: center; }\n      .forumPage__modal__favorite__text {\n        margin-top: 2rem;\n        margin-bottom: 1rem;\n        text-align: center;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        align-items: center; }\n      .forumPage__modal__favorite__icon {\n        color: white;\n        font-size: 1.5rem;\n        margin-right: 5px;\n        vertical-align: center; }\n      .forumPage__modal__favorite__item {\n        border: 1px rgba(255, 255, 255, 0.2) solid;\n        padding-left: 10px;\n        padding-right: 10px;\n        padding-top: 5px;\n        padding-bottom: 5px;\n        margin-right: 5px;\n        margin-bottom: 5px;\n        cursor: pointer; }\n        .forumPage__modal__favorite__item:hover {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          border: 1px white solid; }\n        .forumPage__modal__favorite__item-active {\n          border: 1px #5cb85c solid; }\n          .forumPage__modal__favorite__item-active:hover {\n            transition: 0.3s;\n            -webkit-transition: 0.3s;\n            -moz-transition: 0.3s;\n            -o-transition: 0.3s;\n            border: 1px #5cb85c solid; }\n  .forumPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .forumPage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .forumPage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        border-bottom: 1px white solid; }\n        .forumPage__content__news__search__first {\n          display: flex;\n          flex-direction: row;\n          justify-content: space-between;\n          padding: 10px;\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid; }\n          .forumPage__content__news__search__first__container {\n            display: flex;\n            flex-direction: row; }\n          .forumPage__content__news__search__first__iconArea {\n            padding-left: 5px;\n            display: flex;\n            justify-content: center;\n            margin-right: 1rem;\n            align-items: center; }\n            .forumPage__content__news__search__first__iconArea__icon {\n              color: white;\n              font-size: 1.5rem; }\n          .forumPage__content__news__search__first__inputArea {\n            display: flex;\n            align-items: center; }\n            .forumPage__content__news__search__first__inputArea__input {\n              background-color: transparent;\n              outline-width: 0 !important;\n              color: white;\n              border: 0;\n              width: 23vw; }\n        .forumPage__content__news__search__second {\n          padding: 10px; }\n          .forumPage__content__news__search__second__content {\n            display: flex;\n            flex-direction: row;\n            justify-content: space-between; }\n      .forumPage__content__news__lists {\n        height: calc(100vh - 110px);\n        margin-top: 110px;\n        overflow-y: scroll; }\n        .forumPage__content__news__lists-loading {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          height: 55vh;\n          color: white;\n          font-size: 1rem;\n          height: calc(100vh - 100px);\n          margin-top: 100px; }\n        .forumPage__content__news__lists__footer {\n          height: 12vh;\n          display: flex;\n          align-items: center;\n          justify-content: center; }\n    .forumPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .forumPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .forumPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .forumPage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .forumPage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n        .forumPage__content__chart__intro__welcome {\n          margin-top: 6%; }\n        .forumPage__content__chart__intro__desc {\n          margin-top: 6%; }\n        .forumPage__content__chart__intro__post {\n          height: 90vh; }\n          .forumPage__content__chart__intro__post__header {\n            border-bottom: 1px rgba(255, 255, 255, 0.2) solid;\n            display: flex;\n            height: 10vh;\n            flex-direction: row;\n            align-items: center;\n            justify-content: space-between;\n            padding-bottom: 1rem; }\n            .forumPage__content__chart__intro__post__header__userInfo {\n              display: flex;\n              width: 15vw;\n              flex-direction: row;\n              align-items: center; }\n              .forumPage__content__chart__intro__post__header__userInfo__thumb {\n                flex: 1; }\n              .forumPage__content__chart__intro__post__header__userInfo__name {\n                flex: 3;\n                margin-left: 10px;\n                display: flex;\n                flex-direction: column;\n                align-items: flex-start;\n                justify-content: center; }\n              .forumPage__content__chart__intro__post__header__userInfo__point {\n                font-size: 13px; }\n            .forumPage__content__chart__intro__post__header__detail {\n              display: flex;\n              flex-direction: column;\n              justify-content: flex-end;\n              align-items: flex-end; }\n          .forumPage__content__chart__intro__post__title {\n            margin-top: 1rem;\n            padding-bottom: 1rem;\n            border-bottom: rgba(255, 255, 255, 0.2) 1px solid;\n            font-weight: 400; }\n          .forumPage__content__chart__intro__post__body {\n            margin-top: 1rem;\n            padding-bottom: 1rem;\n            border-bottom: rgba(255, 255, 255, 0.2) 1px solid;\n            font-weight: 300; }\n          .forumPage__content__chart__intro__post__footer {\n            display: flex;\n            flex-direction: row;\n            justify-content: center;\n            padding-top: 1rem;\n            padding-bottom: 1rem; }\n            .forumPage__content__chart__intro__post__footer__icon {\n              display: inline-flex;\n              font-size: 1.5rem;\n              margin-right: 1rem; }\n        .forumPage__content__chart__intro__signUp {\n          margin-top: 5%;\n          width: 100%;\n          display: flex;\n          flex-direction: column;\n          align-items: center; }\n          .forumPage__content__chart__intro__signUp__link {\n            cursor: pointer; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.postPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .postPage__modal {\n    height: 60vh;\n    display: flex;\n    align-items: center;\n    justify-content: center; }\n    .postPage__modal__content {\n      margin-left: 1rem;\n      margin-right: 1rem;\n      display: flex;\n      flex-direction: column;\n      justify-content: center;\n      align-items: center; }\n      .postPage__modal__content__area {\n        display: flex;\n        flex-direction: row; }\n        .postPage__modal__content__area__number {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          padding-left: 1.5rem;\n          padding-right: 1.5rem;\n          flex-direction: column;\n          font-weight: 500; }\n          .postPage__modal__content__area__number-border {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            padding-left: 1.5rem;\n            padding-right: 1.5rem;\n            flex-direction: column;\n            font-weight: 500;\n            border-right: 1px rgba(255, 255, 255, 0.2) solid; }\n        .postPage__modal__content__area__text {\n          font-weight: 300 !important; }\n      .postPage__modal__content__coins {\n        margin-top: 2rem;\n        display: flex;\n        flex-wrap: wrap;\n        flex-direction: row;\n        font-size: 13px;\n        width: 80%;\n        justify-content: center;\n        flex-wrap: wrap;\n        margin-bottom: 5px;\n        color: #f4e7d7; }\n        .postPage__modal__content__coins__coin {\n          border: 1px #f4e7d7 solid;\n          padding-left: 5px;\n          padding-right: 5px;\n          margin-right: 5px; }\n      .postPage__modal__content__username {\n        margin-top: 1.5rem;\n        margin-bottom: 1.5rem;\n        font-size: 1.5rem; }\n  .postPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .postPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .postPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .postPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .postPage__content__chart__intro__loading {\n          padding: 2rem 2rem 2rem 2rem;\n          display: flex;\n          width: 100%;\n          height: 90vh;\n          justify-content: center;\n          align-items: center; }\n        .postPage__content__chart__intro__post__header {\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid;\n          display: flex;\n          height: 10vh;\n          flex-direction: row;\n          align-items: center;\n          justify-content: space-between;\n          padding-bottom: 1rem; }\n          .postPage__content__chart__intro__post__header__userInfo {\n            display: flex;\n            width: 15vw;\n            flex-direction: row;\n            align-items: center; }\n            .postPage__content__chart__intro__post__header__userInfo__thumb {\n              flex: 1; }\n            .postPage__content__chart__intro__post__header__userInfo__name {\n              flex: 3;\n              margin-left: 10px;\n              display: flex;\n              flex-direction: column;\n              align-items: flex-start;\n              justify-content: center; }\n            .postPage__content__chart__intro__post__header__userInfo__point {\n              font-size: 13px; }\n            .postPage__content__chart__intro__post__header__userInfo__date {\n              font-size: 13px;\n              color: rgba(255, 255, 255, 0.5); }\n          .postPage__content__chart__intro__post__header__detail {\n            display: flex;\n            flex-direction: column;\n            justify-content: flex-end;\n            align-items: flex-end; }\n        .postPage__content__chart__intro__post__title {\n          margin-top: 1rem;\n          padding-left: 10px;\n          padding-right: 10px;\n          font-size: 18px;\n          padding-bottom: 1rem;\n          border-bottom: rgba(255, 255, 255, 0.2) 1px solid;\n          font-weight: 400; }\n        .postPage__content__chart__intro__post__body {\n          margin-top: 1rem;\n          padding-left: 10px;\n          padding-right: 10px;\n          padding-bottom: 1rem;\n          font-weight: 300; }\n        .postPage__content__chart__intro__post__coin {\n          margin-top: 1rem;\n          display: flex;\n          flex-direction: row;\n          justify-content: flex-end;\n          font-size: 13px;\n          width: 100%;\n          flex-wrap: wrap;\n          margin-bottom: 5px;\n          color: #f4e7d7; }\n          .postPage__content__chart__intro__post__coin__item {\n            border: 1px #f4e7d7 solid;\n            padding-left: 5px;\n            padding-right: 5px;\n            margin-right: 5px; }\n        .postPage__content__chart__intro__post__footer {\n          display: flex;\n          flex-direction: row;\n          justify-content: center;\n          align-items: center;\n          padding-top: 1rem;\n          padding-bottom: 1rem;\n          cursor: pointer;\n          color: #a0c1b8; }\n          .postPage__content__chart__intro__post__footer__count {\n            font-size: 1rem;\n            margin-right: 7px; }\n            .postPage__content__chart__intro__post__footer__count-liked {\n              color: #5cb85c !important; }\n            .postPage__content__chart__intro__post__footer__count-hated {\n              color: #f26968 !important; }\n          .postPage__content__chart__intro__post__footer__icon {\n            display: inline-flex;\n            font-size: 1.5rem;\n            margin-right: 1rem; }\n        .postPage__content__chart__intro__comments {\n          margin-top: 10%; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.userPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .userPage__modal {\n    height: 90vh;\n    padding-left: 50px;\n    padding-right: 50px;\n    display: flex;\n    flex-direction: column; }\n    .userPage__modal__favorite {\n      width: 100%;\n      padding-left: 1rem;\n      padding-right: 1rem;\n      display: flex;\n      flex-direction: row;\n      flex-wrap: wrap;\n      justify-content: center; }\n      .userPage__modal__favorite__text {\n        margin-top: 2rem;\n        margin-bottom: 1rem;\n        text-align: center;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        align-items: center; }\n      .userPage__modal__favorite__icon {\n        color: white;\n        font-size: 1.5rem;\n        margin-right: 5px;\n        vertical-align: center; }\n      .userPage__modal__favorite__item {\n        border: 1px rgba(255, 255, 255, 0.2) solid;\n        padding-left: 10px;\n        padding-right: 10px;\n        padding-top: 5px;\n        padding-bottom: 5px;\n        margin-right: 5px;\n        margin-bottom: 5px;\n        cursor: pointer; }\n        .userPage__modal__favorite__item:hover {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          border: 1px white solid; }\n        .userPage__modal__favorite__item-active {\n          border: 1px #5cb85c solid; }\n          .userPage__modal__favorite__item-active:hover {\n            transition: 0.3s;\n            -webkit-transition: 0.3s;\n            -moz-transition: 0.3s;\n            -o-transition: 0.3s;\n            border: 1px #5cb85c solid; }\n  .userPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .userPage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .userPage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        border-bottom: 1px white solid; }\n        .userPage__content__news__search__first {\n          display: flex;\n          flex-direction: row;\n          padding: 10px;\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid; }\n          .userPage__content__news__search__first__iconArea {\n            padding-left: 5px;\n            display: flex;\n            justify-content: center;\n            margin-right: 1rem;\n            align-items: center; }\n            .userPage__content__news__search__first__iconArea__icon {\n              color: white;\n              font-size: 1.5rem; }\n          .userPage__content__news__search__first__inputArea {\n            display: flex;\n            align-items: center; }\n            .userPage__content__news__search__first__inputArea__input {\n              background-color: transparent;\n              outline-width: 0 !important;\n              color: white;\n              border: 0;\n              width: 35vw; }\n        .userPage__content__news__search__second {\n          padding: 10px; }\n          .userPage__content__news__search__second__content {\n            display: flex;\n            flex-direction: row;\n            justify-content: space-between; }\n      .userPage__content__news__lists {\n        height: calc(100vh - 110px);\n        margin-top: 110px;\n        overflow-y: scroll; }\n        .userPage__content__news__lists-loading {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          height: 55vh;\n          color: white;\n          font-size: 1rem;\n          height: calc(100vh - 100px);\n          margin-top: 100px; }\n        .userPage__content__news__lists__footer {\n          height: 12vh;\n          display: flex;\n          align-items: center;\n          justify-content: center; }\n    .userPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .userPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .userPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column;\n        align-items: center;\n        height: 100%;\n        justify-content: center; }\n        .userPage__content__chart__intro__content {\n          margin-left: 1rem;\n          margin-right: 1rem;\n          display: flex;\n          flex-direction: column;\n          justify-content: center;\n          align-items: center; }\n          .userPage__content__chart__intro__content__area {\n            display: flex;\n            flex-direction: row; }\n            .userPage__content__chart__intro__content__area__number {\n              display: flex;\n              justify-content: center;\n              align-items: center;\n              padding-left: 1.5rem;\n              padding-right: 1.5rem;\n              flex-direction: column;\n              font-weight: 500; }\n              .userPage__content__chart__intro__content__area__number-border {\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                padding-left: 1.5rem;\n                padding-right: 1.5rem;\n                flex-direction: column;\n                font-weight: 500;\n                border-right: 1px rgba(255, 255, 255, 0.2) solid; }\n            .userPage__content__chart__intro__content__area__text {\n              font-weight: 300 !important; }\n          .userPage__content__chart__intro__content__username {\n            margin-top: 1rem;\n            margin-bottom: 1rem;\n            font-size: 2rem; }\n          .userPage__content__chart__intro__content__coins {\n            margin-top: 1.5rem;\n            margin-bottom: 1.5rem;\n            width: 100%;\n            flex-wrap: wrap;\n            display: flex;\n            flex-direction: row;\n            justify-content: center;\n            font-size: 13px;\n            color: #f4e7d7; }\n            .userPage__content__chart__intro__content__coins__coin {\n              border: 1px #f4e7d7 solid;\n              padding-left: 5px;\n              padding-right: 5px;\n              margin-right: 5px;\n              margin-bottom: 5px; }\n        .userPage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .userPage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.myPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .myPage__modal {\n    height: 90vh;\n    padding-left: 50px;\n    padding-right: 50px;\n    display: flex;\n    flex-direction: column; }\n    .myPage__modal__favorite {\n      width: 100%;\n      padding-left: 1rem;\n      padding-right: 1rem;\n      display: flex;\n      flex-direction: row;\n      flex-wrap: wrap;\n      justify-content: center; }\n      .myPage__modal__favorite__text {\n        margin-top: 2rem;\n        margin-bottom: 1rem;\n        text-align: center;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        align-items: center; }\n      .myPage__modal__favorite__icon {\n        color: white;\n        font-size: 1.5rem;\n        margin-right: 5px;\n        vertical-align: center; }\n      .myPage__modal__favorite__item {\n        border: 1px rgba(255, 255, 255, 0.2) solid;\n        padding-left: 10px;\n        padding-right: 10px;\n        padding-top: 5px;\n        padding-bottom: 5px;\n        margin-right: 5px;\n        margin-bottom: 5px;\n        cursor: pointer; }\n        .myPage__modal__favorite__item:hover {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          border: 1px white solid; }\n        .myPage__modal__favorite__item-active {\n          border: 1px #5cb85c solid; }\n          .myPage__modal__favorite__item-active:hover {\n            transition: 0.3s;\n            -webkit-transition: 0.3s;\n            -moz-transition: 0.3s;\n            -o-transition: 0.3s;\n            border: 1px #5cb85c solid; }\n  .myPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .myPage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .myPage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        border-bottom: 1px white solid; }\n        .myPage__content__news__search__first {\n          display: flex;\n          flex-direction: row;\n          padding: 10px;\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid; }\n          .myPage__content__news__search__first__iconArea {\n            padding-left: 5px;\n            display: flex;\n            justify-content: center;\n            margin-right: 1rem;\n            align-items: center; }\n            .myPage__content__news__search__first__iconArea__icon {\n              color: white;\n              font-size: 1.5rem; }\n          .myPage__content__news__search__first__inputArea {\n            display: flex;\n            align-items: center; }\n            .myPage__content__news__search__first__inputArea__input {\n              background-color: transparent;\n              outline-width: 0 !important;\n              color: white;\n              border: 0;\n              width: 35vw; }\n        .myPage__content__news__search__second {\n          padding: 10px; }\n          .myPage__content__news__search__second__content {\n            display: flex;\n            flex-direction: row;\n            justify-content: space-between; }\n      .myPage__content__news__lists {\n        height: calc(100vh - 110px);\n        margin-top: 110px;\n        overflow-y: scroll; }\n        .myPage__content__news__lists-loading {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          height: 55vh;\n          color: white;\n          font-size: 1rem;\n          height: calc(100vh - 100px);\n          margin-top: 100px; }\n        .myPage__content__news__lists__footer {\n          height: 12vh;\n          display: flex;\n          align-items: center;\n          justify-content: center; }\n    .myPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .myPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .myPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column;\n        align-items: center;\n        height: 100%;\n        justify-content: center; }\n        .myPage__content__chart__intro__content {\n          margin-left: 1rem;\n          margin-right: 1rem;\n          display: flex;\n          flex-direction: column;\n          justify-content: center;\n          align-items: center; }\n          .myPage__content__chart__intro__content__area {\n            display: flex;\n            flex-direction: row; }\n            .myPage__content__chart__intro__content__area__number {\n              display: flex;\n              justify-content: center;\n              align-items: center;\n              padding-left: 1.5rem;\n              padding-right: 1.5rem;\n              flex-direction: column;\n              font-weight: 500; }\n              .myPage__content__chart__intro__content__area__number-border {\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                padding-left: 1.5rem;\n                padding-right: 1.5rem;\n                flex-direction: column;\n                font-weight: 500;\n                border-right: 1px rgba(255, 255, 255, 0.2) solid; }\n            .myPage__content__chart__intro__content__area__text {\n              font-weight: 300 !important; }\n          .myPage__content__chart__intro__content__username {\n            margin-top: 1rem;\n            margin-bottom: 1rem;\n            font-size: 2rem; }\n          .myPage__content__chart__intro__content__coins {\n            margin-top: 1.5rem;\n            margin-bottom: 1.5rem;\n            width: 100%;\n            flex-wrap: wrap;\n            display: flex;\n            flex-direction: row;\n            justify-content: center;\n            font-size: 13px;\n            color: #f4e7d7; }\n            .myPage__content__chart__intro__content__coins__coin {\n              border: 1px #f4e7d7 solid;\n              padding-left: 5px;\n              padding-right: 5px;\n              margin-right: 5px;\n              margin-bottom: 5px; }\n        .myPage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .myPage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.postPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .postPage__modal {\n    height: 60vh;\n    display: flex;\n    align-items: center;\n    justify-content: center; }\n    .postPage__modal__content {\n      margin-left: 1rem;\n      margin-right: 1rem;\n      display: flex;\n      flex-direction: column;\n      justify-content: center;\n      align-items: center; }\n      .postPage__modal__content__coins {\n        margin-top: 2rem;\n        display: flex;\n        flex-wrap: wrap;\n        flex-direction: row;\n        font-size: 13px;\n        width: 80%;\n        justify-content: center;\n        flex-wrap: wrap;\n        color: #f4e7d7; }\n        .postPage__modal__content__coins__coin {\n          border: 1px #f4e7d7 solid;\n          padding-left: 5px;\n          padding-right: 5px;\n          margin-right: 5px;\n          margin-bottom: 5px; }\n      .postPage__modal__content__area {\n        display: flex;\n        flex-direction: row; }\n        .postPage__modal__content__area__number {\n          display: flex;\n          justify-content: center;\n          align-items: center;\n          padding-left: 1.5rem;\n          padding-right: 1.5rem;\n          flex-direction: column;\n          font-weight: 500; }\n          .postPage__modal__content__area__number-border {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            padding-left: 1.5rem;\n            padding-right: 1.5rem;\n            flex-direction: column;\n            font-weight: 500;\n            border-right: 1px rgba(255, 255, 255, 0.2) solid; }\n        .postPage__modal__content__area__text {\n          font-weight: 300 !important; }\n      .postPage__modal__content__username {\n        margin-top: 1rem;\n        margin-bottom: 1rem;\n        font-size: 2rem; }\n  .postPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .postPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .postPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .postPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column; }\n        .postPage__content__chart__intro__loading {\n          padding: 2rem 2rem 2rem 2rem;\n          display: flex;\n          width: 100%;\n          height: 90vh;\n          justify-content: center;\n          align-items: center; }\n        .postPage__content__chart__intro__post__header {\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid;\n          display: flex;\n          height: 10vh;\n          flex-direction: row;\n          align-items: center;\n          justify-content: space-between;\n          padding-bottom: 1rem; }\n          .postPage__content__chart__intro__post__header__userInfo {\n            display: flex;\n            width: 15vw;\n            flex-direction: row;\n            align-items: center; }\n            .postPage__content__chart__intro__post__header__userInfo__thumb {\n              flex: 1; }\n            .postPage__content__chart__intro__post__header__userInfo__name {\n              flex: 3;\n              margin-left: 10px;\n              display: flex;\n              flex-direction: column;\n              align-items: flex-start;\n              justify-content: center; }\n            .postPage__content__chart__intro__post__header__userInfo__point {\n              font-size: 13px; }\n            .postPage__content__chart__intro__post__header__userInfo__date {\n              font-size: 13px;\n              color: rgba(255, 255, 255, 0.5); }\n          .postPage__content__chart__intro__post__header__detail {\n            display: flex;\n            flex-direction: column;\n            justify-content: flex-end;\n            align-items: flex-end; }\n        .postPage__content__chart__intro__post__title {\n          margin-top: 1rem;\n          padding-left: 10px;\n          padding-right: 10px;\n          font-size: 18px;\n          padding-bottom: 1rem;\n          border-bottom: rgba(255, 255, 255, 0.2) 1px solid;\n          font-weight: 400; }\n        .postPage__content__chart__intro__post__body {\n          margin-top: 1rem;\n          padding-left: 10px;\n          padding-right: 10px;\n          padding-bottom: 1rem;\n          font-weight: 300; }\n        .postPage__content__chart__intro__post__coin {\n          margin-top: 1rem;\n          display: flex;\n          flex-direction: row;\n          justify-content: flex-end;\n          font-size: 13px;\n          color: #f4e7d7; }\n          .postPage__content__chart__intro__post__coin__item {\n            border: 1px #f4e7d7 solid;\n            padding-left: 5px;\n            margin-bottom: 5px;\n            padding-right: 5px;\n            margin-right: 5px; }\n        .postPage__content__chart__intro__post__footer {\n          display: flex;\n          flex-direction: row;\n          justify-content: center;\n          align-items: center;\n          padding-top: 1rem;\n          padding-bottom: 1rem;\n          color: #a0c1b8; }\n          .postPage__content__chart__intro__post__footer__count {\n            font-size: 1rem;\n            margin-right: 7px; }\n          .postPage__content__chart__intro__post__footer__icon {\n            display: inline-flex;\n            font-size: 1.5rem;\n            margin-right: 1rem; }\n        .postPage__content__chart__intro__comments {\n          margin-top: 10%; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.settingsPage {\n  background: #536976;\n  /* fallback for old browsers */\n  background: -webkit-linear-gradient(to right, #292e49, #536976);\n  /* Chrome 10-25, Safari 5.1-6 */\n  background: linear-gradient(to right, #292e49, #536976);\n  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  .settingsPage__modal {\n    height: 85vh;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center; }\n    .settingsPage__modal__cropImage {\n      border: 1px rgba(255, 255, 255, 0.2) solid; }\n    .settingsPage__modal__right {\n      display: flex;\n      justify-content: center;\n      align-items: center;\n      flex-direction: column; }\n    .settingsPage__modal__favorite {\n      width: 100%;\n      padding-left: 1rem;\n      padding-right: 1rem;\n      display: flex;\n      flex-direction: row;\n      flex-wrap: wrap;\n      justify-content: center; }\n      .settingsPage__modal__favorite__text {\n        margin-top: 2rem;\n        margin-bottom: 1rem;\n        text-align: center;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        align-items: center; }\n      .settingsPage__modal__favorite__icon {\n        color: white;\n        font-size: 1.5rem;\n        margin-right: 5px;\n        vertical-align: center; }\n      .settingsPage__modal__favorite__item {\n        border: 1px rgba(255, 255, 255, 0.2) solid;\n        padding-left: 10px;\n        padding-right: 10px;\n        padding-top: 5px;\n        padding-bottom: 5px;\n        margin-right: 5px;\n        margin-bottom: 5px;\n        cursor: pointer; }\n        .settingsPage__modal__favorite__item:hover {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          border: 1px white solid; }\n        .settingsPage__modal__favorite__item-active {\n          border: 1px #5cb85c solid; }\n          .settingsPage__modal__favorite__item-active:hover {\n            transition: 0.3s;\n            -webkit-transition: 0.3s;\n            -moz-transition: 0.3s;\n            -o-transition: 0.3s;\n            border: 1px #5cb85c solid; }\n  .settingsPage__content {\n    margin-left: 100px;\n    height: 100vh;\n    overflow-y: hidden; }\n    .settingsPage__content__news {\n      box-sizing: border-box;\n      float: left;\n      height: 100vh;\n      width: calc(50vw - 100px);\n      border-right: 1px white solid; }\n      .settingsPage__content__news__search {\n        display: flex;\n        flex-direction: column;\n        position: fixed;\n        width: calc(50vw - 100px);\n        border-bottom: 1px white solid; }\n        .settingsPage__content__news__search__first {\n          display: flex;\n          flex-direction: row;\n          padding: 10px;\n          border-bottom: 1px rgba(255, 255, 255, 0.2) solid; }\n          .settingsPage__content__news__search__first__iconArea {\n            padding-left: 5px;\n            display: flex;\n            justify-content: center;\n            margin-right: 1rem;\n            align-items: center; }\n            .settingsPage__content__news__search__first__iconArea__icon {\n              color: white;\n              font-size: 1.5rem; }\n          .settingsPage__content__news__search__first__inputArea {\n            display: flex;\n            color: white;\n            align-items: center; }\n        .settingsPage__content__news__search__second {\n          padding: 10px; }\n          .settingsPage__content__news__search__second__content {\n            display: flex;\n            flex-direction: row;\n            justify-content: space-between; }\n      .settingsPage__content__news__lists {\n        height: calc(100vh - 70px);\n        margin-top: 70px;\n        overflow-y: scroll;\n        padding: 1rem; }\n        .settingsPage__content__news__lists__content {\n          display: flex;\n          flex-direction: column;\n          align-items: center;\n          color: white; }\n        .settingsPage__content__news__lists__footer {\n          height: 12vh;\n          display: flex;\n          align-items: center;\n          justify-content: center; }\n    .settingsPage__content__chart {\n      color: white;\n      height: 100vh;\n      width: calc(50vw-100px);\n      margin-right: 100px;\n      overflow-y: scroll; }\n      .settingsPage__content__chart__loading {\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 100vh; }\n      .settingsPage__content__chart__intro {\n        padding: 2rem 2rem 2rem 2rem;\n        display: flex;\n        flex-direction: column;\n        align-items: center;\n        height: 100%;\n        justify-content: center; }\n        .settingsPage__content__chart__intro__content {\n          margin-left: 1rem;\n          margin-right: 1rem;\n          display: flex;\n          flex-direction: column;\n          justify-content: center;\n          align-items: center; }\n          .settingsPage__content__chart__intro__content__area {\n            display: flex;\n            flex-direction: row; }\n            .settingsPage__content__chart__intro__content__area__number {\n              display: flex;\n              justify-content: center;\n              align-items: center;\n              padding-left: 1.5rem;\n              padding-right: 1.5rem;\n              flex-direction: column;\n              font-weight: 500; }\n              .settingsPage__content__chart__intro__content__area__number-border {\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                padding-left: 1.5rem;\n                padding-right: 1.5rem;\n                flex-direction: column;\n                font-weight: 500;\n                border-right: 1px rgba(255, 255, 255, 0.2) solid; }\n            .settingsPage__content__chart__intro__content__area__text {\n              font-weight: 300 !important; }\n          .settingsPage__content__chart__intro__content__username {\n            margin-top: 1rem;\n            margin-bottom: 1rem;\n            font-size: 2rem; }\n          .settingsPage__content__chart__intro__content__coins {\n            margin-top: 1.5rem;\n            margin-bottom: 1.5rem;\n            width: 100%;\n            flex-wrap: wrap;\n            display: flex;\n            flex-direction: row;\n            justify-content: center;\n            font-size: 13px;\n            color: #f4e7d7; }\n            .settingsPage__content__chart__intro__content__coins__coin {\n              border: 1px #f4e7d7 solid;\n              padding-left: 5px;\n              padding-right: 5px;\n              margin-right: 5px;\n              margin-bottom: 5px; }\n        .settingsPage__content__chart__intro__logo {\n          display: flex;\n          flex-direction: row;\n          align-items: center; }\n          .settingsPage__content__chart__intro__logo__text {\n            margin-left: 1rem;\n            font-size: 2rem; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.navBar {\n  background: transparent;\n  width: 100px;\n  height: 100vh;\n  position: fixed;\n  left: 0;\n  color: white;\n  border-right: 1px rgba(255, 255, 255, 0.1) solid; }\n  .navBar__signOut {\n    height: 40vh;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    flex-direction: column; }\n    .navBar__signOut__text {\n      margin-bottom: 10%; }\n  .navBar__content {\n    display: flex;\n    flex-direction: column;\n    align-items: center; }\n    .navBar__content__brand {\n      width: 100%;\n      display: flex;\n      align-items: center;\n      justify-content: center;\n      cursor: pointer;\n      font-family: \"Biryani\", sans-serif;\n      flex-direction: column;\n      height: 145px;\n      padding-right: 10px;\n      padding-left: 10px; }\n      .navBar__content__brand__logo {\n        width: 50px;\n        height: auto; }\n        .navBar__content__brand__logo__text {\n          margin-top: 5px;\n          font-size: 12px; }\n    .navBar__content__userArea {\n      height: 17vh;\n      width: 100%;\n      display: inline-flex;\n      align-items: center;\n      justify-content: center; }\n    .navBar__content__items {\n      width: 100%; }\n      .navBar__content__items__item {\n        display: flex;\n        height: 10vh;\n        flex-direction: column;\n        justify-content: center;\n        align-items: center;\n        margin-top: 1.5rem;\n        margin-bottom: 1.5rem;\n        cursor: pointer; }\n        .navBar__content__items__item:first-child {\n          margin-top: 0; }\n        .navBar__content__items__item-active {\n          color: #5cb85c;\n          font-weight: 500; }\n        .navBar__content__items__item-icon {\n          font-size: 2.2rem;\n          display: inline-flex;\n          margin-bottom: 5px; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.list {\n  color: white;\n  cursor: pointer; }\n  .list:hover {\n    transition: 0.3s;\n    -webkit-transition: 0.3s;\n    -moz-transition: 0.3s;\n    -o-transition: 0.3s;\n    background-color: rgba(83, 105, 118, 0.3); }\n  .list-active {\n    background-color: rgba(83, 105, 118, 0.7); }\n    .list-active:hover {\n      background-color: rgba(83, 105, 118, 0.7); }\n  .list__content {\n    display: flex;\n    width: 100%;\n    flex-direction: row;\n    align-items: center;\n    padding-top: 3%;\n    padding-bottom: 3%;\n    border-bottom: 1px solid rgba(83, 105, 118, 0.7); }\n    .list__content__date {\n      width: 12%;\n      padding-left: 10px;\n      padding-right: 10px;\n      color: rgba(255, 255, 255, 0.7);\n      display: flex;\n      font-size: 10px;\n      align-items: center;\n      justify-content: center; }\n    .list__content__textArea {\n      flex: 6;\n      word-wrap: break-word;\n      overflow: auto;\n      display: flex;\n      padding-right: 10px;\n      flex-direction: column; }\n      .list__content__textArea__text {\n        display: inline;\n        font-size: 14px; }\n      .list__content__textArea__username {\n        font-size: 11px;\n        color: #a0c1b8;\n        margin-left: 5px; }\n      .list__content__textArea__edit {\n        font-size: 13px;\n        margin-left: 5px;\n        cursor: pointer; }\n        .list__content__textArea__edit:hover {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          color: #a0c1b8; }\n      .list__content__textArea__social {\n        display: flex;\n        flex-direction: row;\n        align-items: center;\n        margin-top: 2px; }\n        .list__content__textArea__social__username {\n          font-size: 12px;\n          color: #a0c1b8; }\n        .list__content__textArea__social__items {\n          display: flex;\n          flex-direction: row; }\n        .list__content__textArea__social__item {\n          font-size: 12px;\n          display: flex;\n          flex-direction: row;\n          align-items: center;\n          margin-right: 5px;\n          color: #a0c1b8; }\n          .list__content__textArea__social__item__count {\n            margin-right: 5px; }\n          .list__content__textArea__social__item__icon {\n            display: inline-flex; }\n    .list__content__type {\n      flex: 1;\n      font-size: 10px;\n      display: flex;\n      color: #f4e7d7;\n      justify-content: center; }\n      .list__content__type-array {\n        color: #f4e7d7;\n        flex-wrap: wrap;\n        font-size: 10px;\n        padding-right: 10px;\n        display: flex;\n        justify-content: flex-end; }\n        .list__content__type-array__item {\n          margin-right: 5px; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.sideBar {\n  background: transparent;\n  width: 100px;\n  height: 100vh;\n  overflow-y: scroll;\n  position: fixed;\n  right: 0;\n  color: white;\n  border-left: 1px rgba(255, 255, 255, 0.1) solid; }\n  .sideBar__modal {\n    height: 60vh;\n    overflow-y: scroll; }\n    .sideBar__modal__close {\n      cursor: pointer; }\n    .sideBar__modal__header {\n      font-weight: 300 !important; }\n    .sideBar__modal__content {\n      display: flex;\n      justify-content: center;\n      color: white; }\n      .sideBar__modal__content__items {\n        width: 50vw;\n        display: flex;\n        flex-direction: row;\n        justify-content: center;\n        flex-wrap: wrap; }\n        .sideBar__modal__content__items__wrapper {\n          display: flex;\n          width: 25%;\n          margin-top: 1.5rem;\n          flex-direction: column;\n          align-items: center;\n          margin-right: 1rem; }\n          .sideBar__modal__content__items__wrapper:nth-child(3n) {\n            margin-right: 0; }\n          .sideBar__modal__content__items__wrapper__item {\n            display: flex;\n            padding: 5px 1.5rem 5px 1.5rem;\n            flex-direction: column;\n            width: 100%;\n            border: 1px rgba(255, 255, 255, 0.2) solid;\n            justify-content: center;\n            align-items: center; }\n            .sideBar__modal__content__items__wrapper__item:hover {\n              border: 1px white solid;\n              cursor: pointer; }\n            .sideBar__modal__content__items__wrapper__item-active {\n              border: 1px #5cb85c solid; }\n              .sideBar__modal__content__items__wrapper__item-active:hover {\n                border: 1px #5cb85c solid;\n                cursor: pointer; }\n            .sideBar__modal__content__items__wrapper__item__full {\n              width: 100%;\n              overflow: auto;\n              word-wrap: break-word;\n              text-align: center; }\n            .sideBar__modal__content__items__wrapper__item__abbr {\n              text-align: center;\n              color: #f4e7d7;\n              width: 100%;\n              overflow: auto;\n              word-wrap: break-word; }\n            .sideBar__modal__content__items__wrapper__item__kor {\n              width: 100%;\n              text-align: center;\n              overflow: auto;\n              word-wrap: break-word; }\n  .sideBar__content {\n    display: flex;\n    flex-direction: column;\n    width: 100%; }\n    .sideBar__content__items__item {\n      display: flex;\n      border-bottom: 1px rgba(255, 255, 255, 0.1) solid;\n      flex-direction: column;\n      justify-content: center;\n      padding-top: 10px;\n      padding-bottom: 10px;\n      align-items: center;\n      cursor: pointer; }\n      .sideBar__content__items__item-active {\n        border-left: 3px #5cb85c solid; }\n      .sideBar__content__items__item-disable {\n        cursor: not-allowed;\n        pointer-events: none; }\n      .sideBar__content__items__item-plus {\n        font-size: 2rem; }\n      .sideBar__content__items__item:hover {\n        background-color: #536976; }\n      .sideBar__content__items__item__title {\n        color: #f4e7d7; }\n      .sideBar__content__items__item__price {\n        font-size: 10px; }\n        .sideBar__content__items__item__price__icon {\n          display: inline-flex; }\n      .sideBar__content__items__item__percent {\n        font-size: 10px;\n        color: #5cb85c; }\n        .sideBar__content__items__item__percent__icon {\n          display: inline-flex; }\n      .sideBar__content__items__item__percent-down {\n        font-size: 10px;\n        color: #f26968; }\n        .sideBar__content__items__item__percent-down__icon {\n          display: inline-flex; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.roundInput__content {\n  padding-left: 1rem;\n  width: 300px !important;\n  height: 60px !important;\n  border: 1px rgba(255, 255, 255, 0.2) solid !important;\n  border-radius: 75px !important;\n  font-size: 1rem;\n  outline-width: 0 !important;\n  color: white; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.button__content {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  border: 1px white solid;\n  height: 100%;\n  padding-top: 10px;\n  padding-bottom: 10px; }\n  .button__content:hover {\n    border: 1px #5cb85c solid;\n    color: #5cb85c;\n    cursor: pointer; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.thumb {\n  display: inline-block;\n  position: relative;\n  justify-content: center;\n  align-items: center;\n  cursor: pointer; }\n  .thumb__image {\n    box-sizing: border-box;\n    border-radius: 50%;\n    border: 1px solid white; }\n  .thumb__classImage {\n    position: absolute;\n    box-sizing: border-box;\n    border-radius: 50%; }\n  .thumb__defaultImage {\n    position: absolute;\n    bottom: -8px;\n    right: -5px; }\n\n.thumb__default {\n  font-size: 2rem;\n  display: inline-flex;\n  position: relative;\n  justify-content: center;\n  align-items: center;\n  box-sizing: border-box;\n  border-radius: 50%;\n  border: 1px white solid;\n  color: white;\n  cursor: pointer; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.socialInput {\n  padding-top: 30px;\n  background-color: transparent;\n  padding-left: 20px;\n  padding-right: 20px;\n  padding-bottom: 5px; }\n  .socialInput hr {\n    background-color: rgba(255, 255, 255, 0.2); }\n  .socialInput__hr-active {\n    margin-top: 1rem;\n    margin-bottom: 1rem;\n    border: 0;\n    border-top: 1px white solid; }\n  .socialInput__body {\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    padding-bottom: 10px; }\n    .socialInput__body__thumbArea__thumb {\n      font-size: 2rem;\n      display: inline-flex;\n      width: 50px;\n      height: 50px;\n      justify-content: center;\n      align-items: center;\n      box-sizing: border-box;\n      border-radius: 50%;\n      border: 1px rgba(0, 0, 0, 0.2) solid;\n      color: white; }\n    .socialInput__body__inputArea {\n      width: 95%; }\n    .socialInput__body__input {\n      margin-right: 20px;\n      margin-left: 20px;\n      color: white;\n      font-size: 1rem;\n      background: transparent;\n      width: 95%;\n      padding-bottom: 10px;\n      padding-top: 10px;\n      word-break: break-all;\n      border: none; }\n      .socialInput__body__input:focus {\n        transition: 0.3s;\n        -webkit-transition: 0.3s;\n        -moz-transition: 0.3s;\n        -o-transition: 0.3s;\n        outline: none; }\n      .socialInput__body__input-title {\n        margin-right: 20px;\n        margin-left: 20px;\n        margin-bottom: 10px;\n        color: white;\n        font-size: 1rem;\n        background: transparent;\n        width: 60%;\n        padding-bottom: 10px;\n        padding-top: 10px;\n        word-break: break-all;\n        border-top: none;\n        border-left: none;\n        border-right: none;\n        border-bottom: 1px rgba(255, 255, 255, 0.2) solid !important; }\n        .socialInput__body__input-title:focus {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          outline: none;\n          border-bottom: 1px white solid !important; }\n  .socialInput__footer {\n    display: flex;\n    flex-direction: row;\n    justify-content: space-between;\n    align-items: center; }\n    .socialInput__footer__camera__icon {\n      font-size: 1.6rem;\n      color: white; }\n      .socialInput__footer__camera__icon:hover {\n        transition: 0.3s;\n        -webkit-transition: 0.3s;\n        -moz-transition: 0.3s;\n        -o-transition: 0.3s;\n        color: white;\n        cursor: pointer; }\n    .socialInput__footer__postArea {\n      display: inline-flex;\n      align-items: center;\n      justify-content: center; }\n      .socialInput__footer__postArea__postButton {\n        background-color: transparent;\n        color: white;\n        margin-left: 10px;\n        font-weight: 300;\n        padding-left: 10px;\n        padding-top: 3px;\n        border: 1px solid rgba(255, 255, 255, 0.2);\n        padding-bottom: 3px;\n        display: inline-flex;\n        padding-right: 10px;\n        cursor: pointer; }\n        .socialInput__footer__postArea__postButton:hover {\n          transition: 0.3s;\n          -webkit-transition: 0.3s;\n          -moz-transition: 0.3s;\n          -o-transition: 0.3s;\n          color: white;\n          border: 1px solid white; }\n    .socialInput__footer__imagePreview {\n      display: flex;\n      flex-direction: row;\n      flex-wrap: wrap; }\n      .socialInput__footer__imagePreview__image {\n        transition: 0.3s;\n        -webkit-transition: 0.3s;\n        -moz-transition: 0.3s;\n        -o-transition: 0.3s;\n        height: 60px; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.comment__content {\n  transition: 0.3s;\n  -webkit-transition: 0.3s;\n  -moz-transition: 0.3s;\n  -o-transition: 0.3s;\n  display: flex;\n  padding-left: 20px;\n  padding-right: 20px;\n  box-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);\n  flex-direction: row;\n  align-items: center;\n  justify-content: space-between;\n  padding-top: 1rem;\n  padding-bottom: 1rem;\n  margin-bottom: 1rem; }\n  .comment__content-mine {\n    transition: 0.3s;\n    -webkit-transition: 0.3s;\n    -moz-transition: 0.3s;\n    -o-transition: 0.3s;\n    display: flex;\n    padding-left: 20px;\n    padding-right: 20px;\n    box-shadow: 0px !important;\n    border: 1px solid #a0c1b8;\n    flex-direction: row;\n    align-items: center;\n    justify-content: space-between;\n    padding-top: 1rem;\n    padding-bottom: 1rem;\n    margin-bottom: 1rem; }\n  .comment__content__userArea {\n    flex: 2;\n    display: flex;\n    flex-direction: row;\n    align-items: center; }\n    .comment__content__userArea__userInfo {\n      display: flex;\n      flex-direction: column;\n      margin-left: 10px; }\n      .comment__content__userArea__userInfo__name {\n        font-size: 10px; }\n      .comment__content__userArea__userInfo__point {\n        font-size: 10px; }\n  .comment__content__content {\n    flex: 4;\n    word-wrap: break-word;\n    overflow: auto;\n    display: flex;\n    font-size: 13px;\n    flex-direction: column;\n    padding-right: 10px; }\n  .comment__content__date {\n    flex: 1;\n    display: flex;\n    justify-content: flex-end;\n    align-items: center;\n    font-size: 10px;\n    color: rgba(255, 255, 255, 0.3); }\n  .comment__content__delete {\n    color: rgba(255, 255, 255, 0.2);\n    margin-left: 5px;\n    cursor: pointer; }\n    .comment__content__delete:hover {\n      transition: 0.3s;\n      -webkit-transition: 0.3s;\n      -moz-transition: 0.3s;\n      -o-transition: 0.3s;\n      color: #f26968; }\n\n/*\n* Author: @nayunhwan (github.com/nayunhwan)\n* Email: nayunhwan.dev@mgail.com\n*/\n.medal {\n  display: inline-block;\n  position: relative;\n  justify-content: center;\n  align-items: center;\n  cursor: pointer; }\n  .medal__image {\n    box-sizing: border-box;\n    border-radius: 50%;\n    border: 1px solid white; }\n  .medal__classImage {\n    margin-left: 10px; }\n\n.medal__default {\n  font-size: 2rem;\n  display: inline-flex;\n  justify-content: center;\n  align-items: center;\n  box-sizing: border-box;\n  border-radius: 50%;\n  border: 1px white solid;\n  color: white;\n  cursor: pointer; }\n  .medal__default__classImage {\n    position: absolute;\n    box-sizing: border-box;\n    border-radius: 50%; }\n\n/*!\n  Ionicons, v2.0.0\n  Created by Ben Sperry for the Ionic Framework, http://ionicons.com/\n  https://twitter.com/benjsperry  https://twitter.com/ionicframework\n  MIT License: https://github.com/driftyco/ionicons\n\n  Android-style icons originally built by Google’s\n  Material Design Icons: https://github.com/google/material-design-icons\n  used under CC BY http://creativecommons.org/licenses/by/4.0/\n  Modified icons to fit ionicon’s grid from original.\n*/\n@font-face {\n  font-family: \"Ionicons\";\n  src: url(\"https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/fonts/ionicons.eot?v=2.0.0\");\n  src: url(\"https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/fonts/ionicons.eot?v=2.0.0#iefix\") format(\"embedded-opentype\"), url(\"https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/fonts/ionicons.ttf?v=2.0.0\") format(\"truetype\"), url(\"https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/fonts/ionicons.woff?v=2.0.0\") format(\"woff\"), url(\"https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/fonts/ionicons.svg?v=2.0.0#Ionicons\") format(\"svg\");\n  font-weight: normal;\n  font-style: normal; }\n\n.image-gallery-fullscreen-button::before,\n.image-gallery-play-button::before,\n.image-gallery-left-nav::before,\n.image-gallery-right-nav::before {\n  display: inline-block;\n  font-family: \"Ionicons\";\n  speak: none;\n  font-style: normal;\n  font-weight: normal;\n  font-variant: normal;\n  text-transform: none;\n  text-rendering: auto;\n  line-height: 1;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale; }\n\n.image-gallery {\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  -o-user-select: none;\n  user-select: none;\n  -webkit-tap-highlight-color: transparent; }\n  .image-gallery.fullscreen-modal {\n    background: #000;\n    bottom: 0;\n    height: 100%;\n    left: 0;\n    position: fixed;\n    right: 0;\n    top: 0;\n    width: 100%;\n    z-index: 5; }\n    .image-gallery.fullscreen-modal .image-gallery-content {\n      top: 50%;\n      transform: translateY(-50%); }\n\n.image-gallery-content {\n  position: relative;\n  line-height: 0;\n  top: 0; }\n  .image-gallery-content.fullscreen {\n    background: #000; }\n    .image-gallery-content.fullscreen .image-gallery-slide {\n      background: #000; }\n\n.image-gallery-slide-wrapper {\n  position: relative; }\n  .image-gallery-slide-wrapper.left, .image-gallery-slide-wrapper.right {\n    display: inline-block;\n    width: calc(100% - 113px); }\n    @media (max-width: 768px) {\n      .image-gallery-slide-wrapper.left, .image-gallery-slide-wrapper.right {\n        width: calc(100% - 84px); } }\n\n.image-gallery-fullscreen-button,\n.image-gallery-play-button,\n.image-gallery-left-nav,\n.image-gallery-right-nav {\n  appearance: none;\n  background-color: transparent;\n  border: 0;\n  cursor: pointer;\n  outline: none;\n  position: absolute;\n  z-index: 4; }\n  .image-gallery-fullscreen-button::before,\n  .image-gallery-play-button::before,\n  .image-gallery-left-nav::before,\n  .image-gallery-right-nav::before {\n    color: #fff;\n    line-height: .7;\n    text-shadow: 0 2px 2px #1a1a1a;\n    transition: color .2s ease-out; }\n  .image-gallery-fullscreen-button:hover::before,\n  .image-gallery-play-button:hover::before,\n  .image-gallery-left-nav:hover::before,\n  .image-gallery-right-nav:hover::before {\n    color: #337ab7; }\n    @media (max-width: 768px) {\n      .image-gallery-fullscreen-button:hover::before,\n      .image-gallery-play-button:hover::before,\n      .image-gallery-left-nav:hover::before,\n      .image-gallery-right-nav:hover::before {\n        color: #fff; } }\n\n.image-gallery-fullscreen-button,\n.image-gallery-play-button {\n  bottom: 0; }\n  .image-gallery-fullscreen-button::before,\n  .image-gallery-play-button::before {\n    font-size: 2.7em;\n    padding: 15px 20px;\n    text-shadow: 0 1px 1px #1a1a1a; }\n    @media (max-width: 768px) {\n      .image-gallery-fullscreen-button::before,\n      .image-gallery-play-button::before {\n        font-size: 2.4em; } }\n    @media (max-width: 480px) {\n      .image-gallery-fullscreen-button::before,\n      .image-gallery-play-button::before {\n        font-size: 2em; } }\n  .image-gallery-fullscreen-button:hover::before,\n  .image-gallery-play-button:hover::before {\n    color: #fff;\n    transform: scale(1.1); }\n    @media (max-width: 768px) {\n      .image-gallery-fullscreen-button:hover::before,\n      .image-gallery-play-button:hover::before {\n        transform: none; } }\n\n.image-gallery-fullscreen-button {\n  right: 0; }\n  .image-gallery-fullscreen-button::before {\n    content: \"\"; }\n  .image-gallery-fullscreen-button.active::before {\n    content: \"\"; }\n  .image-gallery-fullscreen-button.active:hover::before {\n    transform: scale(0.9); }\n\n.image-gallery-play-button {\n  left: 0; }\n  .image-gallery-play-button::before {\n    content: \"\"; }\n  .image-gallery-play-button.active::before {\n    content: \"\"; }\n\n.image-gallery-left-nav,\n.image-gallery-right-nav {\n  color: #fff;\n  font-size: 5em;\n  padding: 50px 15px;\n  top: 50%;\n  transform: translateY(-50%); }\n  .image-gallery-left-nav[disabled],\n  .image-gallery-right-nav[disabled] {\n    cursor: disabled;\n    opacity: .6;\n    pointer-events: none; }\n  @media (max-width: 768px) {\n    .image-gallery-left-nav,\n    .image-gallery-right-nav {\n      font-size: 3.4em;\n      padding: 20px 15px; } }\n  @media (max-width: 480px) {\n    .image-gallery-left-nav,\n    .image-gallery-right-nav {\n      font-size: 2.4em;\n      padding: 0 15px; } }\n\n.image-gallery-left-nav {\n  left: 0; }\n  .image-gallery-left-nav::before {\n    content: \"\"; }\n\n.image-gallery-right-nav {\n  right: 0; }\n  .image-gallery-right-nav::before {\n    content: \"\"; }\n\n.image-gallery-slides {\n  line-height: 0;\n  overflow: hidden;\n  position: relative;\n  white-space: nowrap; }\n\n.image-gallery-slide {\n  background: #fff;\n  left: 0;\n  position: absolute;\n  top: 0;\n  width: 100%; }\n  .image-gallery-slide.center {\n    position: relative; }\n  .image-gallery-slide img {\n    width: 100%; }\n  .image-gallery-slide .image-gallery-description {\n    background: rgba(0, 0, 0, 0.4);\n    bottom: 70px;\n    color: #fff;\n    left: 0;\n    line-height: 1;\n    padding: 10px 20px;\n    position: absolute;\n    white-space: normal; }\n    @media (max-width: 768px) {\n      .image-gallery-slide .image-gallery-description {\n        bottom: 45px;\n        font-size: .8em;\n        padding: 8px 15px; } }\n\n.image-gallery-bullets {\n  bottom: 20px;\n  left: 0;\n  margin: 0 auto;\n  position: absolute;\n  right: 0;\n  width: 80%;\n  z-index: 4; }\n  .image-gallery-bullets .image-gallery-bullets-container {\n    margin: 0;\n    padding: 0;\n    text-align: center; }\n  .image-gallery-bullets .image-gallery-bullet {\n    appearance: none;\n    background-color: transparent;\n    border: 1px solid #fff;\n    border-radius: 50%;\n    box-shadow: 0 1px 0 #1a1a1a;\n    cursor: pointer;\n    display: inline-block;\n    margin: 0 5px;\n    outline: none;\n    padding: 5px; }\n    @media (max-width: 768px) {\n      .image-gallery-bullets .image-gallery-bullet {\n        margin: 0 3px;\n        padding: 3px; } }\n    @media (max-width: 480px) {\n      .image-gallery-bullets .image-gallery-bullet {\n        padding: 2.7px; } }\n    .image-gallery-bullets .image-gallery-bullet.active {\n      background: #fff; }\n\n.image-gallery-thumbnails-wrapper {\n  position: relative; }\n  .image-gallery-thumbnails-wrapper.left, .image-gallery-thumbnails-wrapper.right {\n    display: inline-block;\n    vertical-align: top;\n    width: 108px; }\n    @media (max-width: 768px) {\n      .image-gallery-thumbnails-wrapper.left, .image-gallery-thumbnails-wrapper.right {\n        width: 81px; } }\n    .image-gallery-thumbnails-wrapper.left .image-gallery-thumbnails, .image-gallery-thumbnails-wrapper.right .image-gallery-thumbnails {\n      height: 100%;\n      width: 100%;\n      left: 0;\n      padding: 0;\n      position: absolute;\n      top: 0; }\n      .image-gallery-thumbnails-wrapper.left .image-gallery-thumbnails .image-gallery-thumbnail, .image-gallery-thumbnails-wrapper.right .image-gallery-thumbnails .image-gallery-thumbnail {\n        display: block;\n        margin-right: 0;\n        padding: 0; }\n        .image-gallery-thumbnails-wrapper.left .image-gallery-thumbnails .image-gallery-thumbnail + .image-gallery-thumbnail, .image-gallery-thumbnails-wrapper.right .image-gallery-thumbnails .image-gallery-thumbnail + .image-gallery-thumbnail {\n          margin-left: 0; }\n  .image-gallery-thumbnails-wrapper.left {\n    margin-right: 5px; }\n    @media (max-width: 768px) {\n      .image-gallery-thumbnails-wrapper.left {\n        margin-right: 3px; } }\n  .image-gallery-thumbnails-wrapper.right {\n    margin-left: 5px; }\n    @media (max-width: 768px) {\n      .image-gallery-thumbnails-wrapper.right {\n        margin-left: 3px; } }\n\n.image-gallery-thumbnails {\n  overflow: hidden;\n  padding: 5px 0; }\n  @media (max-width: 768px) {\n    .image-gallery-thumbnails {\n      padding: 3px 0; } }\n  .image-gallery-thumbnails .image-gallery-thumbnails-container {\n    cursor: pointer;\n    text-align: center;\n    transition: transform .45s ease-out;\n    white-space: nowrap; }\n\n.image-gallery-thumbnail {\n  display: inline-block;\n  border: 4px solid transparent;\n  transition: border .3s ease-out;\n  width: 100px; }\n  @media (max-width: 768px) {\n    .image-gallery-thumbnail {\n      border: 3px solid transparent;\n      width: 75px; } }\n  .image-gallery-thumbnail + .image-gallery-thumbnail {\n    margin-left: 2px; }\n  .image-gallery-thumbnail img {\n    vertical-align: middle;\n    width: 100%; }\n  .image-gallery-thumbnail.active {\n    border: 4px solid #337ab7; }\n    @media (max-width: 768px) {\n      .image-gallery-thumbnail.active {\n        border: 3px solid #337ab7; } }\n\n.image-gallery-thumbnail-label {\n  color: #1a1a1a;\n  font-size: 1em; }\n  @media (max-width: 768px) {\n    .image-gallery-thumbnail-label {\n      font-size: .8em; } }\n\n.image-gallery-index {\n  background: rgba(0, 0, 0, 0.4);\n  color: #fff;\n  line-height: 1;\n  padding: 10px 20px;\n  position: absolute;\n  right: 0;\n  top: 0;\n  z-index: 4; }\n  @media (max-width: 768px) {\n    .image-gallery-index {\n      font-size: .8em;\n      padding: 5px 10px; } }\n\n.ReactCrop {\n  position: relative;\n  display: inline-block;\n  cursor: crosshair;\n  overflow: hidden;\n  max-width: 100%;\n  background-color: #000; }\n  .ReactCrop:focus {\n    outline: none; }\n  .ReactCrop--disabled {\n    cursor: inherit; }\n  .ReactCrop__image {\n    display: block;\n    max-width: 100%;\n    max-height: -webkit-fill-available;\n    max-height: -moz-available;\n    max-height: stretch; }\n  .ReactCrop--crop-invisible .ReactCrop__image {\n    opacity: 0.5; }\n  .ReactCrop__crop-selection {\n    position: absolute;\n    top: 0;\n    left: 0;\n    transform: translate3d(0, 0, 0);\n    box-sizing: border-box;\n    cursor: move;\n    box-shadow: 0 0 0 9999em rgba(0, 0, 0, 0.5);\n    border: 1px solid;\n    border-image-source: url(\"data:image/gif;base64,R0lGODlhCgAKAJECAAAAAP///////wAAACH/C05FVFNDQVBFMi4wAwEAAAAh/wtYTVAgRGF0YVhNUDw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OEI5RDc5MTFDNkE2MTFFM0JCMDZEODI2QTI4MzJBOTIiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OEI5RDc5MTBDNkE2MTFFM0JCMDZEODI2QTI4MzJBOTIiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuZGlkOjAyODAxMTc0MDcyMDY4MTE4MDgzQzNDMjA5MzREQ0ZDIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjAyODAxMTc0MDcyMDY4MTE4MDgzQzNDMjA5MzREQ0ZDIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEgHx4dHBsaGRgXFhUUExIREA8ODQwLCgkIBwYFBAMCAQAAIfkEBQoAAgAsAAAAAAoACgAAAhWEERkn7W3ei7KlagMWF/dKgYeyGAUAIfkEBQoAAgAsAAAAAAoACgAAAg+UYwLJ7RnQm7QmsCyVKhUAIfkEBQoAAgAsAAAAAAoACgAAAhCUYgLJHdiinNSAVfOEKoUCACH5BAUKAAIALAAAAAAKAAoAAAIRVISAdusPo3RAzYtjaMIaUQAAIfkEBQoAAgAsAAAAAAoACgAAAg+MDiem7Q8bSLFaG5il6xQAIfkEBQoAAgAsAAAAAAoACgAAAg+UYRLJ7QnQm7SmsCyVKhUAIfkEBQoAAgAsAAAAAAoACgAAAhCUYBLJDdiinNSEVfOEKoECACH5BAUKAAIALAAAAAAKAAoAAAIRFISBdusPo3RBzYsjaMIaUQAAOw==\");\n    border-image-slice: 1;\n    border-image-repeat: repeat; }\n    .ReactCrop--disabled .ReactCrop__crop-selection {\n      cursor: inherit; }\n  .ReactCrop__drag-handle {\n    position: absolute;\n    width: 9px;\n    height: 9px;\n    background-color: rgba(0, 0, 0, 0.2);\n    border: 1px solid rgba(255, 255, 255, 0.7);\n    box-sizing: border-box;\n    outline: 1px solid transparent; }\n  .ReactCrop .ord-nw {\n    top: 0;\n    left: 0;\n    margin-top: -5px;\n    margin-left: -5px;\n    cursor: nw-resize; }\n  .ReactCrop .ord-n {\n    top: 0;\n    left: 50%;\n    margin-top: -5px;\n    margin-left: -5px;\n    cursor: n-resize; }\n  .ReactCrop .ord-ne {\n    top: 0;\n    right: 0;\n    margin-top: -5px;\n    margin-right: -5px;\n    cursor: ne-resize; }\n  .ReactCrop .ord-e {\n    top: 50%;\n    right: 0;\n    margin-top: -5px;\n    margin-right: -5px;\n    cursor: e-resize; }\n  .ReactCrop .ord-se {\n    bottom: 0;\n    right: 0;\n    margin-bottom: -5px;\n    margin-right: -5px;\n    cursor: se-resize; }\n  .ReactCrop .ord-s {\n    bottom: 0;\n    left: 50%;\n    margin-bottom: -5px;\n    margin-left: -5px;\n    cursor: s-resize; }\n  .ReactCrop .ord-sw {\n    bottom: 0;\n    left: 0;\n    margin-bottom: -5px;\n    margin-left: -5px;\n    cursor: sw-resize; }\n  .ReactCrop .ord-w {\n    top: 50%;\n    left: 0;\n    margin-top: -5px;\n    margin-left: -5px;\n    cursor: w-resize; }\n  .ReactCrop__disabled .ReactCrop__drag-handle {\n    cursor: inherit; }\n  .ReactCrop__drag-bar {\n    position: absolute; }\n    .ReactCrop__drag-bar.ord-n {\n      top: 0;\n      left: 0;\n      width: 100%;\n      height: 6px;\n      margin-top: -3px; }\n    .ReactCrop__drag-bar.ord-e {\n      right: 0;\n      top: 0;\n      width: 6px;\n      height: 100%;\n      margin-right: -3px; }\n    .ReactCrop__drag-bar.ord-s {\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      height: 6px;\n      margin-bottom: -3px; }\n    .ReactCrop__drag-bar.ord-w {\n      top: 0;\n      left: 0;\n      width: 6px;\n      height: 100%;\n      margin-left: -3px; }\n  .ReactCrop--new-crop .ReactCrop__drag-bar,\n  .ReactCrop--new-crop .ReactCrop__drag-handle,\n  .ReactCrop--fixed-aspect .ReactCrop__drag-bar {\n    display: none; }\n  .ReactCrop--fixed-aspect .ReactCrop__drag-handle.ord-n,\n  .ReactCrop--fixed-aspect .ReactCrop__drag-handle.ord-e,\n  .ReactCrop--fixed-aspect .ReactCrop__drag-handle.ord-s,\n  .ReactCrop--fixed-aspect .ReactCrop__drag-handle.ord-w {\n    display: none; }\n  @media (max-width: 768px), (pointer: coarse) {\n    .ReactCrop__drag-handle {\n      width: 17px;\n      height: 17px; }\n    .ReactCrop .ord-nw {\n      margin-top: -9px;\n      margin-left: -9px; }\n    .ReactCrop .ord-n {\n      margin-top: -9px;\n      margin-left: -9px; }\n    .ReactCrop .ord-ne {\n      margin-top: -9px;\n      margin-right: -9px; }\n    .ReactCrop .ord-e {\n      margin-top: -9px;\n      margin-right: -9px; }\n    .ReactCrop .ord-se {\n      margin-bottom: -9px;\n      margin-right: -9px; }\n    .ReactCrop .ord-s {\n      margin-bottom: -9px;\n      margin-left: -9px; }\n    .ReactCrop .ord-sw {\n      margin-bottom: -9px;\n      margin-left: -9px; }\n    .ReactCrop .ord-w {\n      margin-top: -9px;\n      margin-left: -9px; }\n    .ReactCrop__drag-bar.ord-n {\n      height: 14px;\n      margin-top: -7px; }\n    .ReactCrop__drag-bar.ord-e {\n      width: 14px;\n      margin-right: -7px; }\n    .ReactCrop__drag-bar.ord-s {\n      height: 14px;\n      margin-bottom: -7px; }\n    .ReactCrop__drag-bar.ord-w {\n      width: 14px;\n      margin-left: -7px; } }\n\nbody {\n  margin: 0 auto;\n  font-weight: 300; }\n  body ::placeholder {\n    /* Chrome, Firefox, Opera, Safari 10.1+ */\n    color: white;\n    opacity: 0.7;\n    font-size: 14px;\n    font-weight: 300 !important;\n    font-family: \"Nanum Gothic\", sans-serif;\n    /* Firefox */ }\n  body .app {\n    background: #536976;\n    /* fallback for old browsers */\n    background: -webkit-linear-gradient(to right, #292e49, #536976);\n    /* Chrome 10-25, Safari 5.1-6 */\n    background: linear-gradient(to right, #292e49, #536976);\n    height: 100vh; }\n  body .btn {\n    font-weight: 300 !important; }\n  body .btn-group-sm > .btn,\n  body .btn-sm {\n    padding: 5px 25px !important;\n    font-size: 13px !important;\n    font-weight: 300 !important;\n    color: white;\n    margin-right: 1px;\n    cursor: pointer;\n    float: left;\n    padding: 5px 13px !important;\n    border-radius: 0 !important; }\n  body a:hover {\n    text-decoration: none; }\n  body p {\n    margin: 0; }\n  body hr {\n    background-color: white; }\n  body .cTypeTabActive {\n    background: #536976 !important;\n    font-weight: 300; }\n  body .chartTypeTabLinks {\n    background: transparent;\n    font-weight: 300 !important; }\n  body text {\n    fill: white; }\n  body .ccc-widget > div {\n    background-color: transparent !important;\n    color: white !important;\n    border: 0 !important;\n    border-top: 0 !important;\n    font-weight: 300 !important;\n    padding: 10px !important; }\n  body .cccCustomRadioContainer > label {\n    color: white !important; }\n  body .tabperiods {\n    background: transparent !important;\n    font-weight: 300 !important; }\n  body .active {\n    border-color: #5cb85c !important; }\n  body .tabperiods_active {\n    font-weight: 900 !important;\n    color: #5cb85c !important; }\n  body .chartTypeTabLinks:hover {\n    background: #536976; }\n  body .modal-content {\n    font-weight: 300 !important;\n    border-radius: 0px !important;\n    background: #536976;\n    margin: 0 !important;\n    color: white;\n    padding: 0 !important;\n    /* fallback for old browsers */\n    background: -webkit-linear-gradient(to bottom, #292e49, #536976);\n    /* Chrome 10-25, Safari 5.1-6 */\n    background: linear-gradient(to bottom, #292e49, #536976);\n    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ }\n  body .modal-backdrop.show {\n    opacity: 0.1 !important; }\n  body .dropdown-menu {\n    position: absolute;\n    top: 100%;\n    left: 0;\n    z-index: 1000;\n    display: none;\n    float: left;\n    min-width: 10rem;\n    padding: 0.5rem 0;\n    margin: 0.125rem 0 0;\n    font-size: 1rem;\n    color: white !important;\n    text-align: left;\n    list-style: none;\n    background-color: #292e49 !important;\n    background-clip: padding-box;\n    border: 1px solid rgba(0, 0, 0, 0.15);\n    border-radius: 0px !important; }\n  body .dropdown-item {\n    display: block;\n    width: 100%;\n    cursor: pointer;\n    padding: 0.25rem 1.5rem;\n    clear: both;\n    font-weight: 400;\n    color: white !important;\n    text-align: inherit;\n    white-space: nowrap;\n    background-color: transparent;\n    border: 0; }\n    body .dropdown-item:hover {\n      background-color: transparent !important; }\n  body .chartTypeTabLinks {\n    font-size: 13px !important;\n    color: white;\n    margin-right: 1px;\n    font-weight: 600;\n    cursor: pointer;\n    float: left;\n    padding: 5px 25px;\n    background: transparent; }\n  body .image-gallery-left-nav,\n  body .image-gallery-right-nav {\n    color: #fff;\n    font-size: 2em;\n    padding: 50px 15px;\n    top: 50%;\n    transform: translateY(-50%); }\n    body .image-gallery-left-nav:focus,\n    body .image-gallery-right-nav:focus {\n      outline-style: none; }\n  body .image-gallery-fullscreen-button::before,\n  body .image-gallery-play-button::before {\n    font-size: 2em !important;\n    padding: 15px 20px;\n    text-shadow: 0 1px 1px #1a1a1a; }\n  body .image-gallery-fullscreen-button::after:focus,\n  body .image-gallery-play-button::after:focus {\n    outline: none !important; }\n", ""]);
 
 /***/ }),
 /* 442 */
@@ -87053,12 +87207,18 @@
 	      };
 	      _this.setState({ isSignedUp: true });
 	      _this.props.dispatch(AuthAction.postSignUp(params)).then(function (value) {
-	        _this.props.dispatch(AuthAction.getMe(value)).then(function (value2) {
-	          _this.setState({ isSignedUp: false });
-	          _this.props.history.replace({
-	            pathname: "/"
+	        if (value === "user email exists") {
+	          _this.setState({ emailExist: true, isSignedUp: false });
+	        } else if (value === "username exists") {
+	          _this.setState({ userExist: true, isSignedUp: false });
+	        } else {
+	          _this.props.dispatch(AuthAction.getMe(value)).then(function (value2) {
+	            _this.setState({ isSignedUp: false });
+	            _this.props.history.replace({
+	              pathname: "/"
+	            });
 	          });
-	        });
+	        }
 	      });
 	    };
 	
@@ -87070,6 +87230,8 @@
 	      email: "",
 	      password: "",
 	      username: "",
+	      emailExist: false,
+	      userExist: false,
 	      isSignedUp: false
 	    };
 	    _this.toggle = _this.toggle.bind(_this);
@@ -87108,7 +87270,9 @@
 	          coinType = _state.coinType,
 	          coins = _state.coins,
 	          favorite = _state.favorite,
-	          isSignedUp = _state.isSignedUp;
+	          isSignedUp = _state.isSignedUp,
+	          emailExist = _state.emailExist,
+	          userExist = _state.userExist;
 	      var news = this.props.news;
 	
 	      return _react2.default.createElement(
@@ -87228,11 +87392,13 @@
 	                _react2.default.createElement(_Components.RoundInput, {
 	                  onChange: this.handleEmail,
 	                  placeholder: "\uC774\uBA54\uC77C",
+	                  errorText: emailExist ? "이미 등록된 이메일입니다" : null,
 	                  type: "email"
 	                }),
 	                _react2.default.createElement("br", null),
 	                _react2.default.createElement(_Components.RoundInput, {
 	                  onChange: this.handleName,
+	                  errorText: userExist ? "이미 등록된 이름입니다" : null,
 	                  placeholder: "\uB2C9\uB124\uC784",
 	                  type: "text"
 	                }),
@@ -87852,8 +88018,6 @@
 	          created_at: date,
 	          token: _this.props.token
 	        };
-	
-	        console.log(params);
 	
 	        _this.setState({ postLoading: true });
 	        _this.props.dispatch(SocialAction.editForum(params)).then(function (value) {
@@ -95378,6 +95542,7 @@
 	          selectedAbbr = _this$state.selectedAbbr,
 	          selectedPostType2 = _this$state.selectedPostType2,
 	          posts = _this$state.posts,
+	          imagePreview = _this$state.imagePreview,
 	          editIndex = _this$state.editIndex,
 	          editId = _this$state.editId;
 	
@@ -95394,6 +95559,7 @@
 	          content: main,
 	          category: selectedPostType2,
 	          coins: selectedCoinType,
+	          pic_list: imagePreview,
 	          token: _this.props.token
 	        };
 	
@@ -96159,15 +96325,15 @@
 	                        "div",
 	                        { className: "myPage__content__chart__intro__content" },
 	                        _react2.default.createElement(_Components.Thumb, {
-	                          src: me.profile_img,
+	                          src: me && me.profile_img,
 	                          fontSize: 75,
 	                          size: 90,
-	                          point: me.point
+	                          point: me && me.point
 	                        }),
 	                        _react2.default.createElement(
 	                          "p",
 	                          { className: "myPage__content__chart__intro__content__username" },
-	                          me.username
+	                          me && me.username
 	                        ),
 	                        _react2.default.createElement(
 	                          "div",
@@ -96175,7 +96341,7 @@
 	                          _react2.default.createElement(
 	                            "p",
 	                            { className: "myPage__content__chart__intro__content__area__number-border" },
-	                            me.point,
+	                            me && me.point,
 	                            _react2.default.createElement(
 	                              "span",
 	                              { className: "myPage__content__chart__intro__content__area__text" },
@@ -96286,10 +96452,6 @@
 	
 	__webpack_require__(759);
 	
-	var _function = __webpack_require__(870);
-	
-	var _function2 = _interopRequireDefault(_function);
-	
 	var _reactstrap = __webpack_require__(623);
 	
 	var _classnames = __webpack_require__(624);
@@ -96300,9 +96462,11 @@
 	
 	var _reactLoadingOverlay2 = _interopRequireDefault(_reactLoadingOverlay);
 	
-	var _reactImageCrop = __webpack_require__(871);
+	var _reactCropper = __webpack_require__(870);
 	
-	var _reactImageCrop2 = _interopRequireDefault(_reactImageCrop);
+	var _reactCropper2 = _interopRequireDefault(_reactCropper);
+	
+	__webpack_require__(872);
 	
 	var _reactFileInputPreviewsBase = __webpack_require__(840);
 	
@@ -96311,6 +96475,8 @@
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
 	function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 	
@@ -96366,21 +96532,29 @@
 	      _this.setState({ username: e.target.value });
 	    };
 	
-	    _this.handleEditEmail = function () {
-	      var token = _this.props.token;
-	      var email = _this.state.email;
-	
-	      var params = { token: token, email: email };
-	      _this.props.dispatch(AuthAction.updateEmail(params)).then(function (result) {});
+	    _this.handleCurrentPassword = function (e) {
+	      _this.setState({ c_password: e.target.value });
 	    };
 	
-	    _this.handleEditPassword = function () {};
+	    _this.handleEditPassword = function () {
+	      var token = _this.props.token;
+	      var _this$state = _this.state,
+	          password = _this$state.password,
+	          confirmPassword = _this$state.confirmPassword,
+	          c_password = _this$state.c_password;
+	
+	      var params = { old_password: c_password, new_password: password, token: token };
+	      _this.props.dispatch(AuthAction.updatePassword(params));
+	    };
 	
 	    _this.handleEditUsername = function () {
 	      var token = _this.props.token;
-	      var username = _this.state.username;
+	      var _this$state2 = _this.state,
+	          username = _this$state2.username,
+	          email = _this$state2.email;
 	
-	      var params = { token: token, username: username };
+	      var params = { token: token, username: username, email: email };
+	      console.log(params);
 	      _this.props.dispatch(AuthAction.updateUsername(params)).then(function (result) {});
 	    };
 	
@@ -96476,37 +96650,26 @@
 	      };
 	    }();
 	
-	    _this.handleCrop = function (crop) {
-	      console.log(crop);
-	      _this.setState({ crop: crop });
+	    _this._crop = function () {
+	      // image in dataUrl
+	      _this.setState({
+	        croppedImg: _this.refs.cropper.getCroppedCanvas().toDataURL()
+	      });
 	    };
 	
 	    _this.handleFile = function (e) {
-	      _this.setState({ targetImg: e[0].base64, targetImgFile: e[0].file });
+	      _this.setState({ targetImg: e[0].base64, showCrop: true });
 	    };
 	
-	    _this.handleEditImage = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-	      var result;
-	      return regeneratorRuntime.wrap(function _callee2$(_context2) {
-	        while (1) {
-	          switch (_context2.prev = _context2.next) {
-	            case 0:
-	              _context2.next = 2;
-	              return (0, _function2.default)(_this.state.targetImgFile, _this.state.crop, "sample");
+	    _this.handleEditImage = function () {
+	      var token = _this.props.token;
+	      var croppedImg = _this.state.croppedImg;
 	
-	            case 2:
-	              result = _context2.sent;
-	
-	              console.log(result);
-	              _this.setState({ croppedImg: result });
-	
-	            case 5:
-	            case "end":
-	              return _context2.stop();
-	          }
-	        }
-	      }, _callee2, _this2);
-	    }));
+	      var params = { token: token, base64: croppedImg };
+	      _this.props.dispatch(AuthAction.updateProfile(params)).then(function (result) {
+	        _this.toggleModal();
+	      });
+	    };
 	
 	    _this.handleSignOut = function () {
 	      _this.props.dispatch(AuthAction.signOut()).then(function (value) {
@@ -96522,11 +96685,13 @@
 	      showModal: false,
 	      sideFavorite: [],
 	      posts: [],
-	      crop: { aspect: 1 },
+	      crop: { aspect: 16 / 9 },
 	      comments: [],
 	      favorite: [],
+	      showCrop: false,
 	      email: "",
 	      username: "",
+	      c_password: "",
 	      password: "",
 	      confirmPassword: "",
 	      croppedImg: "",
@@ -96545,6 +96710,7 @@
 	          me = _props.me,
 	          token = _props.token;
 	
+	      this.setState({ email: me.email, username: me.username });
 	      var params = { user_id: me.id, token: token };
 	      this.props.dispatch(SocialAction.getForumByUser(params)).then(function (forums) {
 	        _this3.props.dispatch(SocialAction.getCommentsByUser(params)).then(function (comments) {
@@ -96638,12 +96804,15 @@
 	  }, {
 	    key: "render",
 	    value: function render() {
+	      var _React$createElement;
+	
 	      var _state = this.state,
 	          posts = _state.posts,
 	          comments = _state.comments,
 	          favorite = _state.favorite,
 	          sideFavorite = _state.sideFavorite,
-	          postLoading = _state.postLoading;
+	          postLoading = _state.postLoading,
+	          showCrop = _state.showCrop;
 	      var me = this.props.me;
 	
 	
@@ -96671,27 +96840,55 @@
 	            _react2.default.createElement(
 	              _reactstrap.ModalBody,
 	              null,
-	              _react2.default.createElement(_reactImageCrop2.default, {
-	                src: this.state.targetImg,
-	                crop: this.state.crop,
-	                onChange: this.handleCrop
-	              }),
-	              _react2.default.createElement(_reactFileInputPreviewsBase2.default, {
-	                labelText: "Select file",
-	                labelStyle: { fontSize: 14 },
-	                multiple: true,
-	                callbackFunction: this.handleFile,
-	                imagePreview: false,
-	                accept: "image/*"
-	              }),
-	              _react2.default.createElement("img", { src: this.state.croppedImg, width: 100, height: 100 }),
-	              _react2.default.createElement(_Components.Button, {
-	                text: "\uC218\uC815\uD558\uAE30",
-	                width: 90,
-	                height: 30,
-	                marginTop: 10,
-	                onClick: this.handleEditImage
-	              })
+	              _react2.default.createElement(
+	                "div",
+	                { className: "settingsPage__modal" },
+	                _react2.default.createElement(
+	                  "div",
+	                  { className: "settingsPage__modal__left" },
+	                  _react2.default.createElement(_reactFileInputPreviewsBase2.default, (_React$createElement = {
+	                    parentStyle: { margin: 0, textAlign: "center" },
+	                    labelText: "Select file",
+	                    labelStyle: { fontSize: 14 }
+	                  }, _defineProperty(_React$createElement, "labelStyle", { display: "none", margin: 0 }), _defineProperty(_React$createElement, "multiple", true), _defineProperty(_React$createElement, "callbackFunction", this.handleFile), _defineProperty(_React$createElement, "imagePreview", false), _defineProperty(_React$createElement, "buttonComponent", showCrop ? _react2.default.createElement(
+	                    "span",
+	                    { className: "socialInput__footer__camera__icon" },
+	                    _react2.default.createElement("i", { className: "xi-camera" })
+	                  ) : _react2.default.createElement(_Components.Thumb, {
+	                    src: me && me.profile_img,
+	                    fontSize: 80,
+	                    size: 100
+	                  })), _defineProperty(_React$createElement, "accept", "image/*"), _React$createElement)),
+	                  showCrop ? _react2.default.createElement(_reactCropper2.default, {
+	                    ref: "cropper",
+	                    src: this.state.targetImg,
+	                    style: { height: 200, width: "50%" }
+	                    // Cropper.js options
+	                    , aspectRatio: 1,
+	                    guides: false,
+	                    crop: this._crop
+	                  }) : null
+	                ),
+	                _react2.default.createElement(
+	                  "div",
+	                  { className: "settingsPage__modal__right" },
+	                  _react2.default.createElement("br", null),
+	                  _react2.default.createElement("img", {
+	                    src: this.state.croppedImg,
+	                    width: 200,
+	                    height: 200,
+	                    className: "settingsPage__modal__cropImage",
+	                    style: showCrop ? null : { display: "none" }
+	                  }),
+	                  showCrop ? _react2.default.createElement(_Components.Button, {
+	                    text: "\uC218\uC815\uD558\uAE30",
+	                    width: 90,
+	                    height: 30,
+	                    marginTop: 10,
+	                    onClick: this.handleEditImage
+	                  }) : "프로필을 클릭해 이미지를 수정하세요"
+	                )
+	              )
 	            )
 	          )
 	        ),
@@ -96729,14 +96926,7 @@
 	              _react2.default.createElement(
 	                "div",
 	                { className: "settingsPage__content__news__lists__content" },
-	                _react2.default.createElement(_Components.RoundInput, { value: me.email, onChange: this.handleEmail }),
-	                _react2.default.createElement(_Components.Button, {
-	                  text: "\uC218\uC815\uD558\uAE30",
-	                  width: 90,
-	                  height: 30,
-	                  marginTop: 10,
-	                  onClick: this.handleEditEmail
-	                })
+	                _react2.default.createElement(_Components.RoundInput, { value: me.email, onChange: this.handleEmail })
 	              ),
 	              _react2.default.createElement("br", null),
 	              _react2.default.createElement(
@@ -96759,6 +96949,12 @@
 	              _react2.default.createElement(
 	                "div",
 	                { className: "settingsPage__content__news__lists__content" },
+	                _react2.default.createElement(_Components.RoundInput, {
+	                  placeholder: "\uD604\uC7AC \uBE44\uBC00\uBC88\uD638\uB97C \uC785\uB825\uD558\uC138\uC694",
+	                  type: "password",
+	                  onChange: this.handleCurrentPassword
+	                }),
+	                _react2.default.createElement("br", null),
 	                _react2.default.createElement(_Components.RoundInput, {
 	                  placeholder: "\uC0C8\uB85C\uC6B4 \uBE44\uBC00\uBC88\uD638\uB97C \uC785\uB825\uD558\uC138\uC694",
 	                  type: "password",
@@ -96884,517 +97080,33 @@
 
 /***/ }),
 /* 870 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.default = getCroppedImg;
-	/**
-	 * @param {File} image - Image File Object
-	 * @param {Object} pixelCrop - pixelCrop Object provided by react-image-crop
-	 */
-	function getCroppedImg(image, pixelCrop) {
-	  var canvas = document.createElement("canvas");
-	  canvas.width = pixelCrop.width;
-	  canvas.height = pixelCrop.height;
-	  var ctx = canvas.getContext("2d");
-	  var newImage = new Image();
-	  newImage.onload = function () {
-	    ctx.drawImage(image, pixelCrop.x, pixelCrop.y, pixelCrop.width, pixelCrop.height, 0, 0, pixelCrop.width, pixelCrop.height);
-	  };
-	  return canvas.toDataURL();
-	}
-
-/***/ }),
-/* 871 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__(872);
-
-
-/***/ }),
-/* 872 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	(function webpackUniversalModuleDefinition(root, factory) {
-		if(true)
-			module.exports = factory(__webpack_require__(328));
-		else if(typeof define === 'function' && define.amd)
-			define(["react"], factory);
-		else if(typeof exports === 'object')
-			exports["ReactCrop"] = factory(require("react"));
-		else
-			root["ReactCrop"] = factory(root["React"]);
-	})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_6__) {
-	return /******/ (function(modules) { // webpackBootstrap
-	/******/ 	// The module cache
-	/******/ 	var installedModules = {};
-	/******/
-	/******/ 	// The require function
-	/******/ 	function __webpack_require__(moduleId) {
-	/******/
-	/******/ 		// Check if module is in cache
-	/******/ 		if(installedModules[moduleId]) {
-	/******/ 			return installedModules[moduleId].exports;
-	/******/ 		}
-	/******/ 		// Create a new module (and put it into the cache)
-	/******/ 		var module = installedModules[moduleId] = {
-	/******/ 			i: moduleId,
-	/******/ 			l: false,
-	/******/ 			exports: {}
-	/******/ 		};
-	/******/
-	/******/ 		// Execute the module function
-	/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-	/******/
-	/******/ 		// Flag the module as loaded
-	/******/ 		module.l = true;
-	/******/
-	/******/ 		// Return the exports of the module
-	/******/ 		return module.exports;
-	/******/ 	}
-	/******/
-	/******/
-	/******/ 	// expose the modules object (__webpack_modules__)
-	/******/ 	__webpack_require__.m = modules;
-	/******/
-	/******/ 	// expose the module cache
-	/******/ 	__webpack_require__.c = installedModules;
-	/******/
-	/******/ 	// define getter function for harmony exports
-	/******/ 	__webpack_require__.d = function(exports, name, getter) {
-	/******/ 		if(!__webpack_require__.o(exports, name)) {
-	/******/ 			Object.defineProperty(exports, name, {
-	/******/ 				configurable: false,
-	/******/ 				enumerable: true,
-	/******/ 				get: getter
-	/******/ 			});
-	/******/ 		}
-	/******/ 	};
-	/******/
-	/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-	/******/ 	__webpack_require__.n = function(module) {
-	/******/ 		var getter = module && module.__esModule ?
-	/******/ 			function getDefault() { return module['default']; } :
-	/******/ 			function getModuleExports() { return module; };
-	/******/ 		__webpack_require__.d(getter, 'a', getter);
-	/******/ 		return getter;
-	/******/ 	};
-	/******/
-	/******/ 	// Object.prototype.hasOwnProperty.call
-	/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-	/******/
-	/******/ 	// __webpack_public_path__
-	/******/ 	__webpack_require__.p = "";
-	/******/
-	/******/ 	// Load entry module and return exports
-	/******/ 	return __webpack_require__(__webpack_require__.s = 5);
-	/******/ })
-	/************************************************************************/
-	/******/ ([
-	/* 0 */
-	/***/ (function(module, exports) {
 	
-	// shim for using process in browser
-	var process = module.exports = {};
-	
-	// cached from whatever global is present so that test runners that stub it
-	// don't break things.  But we need to wrap it in a try catch in case it is
-	// wrapped in strict mode code which doesn't define any globals.  It's inside a
-	// function because try/catches deoptimize in certain engines.
-	
-	var cachedSetTimeout;
-	var cachedClearTimeout;
-	
-	function defaultSetTimout() {
-	    throw new Error('setTimeout has not been defined');
-	}
-	function defaultClearTimeout () {
-	    throw new Error('clearTimeout has not been defined');
-	}
-	(function () {
-	    try {
-	        if (typeof setTimeout === 'function') {
-	            cachedSetTimeout = setTimeout;
-	        } else {
-	            cachedSetTimeout = defaultSetTimout;
-	        }
-	    } catch (e) {
-	        cachedSetTimeout = defaultSetTimout;
-	    }
-	    try {
-	        if (typeof clearTimeout === 'function') {
-	            cachedClearTimeout = clearTimeout;
-	        } else {
-	            cachedClearTimeout = defaultClearTimeout;
-	        }
-	    } catch (e) {
-	        cachedClearTimeout = defaultClearTimeout;
-	    }
-	} ())
-	function runTimeout(fun) {
-	    if (cachedSetTimeout === setTimeout) {
-	        //normal enviroments in sane situations
-	        return setTimeout(fun, 0);
-	    }
-	    // if setTimeout wasn't available but was latter defined
-	    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-	        cachedSetTimeout = setTimeout;
-	        return setTimeout(fun, 0);
-	    }
-	    try {
-	        // when when somebody has screwed with setTimeout but no I.E. maddness
-	        return cachedSetTimeout(fun, 0);
-	    } catch(e){
-	        try {
-	            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-	            return cachedSetTimeout.call(null, fun, 0);
-	        } catch(e){
-	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-	            return cachedSetTimeout.call(this, fun, 0);
-	        }
-	    }
-	
-	
-	}
-	function runClearTimeout(marker) {
-	    if (cachedClearTimeout === clearTimeout) {
-	        //normal enviroments in sane situations
-	        return clearTimeout(marker);
-	    }
-	    // if clearTimeout wasn't available but was latter defined
-	    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-	        cachedClearTimeout = clearTimeout;
-	        return clearTimeout(marker);
-	    }
-	    try {
-	        // when when somebody has screwed with setTimeout but no I.E. maddness
-	        return cachedClearTimeout(marker);
-	    } catch (e){
-	        try {
-	            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-	            return cachedClearTimeout.call(null, marker);
-	        } catch (e){
-	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-	            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-	            return cachedClearTimeout.call(this, marker);
-	        }
-	    }
-	
-	
-	
-	}
-	var queue = [];
-	var draining = false;
-	var currentQueue;
-	var queueIndex = -1;
-	
-	function cleanUpNextTick() {
-	    if (!draining || !currentQueue) {
-	        return;
-	    }
-	    draining = false;
-	    if (currentQueue.length) {
-	        queue = currentQueue.concat(queue);
-	    } else {
-	        queueIndex = -1;
-	    }
-	    if (queue.length) {
-	        drainQueue();
-	    }
-	}
-	
-	function drainQueue() {
-	    if (draining) {
-	        return;
-	    }
-	    var timeout = runTimeout(cleanUpNextTick);
-	    draining = true;
-	
-	    var len = queue.length;
-	    while(len) {
-	        currentQueue = queue;
-	        queue = [];
-	        while (++queueIndex < len) {
-	            if (currentQueue) {
-	                currentQueue[queueIndex].run();
-	            }
-	        }
-	        queueIndex = -1;
-	        len = queue.length;
-	    }
-	    currentQueue = null;
-	    draining = false;
-	    runClearTimeout(timeout);
-	}
-	
-	process.nextTick = function (fun) {
-	    var args = new Array(arguments.length - 1);
-	    if (arguments.length > 1) {
-	        for (var i = 1; i < arguments.length; i++) {
-	            args[i - 1] = arguments[i];
-	        }
-	    }
-	    queue.push(new Item(fun, args));
-	    if (queue.length === 1 && !draining) {
-	        runTimeout(drainQueue);
-	    }
-	};
-	
-	// v8 likes predictible objects
-	function Item(fun, array) {
-	    this.fun = fun;
-	    this.array = array;
-	}
-	Item.prototype.run = function () {
-	    this.fun.apply(null, this.array);
-	};
-	process.title = 'browser';
-	process.browser = true;
-	process.env = {};
-	process.argv = [];
-	process.version = ''; // empty string to avoid regexp issues
-	process.versions = {};
-	
-	function noop() {}
-	
-	process.on = noop;
-	process.addListener = noop;
-	process.once = noop;
-	process.off = noop;
-	process.removeListener = noop;
-	process.removeAllListeners = noop;
-	process.emit = noop;
-	process.prependListener = noop;
-	process.prependOnceListener = noop;
-	
-	process.listeners = function (name) { return [] }
-	
-	process.binding = function (name) {
-	    throw new Error('process.binding is not supported');
-	};
-	
-	process.cwd = function () { return '/' };
-	process.chdir = function (dir) {
-	    throw new Error('process.chdir is not supported');
-	};
-	process.umask = function() { return 0; };
-	
-	
-	/***/ }),
-	/* 1 */
-	/***/ (function(module, exports, __webpack_require__) {
-	
-	"use strict";
-	
-	
-	/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 *
-	 * This source code is licensed under the MIT license found in the
-	 * LICENSE file in the root directory of this source tree.
-	 *
-	 * 
-	 */
-	
-	function makeEmptyFunction(arg) {
-	  return function () {
-	    return arg;
-	  };
-	}
-	
-	/**
-	 * This function accepts and discards inputs; it has no side effects. This is
-	 * primarily useful idiomatically for overridable function endpoints which
-	 * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
-	 */
-	var emptyFunction = function emptyFunction() {};
-	
-	emptyFunction.thatReturns = makeEmptyFunction;
-	emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
-	emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
-	emptyFunction.thatReturnsNull = makeEmptyFunction(null);
-	emptyFunction.thatReturnsThis = function () {
-	  return this;
-	};
-	emptyFunction.thatReturnsArgument = function (arg) {
-	  return arg;
-	};
-	
-	module.exports = emptyFunction;
-	
-	/***/ }),
-	/* 2 */
-	/***/ (function(module, exports, __webpack_require__) {
-	
-	"use strict";
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 *
-	 * This source code is licensed under the MIT license found in the
-	 * LICENSE file in the root directory of this source tree.
-	 *
-	 */
-	
-	
-	
-	/**
-	 * Use invariant() to assert state which your program assumes to be true.
-	 *
-	 * Provide sprintf-style format (only %s is supported) and arguments
-	 * to provide information about what broke and what you were
-	 * expecting.
-	 *
-	 * The invariant message will be stripped in production, but the invariant
-	 * will remain to ensure logic does not differ in production.
-	 */
-	
-	var validateFormat = function validateFormat(format) {};
-	
-	if (process.env.NODE_ENV !== 'production') {
-	  validateFormat = function validateFormat(format) {
-	    if (format === undefined) {
-	      throw new Error('invariant requires an error message argument');
-	    }
-	  };
-	}
-	
-	function invariant(condition, format, a, b, c, d, e, f) {
-	  validateFormat(format);
-	
-	  if (!condition) {
-	    var error;
-	    if (format === undefined) {
-	      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
-	    } else {
-	      var args = [a, b, c, d, e, f];
-	      var argIndex = 0;
-	      error = new Error(format.replace(/%s/g, function () {
-	        return args[argIndex++];
-	      }));
-	      error.name = 'Invariant Violation';
-	    }
-	
-	    error.framesToPop = 1; // we don't care about invariant's own frame
-	    throw error;
-	  }
-	}
-	
-	module.exports = invariant;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-	
-	/***/ }),
-	/* 3 */
-	/***/ (function(module, exports, __webpack_require__) {
-	
-	"use strict";
-	/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 *
-	 * This source code is licensed under the MIT license found in the
-	 * LICENSE file in the root directory of this source tree.
-	 */
-	
-	
-	
-	var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
-	
-	module.exports = ReactPropTypesSecret;
-	
-	
-	/***/ }),
-	/* 4 */
-	/***/ (function(module, exports, __webpack_require__) {
-	
-	"use strict";
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright (c) 2014-present, Facebook, Inc.
-	 *
-	 * This source code is licensed under the MIT license found in the
-	 * LICENSE file in the root directory of this source tree.
-	 *
-	 */
-	
-	
-	
-	var emptyFunction = __webpack_require__(1);
-	
-	/**
-	 * Similar to invariant but only logs a warning if the condition is not met.
-	 * This can be used to log issues in development environments in critical
-	 * paths. Removing the logging code for production environments will keep the
-	 * same logic and follow the same code paths.
-	 */
-	
-	var warning = emptyFunction;
-	
-	if (process.env.NODE_ENV !== 'production') {
-	  var printWarning = function printWarning(format) {
-	    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-	      args[_key - 1] = arguments[_key];
-	    }
-	
-	    var argIndex = 0;
-	    var message = 'Warning: ' + format.replace(/%s/g, function () {
-	      return args[argIndex++];
-	    });
-	    if (typeof console !== 'undefined') {
-	      console.error(message);
-	    }
-	    try {
-	      // --- Welcome to debugging React ---
-	      // This error was thrown as a convenience so that you can use this stack
-	      // to find the callsite that caused this warning to fire.
-	      throw new Error(message);
-	    } catch (x) {}
-	  };
-	
-	  warning = function warning(condition, format) {
-	    if (format === undefined) {
-	      throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
-	    }
-	
-	    if (format.indexOf('Failed Composite propType: ') === 0) {
-	      return; // Ignore CompositeComponent proptype check.
-	    }
-	
-	    if (!condition) {
-	      for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
-	        args[_key2 - 2] = arguments[_key2];
-	      }
-	
-	      printWarning.apply(undefined, [format].concat(args));
-	    }
-	  };
-	}
-	
-	module.exports = warning;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-	
-	/***/ }),
-	/* 5 */
-	/***/ (function(module, exports, __webpack_require__) {
-	
-	"use strict";
-	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; /* globals document, window */
-	
-	
-	var _react = __webpack_require__(6);
+	var _react = __webpack_require__(328);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _propTypes = __webpack_require__(7);
+	var _propTypes = __webpack_require__(383);
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
+	var _cropperjs = __webpack_require__(871);
+	
+	var _cropperjs2 = _interopRequireDefault(_cropperjs);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -97402,1617 +97114,3987 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	// Feature detection
-	// https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#Improving_scrolling_performance_with_passive_listeners
-	var passiveSupported = false;
+	var optionProps = ['dragMode', 'aspectRatio', 'data', 'crop',
+	// unchangeable props start from here
+	'viewMode', 'preview', 'responsive', 'restore', 'checkCrossOrigin', 'checkOrientation', 'modal', 'guides', 'center', 'highlight', 'background', 'autoCrop', 'autoCropArea', 'movable', 'rotatable', 'scalable', 'zoomable', 'zoomOnTouch', 'zoomOnWheel', 'wheelZoomRation', 'cropBoxMovable', 'cropBoxResizable', 'toggleDragModeOnDblclick', 'minContainerWidth', 'minContainerHeight', 'minCanvasWidth', 'minCanvasHeight', 'minCropBoxWidth', 'minCropBoxHeight', 'ready', 'cropstart', 'cropmove', 'cropend', 'zoom'];
 	
-	try {
-	  window.addEventListener('test', null, Object.defineProperty({}, 'passive', {
-	    get: function get() {
-	      passiveSupported = true;return true;
-	    }
-	  }));
-	} catch (err) {} // eslint-disable-line no-empty
+	var unchangeableProps = optionProps.slice(4);
 	
-	var EMPTY_GIF = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
+	var ReactCropper = function (_Component) {
+	  _inherits(ReactCropper, _Component);
 	
-	function getElementOffset(el) {
-	  var rect = el.getBoundingClientRect();
-	  var docEl = document.documentElement;
+	  function ReactCropper() {
+	    _classCallCheck(this, ReactCropper);
 	
-	  var rectTop = rect.top + window.pageYOffset - docEl.clientTop;
-	  var rectLeft = rect.left + window.pageXOffset - docEl.clientLeft;
-	
-	  return {
-	    top: rectTop,
-	    left: rectLeft
-	  };
-	}
-	
-	function getClientPos(e) {
-	  var pageX = void 0;
-	  var pageY = void 0;
-	
-	  if (e.touches) {
-	    pageX = e.touches[0].pageX;
-	    pageY = e.touches[0].pageY;
-	  } else {
-	    pageX = e.pageX;
-	    pageY = e.pageY;
+	    return _possibleConstructorReturn(this, (ReactCropper.__proto__ || Object.getPrototypeOf(ReactCropper)).apply(this, arguments));
 	  }
 	
-	  return {
-	    x: pageX,
-	    y: pageY
-	  };
-	}
-	
-	function clamp(num, min, max) {
-	  return Math.min(Math.max(num, min), max);
-	}
-	
-	function isCropValid(crop) {
-	  return crop && crop.width && crop.height;
-	}
-	
-	function inverseOrd(ord) {
-	  var inversedOrd = void 0;
-	
-	  if (ord === 'n') inversedOrd = 's';else if (ord === 'ne') inversedOrd = 'sw';else if (ord === 'e') inversedOrd = 'w';else if (ord === 'se') inversedOrd = 'nw';else if (ord === 's') inversedOrd = 'n';else if (ord === 'sw') inversedOrd = 'ne';else if (ord === 'w') inversedOrd = 'e';else if (ord === 'nw') inversedOrd = 'se';
-	
-	  return inversedOrd;
-	}
-	
-	function makeAspectCrop(crop, imageAspect) {
-	  var completeCrop = _extends({}, crop);
-	
-	  if (crop.width) {
-	    completeCrop.height = crop.width / crop.aspect * imageAspect;
-	  }
-	  if (crop.height) {
-	    completeCrop.width = (completeCrop.height || crop.height) * (crop.aspect / imageAspect);
-	  }
-	
-	  if (crop.y + (completeCrop.height || crop.height) > 100) {
-	    completeCrop.height = 100 - crop.y;
-	    completeCrop.width = completeCrop.height * crop.aspect / imageAspect;
-	  }
-	
-	  if (crop.x + (completeCrop.width || crop.width) > 100) {
-	    completeCrop.width = 100 - crop.x;
-	    completeCrop.height = completeCrop.width / crop.aspect * imageAspect;
-	  }
-	
-	  return completeCrop;
-	}
-	
-	function getPixelCrop(image, percentCrop) {
-	  var x = Math.round(image.naturalWidth * (percentCrop.x / 100));
-	  var y = Math.round(image.naturalHeight * (percentCrop.y / 100));
-	  var width = Math.round(image.naturalWidth * (percentCrop.width / 100));
-	  var height = Math.round(image.naturalHeight * (percentCrop.height / 100));
-	
-	  return {
-	    x: x,
-	    y: y,
-	    // Clamp width and height so rounding doesn't cause the crop to exceed bounds.
-	    width: clamp(width, 0, image.naturalWidth - x),
-	    height: clamp(height, 0, image.naturalHeight - y)
-	  };
-	}
-	
-	function containCrop(crop, imageAspect) {
-	  var contained = _extends({}, crop);
-	
-	  // Don't let the crop grow on the opposite side when hitting an x image boundary.
-	  var cropXAdjusted = false;
-	  if (contained.x + contained.width > 100) {
-	    contained.width = crop.width + (100 - (crop.x + crop.width));
-	    contained.x = crop.x + (100 - (crop.x + contained.width));
-	    cropXAdjusted = true;
-	  } else if (contained.x < 0) {
-	    contained.width = crop.x + crop.width;
-	    contained.x = 0;
-	    cropXAdjusted = true;
-	  }
-	
-	  if (cropXAdjusted && crop.aspect) {
-	    // Adjust height to the resized width to maintain aspect.
-	    contained.height = contained.width / crop.aspect * imageAspect;
-	    // If sizing in up direction we need to pin Y at the point it
-	    // would be at the boundary.
-	    if (contained.y < crop.y) {
-	      contained.y = crop.y + (crop.height - contained.height);
-	    }
-	  }
-	
-	  // Don't let the crop grow on the opposite side when hitting a y image boundary.
-	  var cropYAdjusted = false;
-	  if (contained.y + contained.height > 100) {
-	    contained.height = crop.height + (100 - (crop.y + crop.height));
-	    contained.y = crop.y + (100 - (crop.y + contained.height));
-	    cropYAdjusted = true;
-	  } else if (contained.y < 0) {
-	    contained.height = crop.y + crop.height;
-	    contained.y = 0;
-	    cropYAdjusted = true;
-	  }
-	
-	  if (cropYAdjusted && crop.aspect) {
-	    // Adjust width to the resized height to maintain aspect.
-	    contained.width = contained.height * crop.aspect / imageAspect;
-	    // If sizing in up direction we need to pin X at the point it
-	    // would be at the boundary.
-	    if (contained.x < crop.x) {
-	      contained.x = crop.x + (crop.width - contained.width);
-	    }
-	  }
-	
-	  return contained;
-	}
-	
-	var ReactCrop = function (_PureComponent) {
-	  _inherits(ReactCrop, _PureComponent);
-	
-	  function ReactCrop() {
-	    var _ref;
-	
-	    var _temp, _this, _ret;
-	
-	    _classCallCheck(this, ReactCrop);
-	
-	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	      args[_key] = arguments[_key];
-	    }
-	
-	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ReactCrop.__proto__ || Object.getPrototypeOf(ReactCrop)).call.apply(_ref, [this].concat(args))), _this), _this.state = {}, _this.onCropMouseTouchDown = function (e) {
-	      var _this$props = _this.props,
-	          crop = _this$props.crop,
-	          disabled = _this$props.disabled;
-	
-	
-	      if (disabled) {
-	        return;
-	      }
-	
-	      e.preventDefault(); // Stop drag selection.
-	
-	      var clientPos = getClientPos(e);
-	
-	      // Focus for detecting keypress.
-	      _this.componentRef.focus({ preventScroll: true });
-	
-	      var ord = e.target.dataset.ord;
-	
-	      var xInversed = ord === 'nw' || ord === 'w' || ord === 'sw';
-	      var yInversed = ord === 'nw' || ord === 'n' || ord === 'ne';
-	
-	      var cropOffset = void 0;
-	
-	      if (crop.aspect) {
-	        cropOffset = getElementOffset(_this.cropSelectRef);
-	      }
-	
-	      _this.evData = {
-	        clientStartX: clientPos.x,
-	        clientStartY: clientPos.y,
-	        cropStartWidth: crop.width,
-	        cropStartHeight: crop.height,
-	        cropStartX: xInversed ? crop.x + crop.width : crop.x,
-	        cropStartY: yInversed ? crop.y + crop.height : crop.y,
-	        xInversed: xInversed,
-	        yInversed: yInversed,
-	        xCrossOver: xInversed,
-	        yCrossOver: yInversed,
-	        startXCrossOver: xInversed,
-	        startYCrossOver: yInversed,
-	        isResize: e.target !== _this.cropSelectRef,
-	        ord: ord,
-	        cropOffset: cropOffset
-	      };
-	
-	      _this.mouseDownOnCrop = true;
-	      _this.setState({ cropIsActive: true });
-	    }, _this.onComponentMouseTouchDown = function (e) {
-	      var _this$props2 = _this.props,
-	          crop = _this$props2.crop,
-	          disabled = _this$props2.disabled,
-	          keepSelection = _this$props2.keepSelection,
-	          onChange = _this$props2.onChange;
-	
-	
-	      if (e.target !== _this.imageRef) {
-	        return;
-	      }
-	
-	      if (disabled || keepSelection && isCropValid(crop)) {
-	        return;
-	      }
-	
-	      e.preventDefault(); // Stop drag selection.
-	
-	      var clientPos = getClientPos(e);
-	
-	      // Focus for detecting keypress.
-	      _this.componentRef.focus({ preventScroll: true });
-	
-	      var imageOffset = getElementOffset(_this.imageRef);
-	      var xPc = (clientPos.x - imageOffset.left) / _this.imageRef.width * 100;
-	      var yPc = (clientPos.y - imageOffset.top) / _this.imageRef.height * 100;
-	
-	      var nextCrop = {
-	        aspect: crop ? crop.aspect : undefined,
-	        x: xPc,
-	        y: yPc,
-	        width: 0,
-	        height: 0
-	      };
-	
-	      _this.evData = {
-	        clientStartX: clientPos.x,
-	        clientStartY: clientPos.y,
-	        cropStartWidth: nextCrop.width,
-	        cropStartHeight: nextCrop.height,
-	        cropStartX: nextCrop.x,
-	        cropStartY: nextCrop.y,
-	        xInversed: false,
-	        yInversed: false,
-	        xCrossOver: false,
-	        yCrossOver: false,
-	        startXCrossOver: false,
-	        startYCrossOver: false,
-	        isResize: true,
-	        ord: 'nw'
-	      };
-	
-	      _this.mouseDownOnCrop = true;
-	      onChange(nextCrop, getPixelCrop(_this.imageRef, nextCrop));
-	      _this.setState({ cropIsActive: true });
-	    }, _this.onDocMouseTouchMove = function (e) {
-	      var _this$props3 = _this.props,
-	          crop = _this$props3.crop,
-	          disabled = _this$props3.disabled,
-	          onChange = _this$props3.onChange,
-	          onDragStart = _this$props3.onDragStart;
-	
-	
-	      onDragStart();
-	
-	      if (disabled) {
-	        return;
-	      }
-	
-	      if (!_this.mouseDownOnCrop) {
-	        return;
-	      }
-	
-	      e.preventDefault(); // Stop drag selection.
-	
-	      var _this2 = _this,
-	          evData = _this2.evData;
-	
-	      var clientPos = getClientPos(e);
-	
-	      if (evData.isResize && crop.aspect && evData.cropOffset) {
-	        clientPos.y = _this.straightenYPath(clientPos.x);
-	      }
-	
-	      var xDiffPx = clientPos.x - evData.clientStartX;
-	      evData.xDiffPc = xDiffPx / _this.imageRef.width * 100;
-	
-	      var yDiffPx = clientPos.y - evData.clientStartY;
-	      evData.yDiffPc = yDiffPx / _this.imageRef.height * 100;
-	
-	      var nextCrop = void 0;
-	
-	      if (evData.isResize) {
-	        nextCrop = _this.resizeCrop();
-	      } else {
-	        nextCrop = _this.dragCrop();
-	      }
-	
-	      onChange(nextCrop, getPixelCrop(_this.imageRef, nextCrop));
-	    }, _this.onComponentKeyDown = function (e) {
-	      var _this$props4 = _this.props,
-	          crop = _this$props4.crop,
-	          disabled = _this$props4.disabled,
-	          onChange = _this$props4.onChange,
-	          onComplete = _this$props4.onComplete;
-	
-	
-	      if (disabled) {
-	        return;
-	      }
-	
-	      var keyCode = e.which;
-	      var nudged = false;
-	
-	      if (!isCropValid(crop)) {
-	        return;
-	      }
-	
-	      var nextCrop = _this.makeNewCrop();
-	
-	      if (keyCode === ReactCrop.arrowKey.left) {
-	        nextCrop.x -= ReactCrop.nudgeStep;
-	        nudged = true;
-	      } else if (keyCode === ReactCrop.arrowKey.right) {
-	        nextCrop.x += ReactCrop.nudgeStep;
-	        nudged = true;
-	      } else if (keyCode === ReactCrop.arrowKey.up) {
-	        nextCrop.y -= ReactCrop.nudgeStep;
-	        nudged = true;
-	      } else if (keyCode === ReactCrop.arrowKey.down) {
-	        nextCrop.y += ReactCrop.nudgeStep;
-	        nudged = true;
-	      }
-	
-	      if (nudged) {
-	        e.preventDefault(); // Stop drag selection.
-	        nextCrop.x = clamp(nextCrop.x, 0, 100 - nextCrop.width);
-	        nextCrop.y = clamp(nextCrop.y, 0, 100 - nextCrop.height);
-	
-	        onChange(nextCrop, getPixelCrop(_this.imageRef, nextCrop));
-	        onComplete(nextCrop, getPixelCrop(_this.imageRef, nextCrop));
-	      }
-	    }, _this.onDocMouseTouchEnd = function () {
-	      var _this$props5 = _this.props,
-	          crop = _this$props5.crop,
-	          disabled = _this$props5.disabled,
-	          onComplete = _this$props5.onComplete,
-	          onDragEnd = _this$props5.onDragEnd;
-	
-	
-	      onDragEnd();
-	
-	      if (disabled) {
-	        return;
-	      }
-	
-	      if (_this.mouseDownOnCrop) {
-	        _this.mouseDownOnCrop = false;
-	
-	        onComplete(crop, getPixelCrop(_this.imageRef, crop));
-	        _this.setState({ cropIsActive: false });
-	      }
-	    }, _temp), _possibleConstructorReturn(_this, _ret);
-	  }
-	
-	  _createClass(ReactCrop, [{
+	  _createClass(ReactCropper, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      var options = passiveSupported ? { passive: false } : false;
+	      var _this2 = this;
 	
-	      document.addEventListener('mousemove', this.onDocMouseTouchMove, options);
-	      document.addEventListener('touchmove', this.onDocMouseTouchMove, options);
+	      var options = Object.keys(this.props).filter(function (propKey) {
+	        return optionProps.indexOf(propKey) !== -1;
+	      }).reduce(function (prevOptions, propKey) {
+	        return _extends({}, prevOptions, _defineProperty({}, propKey, _this2.props[propKey]));
+	      }, {});
+	      this.cropper = new _cropperjs2.default(this.img, options);
+	    }
+	  }, {
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      var _this3 = this;
 	
-	      document.addEventListener('mouseup', this.onDocMouseTouchEnd, options);
-	      document.addEventListener('touchend', this.onDocMouseTouchEnd, options);
-	      document.addEventListener('touchcancel', this.onDocMouseTouchEnd, options);
-	
-	      if (this.imageRef.complete || this.imageRef.readyState) {
-	        if (this.imageRef.naturalWidth === 0) {
-	          // Broken load on iOS, PR #51
-	          // https://css-tricks.com/snippets/jquery/fixing-load-in-ie-for-cached-images/
-	          // http://stackoverflow.com/questions/821516/browser-independent-way-to-detect-when-image-has-been-loaded
-	          var src = this.imageRef.src;
-	
-	          this.imageRef.src = EMPTY_GIF;
-	          this.imageRef.src = src;
+	      if (nextProps.src !== this.props.src) {
+	        this.cropper.reset().clear().replace(nextProps.src);
+	      }
+	      if (nextProps.aspectRatio !== this.props.aspectRatio) {
+	        this.setAspectRatio(nextProps.aspectRatio);
+	      }
+	      if (nextProps.data !== this.props.data) {
+	        this.setData(nextProps.data);
+	      }
+	      if (nextProps.dragMode !== this.props.dragMode) {
+	        this.setDragMode(nextProps.dragMode);
+	      }
+	      if (nextProps.cropBoxData !== this.props.cropBoxData) {
+	        this.setCropBoxData(nextProps.cropBoxData);
+	      }
+	      if (nextProps.canvasData !== this.props.canvasData) {
+	        this.setCanvasData(nextProps.canvasData);
+	      }
+	      if (nextProps.moveTo !== this.props.moveTo) {
+	        if (nextProps.moveTo.length > 1) {
+	          this.moveTo(nextProps.moveTo[0], nextProps.moveTo[1]);
 	        } else {
-	          this.onImageLoad(this.imageRef);
+	          this.moveTo(nextProps.moveTo[0]);
 	        }
 	      }
+	      if (nextProps.zoomTo !== this.props.zoomTo) {
+	        this.zoomTo(nextProps.zoomTo);
+	      }
+	      if (nextProps.rotateTo !== this.props.rotateTo) {
+	        this.rotateTo(nextProps.rotateTo);
+	      }
+	      if (nextProps.scaleX !== this.props.scaleX) {
+	        this.scaleX(nextProps.scaleX);
+	      }
+	      if (nextProps.scaleY !== this.props.scaleY) {
+	        this.scaleY(nextProps.scaleY);
+	      }
+	      if (nextProps.enable !== this.props.enable) {
+	        if (nextProps.enable) {
+	          this.enable();
+	        } else {
+	          this.disable();
+	        }
+	      }
+	
+	      Object.keys(nextProps).forEach(function (propKey) {
+	        var isDifferentVal = nextProps[propKey] !== _this3.props[propKey];
+	        var isUnchangeableProps = unchangeableProps.indexOf(propKey) !== -1;
+	
+	        if (typeof nextProps[propKey] === 'function' && typeof _this3.props[propKey] === 'function') {
+	          isDifferentVal = nextProps[propKey].toString() !== _this3.props[propKey].toString();
+	        }
+	
+	        if (isDifferentVal && isUnchangeableProps) {
+	          throw new Error('prop: ' + propKey + ' can\'t be change after componentDidMount');
+	        }
+	      });
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
-	      document.removeEventListener('mousemove', this.onDocMouseTouchMove);
-	      document.removeEventListener('touchmove', this.onDocMouseTouchMove);
-	
-	      document.removeEventListener('mouseup', this.onDocMouseTouchEnd);
-	      document.removeEventListener('touchend', this.onDocMouseTouchEnd);
-	      document.removeEventListener('touchcancel', this.onDocMouseTouchEnd);
+	      if (this.img) {
+	        // Destroy the cropper, this makes sure events such as resize are cleaned up and do not leak
+	        this.cropper.destroy();
+	        delete this.img;
+	        delete this.cropper;
+	      }
 	    }
 	  }, {
-	    key: 'onImageLoad',
-	    value: function onImageLoad(image) {
-	      this.props.onImageLoaded(image);
+	    key: 'setDragMode',
+	    value: function setDragMode(mode) {
+	      return this.cropper.setDragMode(mode);
 	    }
 	  }, {
-	    key: 'getCropStyle',
-	    value: function getCropStyle() {
-	      var crop = this.props.crop;
-	
-	      return {
-	        top: crop.y + '%',
-	        left: crop.x + '%',
-	        width: crop.width + '%',
-	        height: crop.height + '%'
-	      };
+	    key: 'setAspectRatio',
+	    value: function setAspectRatio(aspectRatio) {
+	      return this.cropper.setAspectRatio(aspectRatio);
 	    }
 	  }, {
-	    key: 'getNewSize',
-	    value: function getNewSize() {
-	      var _props = this.props,
-	          crop = _props.crop,
-	          minWidth = _props.minWidth,
-	          maxWidth = _props.maxWidth,
-	          minHeight = _props.minHeight,
-	          maxHeight = _props.maxHeight;
-	      var evData = this.evData;
-	
-	      var imageAspect = this.imageRef.width / this.imageRef.height;
-	
-	      // New width.
-	      var newWidth = evData.cropStartWidth + evData.xDiffPc;
-	
-	      if (evData.xCrossOver) {
-	        newWidth = Math.abs(newWidth);
-	      }
-	
-	      newWidth = clamp(newWidth, minWidth, maxWidth);
-	
-	      // New height.
-	      var newHeight = void 0;
-	
-	      if (crop.aspect) {
-	        newHeight = newWidth / crop.aspect * imageAspect;
-	      } else {
-	        newHeight = evData.cropStartHeight + evData.yDiffPc;
-	      }
-	
-	      if (evData.yCrossOver) {
-	        // Cap if polarity is inversed and the height fills the y space.
-	        newHeight = Math.min(Math.abs(newHeight), evData.cropStartY);
-	      }
-	
-	      newHeight = clamp(newHeight, minHeight, maxHeight);
-	
-	      if (crop.aspect) {
-	        newWidth = clamp(newHeight * crop.aspect / imageAspect, 0, 100);
-	      }
-	
-	      return {
-	        width: newWidth,
-	        height: newHeight
-	      };
+	    key: 'getCroppedCanvas',
+	    value: function getCroppedCanvas(options) {
+	      return this.cropper.getCroppedCanvas(options);
 	    }
 	  }, {
-	    key: 'dragCrop',
-	    value: function dragCrop() {
-	      var nextCrop = this.makeNewCrop();
-	      var evData = this.evData;
-	
-	      nextCrop.x = clamp(evData.cropStartX + evData.xDiffPc, 0, 100 - nextCrop.width);
-	      nextCrop.y = clamp(evData.cropStartY + evData.yDiffPc, 0, 100 - nextCrop.height);
-	      return nextCrop;
+	    key: 'setCropBoxData',
+	    value: function setCropBoxData(data) {
+	      return this.cropper.setCropBoxData(data);
 	    }
 	  }, {
-	    key: 'resizeCrop',
-	    value: function resizeCrop() {
-	      var nextCrop = this.makeNewCrop();
-	      var evData = this.evData;
-	      var ord = evData.ord;
-	
-	      var imageAspect = this.imageRef.width / this.imageRef.height;
-	
-	      // On the inverse change the diff so it's the same and
-	      // the same algo applies.
-	      if (evData.xInversed) {
-	        evData.xDiffPc -= evData.cropStartWidth * 2;
-	      }
-	      if (evData.yInversed) {
-	        evData.yDiffPc -= evData.cropStartHeight * 2;
-	      }
-	
-	      // New size.
-	      var newSize = this.getNewSize();
-	
-	      // Adjust x/y to give illusion of 'staticness' as width/height is increased
-	      // when polarity is inversed.
-	      var newX = evData.cropStartX;
-	      var newY = evData.cropStartY;
-	
-	      if (evData.xCrossOver) {
-	        newX = nextCrop.x + (nextCrop.width - newSize.width);
-	      }
-	
-	      if (evData.yCrossOver) {
-	        // This not only removes the little "shake" when inverting at a diagonal, but for some
-	        // reason y was way off at fast speeds moving sw->ne with fixed aspect only, I couldn't
-	        // figure out why.
-	        if (evData.lastYCrossover === false) {
-	          newY = nextCrop.y - newSize.height;
-	        } else {
-	          newY = nextCrop.y + (nextCrop.height - newSize.height);
-	        }
-	      }
-	
-	      var containedCrop = containCrop({
-	        x: newX,
-	        y: newY,
-	        width: newSize.width,
-	        height: newSize.height,
-	        aspect: nextCrop.aspect
-	      }, imageAspect);
-	
-	      // Apply x/y/width/height changes depending on ordinate (fixed aspect always applies both).
-	      if (nextCrop.aspect || ReactCrop.xyOrds.indexOf(ord) > -1) {
-	        nextCrop.x = containedCrop.x;
-	        nextCrop.y = containedCrop.y;
-	        nextCrop.width = containedCrop.width;
-	        nextCrop.height = containedCrop.height;
-	      } else if (ReactCrop.xOrds.indexOf(ord) > -1) {
-	        nextCrop.x = containedCrop.x;
-	        nextCrop.width = containedCrop.width;
-	      } else if (ReactCrop.yOrds.indexOf(ord) > -1) {
-	        nextCrop.y = containedCrop.y;
-	        nextCrop.height = containedCrop.height;
-	      }
-	
-	      evData.lastYCrossover = evData.yCrossOver;
-	      this.crossOverCheck();
-	      return nextCrop;
+	    key: 'getCropBoxData',
+	    value: function getCropBoxData() {
+	      return this.cropper.getCropBoxData();
 	    }
 	  }, {
-	    key: 'straightenYPath',
-	    value: function straightenYPath(clientX) {
-	      var evData = this.evData;
-	      var ord = evData.ord;
-	      var cropOffset = evData.cropOffset;
-	
-	      var cropStartWidth = evData.cropStartWidth / 100 * this.imageRef.width;
-	      var cropStartHeight = evData.cropStartHeight / 100 * this.imageRef.height;
-	      var k = void 0;
-	      var d = void 0;
-	
-	      if (ord === 'nw' || ord === 'se') {
-	        k = cropStartHeight / cropStartWidth;
-	        d = cropOffset.top - cropOffset.left * k;
-	      } else {
-	        k = -cropStartHeight / cropStartWidth;
-	        d = cropOffset.top + (cropStartHeight - cropOffset.left * k);
-	      }
-	
-	      return k * clientX + d;
+	    key: 'setCanvasData',
+	    value: function setCanvasData(data) {
+	      return this.cropper.setCanvasData(data);
 	    }
 	  }, {
-	    key: 'createCropSelection',
-	    value: function createCropSelection() {
-	      var _this3 = this;
-	
-	      var disabled = this.props.disabled;
-	
-	      var style = this.getCropStyle();
-	
-	      return _react2.default.createElement(
-	        'div',
-	        {
-	          ref: function ref(n) {
-	            _this3.cropSelectRef = n;
-	          },
-	          style: style,
-	          className: 'ReactCrop__crop-selection',
-	          onMouseDown: this.onCropMouseTouchDown,
-	          onTouchStart: this.onCropMouseTouchDown
-	        },
-	        !disabled && _react2.default.createElement(
-	          'div',
-	          { className: 'ReactCrop__drag-elements' },
-	          _react2.default.createElement('div', { className: 'ReactCrop__drag-bar ord-n', 'data-ord': 'n' }),
-	          _react2.default.createElement('div', { className: 'ReactCrop__drag-bar ord-e', 'data-ord': 'e' }),
-	          _react2.default.createElement('div', { className: 'ReactCrop__drag-bar ord-s', 'data-ord': 's' }),
-	          _react2.default.createElement('div', { className: 'ReactCrop__drag-bar ord-w', 'data-ord': 'w' }),
-	          _react2.default.createElement('div', { className: 'ReactCrop__drag-handle ord-nw', 'data-ord': 'nw' }),
-	          _react2.default.createElement('div', { className: 'ReactCrop__drag-handle ord-n', 'data-ord': 'n' }),
-	          _react2.default.createElement('div', { className: 'ReactCrop__drag-handle ord-ne', 'data-ord': 'ne' }),
-	          _react2.default.createElement('div', { className: 'ReactCrop__drag-handle ord-e', 'data-ord': 'e' }),
-	          _react2.default.createElement('div', { className: 'ReactCrop__drag-handle ord-se', 'data-ord': 'se' }),
-	          _react2.default.createElement('div', { className: 'ReactCrop__drag-handle ord-s', 'data-ord': 's' }),
-	          _react2.default.createElement('div', { className: 'ReactCrop__drag-handle ord-sw', 'data-ord': 'sw' }),
-	          _react2.default.createElement('div', { className: 'ReactCrop__drag-handle ord-w', 'data-ord': 'w' })
-	        )
-	      );
+	    key: 'getCanvasData',
+	    value: function getCanvasData() {
+	      return this.cropper.getCanvasData();
 	    }
 	  }, {
-	    key: 'makeNewCrop',
-	    value: function makeNewCrop() {
-	      return _extends({}, ReactCrop.defaultCrop, this.props.crop);
+	    key: 'getImageData',
+	    value: function getImageData() {
+	      return this.cropper.getImageData();
 	    }
 	  }, {
-	    key: 'crossOverCheck',
-	    value: function crossOverCheck() {
-	      var evData = this.evData;
-	
-	
-	      if (!evData.xCrossOver && -Math.abs(evData.cropStartWidth) - evData.xDiffPc >= 0 || evData.xCrossOver && -Math.abs(evData.cropStartWidth) - evData.xDiffPc <= 0) {
-	        evData.xCrossOver = !evData.xCrossOver;
-	      }
-	
-	      if (!evData.yCrossOver && -Math.abs(evData.cropStartHeight) - evData.yDiffPc >= 0 || evData.yCrossOver && -Math.abs(evData.cropStartHeight) - evData.yDiffPc <= 0) {
-	        evData.yCrossOver = !evData.yCrossOver;
-	      }
-	
-	      var swapXOrd = evData.xCrossOver !== evData.startXCrossOver;
-	      var swapYOrd = evData.yCrossOver !== evData.startYCrossOver;
-	
-	      evData.inversedXOrd = swapXOrd ? inverseOrd(evData.ord) : false;
-	      evData.inversedYOrd = swapYOrd ? inverseOrd(evData.ord) : false;
+	    key: 'getContainerData',
+	    value: function getContainerData() {
+	      return this.cropper.getContainerData();
+	    }
+	  }, {
+	    key: 'setData',
+	    value: function setData(data) {
+	      return this.cropper.setData(data);
+	    }
+	  }, {
+	    key: 'getData',
+	    value: function getData(rounded) {
+	      return this.cropper.getData(rounded);
+	    }
+	  }, {
+	    key: 'crop',
+	    value: function crop() {
+	      return this.cropper.crop();
+	    }
+	  }, {
+	    key: 'move',
+	    value: function move(offsetX, offsetY) {
+	      return this.cropper.move(offsetX, offsetY);
+	    }
+	  }, {
+	    key: 'moveTo',
+	    value: function moveTo(x, y) {
+	      return this.cropper.moveTo(x, y);
+	    }
+	  }, {
+	    key: 'zoom',
+	    value: function zoom(ratio) {
+	      return this.cropper.zoom(ratio);
+	    }
+	  }, {
+	    key: 'zoomTo',
+	    value: function zoomTo(ratio) {
+	      return this.cropper.zoomTo(ratio);
+	    }
+	  }, {
+	    key: 'rotate',
+	    value: function rotate(degree) {
+	      return this.cropper.rotate(degree);
+	    }
+	  }, {
+	    key: 'rotateTo',
+	    value: function rotateTo(degree) {
+	      return this.cropper.rotateTo(degree);
+	    }
+	  }, {
+	    key: 'enable',
+	    value: function enable() {
+	      return this.cropper.enable();
+	    }
+	  }, {
+	    key: 'disable',
+	    value: function disable() {
+	      return this.cropper.disable();
+	    }
+	  }, {
+	    key: 'reset',
+	    value: function reset() {
+	      return this.cropper.reset();
+	    }
+	  }, {
+	    key: 'clear',
+	    value: function clear() {
+	      return this.cropper.clear();
+	    }
+	  }, {
+	    key: 'replace',
+	    value: function replace(url, onlyColorChanged) {
+	      return this.cropper.replace(url, onlyColorChanged);
+	    }
+	  }, {
+	    key: 'scale',
+	    value: function scale(scaleX, scaleY) {
+	      return this.cropper.scale(scaleX, scaleY);
+	    }
+	  }, {
+	    key: 'scaleX',
+	    value: function scaleX(_scaleX) {
+	      return this.cropper.scaleX(_scaleX);
+	    }
+	  }, {
+	    key: 'scaleY',
+	    value: function scaleY(_scaleY) {
+	      return this.cropper.scaleY(_scaleY);
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this4 = this;
 	
-	      var _props2 = this.props,
-	          children = _props2.children,
-	          crossorigin = _props2.crossorigin,
-	          crop = _props2.crop,
-	          disabled = _props2.disabled,
-	          imageAlt = _props2.imageAlt,
-	          src = _props2.src,
-	          style = _props2.style,
-	          imageStyle = _props2.imageStyle;
-	      var cropIsActive = this.state.cropIsActive;
+	      var _props = this.props,
+	          src = _props.src,
+	          alt = _props.alt,
+	          crossOrigin = _props.crossOrigin;
 	
-	      var cropSelection = void 0;
-	
-	      if (isCropValid(crop)) {
-	        cropSelection = this.createCropSelection();
-	      }
-	
-	      var componentClasses = ['ReactCrop'];
-	
-	      if (cropIsActive) {
-	        componentClasses.push('ReactCrop--active');
-	      }
-	
-	      if (crop) {
-	        if (crop.aspect) {
-	          componentClasses.push('ReactCrop--fixed-aspect');
-	        }
-	
-	        // In this case we have to shadow the image, since the box-shadow
-	        // on the crop won't work.
-	        if (cropIsActive && (!crop.width || !crop.height)) {
-	          componentClasses.push('ReactCrop--crop-invisible');
-	        }
-	      }
-	
-	      if (disabled) {
-	        componentClasses.push('ReactCrop--disabled');
-	      }
 	
 	      return _react2.default.createElement(
 	        'div',
 	        {
-	          ref: function ref(n) {
-	            _this4.componentRef = n;
-	          },
-	          className: componentClasses.join(' '),
-	          style: style,
-	          onTouchStart: this.onComponentMouseTouchDown,
-	          onMouseDown: this.onComponentMouseTouchDown,
-	          tabIndex: '1',
-	          onKeyDown: this.onComponentKeyDown
+	          src: null,
+	          crossOrigin: null,
+	          alt: null,
+	          style: this.props.style,
+	          className: this.props.className
 	        },
 	        _react2.default.createElement('img', {
-	          ref: function ref(n) {
-	            _this4.imageRef = n;
+	          crossOrigin: crossOrigin,
+	          ref: function ref(img) {
+	            _this4.img = img;
 	          },
-	          crossOrigin: crossorigin,
-	          className: 'ReactCrop__image',
-	          style: imageStyle,
 	          src: src,
-	          onLoad: function onLoad(e) {
-	            return _this4.onImageLoad(e.target);
-	          },
-	          alt: imageAlt
-	        }),
-	        cropSelection,
-	        children
+	          alt: alt === undefined ? 'picture' : alt,
+	          style: { opacity: 0 }
+	        })
 	      );
 	    }
 	  }]);
 	
-	  return ReactCrop;
-	}(_react.PureComponent);
+	  return ReactCropper;
+	}(_react.Component);
 	
-	ReactCrop.xOrds = ['e', 'w'];
-	ReactCrop.yOrds = ['n', 's'];
-	ReactCrop.xyOrds = ['nw', 'ne', 'se', 'sw'];
+	ReactCropper.propTypes = {
+	  style: _propTypes2.default.object, // eslint-disable-line react/forbid-prop-types
+	  className: _propTypes2.default.string,
 	
-	ReactCrop.arrowKey = {
-	  left: 37,
-	  up: 38,
-	  right: 39,
-	  down: 40
-	};
+	  // react cropper options
+	  crossOrigin: _propTypes2.default.string,
+	  src: _propTypes2.default.string,
+	  alt: _propTypes2.default.string,
 	
-	ReactCrop.nudgeStep = 0.2;
-	
-	ReactCrop.defaultCrop = {
-	  x: 0,
-	  y: 0,
-	  width: 0,
-	  height: 0
-	};
-	
-	ReactCrop.propTypes = {
-	  src: _propTypes2.default.string.isRequired,
-	  crop: _propTypes2.default.shape({
-	    aspect: _propTypes2.default.number,
+	  // props of option can be changed after componentDidmount
+	  aspectRatio: _propTypes2.default.number,
+	  dragMode: _propTypes2.default.oneOf(['crop', 'move', 'none']),
+	  data: _propTypes2.default.shape({
 	    x: _propTypes2.default.number,
 	    y: _propTypes2.default.number,
 	    width: _propTypes2.default.number,
+	    height: _propTypes2.default.number,
+	    rotate: _propTypes2.default.number,
+	    scaleX: _propTypes2.default.number,
+	    scaleY: _propTypes2.default.number
+	  }),
+	  scaleX: _propTypes2.default.number,
+	  scaleY: _propTypes2.default.number,
+	  enable: _propTypes2.default.bool,
+	  cropBoxData: _propTypes2.default.shape({
+	    left: _propTypes2.default.number,
+	    top: _propTypes2.default.number,
+	    width: _propTypes2.default.number,
 	    height: _propTypes2.default.number
 	  }),
-	  imageAlt: _propTypes2.default.string,
-	  minWidth: _propTypes2.default.number,
-	  minHeight: _propTypes2.default.number,
-	  maxWidth: _propTypes2.default.number,
-	  maxHeight: _propTypes2.default.number,
-	  keepSelection: _propTypes2.default.bool,
-	  onChange: _propTypes2.default.func.isRequired,
-	  onComplete: _propTypes2.default.func,
-	  onImageLoaded: _propTypes2.default.func,
-	  onDragStart: _propTypes2.default.func,
-	  onDragEnd: _propTypes2.default.func,
-	  disabled: _propTypes2.default.bool,
-	  crossorigin: _propTypes2.default.string,
-	  children: _propTypes2.default.oneOfType([_propTypes2.default.arrayOf(_propTypes2.default.node), _propTypes2.default.node]),
-	  style: _propTypes2.default.shape({}),
-	  imageStyle: _propTypes2.default.shape({})
+	  canvasData: _propTypes2.default.shape({
+	    left: _propTypes2.default.number,
+	    top: _propTypes2.default.number,
+	    width: _propTypes2.default.number,
+	    height: _propTypes2.default.number
+	  }),
+	  zoomTo: _propTypes2.default.number,
+	  moveTo: _propTypes2.default.arrayOf(_propTypes2.default.number),
+	  rotateTo: _propTypes2.default.number,
+	
+	  // cropperjs options
+	  // https://github.com/fengyuanchen/cropperjs#options
+	  // aspectRatio, dragMode, data
+	  viewMode: _propTypes2.default.oneOf([0, 1, 2, 3]),
+	  preview: _propTypes2.default.string,
+	  responsive: _propTypes2.default.bool,
+	  restore: _propTypes2.default.bool,
+	  checkCrossOrigin: _propTypes2.default.bool,
+	  checkOrientation: _propTypes2.default.bool,
+	  modal: _propTypes2.default.bool,
+	  guides: _propTypes2.default.bool,
+	  center: _propTypes2.default.bool,
+	  highlight: _propTypes2.default.bool,
+	  background: _propTypes2.default.bool,
+	  autoCrop: _propTypes2.default.bool,
+	  autoCropArea: _propTypes2.default.number,
+	  movable: _propTypes2.default.bool,
+	  rotatable: _propTypes2.default.bool,
+	  scalable: _propTypes2.default.bool,
+	  zoomable: _propTypes2.default.bool,
+	  zoomOnTouch: _propTypes2.default.bool,
+	  zoomOnWheel: _propTypes2.default.bool,
+	  wheelZoomRation: _propTypes2.default.number,
+	  cropBoxMovable: _propTypes2.default.bool,
+	  cropBoxResizable: _propTypes2.default.bool,
+	  toggleDragModeOnDblclick: _propTypes2.default.bool,
+	  minContainerWidth: _propTypes2.default.number,
+	  minContainerHeight: _propTypes2.default.number,
+	  minCanvasWidth: _propTypes2.default.number,
+	  minCanvasHeight: _propTypes2.default.number,
+	  minCropBoxWidth: _propTypes2.default.number,
+	  minCropBoxHeight: _propTypes2.default.number,
+	  ready: _propTypes2.default.func,
+	  cropstart: _propTypes2.default.func,
+	  cropmove: _propTypes2.default.func,
+	  cropend: _propTypes2.default.func,
+	  crop: _propTypes2.default.func,
+	  zoom: _propTypes2.default.func
 	};
 	
-	ReactCrop.defaultProps = {
-	  crop: undefined,
-	  crossorigin: undefined,
-	  disabled: false,
-	  imageAlt: '',
-	  maxWidth: 100,
-	  maxHeight: 100,
-	  minWidth: 0,
-	  minHeight: 0,
-	  keepSelection: false,
-	  onComplete: function onComplete() {},
-	  onImageLoaded: function onImageLoaded() {},
-	  onDragStart: function onDragStart() {},
-	  onDragEnd: function onDragEnd() {},
-	  children: undefined,
-	  style: undefined,
-	  imageStyle: undefined
+	ReactCropper.defaultProps = {
+	  src: null,
+	  dragMode: 'crop',
+	  data: null,
+	  scaleX: 1,
+	  scaleY: 1,
+	  enable: true,
+	  zoomTo: 1,
+	  rotateTo: 0
 	};
 	
-	module.exports = ReactCrop;
-	module.exports.getPixelCrop = getPixelCrop;
-	module.exports.makeAspectCrop = makeAspectCrop;
-	module.exports.containCrop = containCrop;
-	
-	/***/ }),
-	/* 6 */
-	/***/ (function(module, exports) {
-	
-	module.exports = __WEBPACK_EXTERNAL_MODULE_6__;
-	
-	/***/ }),
-	/* 7 */
-	/***/ (function(module, exports, __webpack_require__) {
-	
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
+	exports.default = ReactCropper;
+
+
+/***/ }),
+/* 871 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/*!
+	 * Cropper.js v1.0.0-rc.3
+	 * https://github.com/fengyuanchen/cropperjs
 	 *
-	 * This source code is licensed under the MIT license found in the
-	 * LICENSE file in the root directory of this source tree.
+	 * Copyright (c) 2017 Fengyuan Chen
+	 * Released under the MIT license
+	 *
+	 * Date: 2017-07-07T12:56:42.462Z
 	 */
 	
-	if (process.env.NODE_ENV !== 'production') {
-	  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
-	    Symbol.for &&
-	    Symbol.for('react.element')) ||
-	    0xeac7;
+	(function (global, factory) {
+	   true ? module.exports = factory() :
+	  typeof define === 'function' && define.amd ? define(factory) :
+	  (global.Cropper = factory());
+	}(this, (function () { 'use strict';
 	
-	  var isValidElement = function(object) {
-	    return typeof object === 'object' &&
-	      object !== null &&
-	      object.$$typeof === REACT_ELEMENT_TYPE;
+	var DEFAULTS = {
+	  // Define the view mode of the cropper
+	  viewMode: 0, // 0, 1, 2, 3
+	
+	  // Define the dragging mode of the cropper
+	  dragMode: 'crop', // 'crop', 'move' or 'none'
+	
+	  // Define the aspect ratio of the crop box
+	  aspectRatio: NaN,
+	
+	  // An object with the previous cropping result data
+	  data: null,
+	
+	  // A selector for adding extra containers to preview
+	  preview: '',
+	
+	  // Re-render the cropper when resize the window
+	  responsive: true,
+	
+	  // Restore the cropped area after resize the window
+	  restore: true,
+	
+	  // Check if the current image is a cross-origin image
+	  checkCrossOrigin: true,
+	
+	  // Check the current image's Exif Orientation information
+	  checkOrientation: true,
+	
+	  // Show the black modal
+	  modal: true,
+	
+	  // Show the dashed lines for guiding
+	  guides: true,
+	
+	  // Show the center indicator for guiding
+	  center: true,
+	
+	  // Show the white modal to highlight the crop box
+	  highlight: true,
+	
+	  // Show the grid background
+	  background: true,
+	
+	  // Enable to crop the image automatically when initialize
+	  autoCrop: true,
+	
+	  // Define the percentage of automatic cropping area when initializes
+	  autoCropArea: 0.8,
+	
+	  // Enable to move the image
+	  movable: true,
+	
+	  // Enable to rotate the image
+	  rotatable: true,
+	
+	  // Enable to scale the image
+	  scalable: true,
+	
+	  // Enable to zoom the image
+	  zoomable: true,
+	
+	  // Enable to zoom the image by dragging touch
+	  zoomOnTouch: true,
+	
+	  // Enable to zoom the image by wheeling mouse
+	  zoomOnWheel: true,
+	
+	  // Define zoom ratio when zoom the image by wheeling mouse
+	  wheelZoomRatio: 0.1,
+	
+	  // Enable to move the crop box
+	  cropBoxMovable: true,
+	
+	  // Enable to resize the crop box
+	  cropBoxResizable: true,
+	
+	  // Toggle drag mode between "crop" and "move" when click twice on the cropper
+	  toggleDragModeOnDblclick: true,
+	
+	  // Size limitation
+	  minCanvasWidth: 0,
+	  minCanvasHeight: 0,
+	  minCropBoxWidth: 0,
+	  minCropBoxHeight: 0,
+	  minContainerWidth: 200,
+	  minContainerHeight: 100,
+	
+	  // Shortcuts of events
+	  ready: null,
+	  cropstart: null,
+	  cropmove: null,
+	  cropend: null,
+	  crop: null,
+	  zoom: null
+	};
+	
+	var TEMPLATE = '<div class="cropper-container">' + '<div class="cropper-wrap-box">' + '<div class="cropper-canvas"></div>' + '</div>' + '<div class="cropper-drag-box"></div>' + '<div class="cropper-crop-box">' + '<span class="cropper-view-box"></span>' + '<span class="cropper-dashed dashed-h"></span>' + '<span class="cropper-dashed dashed-v"></span>' + '<span class="cropper-center"></span>' + '<span class="cropper-face"></span>' + '<span class="cropper-line line-e" data-action="e"></span>' + '<span class="cropper-line line-n" data-action="n"></span>' + '<span class="cropper-line line-w" data-action="w"></span>' + '<span class="cropper-line line-s" data-action="s"></span>' + '<span class="cropper-point point-e" data-action="e"></span>' + '<span class="cropper-point point-n" data-action="n"></span>' + '<span class="cropper-point point-w" data-action="w"></span>' + '<span class="cropper-point point-s" data-action="s"></span>' + '<span class="cropper-point point-ne" data-action="ne"></span>' + '<span class="cropper-point point-nw" data-action="nw"></span>' + '<span class="cropper-point point-sw" data-action="sw"></span>' + '<span class="cropper-point point-se" data-action="se"></span>' + '</div>' + '</div>';
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+	  return typeof obj;
+	} : function (obj) {
+	  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+	};
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	var classCallCheck = function (instance, Constructor) {
+	  if (!(instance instanceof Constructor)) {
+	    throw new TypeError("Cannot call a class as a function");
+	  }
+	};
+	
+	var createClass = function () {
+	  function defineProperties(target, props) {
+	    for (var i = 0; i < props.length; i++) {
+	      var descriptor = props[i];
+	      descriptor.enumerable = descriptor.enumerable || false;
+	      descriptor.configurable = true;
+	      if ("value" in descriptor) descriptor.writable = true;
+	      Object.defineProperty(target, descriptor.key, descriptor);
+	    }
+	  }
+	
+	  return function (Constructor, protoProps, staticProps) {
+	    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+	    if (staticProps) defineProperties(Constructor, staticProps);
+	    return Constructor;
 	  };
+	}();
 	
-	  // By explicitly using `prop-types` you are opting into new development behavior.
-	  // http://fb.me/prop-types-in-prod
-	  var throwOnDirectAccess = true;
-	  module.exports = __webpack_require__(8)(isValidElement, throwOnDirectAccess);
-	} else {
-	  // By explicitly using `prop-types` you are opting into new production behavior.
-	  // http://fb.me/prop-types-in-prod
-	  module.exports = __webpack_require__(11)();
+	
+	
+	
+	
+	
+	
+	var get = function get(object, property, receiver) {
+	  if (object === null) object = Function.prototype;
+	  var desc = Object.getOwnPropertyDescriptor(object, property);
+	
+	  if (desc === undefined) {
+	    var parent = Object.getPrototypeOf(object);
+	
+	    if (parent === null) {
+	      return undefined;
+	    } else {
+	      return get(parent, property, receiver);
+	    }
+	  } else if ("value" in desc) {
+	    return desc.value;
+	  } else {
+	    var getter = desc.get;
+	
+	    if (getter === undefined) {
+	      return undefined;
+	    }
+	
+	    return getter.call(receiver);
+	  }
+	};
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	var set = function set(object, property, value, receiver) {
+	  var desc = Object.getOwnPropertyDescriptor(object, property);
+	
+	  if (desc === undefined) {
+	    var parent = Object.getPrototypeOf(object);
+	
+	    if (parent !== null) {
+	      set(parent, property, value, receiver);
+	    }
+	  } else if ("value" in desc && desc.writable) {
+	    desc.value = value;
+	  } else {
+	    var setter = desc.set;
+	
+	    if (setter !== undefined) {
+	      setter.call(receiver, value);
+	    }
+	  }
+	
+	  return value;
+	};
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	var toConsumableArray = function (arr) {
+	  if (Array.isArray(arr)) {
+	    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+	
+	    return arr2;
+	  } else {
+	    return Array.from(arr);
+	  }
+	};
+	
+	// RegExps
+	var REGEXP_DATA_URL_HEAD = /^data:.*,/;
+	var REGEXP_HYPHENATE = /([a-z\d])([A-Z])/g;
+	var REGEXP_ORIGINS = /^(https?:)\/\/([^:/?#]+):?(\d*)/i;
+	var REGEXP_SPACES = /\s+/;
+	var REGEXP_SUFFIX = /^(width|height|left|top|marginLeft|marginTop)$/;
+	var REGEXP_TRIM = /^\s+(.*)\s+$/;
+	var REGEXP_USERAGENT = /(Macintosh|iPhone|iPod|iPad).*AppleWebKit/i;
+	
+	// Utilities
+	var navigator = typeof window !== 'undefined' ? window.navigator : null;
+	var IS_SAFARI_OR_UIWEBVIEW = navigator && REGEXP_USERAGENT.test(navigator.userAgent);
+	var objectProto = Object.prototype;
+	var toString = objectProto.toString;
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	var slice = Array.prototype.slice;
+	var fromCharCode = String.fromCharCode;
+	
+	function typeOf(obj) {
+	  return toString.call(obj).slice(8, -1).toLowerCase();
 	}
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+	function isNumber(num) {
+	  return typeof num === 'number' && !isNaN(num);
+	}
 	
-	/***/ }),
-	/* 8 */
-	/***/ (function(module, exports, __webpack_require__) {
+	function isUndefined(obj) {
+	  return typeof obj === 'undefined';
+	}
 	
-	"use strict";
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 *
-	 * This source code is licensed under the MIT license found in the
-	 * LICENSE file in the root directory of this source tree.
-	 */
+	function isObject(obj) {
+	  return (typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === 'object' && obj !== null;
+	}
 	
-	
-	
-	var emptyFunction = __webpack_require__(1);
-	var invariant = __webpack_require__(2);
-	var warning = __webpack_require__(4);
-	var assign = __webpack_require__(9);
-	
-	var ReactPropTypesSecret = __webpack_require__(3);
-	var checkPropTypes = __webpack_require__(10);
-	
-	module.exports = function(isValidElement, throwOnDirectAccess) {
-	  /* global Symbol */
-	  var ITERATOR_SYMBOL = typeof Symbol === 'function' && Symbol.iterator;
-	  var FAUX_ITERATOR_SYMBOL = '@@iterator'; // Before Symbol spec.
-	
-	  /**
-	   * Returns the iterator method function contained on the iterable object.
-	   *
-	   * Be sure to invoke the function with the iterable as context:
-	   *
-	   *     var iteratorFn = getIteratorFn(myIterable);
-	   *     if (iteratorFn) {
-	   *       var iterator = iteratorFn.call(myIterable);
-	   *       ...
-	   *     }
-	   *
-	   * @param {?object} maybeIterable
-	   * @return {?function}
-	   */
-	  function getIteratorFn(maybeIterable) {
-	    var iteratorFn = maybeIterable && (ITERATOR_SYMBOL && maybeIterable[ITERATOR_SYMBOL] || maybeIterable[FAUX_ITERATOR_SYMBOL]);
-	    if (typeof iteratorFn === 'function') {
-	      return iteratorFn;
-	    }
-	  }
-	
-	  /**
-	   * Collection of methods that allow declaration and validation of props that are
-	   * supplied to React components. Example usage:
-	   *
-	   *   var Props = require('ReactPropTypes');
-	   *   var MyArticle = React.createClass({
-	   *     propTypes: {
-	   *       // An optional string prop named "description".
-	   *       description: Props.string,
-	   *
-	   *       // A required enum prop named "category".
-	   *       category: Props.oneOf(['News','Photos']).isRequired,
-	   *
-	   *       // A prop named "dialog" that requires an instance of Dialog.
-	   *       dialog: Props.instanceOf(Dialog).isRequired
-	   *     },
-	   *     render: function() { ... }
-	   *   });
-	   *
-	   * A more formal specification of how these methods are used:
-	   *
-	   *   type := array|bool|func|object|number|string|oneOf([...])|instanceOf(...)
-	   *   decl := ReactPropTypes.{type}(.isRequired)?
-	   *
-	   * Each and every declaration produces a function with the same signature. This
-	   * allows the creation of custom validation functions. For example:
-	   *
-	   *  var MyLink = React.createClass({
-	   *    propTypes: {
-	   *      // An optional string or URI prop named "href".
-	   *      href: function(props, propName, componentName) {
-	   *        var propValue = props[propName];
-	   *        if (propValue != null && typeof propValue !== 'string' &&
-	   *            !(propValue instanceof URI)) {
-	   *          return new Error(
-	   *            'Expected a string or an URI for ' + propName + ' in ' +
-	   *            componentName
-	   *          );
-	   *        }
-	   *      }
-	   *    },
-	   *    render: function() {...}
-	   *  });
-	   *
-	   * @internal
-	   */
-	
-	  var ANONYMOUS = '<<anonymous>>';
-	
-	  // Important!
-	  // Keep this list in sync with production version in `./factoryWithThrowingShims.js`.
-	  var ReactPropTypes = {
-	    array: createPrimitiveTypeChecker('array'),
-	    bool: createPrimitiveTypeChecker('boolean'),
-	    func: createPrimitiveTypeChecker('function'),
-	    number: createPrimitiveTypeChecker('number'),
-	    object: createPrimitiveTypeChecker('object'),
-	    string: createPrimitiveTypeChecker('string'),
-	    symbol: createPrimitiveTypeChecker('symbol'),
-	
-	    any: createAnyTypeChecker(),
-	    arrayOf: createArrayOfTypeChecker,
-	    element: createElementTypeChecker(),
-	    instanceOf: createInstanceTypeChecker,
-	    node: createNodeChecker(),
-	    objectOf: createObjectOfTypeChecker,
-	    oneOf: createEnumTypeChecker,
-	    oneOfType: createUnionTypeChecker,
-	    shape: createShapeTypeChecker,
-	    exact: createStrictShapeTypeChecker,
-	  };
-	
-	  /**
-	   * inlined Object.is polyfill to avoid requiring consumers ship their own
-	   * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
-	   */
-	  /*eslint-disable no-self-compare*/
-	  function is(x, y) {
-	    // SameValue algorithm
-	    if (x === y) {
-	      // Steps 1-5, 7-10
-	      // Steps 6.b-6.e: +0 != -0
-	      return x !== 0 || 1 / x === 1 / y;
-	    } else {
-	      // Step 6.a: NaN == NaN
-	      return x !== x && y !== y;
-	    }
-	  }
-	  /*eslint-enable no-self-compare*/
-	
-	  /**
-	   * We use an Error-like object for backward compatibility as people may call
-	   * PropTypes directly and inspect their output. However, we don't use real
-	   * Errors anymore. We don't inspect their stack anyway, and creating them
-	   * is prohibitively expensive if they are created too often, such as what
-	   * happens in oneOfType() for any type before the one that matched.
-	   */
-	  function PropTypeError(message) {
-	    this.message = message;
-	    this.stack = '';
-	  }
-	  // Make `instanceof Error` still work for returned errors.
-	  PropTypeError.prototype = Error.prototype;
-	
-	  function createChainableTypeChecker(validate) {
-	    if (process.env.NODE_ENV !== 'production') {
-	      var manualPropTypeCallCache = {};
-	      var manualPropTypeWarningCount = 0;
-	    }
-	    function checkType(isRequired, props, propName, componentName, location, propFullName, secret) {
-	      componentName = componentName || ANONYMOUS;
-	      propFullName = propFullName || propName;
-	
-	      if (secret !== ReactPropTypesSecret) {
-	        if (throwOnDirectAccess) {
-	          // New behavior only for users of `prop-types` package
-	          invariant(
-	            false,
-	            'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
-	            'Use `PropTypes.checkPropTypes()` to call them. ' +
-	            'Read more at http://fb.me/use-check-prop-types'
-	          );
-	        } else if (process.env.NODE_ENV !== 'production' && typeof console !== 'undefined') {
-	          // Old behavior for people using React.PropTypes
-	          var cacheKey = componentName + ':' + propName;
-	          if (
-	            !manualPropTypeCallCache[cacheKey] &&
-	            // Avoid spamming the console because they are often not actionable except for lib authors
-	            manualPropTypeWarningCount < 3
-	          ) {
-	            warning(
-	              false,
-	              'You are manually calling a React.PropTypes validation ' +
-	              'function for the `%s` prop on `%s`. This is deprecated ' +
-	              'and will throw in the standalone `prop-types` package. ' +
-	              'You may be seeing this warning due to a third-party PropTypes ' +
-	              'library. See https://fb.me/react-warning-dont-call-proptypes ' + 'for details.',
-	              propFullName,
-	              componentName
-	            );
-	            manualPropTypeCallCache[cacheKey] = true;
-	            manualPropTypeWarningCount++;
-	          }
-	        }
-	      }
-	      if (props[propName] == null) {
-	        if (isRequired) {
-	          if (props[propName] === null) {
-	            return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required ' + ('in `' + componentName + '`, but its value is `null`.'));
-	          }
-	          return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required in ' + ('`' + componentName + '`, but its value is `undefined`.'));
-	        }
-	        return null;
-	      } else {
-	        return validate(props, propName, componentName, location, propFullName);
-	      }
-	    }
-	
-	    var chainedCheckType = checkType.bind(null, false);
-	    chainedCheckType.isRequired = checkType.bind(null, true);
-	
-	    return chainedCheckType;
-	  }
-	
-	  function createPrimitiveTypeChecker(expectedType) {
-	    function validate(props, propName, componentName, location, propFullName, secret) {
-	      var propValue = props[propName];
-	      var propType = getPropType(propValue);
-	      if (propType !== expectedType) {
-	        // `propValue` being instance of, say, date/regexp, pass the 'object'
-	        // check, but we can offer a more precise error message here rather than
-	        // 'of type `object`'.
-	        var preciseType = getPreciseType(propValue);
-	
-	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + preciseType + '` supplied to `' + componentName + '`, expected ') + ('`' + expectedType + '`.'));
-	      }
-	      return null;
-	    }
-	    return createChainableTypeChecker(validate);
-	  }
-	
-	  function createAnyTypeChecker() {
-	    return createChainableTypeChecker(emptyFunction.thatReturnsNull);
-	  }
-	
-	  function createArrayOfTypeChecker(typeChecker) {
-	    function validate(props, propName, componentName, location, propFullName) {
-	      if (typeof typeChecker !== 'function') {
-	        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside arrayOf.');
-	      }
-	      var propValue = props[propName];
-	      if (!Array.isArray(propValue)) {
-	        var propType = getPropType(propValue);
-	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an array.'));
-	      }
-	      for (var i = 0; i < propValue.length; i++) {
-	        var error = typeChecker(propValue, i, componentName, location, propFullName + '[' + i + ']', ReactPropTypesSecret);
-	        if (error instanceof Error) {
-	          return error;
-	        }
-	      }
-	      return null;
-	    }
-	    return createChainableTypeChecker(validate);
-	  }
-	
-	  function createElementTypeChecker() {
-	    function validate(props, propName, componentName, location, propFullName) {
-	      var propValue = props[propName];
-	      if (!isValidElement(propValue)) {
-	        var propType = getPropType(propValue);
-	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected a single ReactElement.'));
-	      }
-	      return null;
-	    }
-	    return createChainableTypeChecker(validate);
-	  }
-	
-	  function createInstanceTypeChecker(expectedClass) {
-	    function validate(props, propName, componentName, location, propFullName) {
-	      if (!(props[propName] instanceof expectedClass)) {
-	        var expectedClassName = expectedClass.name || ANONYMOUS;
-	        var actualClassName = getClassName(props[propName]);
-	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + actualClassName + '` supplied to `' + componentName + '`, expected ') + ('instance of `' + expectedClassName + '`.'));
-	      }
-	      return null;
-	    }
-	    return createChainableTypeChecker(validate);
-	  }
-	
-	  function createEnumTypeChecker(expectedValues) {
-	    if (!Array.isArray(expectedValues)) {
-	      process.env.NODE_ENV !== 'production' ? warning(false, 'Invalid argument supplied to oneOf, expected an instance of array.') : void 0;
-	      return emptyFunction.thatReturnsNull;
-	    }
-	
-	    function validate(props, propName, componentName, location, propFullName) {
-	      var propValue = props[propName];
-	      for (var i = 0; i < expectedValues.length; i++) {
-	        if (is(propValue, expectedValues[i])) {
-	          return null;
-	        }
-	      }
-	
-	      var valuesString = JSON.stringify(expectedValues);
-	      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of value `' + propValue + '` ' + ('supplied to `' + componentName + '`, expected one of ' + valuesString + '.'));
-	    }
-	    return createChainableTypeChecker(validate);
-	  }
-	
-	  function createObjectOfTypeChecker(typeChecker) {
-	    function validate(props, propName, componentName, location, propFullName) {
-	      if (typeof typeChecker !== 'function') {
-	        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside objectOf.');
-	      }
-	      var propValue = props[propName];
-	      var propType = getPropType(propValue);
-	      if (propType !== 'object') {
-	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an object.'));
-	      }
-	      for (var key in propValue) {
-	        if (propValue.hasOwnProperty(key)) {
-	          var error = typeChecker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
-	          if (error instanceof Error) {
-	            return error;
-	          }
-	        }
-	      }
-	      return null;
-	    }
-	    return createChainableTypeChecker(validate);
-	  }
-	
-	  function createUnionTypeChecker(arrayOfTypeCheckers) {
-	    if (!Array.isArray(arrayOfTypeCheckers)) {
-	      process.env.NODE_ENV !== 'production' ? warning(false, 'Invalid argument supplied to oneOfType, expected an instance of array.') : void 0;
-	      return emptyFunction.thatReturnsNull;
-	    }
-	
-	    for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
-	      var checker = arrayOfTypeCheckers[i];
-	      if (typeof checker !== 'function') {
-	        warning(
-	          false,
-	          'Invalid argument supplied to oneOfType. Expected an array of check functions, but ' +
-	          'received %s at index %s.',
-	          getPostfixForTypeWarning(checker),
-	          i
-	        );
-	        return emptyFunction.thatReturnsNull;
-	      }
-	    }
-	
-	    function validate(props, propName, componentName, location, propFullName) {
-	      for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
-	        var checker = arrayOfTypeCheckers[i];
-	        if (checker(props, propName, componentName, location, propFullName, ReactPropTypesSecret) == null) {
-	          return null;
-	        }
-	      }
-	
-	      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`.'));
-	    }
-	    return createChainableTypeChecker(validate);
-	  }
-	
-	  function createNodeChecker() {
-	    function validate(props, propName, componentName, location, propFullName) {
-	      if (!isNode(props[propName])) {
-	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`, expected a ReactNode.'));
-	      }
-	      return null;
-	    }
-	    return createChainableTypeChecker(validate);
-	  }
-	
-	  function createShapeTypeChecker(shapeTypes) {
-	    function validate(props, propName, componentName, location, propFullName) {
-	      var propValue = props[propName];
-	      var propType = getPropType(propValue);
-	      if (propType !== 'object') {
-	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
-	      }
-	      for (var key in shapeTypes) {
-	        var checker = shapeTypes[key];
-	        if (!checker) {
-	          continue;
-	        }
-	        var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
-	        if (error) {
-	          return error;
-	        }
-	      }
-	      return null;
-	    }
-	    return createChainableTypeChecker(validate);
-	  }
-	
-	  function createStrictShapeTypeChecker(shapeTypes) {
-	    function validate(props, propName, componentName, location, propFullName) {
-	      var propValue = props[propName];
-	      var propType = getPropType(propValue);
-	      if (propType !== 'object') {
-	        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
-	      }
-	      // We need to check all keys in case some are required but missing from
-	      // props.
-	      var allKeys = assign({}, props[propName], shapeTypes);
-	      for (var key in allKeys) {
-	        var checker = shapeTypes[key];
-	        if (!checker) {
-	          return new PropTypeError(
-	            'Invalid ' + location + ' `' + propFullName + '` key `' + key + '` supplied to `' + componentName + '`.' +
-	            '\nBad object: ' + JSON.stringify(props[propName], null, '  ') +
-	            '\nValid keys: ' +  JSON.stringify(Object.keys(shapeTypes), null, '  ')
-	          );
-	        }
-	        var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
-	        if (error) {
-	          return error;
-	        }
-	      }
-	      return null;
-	    }
-	
-	    return createChainableTypeChecker(validate);
-	  }
-	
-	  function isNode(propValue) {
-	    switch (typeof propValue) {
-	      case 'number':
-	      case 'string':
-	      case 'undefined':
-	        return true;
-	      case 'boolean':
-	        return !propValue;
-	      case 'object':
-	        if (Array.isArray(propValue)) {
-	          return propValue.every(isNode);
-	        }
-	        if (propValue === null || isValidElement(propValue)) {
-	          return true;
-	        }
-	
-	        var iteratorFn = getIteratorFn(propValue);
-	        if (iteratorFn) {
-	          var iterator = iteratorFn.call(propValue);
-	          var step;
-	          if (iteratorFn !== propValue.entries) {
-	            while (!(step = iterator.next()).done) {
-	              if (!isNode(step.value)) {
-	                return false;
-	              }
-	            }
-	          } else {
-	            // Iterator will provide entry [k,v] tuples rather than values.
-	            while (!(step = iterator.next()).done) {
-	              var entry = step.value;
-	              if (entry) {
-	                if (!isNode(entry[1])) {
-	                  return false;
-	                }
-	              }
-	            }
-	          }
-	        } else {
-	          return false;
-	        }
-	
-	        return true;
-	      default:
-	        return false;
-	    }
-	  }
-	
-	  function isSymbol(propType, propValue) {
-	    // Native Symbol.
-	    if (propType === 'symbol') {
-	      return true;
-	    }
-	
-	    // 19.4.3.5 Symbol.prototype[@@toStringTag] === 'Symbol'
-	    if (propValue['@@toStringTag'] === 'Symbol') {
-	      return true;
-	    }
-	
-	    // Fallback for non-spec compliant Symbols which are polyfilled.
-	    if (typeof Symbol === 'function' && propValue instanceof Symbol) {
-	      return true;
-	    }
-	
+	function isPlainObject(obj) {
+	  if (!isObject(obj)) {
 	    return false;
 	  }
 	
-	  // Equivalent of `typeof` but with special handling for array and regexp.
-	  function getPropType(propValue) {
-	    var propType = typeof propValue;
-	    if (Array.isArray(propValue)) {
-	      return 'array';
-	    }
-	    if (propValue instanceof RegExp) {
-	      // Old webkits (at least until Android 4.0) return 'function' rather than
-	      // 'object' for typeof a RegExp. We'll normalize this here so that /bla/
-	      // passes PropTypes.object.
-	      return 'object';
-	    }
-	    if (isSymbol(propType, propValue)) {
-	      return 'symbol';
-	    }
-	    return propType;
+	  try {
+	    var _constructor = obj.constructor;
+	    var prototype = _constructor.prototype;
+	
+	    return _constructor && prototype && hasOwnProperty.call(prototype, 'isPrototypeOf');
+	  } catch (e) {
+	    return false;
+	  }
+	}
+	
+	function isFunction(fn) {
+	  return typeOf(fn) === 'function';
+	}
+	
+	function isArray(arr) {
+	  return Array.isArray ? Array.isArray(arr) : typeOf(arr) === 'array';
+	}
+	
+	
+	
+	function trim(str) {
+	  if (typeof str === 'string') {
+	    str = str.trim ? str.trim() : str.replace(REGEXP_TRIM, '$1');
 	  }
 	
-	  // This handles more types than `getPropType`. Only used for error messages.
-	  // See `createPrimitiveTypeChecker`.
-	  function getPreciseType(propValue) {
-	    if (typeof propValue === 'undefined' || propValue === null) {
-	      return '' + propValue;
+	  return str;
+	}
+	
+	function each(obj, callback) {
+	  if (obj && isFunction(callback)) {
+	    var i = void 0;
+	
+	    if (isArray(obj) || isNumber(obj.length) /* array-like */) {
+	        var length = obj.length;
+	
+	        for (i = 0; i < length; i++) {
+	          if (callback.call(obj, obj[i], i, obj) === false) {
+	            break;
+	          }
+	        }
+	      } else if (isObject(obj)) {
+	      Object.keys(obj).forEach(function (key) {
+	        callback.call(obj, obj[key], key, obj);
+	      });
 	    }
-	    var propType = getPropType(propValue);
-	    if (propType === 'object') {
-	      if (propValue instanceof Date) {
-	        return 'date';
-	      } else if (propValue instanceof RegExp) {
-	        return 'regexp';
+	  }
+	
+	  return obj;
+	}
+	
+	function extend(obj) {
+	  for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+	    args[_key - 1] = arguments[_key];
+	  }
+	
+	  if (isObject(obj) && args.length > 0) {
+	    if (Object.assign) {
+	      return Object.assign.apply(Object, [obj].concat(args));
+	    }
+	
+	    args.forEach(function (arg) {
+	      if (isObject(arg)) {
+	        Object.keys(arg).forEach(function (key) {
+	          obj[key] = arg[key];
+	        });
+	      }
+	    });
+	  }
+	
+	  return obj;
+	}
+	
+	function proxy(fn, context) {
+	  for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+	    args[_key2 - 2] = arguments[_key2];
+	  }
+	
+	  return function () {
+	    for (var _len3 = arguments.length, args2 = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+	      args2[_key3] = arguments[_key3];
+	    }
+	
+	    return fn.apply(context, args.concat(args2));
+	  };
+	}
+	
+	function setStyle(element, styles) {
+	  var style = element.style;
+	
+	  each(styles, function (value, property) {
+	    if (REGEXP_SUFFIX.test(property) && isNumber(value)) {
+	      value += 'px';
+	    }
+	
+	    style[property] = value;
+	  });
+	}
+	
+	function hasClass(element, value) {
+	  return element.classList ? element.classList.contains(value) : element.className.indexOf(value) > -1;
+	}
+	
+	function addClass(element, value) {
+	  if (!value) {
+	    return;
+	  }
+	
+	  if (isNumber(element.length)) {
+	    each(element, function (elem) {
+	      addClass(elem, value);
+	    });
+	    return;
+	  }
+	
+	  if (element.classList) {
+	    element.classList.add(value);
+	    return;
+	  }
+	
+	  var className = trim(element.className);
+	
+	  if (!className) {
+	    element.className = value;
+	  } else if (className.indexOf(value) < 0) {
+	    element.className = className + ' ' + value;
+	  }
+	}
+	
+	function removeClass(element, value) {
+	  if (!value) {
+	    return;
+	  }
+	
+	  if (isNumber(element.length)) {
+	    each(element, function (elem) {
+	      removeClass(elem, value);
+	    });
+	    return;
+	  }
+	
+	  if (element.classList) {
+	    element.classList.remove(value);
+	    return;
+	  }
+	
+	  if (element.className.indexOf(value) >= 0) {
+	    element.className = element.className.replace(value, '');
+	  }
+	}
+	
+	function toggleClass(element, value, added) {
+	  if (!value) {
+	    return;
+	  }
+	
+	  if (isNumber(element.length)) {
+	    each(element, function (elem) {
+	      toggleClass(elem, value, added);
+	    });
+	    return;
+	  }
+	
+	  // IE10-11 doesn't support the second parameter of `classList.toggle`
+	  if (added) {
+	    addClass(element, value);
+	  } else {
+	    removeClass(element, value);
+	  }
+	}
+	
+	function hyphenate(str) {
+	  return str.replace(REGEXP_HYPHENATE, '$1-$2').toLowerCase();
+	}
+	
+	function getData$1(element, name) {
+	  if (isObject(element[name])) {
+	    return element[name];
+	  } else if (element.dataset) {
+	    return element.dataset[name];
+	  }
+	
+	  return element.getAttribute('data-' + hyphenate(name));
+	}
+	
+	function setData$1(element, name, data) {
+	  if (isObject(data)) {
+	    element[name] = data;
+	  } else if (element.dataset) {
+	    element.dataset[name] = data;
+	  } else {
+	    element.setAttribute('data-' + hyphenate(name), data);
+	  }
+	}
+	
+	function removeData(element, name) {
+	  if (isObject(element[name])) {
+	    delete element[name];
+	  } else if (element.dataset) {
+	    // #128 Safari not allows to delete dataset property
+	    try {
+	      delete element.dataset[name];
+	    } catch (e) {
+	      element.dataset[name] = null;
+	    }
+	  } else {
+	    element.removeAttribute('data-' + hyphenate(name));
+	  }
+	}
+	
+	function removeListener(element, type, handler) {
+	  var types = trim(type).split(REGEXP_SPACES);
+	
+	  if (types.length > 1) {
+	    each(types, function (t) {
+	      removeListener(element, t, handler);
+	    });
+	    return;
+	  }
+	
+	  if (element.removeEventListener) {
+	    element.removeEventListener(type, handler, false);
+	  } else if (element.detachEvent) {
+	    element.detachEvent('on' + type, handler);
+	  }
+	}
+	
+	function addListener(element, type, _handler, once) {
+	  var types = trim(type).split(REGEXP_SPACES);
+	  var originalHandler = _handler;
+	
+	  if (types.length > 1) {
+	    each(types, function (t) {
+	      addListener(element, t, _handler);
+	    });
+	    return;
+	  }
+	
+	  if (once) {
+	    _handler = function handler() {
+	      for (var _len4 = arguments.length, args = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+	        args[_key4] = arguments[_key4];
+	      }
+	
+	      removeListener(element, type, _handler);
+	
+	      return originalHandler.apply(element, args);
+	    };
+	  }
+	
+	  if (element.addEventListener) {
+	    element.addEventListener(type, _handler, false);
+	  } else if (element.attachEvent) {
+	    element.attachEvent('on' + type, _handler);
+	  }
+	}
+	
+	function dispatchEvent(element, type, data) {
+	  if (element.dispatchEvent) {
+	    var event = void 0;
+	
+	    // Event and CustomEvent on IE9-11 are global objects, not constructors
+	    if (isFunction(Event) && isFunction(CustomEvent)) {
+	      if (isUndefined(data)) {
+	        event = new Event(type, {
+	          bubbles: true,
+	          cancelable: true
+	        });
+	      } else {
+	        event = new CustomEvent(type, {
+	          detail: data,
+	          bubbles: true,
+	          cancelable: true
+	        });
+	      }
+	    } else if (isUndefined(data)) {
+	      event = document.createEvent('Event');
+	      event.initEvent(type, true, true);
+	    } else {
+	      event = document.createEvent('CustomEvent');
+	      event.initCustomEvent(type, true, true, data);
+	    }
+	
+	    // IE9+
+	    return element.dispatchEvent(event);
+	  } else if (element.fireEvent) {
+	    // IE6-10 (native events only)
+	    return element.fireEvent('on' + type);
+	  }
+	
+	  return true;
+	}
+	
+	function getEvent(event) {
+	  var e = event || window.event;
+	
+	  // Fix target property (IE8)
+	  if (!e.target) {
+	    e.target = e.srcElement || document;
+	  }
+	
+	  if (!isNumber(e.pageX) && isNumber(e.clientX)) {
+	    var eventDoc = event.target.ownerDocument || document;
+	    var doc = eventDoc.documentElement;
+	    var body = eventDoc.body;
+	
+	    e.pageX = e.clientX + ((doc && doc.scrollLeft || body && body.scrollLeft || 0) - (doc && doc.clientLeft || body && body.clientLeft || 0));
+	    e.pageY = e.clientY + ((doc && doc.scrollTop || body && body.scrollTop || 0) - (doc && doc.clientTop || body && body.clientTop || 0));
+	  }
+	
+	  return e;
+	}
+	
+	function getOffset(element) {
+	  var doc = document.documentElement;
+	  var box = element.getBoundingClientRect();
+	
+	  return {
+	    left: box.left + ((window.scrollX || doc && doc.scrollLeft || 0) - (doc && doc.clientLeft || 0)),
+	    top: box.top + ((window.scrollY || doc && doc.scrollTop || 0) - (doc && doc.clientTop || 0))
+	  };
+	}
+	
+	function getByTag(element, tagName) {
+	  return element.getElementsByTagName(tagName);
+	}
+	
+	function getByClass(element, className) {
+	  return element.getElementsByClassName ? element.getElementsByClassName(className) : element.querySelectorAll('.' + className);
+	}
+	
+	function createElement(tagName) {
+	  return document.createElement(tagName);
+	}
+	
+	function appendChild(element, elem) {
+	  element.appendChild(elem);
+	}
+	
+	function removeChild(element) {
+	  if (element.parentNode) {
+	    element.parentNode.removeChild(element);
+	  }
+	}
+	
+	function empty(element) {
+	  while (element.firstChild) {
+	    element.removeChild(element.firstChild);
+	  }
+	}
+	
+	function isCrossOriginURL(url) {
+	  var parts = url.match(REGEXP_ORIGINS);
+	
+	  return parts && (parts[1] !== location.protocol || parts[2] !== location.hostname || parts[3] !== location.port);
+	}
+	
+	function addTimestamp(url) {
+	  var timestamp = 'timestamp=' + new Date().getTime();
+	
+	  return url + (url.indexOf('?') === -1 ? '?' : '&') + timestamp;
+	}
+	
+	function getImageSize(image, callback) {
+	  // Modern browsers (ignore Safari)
+	  if (image.naturalWidth && !IS_SAFARI_OR_UIWEBVIEW) {
+	    callback(image.naturalWidth, image.naturalHeight);
+	    return;
+	  }
+	
+	  // IE8: Don't use `new Image()` here
+	  var newImage = createElement('img');
+	
+	  newImage.onload = function load() {
+	    callback(this.width, this.height);
+	  };
+	
+	  newImage.src = image.src;
+	}
+	
+	function getTransforms(data) {
+	  var transforms = [];
+	  var translateX = data.translateX;
+	  var translateY = data.translateY;
+	  var rotate = data.rotate;
+	  var scaleX = data.scaleX;
+	  var scaleY = data.scaleY;
+	
+	  if (isNumber(translateX) && translateX !== 0) {
+	    transforms.push('translateX(' + translateX + 'px)');
+	  }
+	
+	  if (isNumber(translateY) && translateY !== 0) {
+	    transforms.push('translateY(' + translateY + 'px)');
+	  }
+	
+	  // Rotate should come first before scale to match orientation transform
+	  if (isNumber(rotate) && rotate !== 0) {
+	    transforms.push('rotate(' + rotate + 'deg)');
+	  }
+	
+	  if (isNumber(scaleX) && scaleX !== 1) {
+	    transforms.push('scaleX(' + scaleX + ')');
+	  }
+	
+	  if (isNumber(scaleY) && scaleY !== 1) {
+	    transforms.push('scaleY(' + scaleY + ')');
+	  }
+	
+	  var transform = transforms.length ? transforms.join(' ') : 'none';
+	
+	  return {
+	    WebkitTransform: transform,
+	    msTransform: transform,
+	    transform: transform
+	  };
+	}
+	
+	function getRotatedSizes(data, reversed) {
+	  var deg = Math.abs(data.degree) % 180;
+	  var arc = (deg > 90 ? 180 - deg : deg) * Math.PI / 180;
+	  var sinArc = Math.sin(arc);
+	  var cosArc = Math.cos(arc);
+	  var width = data.width;
+	  var height = data.height;
+	  var aspectRatio = data.aspectRatio;
+	  var newWidth = void 0;
+	  var newHeight = void 0;
+	
+	  if (!reversed) {
+	    newWidth = width * cosArc + height * sinArc;
+	    newHeight = width * sinArc + height * cosArc;
+	  } else {
+	    newWidth = width / (cosArc + sinArc / aspectRatio);
+	    newHeight = newWidth / aspectRatio;
+	  }
+	
+	  return {
+	    width: newWidth,
+	    height: newHeight
+	  };
+	}
+	
+	function getSourceCanvas(image, data, options) {
+	  var canvas = createElement('canvas');
+	  var context = canvas.getContext('2d');
+	  var dstX = 0;
+	  var dstY = 0;
+	  var dstWidth = data.naturalWidth;
+	  var dstHeight = data.naturalHeight;
+	  var rotate = data.rotate;
+	  var scaleX = data.scaleX;
+	  var scaleY = data.scaleY;
+	  var scalable = isNumber(scaleX) && isNumber(scaleY) && (scaleX !== 1 || scaleY !== 1);
+	  var rotatable = isNumber(rotate) && rotate !== 0;
+	  var advanced = rotatable || scalable;
+	  var canvasWidth = dstWidth * Math.abs(scaleX || 1);
+	  var canvasHeight = dstHeight * Math.abs(scaleY || 1);
+	  var translateX = void 0;
+	  var translateY = void 0;
+	  var rotated = void 0;
+	
+	  if (scalable) {
+	    translateX = canvasWidth / 2;
+	    translateY = canvasHeight / 2;
+	  }
+	
+	  if (rotatable) {
+	    rotated = getRotatedSizes({
+	      width: canvasWidth,
+	      height: canvasHeight,
+	      degree: rotate
+	    });
+	
+	    canvasWidth = rotated.width;
+	    canvasHeight = rotated.height;
+	    translateX = canvasWidth / 2;
+	    translateY = canvasHeight / 2;
+	  }
+	
+	  canvas.width = canvasWidth;
+	  canvas.height = canvasHeight;
+	
+	  if (options.fillColor) {
+	    context.fillStyle = options.fillColor;
+	    context.fillRect(0, 0, canvasWidth, canvasHeight);
+	  }
+	
+	  if (advanced) {
+	    dstX = -dstWidth / 2;
+	    dstY = -dstHeight / 2;
+	
+	    context.save();
+	    context.translate(translateX, translateY);
+	  }
+	
+	  // Rotate should come first before scale as in the "getTransform" function
+	  if (rotatable) {
+	    context.rotate(rotate * Math.PI / 180);
+	  }
+	
+	  if (scalable) {
+	    context.scale(scaleX, scaleY);
+	  }
+	
+	  context.imageSmoothingEnabled = !!options.imageSmoothingEnabled;
+	
+	  if (options.imageSmoothingQuality) {
+	    context.imageSmoothingQuality = options.imageSmoothingQuality;
+	  }
+	
+	  context.drawImage(image, Math.floor(dstX), Math.floor(dstY), Math.floor(dstWidth), Math.floor(dstHeight));
+	
+	  if (advanced) {
+	    context.restore();
+	  }
+	
+	  return canvas;
+	}
+	
+	function getStringFromCharCode(dataView, start, length) {
+	  var str = '';
+	  var i = start;
+	
+	  for (length += start; i < length; i++) {
+	    str += fromCharCode(dataView.getUint8(i));
+	  }
+	
+	  return str;
+	}
+	
+	function getOrientation(arrayBuffer) {
+	  var dataView = new DataView(arrayBuffer);
+	  var length = dataView.byteLength;
+	  var orientation = void 0;
+	  var exifIDCode = void 0;
+	  var tiffOffset = void 0;
+	  var firstIFDOffset = void 0;
+	  var littleEndian = void 0;
+	  var endianness = void 0;
+	  var app1Start = void 0;
+	  var ifdStart = void 0;
+	  var offset = void 0;
+	  var i = void 0;
+	
+	  // Only handle JPEG image (start by 0xFFD8)
+	  if (dataView.getUint8(0) === 0xFF && dataView.getUint8(1) === 0xD8) {
+	    offset = 2;
+	
+	    while (offset < length) {
+	      if (dataView.getUint8(offset) === 0xFF && dataView.getUint8(offset + 1) === 0xE1) {
+	        app1Start = offset;
+	        break;
+	      }
+	
+	      offset++;
+	    }
+	  }
+	
+	  if (app1Start) {
+	    exifIDCode = app1Start + 4;
+	    tiffOffset = app1Start + 10;
+	
+	    if (getStringFromCharCode(dataView, exifIDCode, 4) === 'Exif') {
+	      endianness = dataView.getUint16(tiffOffset);
+	      littleEndian = endianness === 0x4949;
+	
+	      if (littleEndian || endianness === 0x4D4D /* bigEndian */) {
+	          if (dataView.getUint16(tiffOffset + 2, littleEndian) === 0x002A) {
+	            firstIFDOffset = dataView.getUint32(tiffOffset + 4, littleEndian);
+	
+	            if (firstIFDOffset >= 0x00000008) {
+	              ifdStart = tiffOffset + firstIFDOffset;
+	            }
+	          }
+	        }
+	    }
+	  }
+	
+	  if (ifdStart) {
+	    length = dataView.getUint16(ifdStart, littleEndian);
+	
+	    for (i = 0; i < length; i++) {
+	      offset = ifdStart + i * 12 + 2;
+	
+	      if (dataView.getUint16(offset, littleEndian) === 0x0112 /* Orientation */) {
+	          // 8 is the offset of the current tag's value
+	          offset += 8;
+	
+	          // Get the original orientation value
+	          orientation = dataView.getUint16(offset, littleEndian);
+	
+	          // Override the orientation with its default value for Safari
+	          if (IS_SAFARI_OR_UIWEBVIEW) {
+	            dataView.setUint16(offset, 1, littleEndian);
+	          }
+	
+	          break;
+	        }
+	    }
+	  }
+	
+	  return orientation;
+	}
+	
+	function dataURLToArrayBuffer(dataURL) {
+	  var base64 = dataURL.replace(REGEXP_DATA_URL_HEAD, '');
+	  var binary = atob(base64);
+	  var length = binary.length;
+	  var arrayBuffer = new ArrayBuffer(length);
+	  var dataView = new Uint8Array(arrayBuffer);
+	  var i = void 0;
+	
+	  for (i = 0; i < length; i++) {
+	    dataView[i] = binary.charCodeAt(i);
+	  }
+	
+	  return arrayBuffer;
+	}
+	
+	// Only available for JPEG image
+	function arrayBufferToDataURL(arrayBuffer) {
+	  var dataView = new Uint8Array(arrayBuffer);
+	  var length = dataView.length;
+	  var base64 = '';
+	  var i = void 0;
+	
+	  for (i = 0; i < length; i++) {
+	    base64 += fromCharCode(dataView[i]);
+	  }
+	
+	  return 'data:image/jpeg;base64,' + btoa(base64);
+	}
+	
+	var render$1 = {
+	  render: function render() {
+	    var self = this;
+	
+	    self.initContainer();
+	    self.initCanvas();
+	    self.initCropBox();
+	
+	    self.renderCanvas();
+	
+	    if (self.cropped) {
+	      self.renderCropBox();
+	    }
+	  },
+	  initContainer: function initContainer() {
+	    var self = this;
+	    var options = self.options;
+	    var element = self.element;
+	    var container = self.container;
+	    var cropper = self.cropper;
+	    var hidden = 'cropper-hidden';
+	    var containerData = void 0;
+	
+	    addClass(cropper, hidden);
+	    removeClass(element, hidden);
+	
+	    self.containerData = containerData = {
+	      width: Math.max(container.offsetWidth, Number(options.minContainerWidth) || 200),
+	      height: Math.max(container.offsetHeight, Number(options.minContainerHeight) || 100)
+	    };
+	
+	    setStyle(cropper, {
+	      width: containerData.width,
+	      height: containerData.height
+	    });
+	
+	    addClass(element, hidden);
+	    removeClass(cropper, hidden);
+	  },
+	
+	
+	  // Canvas (image wrapper)
+	  initCanvas: function initCanvas() {
+	    var self = this;
+	    var viewMode = self.options.viewMode;
+	    var containerData = self.containerData;
+	    var imageData = self.imageData;
+	    var rotated = Math.abs(imageData.rotate) % 180 === 90;
+	    var naturalWidth = rotated ? imageData.naturalHeight : imageData.naturalWidth;
+	    var naturalHeight = rotated ? imageData.naturalWidth : imageData.naturalHeight;
+	    var aspectRatio = naturalWidth / naturalHeight;
+	    var canvasWidth = containerData.width;
+	    var canvasHeight = containerData.height;
+	
+	    if (containerData.height * aspectRatio > containerData.width) {
+	      if (viewMode === 3) {
+	        canvasWidth = containerData.height * aspectRatio;
+	      } else {
+	        canvasHeight = containerData.width / aspectRatio;
+	      }
+	    } else if (viewMode === 3) {
+	      canvasHeight = containerData.width / aspectRatio;
+	    } else {
+	      canvasWidth = containerData.height * aspectRatio;
+	    }
+	
+	    var canvasData = {
+	      naturalWidth: naturalWidth,
+	      naturalHeight: naturalHeight,
+	      aspectRatio: aspectRatio,
+	      width: canvasWidth,
+	      height: canvasHeight
+	    };
+	
+	    canvasData.oldLeft = canvasData.left = (containerData.width - canvasWidth) / 2;
+	    canvasData.oldTop = canvasData.top = (containerData.height - canvasHeight) / 2;
+	
+	    self.canvasData = canvasData;
+	    self.limited = viewMode === 1 || viewMode === 2;
+	    self.limitCanvas(true, true);
+	    self.initialImageData = extend({}, imageData);
+	    self.initialCanvasData = extend({}, canvasData);
+	  },
+	  limitCanvas: function limitCanvas(sizeLimited, positionLimited) {
+	    var self = this;
+	    var options = self.options;
+	    var viewMode = options.viewMode;
+	    var containerData = self.containerData;
+	    var canvasData = self.canvasData;
+	    var aspectRatio = canvasData.aspectRatio;
+	    var cropBoxData = self.cropBoxData;
+	    var cropped = self.cropped && cropBoxData;
+	
+	    if (sizeLimited) {
+	      var minCanvasWidth = Number(options.minCanvasWidth) || 0;
+	      var minCanvasHeight = Number(options.minCanvasHeight) || 0;
+	
+	      if (viewMode > 1) {
+	        minCanvasWidth = Math.max(minCanvasWidth, containerData.width);
+	        minCanvasHeight = Math.max(minCanvasHeight, containerData.height);
+	
+	        if (viewMode === 3) {
+	          if (minCanvasHeight * aspectRatio > minCanvasWidth) {
+	            minCanvasWidth = minCanvasHeight * aspectRatio;
+	          } else {
+	            minCanvasHeight = minCanvasWidth / aspectRatio;
+	          }
+	        }
+	      } else if (viewMode > 0) {
+	        if (minCanvasWidth) {
+	          minCanvasWidth = Math.max(minCanvasWidth, cropped ? cropBoxData.width : 0);
+	        } else if (minCanvasHeight) {
+	          minCanvasHeight = Math.max(minCanvasHeight, cropped ? cropBoxData.height : 0);
+	        } else if (cropped) {
+	          minCanvasWidth = cropBoxData.width;
+	          minCanvasHeight = cropBoxData.height;
+	
+	          if (minCanvasHeight * aspectRatio > minCanvasWidth) {
+	            minCanvasWidth = minCanvasHeight * aspectRatio;
+	          } else {
+	            minCanvasHeight = minCanvasWidth / aspectRatio;
+	          }
+	        }
+	      }
+	
+	      if (minCanvasWidth && minCanvasHeight) {
+	        if (minCanvasHeight * aspectRatio > minCanvasWidth) {
+	          minCanvasHeight = minCanvasWidth / aspectRatio;
+	        } else {
+	          minCanvasWidth = minCanvasHeight * aspectRatio;
+	        }
+	      } else if (minCanvasWidth) {
+	        minCanvasHeight = minCanvasWidth / aspectRatio;
+	      } else if (minCanvasHeight) {
+	        minCanvasWidth = minCanvasHeight * aspectRatio;
+	      }
+	
+	      canvasData.minWidth = minCanvasWidth;
+	      canvasData.minHeight = minCanvasHeight;
+	      canvasData.maxWidth = Infinity;
+	      canvasData.maxHeight = Infinity;
+	    }
+	
+	    if (positionLimited) {
+	      if (viewMode) {
+	        var newCanvasLeft = containerData.width - canvasData.width;
+	        var newCanvasTop = containerData.height - canvasData.height;
+	
+	        canvasData.minLeft = Math.min(0, newCanvasLeft);
+	        canvasData.minTop = Math.min(0, newCanvasTop);
+	        canvasData.maxLeft = Math.max(0, newCanvasLeft);
+	        canvasData.maxTop = Math.max(0, newCanvasTop);
+	
+	        if (cropped && self.limited) {
+	          canvasData.minLeft = Math.min(cropBoxData.left, cropBoxData.left + (cropBoxData.width - canvasData.width));
+	          canvasData.minTop = Math.min(cropBoxData.top, cropBoxData.top + (cropBoxData.height - canvasData.height));
+	          canvasData.maxLeft = cropBoxData.left;
+	          canvasData.maxTop = cropBoxData.top;
+	
+	          if (viewMode === 2) {
+	            if (canvasData.width >= containerData.width) {
+	              canvasData.minLeft = Math.min(0, newCanvasLeft);
+	              canvasData.maxLeft = Math.max(0, newCanvasLeft);
+	            }
+	
+	            if (canvasData.height >= containerData.height) {
+	              canvasData.minTop = Math.min(0, newCanvasTop);
+	              canvasData.maxTop = Math.max(0, newCanvasTop);
+	            }
+	          }
+	        }
+	      } else {
+	        canvasData.minLeft = -canvasData.width;
+	        canvasData.minTop = -canvasData.height;
+	        canvasData.maxLeft = containerData.width;
+	        canvasData.maxTop = containerData.height;
 	      }
 	    }
-	    return propType;
-	  }
+	  },
+	  renderCanvas: function renderCanvas(changed) {
+	    var self = this;
+	    var canvasData = self.canvasData;
+	    var imageData = self.imageData;
+	    var rotate = imageData.rotate;
 	
-	  // Returns a string that is postfixed to a warning about an invalid type.
-	  // For example, "undefined" or "of type array"
-	  function getPostfixForTypeWarning(value) {
-	    var type = getPreciseType(value);
-	    switch (type) {
-	      case 'array':
-	      case 'object':
-	        return 'an ' + type;
-	      case 'boolean':
-	      case 'date':
-	      case 'regexp':
-	        return 'a ' + type;
-	      default:
-	        return type;
-	    }
-	  }
+	    if (self.rotated) {
+	      self.rotated = false;
 	
-	  // Returns class name of the object, if any.
-	  function getClassName(propValue) {
-	    if (!propValue.constructor || !propValue.constructor.name) {
-	      return ANONYMOUS;
-	    }
-	    return propValue.constructor.name;
-	  }
+	      // Computes rotated sizes with image sizes
+	      var rotatedData = getRotatedSizes({
+	        width: imageData.width,
+	        height: imageData.height,
+	        degree: rotate
+	      });
+	      var aspectRatio = rotatedData.width / rotatedData.height;
+	      var isSquareImage = imageData.aspectRatio === 1;
 	
-	  ReactPropTypes.checkPropTypes = checkPropTypes;
-	  ReactPropTypes.PropTypes = ReactPropTypes;
+	      if (isSquareImage || aspectRatio !== canvasData.aspectRatio) {
+	        canvasData.left -= (rotatedData.width - canvasData.width) / 2;
+	        canvasData.top -= (rotatedData.height - canvasData.height) / 2;
+	        canvasData.width = rotatedData.width;
+	        canvasData.height = rotatedData.height;
+	        canvasData.aspectRatio = aspectRatio;
+	        canvasData.naturalWidth = imageData.naturalWidth;
+	        canvasData.naturalHeight = imageData.naturalHeight;
 	
-	  return ReactPropTypes;
-	};
+	        // Computes rotated sizes with natural image sizes
+	        if (isSquareImage && rotate % 90 || rotate % 180) {
+	          var rotatedData2 = getRotatedSizes({
+	            width: imageData.naturalWidth,
+	            height: imageData.naturalHeight,
+	            degree: rotate
+	          });
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-	
-	/***/ }),
-	/* 9 */
-	/***/ (function(module, exports, __webpack_require__) {
-	
-	"use strict";
-	/*
-	object-assign
-	(c) Sindre Sorhus
-	@license MIT
-	*/
-	
-	
-	/* eslint-disable no-unused-vars */
-	var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-	var hasOwnProperty = Object.prototype.hasOwnProperty;
-	var propIsEnumerable = Object.prototype.propertyIsEnumerable;
-	
-	function toObject(val) {
-		if (val === null || val === undefined) {
-			throw new TypeError('Object.assign cannot be called with null or undefined');
-		}
-	
-		return Object(val);
-	}
-	
-	function shouldUseNative() {
-		try {
-			if (!Object.assign) {
-				return false;
-			}
-	
-			// Detect buggy property enumeration order in older V8 versions.
-	
-			// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-			var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
-			test1[5] = 'de';
-			if (Object.getOwnPropertyNames(test1)[0] === '5') {
-				return false;
-			}
-	
-			// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-			var test2 = {};
-			for (var i = 0; i < 10; i++) {
-				test2['_' + String.fromCharCode(i)] = i;
-			}
-			var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
-				return test2[n];
-			});
-			if (order2.join('') !== '0123456789') {
-				return false;
-			}
-	
-			// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-			var test3 = {};
-			'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
-				test3[letter] = letter;
-			});
-			if (Object.keys(Object.assign({}, test3)).join('') !==
-					'abcdefghijklmnopqrst') {
-				return false;
-			}
-	
-			return true;
-		} catch (err) {
-			// We don't expect any of the above to throw, but better to be safe.
-			return false;
-		}
-	}
-	
-	module.exports = shouldUseNative() ? Object.assign : function (target, source) {
-		var from;
-		var to = toObject(target);
-		var symbols;
-	
-		for (var s = 1; s < arguments.length; s++) {
-			from = Object(arguments[s]);
-	
-			for (var key in from) {
-				if (hasOwnProperty.call(from, key)) {
-					to[key] = from[key];
-				}
-			}
-	
-			if (getOwnPropertySymbols) {
-				symbols = getOwnPropertySymbols(from);
-				for (var i = 0; i < symbols.length; i++) {
-					if (propIsEnumerable.call(from, symbols[i])) {
-						to[symbols[i]] = from[symbols[i]];
-					}
-				}
-			}
-		}
-	
-		return to;
-	};
-	
-	
-	/***/ }),
-	/* 10 */
-	/***/ (function(module, exports, __webpack_require__) {
-	
-	"use strict";
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 *
-	 * This source code is licensed under the MIT license found in the
-	 * LICENSE file in the root directory of this source tree.
-	 */
-	
-	
-	
-	if (process.env.NODE_ENV !== 'production') {
-	  var invariant = __webpack_require__(2);
-	  var warning = __webpack_require__(4);
-	  var ReactPropTypesSecret = __webpack_require__(3);
-	  var loggedTypeFailures = {};
-	}
-	
-	/**
-	 * Assert that the values match with the type specs.
-	 * Error messages are memorized and will only be shown once.
-	 *
-	 * @param {object} typeSpecs Map of name to a ReactPropType
-	 * @param {object} values Runtime values that need to be type-checked
-	 * @param {string} location e.g. "prop", "context", "child context"
-	 * @param {string} componentName Name of the component for error messages.
-	 * @param {?Function} getStack Returns the component stack.
-	 * @private
-	 */
-	function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
-	  if (process.env.NODE_ENV !== 'production') {
-	    for (var typeSpecName in typeSpecs) {
-	      if (typeSpecs.hasOwnProperty(typeSpecName)) {
-	        var error;
-	        // Prop type validation may throw. In case they do, we don't want to
-	        // fail the render phase where it didn't fail before. So we log it.
-	        // After these have been cleaned up, we'll let them throw.
-	        try {
-	          // This is intentionally an invariant that gets caught. It's the same
-	          // behavior as without this statement except with a better message.
-	          invariant(typeof typeSpecs[typeSpecName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'the `prop-types` package, but received `%s`.', componentName || 'React class', location, typeSpecName, typeof typeSpecs[typeSpecName]);
-	          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
-	        } catch (ex) {
-	          error = ex;
+	          canvasData.naturalWidth = rotatedData2.width;
+	          canvasData.naturalHeight = rotatedData2.height;
 	        }
-	        warning(!error || error instanceof Error, '%s: type specification of %s `%s` is invalid; the type checker ' + 'function must return `null` or an `Error` but returned a %s. ' + 'You may have forgotten to pass an argument to the type checker ' + 'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' + 'shape all require an argument).', componentName || 'React class', location, typeSpecName, typeof error);
-	        if (error instanceof Error && !(error.message in loggedTypeFailures)) {
-	          // Only monitor this failure once because there tends to be a lot of the
-	          // same error.
-	          loggedTypeFailures[error.message] = true;
 	
-	          var stack = getStack ? getStack() : '';
-	
-	          warning(false, 'Failed %s type: %s%s', location, error.message, stack != null ? stack : '');
-	        }
+	        self.limitCanvas(true, false);
 	      }
 	    }
+	
+	    if (canvasData.width > canvasData.maxWidth || canvasData.width < canvasData.minWidth) {
+	      canvasData.left = canvasData.oldLeft;
+	    }
+	
+	    if (canvasData.height > canvasData.maxHeight || canvasData.height < canvasData.minHeight) {
+	      canvasData.top = canvasData.oldTop;
+	    }
+	
+	    canvasData.width = Math.min(Math.max(canvasData.width, canvasData.minWidth), canvasData.maxWidth);
+	    canvasData.height = Math.min(Math.max(canvasData.height, canvasData.minHeight), canvasData.maxHeight);
+	
+	    self.limitCanvas(false, true);
+	
+	    canvasData.oldLeft = canvasData.left = Math.min(Math.max(canvasData.left, canvasData.minLeft), canvasData.maxLeft);
+	    canvasData.oldTop = canvasData.top = Math.min(Math.max(canvasData.top, canvasData.minTop), canvasData.maxTop);
+	
+	    setStyle(self.canvas, extend({
+	      width: canvasData.width,
+	      height: canvasData.height
+	    }, getTransforms({
+	      translateX: canvasData.left,
+	      translateY: canvasData.top
+	    })));
+	
+	    self.renderImage();
+	
+	    if (self.cropped && self.limited) {
+	      self.limitCropBox(true, true);
+	    }
+	
+	    if (changed) {
+	      self.output();
+	    }
+	  },
+	  renderImage: function renderImage(changed) {
+	    var self = this;
+	    var canvasData = self.canvasData;
+	    var imageData = self.imageData;
+	    var newImageData = void 0;
+	    var reversedData = void 0;
+	    var reversedWidth = void 0;
+	    var reversedHeight = void 0;
+	
+	    if (imageData.rotate) {
+	      reversedData = getRotatedSizes({
+	        width: canvasData.width,
+	        height: canvasData.height,
+	        degree: imageData.rotate,
+	        aspectRatio: imageData.aspectRatio
+	      }, true);
+	
+	      reversedWidth = reversedData.width;
+	      reversedHeight = reversedData.height;
+	
+	      newImageData = {
+	        width: reversedWidth,
+	        height: reversedHeight,
+	        left: (canvasData.width - reversedWidth) / 2,
+	        top: (canvasData.height - reversedHeight) / 2
+	      };
+	    }
+	
+	    extend(imageData, newImageData || {
+	      width: canvasData.width,
+	      height: canvasData.height,
+	      left: 0,
+	      top: 0
+	    });
+	
+	    setStyle(self.image, extend({
+	      width: imageData.width,
+	      height: imageData.height
+	    }, getTransforms(extend({
+	      translateX: imageData.left,
+	      translateY: imageData.top
+	    }, imageData))));
+	
+	    if (changed) {
+	      self.output();
+	    }
+	  },
+	  initCropBox: function initCropBox() {
+	    var self = this;
+	    var options = self.options;
+	    var aspectRatio = options.aspectRatio;
+	    var autoCropArea = Number(options.autoCropArea) || 0.8;
+	    var canvasData = self.canvasData;
+	    var cropBoxData = {
+	      width: canvasData.width,
+	      height: canvasData.height
+	    };
+	
+	    if (aspectRatio) {
+	      if (canvasData.height * aspectRatio > canvasData.width) {
+	        cropBoxData.height = cropBoxData.width / aspectRatio;
+	      } else {
+	        cropBoxData.width = cropBoxData.height * aspectRatio;
+	      }
+	    }
+	
+	    self.cropBoxData = cropBoxData;
+	    self.limitCropBox(true, true);
+	
+	    // Initialize auto crop area
+	    cropBoxData.width = Math.min(Math.max(cropBoxData.width, cropBoxData.minWidth), cropBoxData.maxWidth);
+	    cropBoxData.height = Math.min(Math.max(cropBoxData.height, cropBoxData.minHeight), cropBoxData.maxHeight);
+	
+	    // The width/height of auto crop area must large than "minWidth/Height"
+	    cropBoxData.width = Math.max(cropBoxData.minWidth, cropBoxData.width * autoCropArea);
+	    cropBoxData.height = Math.max(cropBoxData.minHeight, cropBoxData.height * autoCropArea);
+	    cropBoxData.oldLeft = cropBoxData.left = canvasData.left + (canvasData.width - cropBoxData.width) / 2;
+	    cropBoxData.oldTop = cropBoxData.top = canvasData.top + (canvasData.height - cropBoxData.height) / 2;
+	
+	    self.initialCropBoxData = extend({}, cropBoxData);
+	  },
+	  limitCropBox: function limitCropBox(sizeLimited, positionLimited) {
+	    var self = this;
+	    var options = self.options;
+	    var aspectRatio = options.aspectRatio;
+	    var containerData = self.containerData;
+	    var canvasData = self.canvasData;
+	    var cropBoxData = self.cropBoxData;
+	    var limited = self.limited;
+	
+	    if (sizeLimited) {
+	      var minCropBoxWidth = Number(options.minCropBoxWidth) || 0;
+	      var minCropBoxHeight = Number(options.minCropBoxHeight) || 0;
+	      var maxCropBoxWidth = Math.min(containerData.width, limited ? canvasData.width : containerData.width);
+	      var maxCropBoxHeight = Math.min(containerData.height, limited ? canvasData.height : containerData.height);
+	
+	      // The min/maxCropBoxWidth/Height must be less than containerWidth/Height
+	      minCropBoxWidth = Math.min(minCropBoxWidth, containerData.width);
+	      minCropBoxHeight = Math.min(minCropBoxHeight, containerData.height);
+	
+	      if (aspectRatio) {
+	        if (minCropBoxWidth && minCropBoxHeight) {
+	          if (minCropBoxHeight * aspectRatio > minCropBoxWidth) {
+	            minCropBoxHeight = minCropBoxWidth / aspectRatio;
+	          } else {
+	            minCropBoxWidth = minCropBoxHeight * aspectRatio;
+	          }
+	        } else if (minCropBoxWidth) {
+	          minCropBoxHeight = minCropBoxWidth / aspectRatio;
+	        } else if (minCropBoxHeight) {
+	          minCropBoxWidth = minCropBoxHeight * aspectRatio;
+	        }
+	
+	        if (maxCropBoxHeight * aspectRatio > maxCropBoxWidth) {
+	          maxCropBoxHeight = maxCropBoxWidth / aspectRatio;
+	        } else {
+	          maxCropBoxWidth = maxCropBoxHeight * aspectRatio;
+	        }
+	      }
+	
+	      // The minWidth/Height must be less than maxWidth/Height
+	      cropBoxData.minWidth = Math.min(minCropBoxWidth, maxCropBoxWidth);
+	      cropBoxData.minHeight = Math.min(minCropBoxHeight, maxCropBoxHeight);
+	      cropBoxData.maxWidth = maxCropBoxWidth;
+	      cropBoxData.maxHeight = maxCropBoxHeight;
+	    }
+	
+	    if (positionLimited) {
+	      if (limited) {
+	        cropBoxData.minLeft = Math.max(0, canvasData.left);
+	        cropBoxData.minTop = Math.max(0, canvasData.top);
+	        cropBoxData.maxLeft = Math.min(containerData.width, canvasData.left + canvasData.width) - cropBoxData.width;
+	        cropBoxData.maxTop = Math.min(containerData.height, canvasData.top + canvasData.height) - cropBoxData.height;
+	      } else {
+	        cropBoxData.minLeft = 0;
+	        cropBoxData.minTop = 0;
+	        cropBoxData.maxLeft = containerData.width - cropBoxData.width;
+	        cropBoxData.maxTop = containerData.height - cropBoxData.height;
+	      }
+	    }
+	  },
+	  renderCropBox: function renderCropBox() {
+	    var self = this;
+	    var options = self.options;
+	    var containerData = self.containerData;
+	    var cropBoxData = self.cropBoxData;
+	
+	    if (cropBoxData.width > cropBoxData.maxWidth || cropBoxData.width < cropBoxData.minWidth) {
+	      cropBoxData.left = cropBoxData.oldLeft;
+	    }
+	
+	    if (cropBoxData.height > cropBoxData.maxHeight || cropBoxData.height < cropBoxData.minHeight) {
+	      cropBoxData.top = cropBoxData.oldTop;
+	    }
+	
+	    cropBoxData.width = Math.min(Math.max(cropBoxData.width, cropBoxData.minWidth), cropBoxData.maxWidth);
+	    cropBoxData.height = Math.min(Math.max(cropBoxData.height, cropBoxData.minHeight), cropBoxData.maxHeight);
+	
+	    self.limitCropBox(false, true);
+	
+	    cropBoxData.oldLeft = cropBoxData.left = Math.min(Math.max(cropBoxData.left, cropBoxData.minLeft), cropBoxData.maxLeft);
+	    cropBoxData.oldTop = cropBoxData.top = Math.min(Math.max(cropBoxData.top, cropBoxData.minTop), cropBoxData.maxTop);
+	
+	    if (options.movable && options.cropBoxMovable) {
+	      // Turn to move the canvas when the crop box is equal to the container
+	      setData$1(self.face, 'action', cropBoxData.width === containerData.width && cropBoxData.height === containerData.height ? 'move' : 'all');
+	    }
+	
+	    setStyle(self.cropBox, extend({
+	      width: cropBoxData.width,
+	      height: cropBoxData.height
+	    }, getTransforms({
+	      translateX: cropBoxData.left,
+	      translateY: cropBoxData.top
+	    })));
+	
+	    if (self.cropped && self.limited) {
+	      self.limitCanvas(true, true);
+	    }
+	
+	    if (!self.disabled) {
+	      self.output();
+	    }
+	  },
+	  output: function output() {
+	    var self = this;
+	
+	    self.preview();
+	
+	    if (self.complete) {
+	      dispatchEvent(self.element, 'crop', self.getData());
+	    }
 	  }
-	}
+	};
 	
-	module.exports = checkPropTypes;
+	var DATA_PREVIEW = 'preview';
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+	var preview$1 = {
+	  initPreview: function initPreview() {
+	    var self = this;
+	    var preview = self.options.preview;
+	    var image = createElement('img');
+	    var crossOrigin = self.crossOrigin;
+	    var url = crossOrigin ? self.crossOriginUrl : self.url;
 	
-	/***/ }),
-	/* 11 */
-	/***/ (function(module, exports, __webpack_require__) {
+	    if (crossOrigin) {
+	      image.crossOrigin = crossOrigin;
+	    }
 	
-	"use strict";
-	/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 *
-	 * This source code is licensed under the MIT license found in the
-	 * LICENSE file in the root directory of this source tree.
-	 */
+	    image.src = url;
+	    appendChild(self.viewBox, image);
+	    self.image2 = image;
 	
-	
-	
-	var emptyFunction = __webpack_require__(1);
-	var invariant = __webpack_require__(2);
-	var ReactPropTypesSecret = __webpack_require__(3);
-	
-	module.exports = function() {
-	  function shim(props, propName, componentName, location, propFullName, secret) {
-	    if (secret === ReactPropTypesSecret) {
-	      // It is still safe when called from React.
+	    if (!preview) {
 	      return;
 	    }
-	    invariant(
-	      false,
-	      'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
-	      'Use PropTypes.checkPropTypes() to call them. ' +
-	      'Read more at http://fb.me/use-check-prop-types'
-	    );
-	  };
-	  shim.isRequired = shim;
-	  function getShim() {
-	    return shim;
-	  };
-	  // Important!
-	  // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
-	  var ReactPropTypes = {
-	    array: shim,
-	    bool: shim,
-	    func: shim,
-	    number: shim,
-	    object: shim,
-	    string: shim,
-	    symbol: shim,
 	
-	    any: shim,
-	    arrayOf: getShim,
-	    element: shim,
-	    instanceOf: getShim,
-	    node: shim,
-	    objectOf: getShim,
-	    oneOf: getShim,
-	    oneOfType: getShim,
-	    shape: getShim,
-	    exact: getShim
-	  };
+	    var previews = preview.querySelector ? [preview] : document.querySelectorAll(preview);
 	
-	  ReactPropTypes.checkPropTypes = emptyFunction;
-	  ReactPropTypes.PropTypes = ReactPropTypes;
+	    self.previews = previews;
 	
-	  return ReactPropTypes;
+	    each(previews, function (element) {
+	      var img = createElement('img');
+	
+	      // Save the original size for recover
+	      setData$1(element, DATA_PREVIEW, {
+	        width: element.offsetWidth,
+	        height: element.offsetHeight,
+	        html: element.innerHTML
+	      });
+	
+	      if (crossOrigin) {
+	        img.crossOrigin = crossOrigin;
+	      }
+	
+	      img.src = url;
+	
+	      /**
+	       * Override img element styles
+	       * Add `display:block` to avoid margin top issue
+	       * Add `height:auto` to override `height` attribute on IE8
+	       * (Occur only when margin-top <= -height)
+	       */
+	
+	      img.style.cssText = 'display:block;' + 'width:100%;' + 'height:auto;' + 'min-width:0!important;' + 'min-height:0!important;' + 'max-width:none!important;' + 'max-height:none!important;' + 'image-orientation:0deg!important;"';
+	
+	      empty(element);
+	      appendChild(element, img);
+	    });
+	  },
+	  resetPreview: function resetPreview() {
+	    each(this.previews, function (element) {
+	      var data = getData$1(element, DATA_PREVIEW);
+	
+	      setStyle(element, {
+	        width: data.width,
+	        height: data.height
+	      });
+	
+	      element.innerHTML = data.html;
+	      removeData(element, DATA_PREVIEW);
+	    });
+	  },
+	  preview: function preview() {
+	    var self = this;
+	    var imageData = self.imageData;
+	    var canvasData = self.canvasData;
+	    var cropBoxData = self.cropBoxData;
+	    var cropBoxWidth = cropBoxData.width;
+	    var cropBoxHeight = cropBoxData.height;
+	    var width = imageData.width;
+	    var height = imageData.height;
+	    var left = cropBoxData.left - canvasData.left - imageData.left;
+	    var top = cropBoxData.top - canvasData.top - imageData.top;
+	
+	    if (!self.cropped || self.disabled) {
+	      return;
+	    }
+	
+	    setStyle(self.image2, extend({
+	      width: width,
+	      height: height
+	    }, getTransforms(extend({
+	      translateX: -left,
+	      translateY: -top
+	    }, imageData))));
+	
+	    each(self.previews, function (element) {
+	      var data = getData$1(element, DATA_PREVIEW);
+	      var originalWidth = data.width;
+	      var originalHeight = data.height;
+	      var newWidth = originalWidth;
+	      var newHeight = originalHeight;
+	      var ratio = 1;
+	
+	      if (cropBoxWidth) {
+	        ratio = originalWidth / cropBoxWidth;
+	        newHeight = cropBoxHeight * ratio;
+	      }
+	
+	      if (cropBoxHeight && newHeight > originalHeight) {
+	        ratio = originalHeight / cropBoxHeight;
+	        newWidth = cropBoxWidth * ratio;
+	        newHeight = originalHeight;
+	      }
+	
+	      setStyle(element, {
+	        width: newWidth,
+	        height: newHeight
+	      });
+	
+	      setStyle(getByTag(element, 'img')[0], extend({
+	        width: width * ratio,
+	        height: height * ratio
+	      }, getTransforms(extend({
+	        translateX: -left * ratio,
+	        translateY: -top * ratio
+	      }, imageData))));
+	    });
+	  }
 	};
 	
+	// Globals
+	var PointerEvent = typeof window !== 'undefined' ? window.PointerEvent : null;
 	
-	/***/ })
-	/******/ ]);
-	});
+	// Events
+	var EVENT_POINTER_DOWN = PointerEvent ? 'pointerdown' : 'touchstart mousedown';
+	var EVENT_POINTER_MOVE = PointerEvent ? 'pointermove' : 'touchmove mousemove';
+	var EVENT_POINTER_UP = PointerEvent ? ' pointerup pointercancel' : 'touchend touchcancel mouseup';
+	var EVENT_WHEEL = 'wheel mousewheel DOMMouseScroll';
+	var EVENT_DBLCLICK = 'dblclick';
+	var EVENT_RESIZE = 'resize';
+	var EVENT_CROP_START = 'cropstart';
+	var EVENT_CROP_MOVE = 'cropmove';
+	var EVENT_CROP_END = 'cropend';
+	var EVENT_CROP$1 = 'crop';
+	var EVENT_ZOOM = 'zoom';
+	
+	var events = {
+	  bind: function bind() {
+	    var self = this;
+	    var options = self.options;
+	    var element = self.element;
+	    var cropper = self.cropper;
+	
+	    if (isFunction(options.cropstart)) {
+	      addListener(element, EVENT_CROP_START, options.cropstart);
+	    }
+	
+	    if (isFunction(options.cropmove)) {
+	      addListener(element, EVENT_CROP_MOVE, options.cropmove);
+	    }
+	
+	    if (isFunction(options.cropend)) {
+	      addListener(element, EVENT_CROP_END, options.cropend);
+	    }
+	
+	    if (isFunction(options.crop)) {
+	      addListener(element, EVENT_CROP$1, options.crop);
+	    }
+	
+	    if (isFunction(options.zoom)) {
+	      addListener(element, EVENT_ZOOM, options.zoom);
+	    }
+	
+	    addListener(cropper, EVENT_POINTER_DOWN, self.onCropStart = proxy(self.cropStart, self));
+	
+	    if (options.zoomable && options.zoomOnWheel) {
+	      addListener(cropper, EVENT_WHEEL, self.onWheel = proxy(self.wheel, self));
+	    }
+	
+	    if (options.toggleDragModeOnDblclick) {
+	      addListener(cropper, EVENT_DBLCLICK, self.onDblclick = proxy(self.dblclick, self));
+	    }
+	
+	    addListener(document, EVENT_POINTER_MOVE, self.onCropMove = proxy(self.cropMove, self));
+	    addListener(document, EVENT_POINTER_UP, self.onCropEnd = proxy(self.cropEnd, self));
+	
+	    if (options.responsive) {
+	      addListener(window, EVENT_RESIZE, self.onResize = proxy(self.resize, self));
+	    }
+	  },
+	  unbind: function unbind() {
+	    var self = this;
+	    var options = self.options;
+	    var element = self.element;
+	    var cropper = self.cropper;
+	
+	    if (isFunction(options.cropstart)) {
+	      removeListener(element, EVENT_CROP_START, options.cropstart);
+	    }
+	
+	    if (isFunction(options.cropmove)) {
+	      removeListener(element, EVENT_CROP_MOVE, options.cropmove);
+	    }
+	
+	    if (isFunction(options.cropend)) {
+	      removeListener(element, EVENT_CROP_END, options.cropend);
+	    }
+	
+	    if (isFunction(options.crop)) {
+	      removeListener(element, EVENT_CROP$1, options.crop);
+	    }
+	
+	    if (isFunction(options.zoom)) {
+	      removeListener(element, EVENT_ZOOM, options.zoom);
+	    }
+	
+	    removeListener(cropper, EVENT_POINTER_DOWN, self.onCropStart);
+	
+	    if (options.zoomable && options.zoomOnWheel) {
+	      removeListener(cropper, EVENT_WHEEL, self.onWheel);
+	    }
+	
+	    if (options.toggleDragModeOnDblclick) {
+	      removeListener(cropper, EVENT_DBLCLICK, self.onDblclick);
+	    }
+	
+	    removeListener(document, EVENT_POINTER_MOVE, self.onCropMove);
+	    removeListener(document, EVENT_POINTER_UP, self.onCropEnd);
+	
+	    if (options.responsive) {
+	      removeListener(window, EVENT_RESIZE, self.onResize);
+	    }
+	  }
+	};
+	
+	var REGEXP_ACTIONS = /^(e|w|s|n|se|sw|ne|nw|all|crop|move|zoom)$/;
+	
+	function getPointer(_ref, endOnly) {
+	  var pageX = _ref.pageX,
+	      pageY = _ref.pageY;
+	
+	  var end = {
+	    endX: pageX,
+	    endY: pageY
+	  };
+	
+	  if (endOnly) {
+	    return end;
+	  }
+	
+	  return extend({
+	    startX: pageX,
+	    startY: pageY
+	  }, end);
+	}
+	
+	var handlers = {
+	  resize: function resize() {
+	    var self = this;
+	    var options = self.options;
+	    var container = self.container;
+	    var containerData = self.containerData;
+	    var minContainerWidth = Number(options.minContainerWidth) || 200;
+	    var minContainerHeight = Number(options.minContainerHeight) || 100;
+	
+	    if (self.disabled || containerData.width === minContainerWidth || containerData.height === minContainerHeight) {
+	      return;
+	    }
+	
+	    var ratio = container.offsetWidth / containerData.width;
+	
+	    // Resize when width changed or height changed
+	    if (ratio !== 1 || container.offsetHeight !== containerData.height) {
+	      (function () {
+	        var canvasData = void 0;
+	        var cropBoxData = void 0;
+	
+	        if (options.restore) {
+	          canvasData = self.getCanvasData();
+	          cropBoxData = self.getCropBoxData();
+	        }
+	
+	        self.render();
+	
+	        if (options.restore) {
+	          self.setCanvasData(each(canvasData, function (n, i) {
+	            canvasData[i] = n * ratio;
+	          }));
+	          self.setCropBoxData(each(cropBoxData, function (n, i) {
+	            cropBoxData[i] = n * ratio;
+	          }));
+	        }
+	      })();
+	    }
+	  },
+	  dblclick: function dblclick() {
+	    var self = this;
+	
+	    if (self.disabled || self.options.dragMode === 'none') {
+	      return;
+	    }
+	
+	    self.setDragMode(hasClass(self.dragBox, 'cropper-crop') ? 'move' : 'crop');
+	  },
+	  wheel: function wheel(event) {
+	    var self = this;
+	    var e = getEvent(event);
+	    var ratio = Number(self.options.wheelZoomRatio) || 0.1;
+	    var delta = 1;
+	
+	    if (self.disabled) {
+	      return;
+	    }
+	
+	    e.preventDefault();
+	
+	    // Limit wheel speed to prevent zoom too fast (#21)
+	    if (self.wheeling) {
+	      return;
+	    }
+	
+	    self.wheeling = true;
+	
+	    setTimeout(function () {
+	      self.wheeling = false;
+	    }, 50);
+	
+	    if (e.deltaY) {
+	      delta = e.deltaY > 0 ? 1 : -1;
+	    } else if (e.wheelDelta) {
+	      delta = -e.wheelDelta / 120;
+	    } else if (e.detail) {
+	      delta = e.detail > 0 ? 1 : -1;
+	    }
+	
+	    self.zoom(-delta * ratio, e);
+	  },
+	  cropStart: function cropStart(event) {
+	    var self = this;
+	
+	    if (self.disabled) {
+	      return;
+	    }
+	
+	    var options = self.options;
+	    var pointers = self.pointers;
+	    var e = getEvent(event);
+	    var action = void 0;
+	
+	    if (e.changedTouches) {
+	      // Handle touch event
+	      each(e.changedTouches, function (touch) {
+	        pointers[touch.identifier] = getPointer(touch);
+	      });
+	    } else {
+	      // Handle mouse event and pointer event
+	      pointers[e.pointerId || 0] = getPointer(e);
+	    }
+	
+	    if (Object.keys(pointers).length > 1 && options.zoomable && options.zoomOnTouch) {
+	      action = 'zoom';
+	    } else {
+	      action = getData$1(e.target, 'action');
+	    }
+	
+	    if (!REGEXP_ACTIONS.test(action)) {
+	      return;
+	    }
+	
+	    if (dispatchEvent(self.element, 'cropstart', {
+	      originalEvent: e,
+	      action: action
+	    }) === false) {
+	      return;
+	    }
+	
+	    e.preventDefault();
+	
+	    self.action = action;
+	    self.cropping = false;
+	
+	    if (action === 'crop') {
+	      self.cropping = true;
+	      addClass(self.dragBox, 'cropper-modal');
+	    }
+	  },
+	  cropMove: function cropMove(event) {
+	    var self = this;
+	    var action = self.action;
+	
+	    if (self.disabled || !action) {
+	      return;
+	    }
+	
+	    var pointers = self.pointers;
+	    var e = getEvent(event);
+	
+	    e.preventDefault();
+	
+	    if (dispatchEvent(self.element, 'cropmove', {
+	      originalEvent: e,
+	      action: action
+	    }) === false) {
+	      return;
+	    }
+	
+	    if (e.changedTouches) {
+	      each(e.changedTouches, function (touch) {
+	        extend(pointers[touch.identifier], getPointer(touch, true));
+	      });
+	    } else {
+	      extend(pointers[e.pointerId || 0], getPointer(e, true));
+	    }
+	
+	    self.change(e);
+	  },
+	  cropEnd: function cropEnd(event) {
+	    var self = this;
+	
+	    if (self.disabled) {
+	      return;
+	    }
+	
+	    var action = self.action;
+	    var pointers = self.pointers;
+	    var e = getEvent(event);
+	
+	    if (e.changedTouches) {
+	      each(e.changedTouches, function (touch) {
+	        delete pointers[touch.identifier];
+	      });
+	    } else {
+	      delete pointers[e.pointerId || 0];
+	    }
+	
+	    if (!action) {
+	      return;
+	    }
+	
+	    e.preventDefault();
+	
+	    if (!Object.keys(pointers).length) {
+	      self.action = '';
+	    }
+	
+	    if (self.cropping) {
+	      self.cropping = false;
+	      toggleClass(self.dragBox, 'cropper-modal', self.cropped && this.options.modal);
+	    }
+	
+	    dispatchEvent(self.element, 'cropend', {
+	      originalEvent: e,
+	      action: action
+	    });
+	  }
+	};
+	
+	// Actions
+	var ACTION_EAST = 'e';
+	var ACTION_WEST = 'w';
+	var ACTION_SOUTH = 's';
+	var ACTION_NORTH = 'n';
+	var ACTION_SOUTH_EAST = 'se';
+	var ACTION_SOUTH_WEST = 'sw';
+	var ACTION_NORTH_EAST = 'ne';
+	var ACTION_NORTH_WEST = 'nw';
+	
+	function getMaxZoomRatio(pointers) {
+	  var pointers2 = extend({}, pointers);
+	  var ratios = [];
+	
+	  each(pointers, function (pointer, pointerId) {
+	    delete pointers2[pointerId];
+	
+	    each(pointers2, function (pointer2) {
+	      var x1 = Math.abs(pointer.startX - pointer2.startX);
+	      var y1 = Math.abs(pointer.startY - pointer2.startY);
+	      var x2 = Math.abs(pointer.endX - pointer2.endX);
+	      var y2 = Math.abs(pointer.endY - pointer2.endY);
+	      var z1 = Math.sqrt(x1 * x1 + y1 * y1);
+	      var z2 = Math.sqrt(x2 * x2 + y2 * y2);
+	      var ratio = (z2 - z1) / z1;
+	
+	      ratios.push(ratio);
+	    });
+	  });
+	
+	  ratios.sort(function (a, b) {
+	    return Math.abs(a) < Math.abs(b);
+	  });
+	
+	  return ratios[0];
+	}
+	
+	var change$1 = {
+	  change: function change(e) {
+	    var self = this;
+	    var options = self.options;
+	    var containerData = self.containerData;
+	    var canvasData = self.canvasData;
+	    var cropBoxData = self.cropBoxData;
+	    var aspectRatio = options.aspectRatio;
+	    var action = self.action;
+	    var width = cropBoxData.width;
+	    var height = cropBoxData.height;
+	    var left = cropBoxData.left;
+	    var top = cropBoxData.top;
+	    var right = left + width;
+	    var bottom = top + height;
+	    var minLeft = 0;
+	    var minTop = 0;
+	    var maxWidth = containerData.width;
+	    var maxHeight = containerData.height;
+	    var renderable = true;
+	    var offset = void 0;
+	
+	    // Locking aspect ratio in "free mode" by holding shift key
+	    if (!aspectRatio && e.shiftKey) {
+	      aspectRatio = width && height ? width / height : 1;
+	    }
+	
+	    if (self.limited) {
+	      minLeft = cropBoxData.minLeft;
+	      minTop = cropBoxData.minTop;
+	      maxWidth = minLeft + Math.min(containerData.width, canvasData.width, canvasData.left + canvasData.width);
+	      maxHeight = minTop + Math.min(containerData.height, canvasData.height, canvasData.top + canvasData.height);
+	    }
+	
+	    var pointers = self.pointers;
+	    var pointer = pointers[Object.keys(pointers)[0]];
+	    var range = {
+	      x: pointer.endX - pointer.startX,
+	      y: pointer.endY - pointer.startY
+	    };
+	
+	    if (aspectRatio) {
+	      range.X = range.y * aspectRatio;
+	      range.Y = range.x / aspectRatio;
+	    }
+	
+	    switch (action) {
+	      // Move crop box
+	      case 'all':
+	        left += range.x;
+	        top += range.y;
+	        break;
+	
+	      // Resize crop box
+	      case ACTION_EAST:
+	        if (range.x >= 0 && (right >= maxWidth || aspectRatio && (top <= minTop || bottom >= maxHeight))) {
+	          renderable = false;
+	          break;
+	        }
+	
+	        width += range.x;
+	
+	        if (aspectRatio) {
+	          height = width / aspectRatio;
+	          top -= range.Y / 2;
+	        }
+	
+	        if (width < 0) {
+	          action = ACTION_WEST;
+	          width = 0;
+	        }
+	
+	        break;
+	
+	      case ACTION_NORTH:
+	        if (range.y <= 0 && (top <= minTop || aspectRatio && (left <= minLeft || right >= maxWidth))) {
+	          renderable = false;
+	          break;
+	        }
+	
+	        height -= range.y;
+	        top += range.y;
+	
+	        if (aspectRatio) {
+	          width = height * aspectRatio;
+	          left += range.X / 2;
+	        }
+	
+	        if (height < 0) {
+	          action = ACTION_SOUTH;
+	          height = 0;
+	        }
+	
+	        break;
+	
+	      case ACTION_WEST:
+	        if (range.x <= 0 && (left <= minLeft || aspectRatio && (top <= minTop || bottom >= maxHeight))) {
+	          renderable = false;
+	          break;
+	        }
+	
+	        width -= range.x;
+	        left += range.x;
+	
+	        if (aspectRatio) {
+	          height = width / aspectRatio;
+	          top += range.Y / 2;
+	        }
+	
+	        if (width < 0) {
+	          action = ACTION_EAST;
+	          width = 0;
+	        }
+	
+	        break;
+	
+	      case ACTION_SOUTH:
+	        if (range.y >= 0 && (bottom >= maxHeight || aspectRatio && (left <= minLeft || right >= maxWidth))) {
+	          renderable = false;
+	          break;
+	        }
+	
+	        height += range.y;
+	
+	        if (aspectRatio) {
+	          width = height * aspectRatio;
+	          left -= range.X / 2;
+	        }
+	
+	        if (height < 0) {
+	          action = ACTION_NORTH;
+	          height = 0;
+	        }
+	
+	        break;
+	
+	      case ACTION_NORTH_EAST:
+	        if (aspectRatio) {
+	          if (range.y <= 0 && (top <= minTop || right >= maxWidth)) {
+	            renderable = false;
+	            break;
+	          }
+	
+	          height -= range.y;
+	          top += range.y;
+	          width = height * aspectRatio;
+	        } else {
+	          if (range.x >= 0) {
+	            if (right < maxWidth) {
+	              width += range.x;
+	            } else if (range.y <= 0 && top <= minTop) {
+	              renderable = false;
+	            }
+	          } else {
+	            width += range.x;
+	          }
+	
+	          if (range.y <= 0) {
+	            if (top > minTop) {
+	              height -= range.y;
+	              top += range.y;
+	            }
+	          } else {
+	            height -= range.y;
+	            top += range.y;
+	          }
+	        }
+	
+	        if (width < 0 && height < 0) {
+	          action = ACTION_SOUTH_WEST;
+	          height = 0;
+	          width = 0;
+	        } else if (width < 0) {
+	          action = ACTION_NORTH_WEST;
+	          width = 0;
+	        } else if (height < 0) {
+	          action = ACTION_SOUTH_EAST;
+	          height = 0;
+	        }
+	
+	        break;
+	
+	      case ACTION_NORTH_WEST:
+	        if (aspectRatio) {
+	          if (range.y <= 0 && (top <= minTop || left <= minLeft)) {
+	            renderable = false;
+	            break;
+	          }
+	
+	          height -= range.y;
+	          top += range.y;
+	          width = height * aspectRatio;
+	          left += range.X;
+	        } else {
+	          if (range.x <= 0) {
+	            if (left > minLeft) {
+	              width -= range.x;
+	              left += range.x;
+	            } else if (range.y <= 0 && top <= minTop) {
+	              renderable = false;
+	            }
+	          } else {
+	            width -= range.x;
+	            left += range.x;
+	          }
+	
+	          if (range.y <= 0) {
+	            if (top > minTop) {
+	              height -= range.y;
+	              top += range.y;
+	            }
+	          } else {
+	            height -= range.y;
+	            top += range.y;
+	          }
+	        }
+	
+	        if (width < 0 && height < 0) {
+	          action = ACTION_SOUTH_EAST;
+	          height = 0;
+	          width = 0;
+	        } else if (width < 0) {
+	          action = ACTION_NORTH_EAST;
+	          width = 0;
+	        } else if (height < 0) {
+	          action = ACTION_SOUTH_WEST;
+	          height = 0;
+	        }
+	
+	        break;
+	
+	      case ACTION_SOUTH_WEST:
+	        if (aspectRatio) {
+	          if (range.x <= 0 && (left <= minLeft || bottom >= maxHeight)) {
+	            renderable = false;
+	            break;
+	          }
+	
+	          width -= range.x;
+	          left += range.x;
+	          height = width / aspectRatio;
+	        } else {
+	          if (range.x <= 0) {
+	            if (left > minLeft) {
+	              width -= range.x;
+	              left += range.x;
+	            } else if (range.y >= 0 && bottom >= maxHeight) {
+	              renderable = false;
+	            }
+	          } else {
+	            width -= range.x;
+	            left += range.x;
+	          }
+	
+	          if (range.y >= 0) {
+	            if (bottom < maxHeight) {
+	              height += range.y;
+	            }
+	          } else {
+	            height += range.y;
+	          }
+	        }
+	
+	        if (width < 0 && height < 0) {
+	          action = ACTION_NORTH_EAST;
+	          height = 0;
+	          width = 0;
+	        } else if (width < 0) {
+	          action = ACTION_SOUTH_EAST;
+	          width = 0;
+	        } else if (height < 0) {
+	          action = ACTION_NORTH_WEST;
+	          height = 0;
+	        }
+	
+	        break;
+	
+	      case ACTION_SOUTH_EAST:
+	        if (aspectRatio) {
+	          if (range.x >= 0 && (right >= maxWidth || bottom >= maxHeight)) {
+	            renderable = false;
+	            break;
+	          }
+	
+	          width += range.x;
+	          height = width / aspectRatio;
+	        } else {
+	          if (range.x >= 0) {
+	            if (right < maxWidth) {
+	              width += range.x;
+	            } else if (range.y >= 0 && bottom >= maxHeight) {
+	              renderable = false;
+	            }
+	          } else {
+	            width += range.x;
+	          }
+	
+	          if (range.y >= 0) {
+	            if (bottom < maxHeight) {
+	              height += range.y;
+	            }
+	          } else {
+	            height += range.y;
+	          }
+	        }
+	
+	        if (width < 0 && height < 0) {
+	          action = ACTION_NORTH_WEST;
+	          height = 0;
+	          width = 0;
+	        } else if (width < 0) {
+	          action = ACTION_SOUTH_WEST;
+	          width = 0;
+	        } else if (height < 0) {
+	          action = ACTION_NORTH_EAST;
+	          height = 0;
+	        }
+	
+	        break;
+	
+	      // Move canvas
+	      case 'move':
+	        self.move(range.x, range.y);
+	        renderable = false;
+	        break;
+	
+	      // Zoom canvas
+	      case 'zoom':
+	        self.zoom(getMaxZoomRatio(pointers), e);
+	        renderable = false;
+	        break;
+	
+	      // Create crop box
+	      case 'crop':
+	        if (!range.x || !range.y) {
+	          renderable = false;
+	          break;
+	        }
+	
+	        offset = getOffset(self.cropper);
+	        left = pointer.startX - offset.left;
+	        top = pointer.startY - offset.top;
+	        width = cropBoxData.minWidth;
+	        height = cropBoxData.minHeight;
+	
+	        if (range.x > 0) {
+	          action = range.y > 0 ? ACTION_SOUTH_EAST : ACTION_NORTH_EAST;
+	        } else if (range.x < 0) {
+	          left -= width;
+	          action = range.y > 0 ? ACTION_SOUTH_WEST : ACTION_NORTH_WEST;
+	        }
+	
+	        if (range.y < 0) {
+	          top -= height;
+	        }
+	
+	        // Show the crop box if is hidden
+	        if (!self.cropped) {
+	          removeClass(self.cropBox, 'cropper-hidden');
+	          self.cropped = true;
+	
+	          if (self.limited) {
+	            self.limitCropBox(true, true);
+	          }
+	        }
+	
+	        break;
+	
+	      // No default
+	    }
+	
+	    if (renderable) {
+	      cropBoxData.width = width;
+	      cropBoxData.height = height;
+	      cropBoxData.left = left;
+	      cropBoxData.top = top;
+	      self.action = action;
+	
+	      self.renderCropBox();
+	    }
+	
+	    // Override
+	    each(pointers, function (p) {
+	      p.startX = p.endX;
+	      p.startY = p.endY;
+	    });
+	  }
+	};
+	
+	function getPointersCenter(pointers) {
+	  var pageX = 0;
+	  var pageY = 0;
+	  var count = 0;
+	
+	  each(pointers, function (_ref) {
+	    var startX = _ref.startX,
+	        startY = _ref.startY;
+	
+	    pageX += startX;
+	    pageY += startY;
+	    count += 1;
+	  });
+	
+	  pageX /= count;
+	  pageY /= count;
+	
+	  return {
+	    pageX: pageX,
+	    pageY: pageY
+	  };
+	}
+	
+	var methods = {
+	  // Show the crop box manually
+	  crop: function crop() {
+	    var self = this;
+	
+	    if (self.ready && !self.disabled) {
+	      if (!self.cropped) {
+	        self.cropped = true;
+	        self.limitCropBox(true, true);
+	
+	        if (self.options.modal) {
+	          addClass(self.dragBox, 'cropper-modal');
+	        }
+	
+	        removeClass(self.cropBox, 'cropper-hidden');
+	      }
+	
+	      self.setCropBoxData(self.initialCropBoxData);
+	    }
+	
+	    return self;
+	  },
+	
+	
+	  // Reset the image and crop box to their initial states
+	  reset: function reset() {
+	    var self = this;
+	
+	    if (self.ready && !self.disabled) {
+	      self.imageData = extend({}, self.initialImageData);
+	      self.canvasData = extend({}, self.initialCanvasData);
+	      self.cropBoxData = extend({}, self.initialCropBoxData);
+	
+	      self.renderCanvas();
+	
+	      if (self.cropped) {
+	        self.renderCropBox();
+	      }
+	    }
+	
+	    return self;
+	  },
+	
+	
+	  // Clear the crop box
+	  clear: function clear() {
+	    var self = this;
+	
+	    if (self.cropped && !self.disabled) {
+	      extend(self.cropBoxData, {
+	        left: 0,
+	        top: 0,
+	        width: 0,
+	        height: 0
+	      });
+	
+	      self.cropped = false;
+	      self.renderCropBox();
+	
+	      self.limitCanvas();
+	
+	      // Render canvas after crop box rendered
+	      self.renderCanvas();
+	
+	      removeClass(self.dragBox, 'cropper-modal');
+	      addClass(self.cropBox, 'cropper-hidden');
+	    }
+	
+	    return self;
+	  },
+	
+	
+	  /**
+	   * Replace the image's src and rebuild the cropper
+	   *
+	   * @param {String} url
+	   * @param {Boolean} onlyColorChanged (optional)
+	   */
+	  replace: function replace(url, onlyColorChanged) {
+	    var self = this;
+	
+	    if (!self.disabled && url) {
+	      if (self.isImg) {
+	        self.element.src = url;
+	      }
+	
+	      if (onlyColorChanged) {
+	        self.url = url;
+	        self.image.src = url;
+	
+	        if (self.ready) {
+	          self.image2.src = url;
+	
+	          each(self.previews, function (element) {
+	            getByTag(element, 'img')[0].src = url;
+	          });
+	        }
+	      } else {
+	        if (self.isImg) {
+	          self.replaced = true;
+	        }
+	
+	        // Clear previous data
+	        self.options.data = null;
+	        self.load(url);
+	      }
+	    }
+	
+	    return self;
+	  },
+	
+	
+	  // Enable (unfreeze) the cropper
+	  enable: function enable() {
+	    var self = this;
+	
+	    if (self.ready) {
+	      self.disabled = false;
+	      removeClass(self.cropper, 'cropper-disabled');
+	    }
+	
+	    return self;
+	  },
+	
+	
+	  // Disable (freeze) the cropper
+	  disable: function disable() {
+	    var self = this;
+	
+	    if (self.ready) {
+	      self.disabled = true;
+	      addClass(self.cropper, 'cropper-disabled');
+	    }
+	
+	    return self;
+	  },
+	
+	
+	  // Destroy the cropper and remove the instance from the image
+	  destroy: function destroy() {
+	    var self = this;
+	    var element = self.element;
+	    var image = self.image;
+	
+	    if (self.loaded) {
+	      if (self.isImg && self.replaced) {
+	        element.src = self.originalUrl;
+	      }
+	
+	      self.unbuild();
+	      removeClass(element, 'cropper-hidden');
+	    } else if (self.isImg) {
+	      removeListener(element, 'load', self.onStart);
+	    } else if (image) {
+	      removeChild(image);
+	    }
+	
+	    removeData(element, 'cropper');
+	
+	    return self;
+	  },
+	
+	
+	  /**
+	   * Move the canvas with relative offsets
+	   *
+	   * @param {Number} offsetX
+	   * @param {Number} offsetY (optional)
+	   */
+	  move: function move(offsetX, offsetY) {
+	    var self = this;
+	    var canvasData = self.canvasData;
+	
+	    return self.moveTo(isUndefined(offsetX) ? offsetX : canvasData.left + Number(offsetX), isUndefined(offsetY) ? offsetY : canvasData.top + Number(offsetY));
+	  },
+	
+	
+	  /**
+	   * Move the canvas to an absolute point
+	   *
+	   * @param {Number} x
+	   * @param {Number} y (optional)
+	   */
+	  moveTo: function moveTo(x, y) {
+	    var self = this;
+	    var canvasData = self.canvasData;
+	    var changed = false;
+	
+	    // If "y" is not present, its default value is "x"
+	    if (isUndefined(y)) {
+	      y = x;
+	    }
+	
+	    x = Number(x);
+	    y = Number(y);
+	
+	    if (self.ready && !self.disabled && self.options.movable) {
+	      if (isNumber(x)) {
+	        canvasData.left = x;
+	        changed = true;
+	      }
+	
+	      if (isNumber(y)) {
+	        canvasData.top = y;
+	        changed = true;
+	      }
+	
+	      if (changed) {
+	        self.renderCanvas(true);
+	      }
+	    }
+	
+	    return self;
+	  },
+	
+	
+	  /**
+	   * Zoom the canvas with a relative ratio
+	   *
+	   * @param {Number} ratio
+	   * @param {Event} _originalEvent (private)
+	   */
+	  zoom: function zoom(ratio, _originalEvent) {
+	    var self = this;
+	    var canvasData = self.canvasData;
+	
+	    ratio = Number(ratio);
+	
+	    if (ratio < 0) {
+	      ratio = 1 / (1 - ratio);
+	    } else {
+	      ratio = 1 + ratio;
+	    }
+	
+	    return self.zoomTo(canvasData.width * ratio / canvasData.naturalWidth, _originalEvent);
+	  },
+	
+	
+	  /**
+	   * Zoom the canvas to an absolute ratio
+	   *
+	   * @param {Number} ratio
+	   * @param {Event} _originalEvent (private)
+	   */
+	  zoomTo: function zoomTo(ratio, _originalEvent) {
+	    var self = this;
+	    var options = self.options;
+	    var canvasData = self.canvasData;
+	    var width = canvasData.width;
+	    var height = canvasData.height;
+	    var naturalWidth = canvasData.naturalWidth;
+	    var naturalHeight = canvasData.naturalHeight;
+	
+	    ratio = Number(ratio);
+	
+	    if (ratio >= 0 && self.ready && !self.disabled && options.zoomable) {
+	      var newWidth = naturalWidth * ratio;
+	      var newHeight = naturalHeight * ratio;
+	
+	      if (dispatchEvent(self.element, 'zoom', {
+	        originalEvent: _originalEvent,
+	        oldRatio: width / naturalWidth,
+	        ratio: newWidth / naturalWidth
+	      }) === false) {
+	        return self;
+	      }
+	
+	      if (_originalEvent) {
+	        var pointers = self.pointers;
+	        var offset = getOffset(self.cropper);
+	        var center = pointers && Object.keys(pointers).length ? getPointersCenter(pointers) : {
+	          pageX: _originalEvent.pageX,
+	          pageY: _originalEvent.pageY
+	        };
+	
+	        // Zoom from the triggering point of the event
+	        canvasData.left -= (newWidth - width) * ((center.pageX - offset.left - canvasData.left) / width);
+	        canvasData.top -= (newHeight - height) * ((center.pageY - offset.top - canvasData.top) / height);
+	      } else {
+	        // Zoom from the center of the canvas
+	        canvasData.left -= (newWidth - width) / 2;
+	        canvasData.top -= (newHeight - height) / 2;
+	      }
+	
+	      canvasData.width = newWidth;
+	      canvasData.height = newHeight;
+	      self.renderCanvas(true);
+	    }
+	
+	    return self;
+	  },
+	
+	
+	  /**
+	   * Rotate the canvas with a relative degree
+	   *
+	   * @param {Number} degree
+	   */
+	  rotate: function rotate(degree) {
+	    var self = this;
+	
+	    return self.rotateTo((self.imageData.rotate || 0) + Number(degree));
+	  },
+	
+	
+	  /**
+	   * Rotate the canvas to an absolute degree
+	   * https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#rotate()
+	   *
+	   * @param {Number} degree
+	   */
+	  rotateTo: function rotateTo(degree) {
+	    var self = this;
+	
+	    degree = Number(degree);
+	
+	    if (isNumber(degree) && self.ready && !self.disabled && self.options.rotatable) {
+	      self.imageData.rotate = degree % 360;
+	      self.rotated = true;
+	      self.renderCanvas(true);
+	    }
+	
+	    return self;
+	  },
+	
+	
+	  /**
+	   * Scale the image
+	   * https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#scale()
+	   *
+	   * @param {Number} scaleX
+	   * @param {Number} scaleY (optional)
+	   */
+	  scale: function scale(scaleX, scaleY) {
+	    var self = this;
+	    var imageData = self.imageData;
+	    var changed = false;
+	
+	    // If "scaleY" is not present, its default value is "scaleX"
+	    if (isUndefined(scaleY)) {
+	      scaleY = scaleX;
+	    }
+	
+	    scaleX = Number(scaleX);
+	    scaleY = Number(scaleY);
+	
+	    if (self.ready && !self.disabled && self.options.scalable) {
+	      if (isNumber(scaleX)) {
+	        imageData.scaleX = scaleX;
+	        changed = true;
+	      }
+	
+	      if (isNumber(scaleY)) {
+	        imageData.scaleY = scaleY;
+	        changed = true;
+	      }
+	
+	      if (changed) {
+	        self.renderImage(true);
+	      }
+	    }
+	
+	    return self;
+	  },
+	
+	
+	  /**
+	   * Scale the abscissa of the image
+	   *
+	   * @param {Number} scaleX
+	   */
+	  scaleX: function scaleX(_scaleX) {
+	    var self = this;
+	    var scaleY = self.imageData.scaleY;
+	
+	    return self.scale(_scaleX, isNumber(scaleY) ? scaleY : 1);
+	  },
+	
+	
+	  /**
+	   * Scale the ordinate of the image
+	   *
+	   * @param {Number} scaleY
+	   */
+	  scaleY: function scaleY(_scaleY) {
+	    var self = this;
+	    var scaleX = self.imageData.scaleX;
+	
+	    return self.scale(isNumber(scaleX) ? scaleX : 1, _scaleY);
+	  },
+	
+	
+	  /**
+	   * Get the cropped area position and size data (base on the original image)
+	   *
+	   * @param {Boolean} rounded (optional)
+	   * @return {Object} data
+	   */
+	  getData: function getData(rounded) {
+	    var self = this;
+	    var options = self.options;
+	    var imageData = self.imageData;
+	    var canvasData = self.canvasData;
+	    var cropBoxData = self.cropBoxData;
+	    var ratio = void 0;
+	    var data = void 0;
+	
+	    if (self.ready && self.cropped) {
+	      data = {
+	        x: cropBoxData.left - canvasData.left,
+	        y: cropBoxData.top - canvasData.top,
+	        width: cropBoxData.width,
+	        height: cropBoxData.height
+	      };
+	
+	      ratio = imageData.width / imageData.naturalWidth;
+	
+	      each(data, function (n, i) {
+	        n /= ratio;
+	        data[i] = rounded ? Math.round(n) : n;
+	      });
+	    } else {
+	      data = {
+	        x: 0,
+	        y: 0,
+	        width: 0,
+	        height: 0
+	      };
+	    }
+	
+	    if (options.rotatable) {
+	      data.rotate = imageData.rotate || 0;
+	    }
+	
+	    if (options.scalable) {
+	      data.scaleX = imageData.scaleX || 1;
+	      data.scaleY = imageData.scaleY || 1;
+	    }
+	
+	    return data;
+	  },
+	
+	
+	  /**
+	   * Set the cropped area position and size with new data
+	   *
+	   * @param {Object} data
+	   */
+	  setData: function setData(data) {
+	    var self = this;
+	    var options = self.options;
+	    var imageData = self.imageData;
+	    var canvasData = self.canvasData;
+	    var cropBoxData = {};
+	    var rotated = void 0;
+	    var scaled = void 0;
+	    var ratio = void 0;
+	
+	    if (isFunction(data)) {
+	      data = data.call(self.element);
+	    }
+	
+	    if (self.ready && !self.disabled && isPlainObject(data)) {
+	      if (options.rotatable) {
+	        if (isNumber(data.rotate) && data.rotate !== imageData.rotate) {
+	          imageData.rotate = data.rotate;
+	          self.rotated = rotated = true;
+	        }
+	      }
+	
+	      if (options.scalable) {
+	        if (isNumber(data.scaleX) && data.scaleX !== imageData.scaleX) {
+	          imageData.scaleX = data.scaleX;
+	          scaled = true;
+	        }
+	
+	        if (isNumber(data.scaleY) && data.scaleY !== imageData.scaleY) {
+	          imageData.scaleY = data.scaleY;
+	          scaled = true;
+	        }
+	      }
+	
+	      if (rotated) {
+	        self.renderCanvas();
+	      } else if (scaled) {
+	        self.renderImage();
+	      }
+	
+	      ratio = imageData.width / imageData.naturalWidth;
+	
+	      if (isNumber(data.x)) {
+	        cropBoxData.left = data.x * ratio + canvasData.left;
+	      }
+	
+	      if (isNumber(data.y)) {
+	        cropBoxData.top = data.y * ratio + canvasData.top;
+	      }
+	
+	      if (isNumber(data.width)) {
+	        cropBoxData.width = data.width * ratio;
+	      }
+	
+	      if (isNumber(data.height)) {
+	        cropBoxData.height = data.height * ratio;
+	      }
+	
+	      self.setCropBoxData(cropBoxData);
+	    }
+	
+	    return self;
+	  },
+	
+	
+	  /**
+	   * Get the container size data
+	   *
+	   * @return {Object} data
+	   */
+	  getContainerData: function getContainerData() {
+	    var self = this;
+	
+	    return self.ready ? self.containerData : {};
+	  },
+	
+	
+	  /**
+	   * Get the image position and size data
+	   *
+	   * @return {Object} data
+	   */
+	  getImageData: function getImageData() {
+	    var self = this;
+	
+	    return self.loaded ? self.imageData : {};
+	  },
+	
+	
+	  /**
+	   * Get the canvas position and size data
+	   *
+	   * @return {Object} data
+	   */
+	  getCanvasData: function getCanvasData() {
+	    var self = this;
+	    var canvasData = self.canvasData;
+	    var data = {};
+	
+	    if (self.ready) {
+	      each(['left', 'top', 'width', 'height', 'naturalWidth', 'naturalHeight'], function (n) {
+	        data[n] = canvasData[n];
+	      });
+	    }
+	
+	    return data;
+	  },
+	
+	
+	  /**
+	   * Set the canvas position and size with new data
+	   *
+	   * @param {Object} data
+	   */
+	  setCanvasData: function setCanvasData(data) {
+	    var self = this;
+	    var canvasData = self.canvasData;
+	    var aspectRatio = canvasData.aspectRatio;
+	
+	    if (isFunction(data)) {
+	      data = data.call(self.element);
+	    }
+	
+	    if (self.ready && !self.disabled && isPlainObject(data)) {
+	      if (isNumber(data.left)) {
+	        canvasData.left = data.left;
+	      }
+	
+	      if (isNumber(data.top)) {
+	        canvasData.top = data.top;
+	      }
+	
+	      if (isNumber(data.width)) {
+	        canvasData.width = data.width;
+	        canvasData.height = data.width / aspectRatio;
+	      } else if (isNumber(data.height)) {
+	        canvasData.height = data.height;
+	        canvasData.width = data.height * aspectRatio;
+	      }
+	
+	      self.renderCanvas(true);
+	    }
+	
+	    return self;
+	  },
+	
+	
+	  /**
+	   * Get the crop box position and size data
+	   *
+	   * @return {Object} data
+	   */
+	  getCropBoxData: function getCropBoxData() {
+	    var self = this;
+	    var cropBoxData = self.cropBoxData;
+	    var data = void 0;
+	
+	    if (self.ready && self.cropped) {
+	      data = {
+	        left: cropBoxData.left,
+	        top: cropBoxData.top,
+	        width: cropBoxData.width,
+	        height: cropBoxData.height
+	      };
+	    }
+	
+	    return data || {};
+	  },
+	
+	
+	  /**
+	   * Set the crop box position and size with new data
+	   *
+	   * @param {Object} data
+	   */
+	  setCropBoxData: function setCropBoxData(data) {
+	    var self = this;
+	    var cropBoxData = self.cropBoxData;
+	    var aspectRatio = self.options.aspectRatio;
+	    var widthChanged = void 0;
+	    var heightChanged = void 0;
+	
+	    if (isFunction(data)) {
+	      data = data.call(self.element);
+	    }
+	
+	    if (self.ready && self.cropped && !self.disabled && isPlainObject(data)) {
+	      if (isNumber(data.left)) {
+	        cropBoxData.left = data.left;
+	      }
+	
+	      if (isNumber(data.top)) {
+	        cropBoxData.top = data.top;
+	      }
+	
+	      if (isNumber(data.width) && data.width !== cropBoxData.width) {
+	        widthChanged = true;
+	        cropBoxData.width = data.width;
+	      }
+	
+	      if (isNumber(data.height) && data.height !== cropBoxData.height) {
+	        heightChanged = true;
+	        cropBoxData.height = data.height;
+	      }
+	
+	      if (aspectRatio) {
+	        if (widthChanged) {
+	          cropBoxData.height = cropBoxData.width / aspectRatio;
+	        } else if (heightChanged) {
+	          cropBoxData.width = cropBoxData.height * aspectRatio;
+	        }
+	      }
+	
+	      self.renderCropBox();
+	    }
+	
+	    return self;
+	  },
+	
+	
+	  /**
+	   * Get a canvas drawn the cropped image
+	   *
+	   * @param {Object} options (optional)
+	   * @return {HTMLCanvasElement} canvas
+	   */
+	  getCroppedCanvas: function getCroppedCanvas(options) {
+	    var self = this;
+	
+	    if (!self.ready || !window.HTMLCanvasElement) {
+	      return null;
+	    }
+	
+	    if (!isPlainObject(options)) {
+	      options = {};
+	    }
+	
+	    // Return the whole canvas if not cropped
+	    if (!self.cropped) {
+	      return getSourceCanvas(self.image, self.imageData, options);
+	    }
+	
+	    var data = self.getData();
+	    var originalWidth = data.width;
+	    var originalHeight = data.height;
+	    var aspectRatio = originalWidth / originalHeight;
+	    var scaledWidth = void 0;
+	    var scaledHeight = void 0;
+	    var scaledRatio = void 0;
+	
+	    if (isPlainObject(options)) {
+	      scaledWidth = options.width;
+	      scaledHeight = options.height;
+	
+	      if (scaledWidth) {
+	        scaledHeight = scaledWidth / aspectRatio;
+	        scaledRatio = scaledWidth / originalWidth;
+	      } else if (scaledHeight) {
+	        scaledWidth = scaledHeight * aspectRatio;
+	        scaledRatio = scaledHeight / originalHeight;
+	      }
+	    }
+	
+	    // The canvas element will use `Math.floor` on a float number, so floor first
+	    var canvasWidth = Math.floor(scaledWidth || originalWidth);
+	    var canvasHeight = Math.floor(scaledHeight || originalHeight);
+	
+	    var canvas = createElement('canvas');
+	    var context = canvas.getContext('2d');
+	
+	    canvas.width = canvasWidth;
+	    canvas.height = canvasHeight;
+	
+	    if (options.fillColor) {
+	      context.fillStyle = options.fillColor;
+	      context.fillRect(0, 0, canvasWidth, canvasHeight);
+	    }
+	
+	    // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D.drawImage
+	    var parameters = function () {
+	      var source = getSourceCanvas(self.image, self.imageData, options);
+	      var sourceWidth = source.width;
+	      var sourceHeight = source.height;
+	      var canvasData = self.canvasData;
+	      var params = [source];
+	
+	      // Source canvas
+	      var srcX = data.x + canvasData.naturalWidth * (Math.abs(data.scaleX || 1) - 1) / 2;
+	      var srcY = data.y + canvasData.naturalHeight * (Math.abs(data.scaleY || 1) - 1) / 2;
+	      var srcWidth = void 0;
+	      var srcHeight = void 0;
+	
+	      // Destination canvas
+	      var dstX = void 0;
+	      var dstY = void 0;
+	      var dstWidth = void 0;
+	      var dstHeight = void 0;
+	
+	      if (srcX <= -originalWidth || srcX > sourceWidth) {
+	        srcX = srcWidth = dstX = dstWidth = 0;
+	      } else if (srcX <= 0) {
+	        dstX = -srcX;
+	        srcX = 0;
+	        srcWidth = dstWidth = Math.min(sourceWidth, originalWidth + srcX);
+	      } else if (srcX <= sourceWidth) {
+	        dstX = 0;
+	        srcWidth = dstWidth = Math.min(originalWidth, sourceWidth - srcX);
+	      }
+	
+	      if (srcWidth <= 0 || srcY <= -originalHeight || srcY > sourceHeight) {
+	        srcY = srcHeight = dstY = dstHeight = 0;
+	      } else if (srcY <= 0) {
+	        dstY = -srcY;
+	        srcY = 0;
+	        srcHeight = dstHeight = Math.min(sourceHeight, originalHeight + srcY);
+	      } else if (srcY <= sourceHeight) {
+	        dstY = 0;
+	        srcHeight = dstHeight = Math.min(originalHeight, sourceHeight - srcY);
+	      }
+	
+	      params.push(Math.floor(srcX), Math.floor(srcY), Math.floor(srcWidth), Math.floor(srcHeight));
+	
+	      // Scale destination sizes
+	      if (scaledRatio) {
+	        dstX *= scaledRatio;
+	        dstY *= scaledRatio;
+	        dstWidth *= scaledRatio;
+	        dstHeight *= scaledRatio;
+	      }
+	
+	      // Avoid "IndexSizeError" in IE and Firefox
+	      if (dstWidth > 0 && dstHeight > 0) {
+	        params.push(Math.floor(dstX), Math.floor(dstY), Math.floor(dstWidth), Math.floor(dstHeight));
+	      }
+	
+	      return params;
+	    }();
+	
+	    context.imageSmoothingEnabled = !!options.imageSmoothingEnabled;
+	
+	    if (options.imageSmoothingQuality) {
+	      context.imageSmoothingQuality = options.imageSmoothingQuality;
+	    }
+	
+	    context.drawImage.apply(context, toConsumableArray(parameters));
+	
+	    return canvas;
+	  },
+	
+	
+	  /**
+	   * Change the aspect ratio of the crop box
+	   *
+	   * @param {Number} aspectRatio
+	   */
+	  setAspectRatio: function setAspectRatio(aspectRatio) {
+	    var self = this;
+	    var options = self.options;
+	
+	    if (!self.disabled && !isUndefined(aspectRatio)) {
+	      // 0 -> NaN
+	      options.aspectRatio = Math.max(0, aspectRatio) || NaN;
+	
+	      if (self.ready) {
+	        self.initCropBox();
+	
+	        if (self.cropped) {
+	          self.renderCropBox();
+	        }
+	      }
+	    }
+	
+	    return self;
+	  },
+	
+	
+	  /**
+	   * Change the drag mode
+	   *
+	   * @param {String} mode (optional)
+	   */
+	  setDragMode: function setDragMode(mode) {
+	    var self = this;
+	    var options = self.options;
+	    var dragBox = self.dragBox;
+	    var face = self.face;
+	    var croppable = void 0;
+	    var movable = void 0;
+	
+	    if (self.loaded && !self.disabled) {
+	      croppable = mode === 'crop';
+	      movable = options.movable && mode === 'move';
+	      mode = croppable || movable ? mode : 'none';
+	
+	      setData$1(dragBox, 'action', mode);
+	      toggleClass(dragBox, 'cropper-crop', croppable);
+	      toggleClass(dragBox, 'cropper-move', movable);
+	
+	      if (!options.cropBoxMovable) {
+	        // Sync drag mode to crop box when it is not movable
+	        setData$1(face, 'action', mode);
+	        toggleClass(face, 'cropper-crop', croppable);
+	        toggleClass(face, 'cropper-move', movable);
+	      }
+	    }
+	
+	    return self;
+	  }
+	};
+	
+	// Constants
+	var NAMESPACE = 'cropper';
+	
+	// Classes
+	var CLASS_HIDDEN = NAMESPACE + '-hidden';
+	
+	// Events
+	var EVENT_ERROR = 'error';
+	var EVENT_LOAD = 'load';
+	var EVENT_READY = 'ready';
+	var EVENT_CROP = 'crop';
+	
+	// RegExps
+	var REGEXP_DATA_URL = /^data:/;
+	var REGEXP_DATA_URL_JPEG = /^data:image\/jpeg;base64,/;
+	
+	var AnotherCropper = void 0;
+	
+	var Cropper = function () {
+	  function Cropper(element, options) {
+	    classCallCheck(this, Cropper);
+	
+	    var self = this;
+	
+	    self.element = element;
+	    self.options = extend({}, DEFAULTS, isPlainObject(options) && options);
+	    self.loaded = false;
+	    self.ready = false;
+	    self.complete = false;
+	    self.rotated = false;
+	    self.cropped = false;
+	    self.disabled = false;
+	    self.replaced = false;
+	    self.limited = false;
+	    self.wheeling = false;
+	    self.isImg = false;
+	    self.originalUrl = '';
+	    self.canvasData = null;
+	    self.cropBoxData = null;
+	    self.previews = null;
+	    self.pointers = {};
+	    self.init();
+	  }
+	
+	  createClass(Cropper, [{
+	    key: 'init',
+	    value: function init() {
+	      var self = this;
+	      var element = self.element;
+	      var tagName = element.tagName.toLowerCase();
+	      var url = void 0;
+	
+	      if (getData$1(element, NAMESPACE)) {
+	        return;
+	      }
+	
+	      setData$1(element, NAMESPACE, self);
+	
+	      if (tagName === 'img') {
+	        self.isImg = true;
+	
+	        // e.g.: "img/picture.jpg"
+	        self.originalUrl = url = element.getAttribute('src');
+	
+	        // Stop when it's a blank image
+	        if (!url) {
+	          return;
+	        }
+	
+	        // e.g.: "http://example.com/img/picture.jpg"
+	        url = element.src;
+	      } else if (tagName === 'canvas' && window.HTMLCanvasElement) {
+	        url = element.toDataURL();
+	      }
+	
+	      self.load(url);
+	    }
+	  }, {
+	    key: 'load',
+	    value: function load(url) {
+	      var self = this;
+	      var options = self.options;
+	      var element = self.element;
+	
+	      if (!url) {
+	        return;
+	      }
+	
+	      self.url = url;
+	      self.imageData = {};
+	
+	      if (!options.checkOrientation || !window.ArrayBuffer) {
+	        self.clone();
+	        return;
+	      }
+	
+	      // XMLHttpRequest disallows to open a Data URL in some browsers like IE11 and Safari
+	      if (REGEXP_DATA_URL.test(url)) {
+	        if (REGEXP_DATA_URL_JPEG.test(url)) {
+	          self.read(dataURLToArrayBuffer(url));
+	        } else {
+	          self.clone();
+	        }
+	        return;
+	      }
+	
+	      var xhr = new XMLHttpRequest();
+	
+	      xhr.onerror = xhr.onabort = function () {
+	        self.clone();
+	      };
+	
+	      xhr.onload = function () {
+	        self.read(xhr.response);
+	      };
+	
+	      if (options.checkCrossOrigin && isCrossOriginURL(url) && element.crossOrigin) {
+	        url = addTimestamp(url);
+	      }
+	
+	      xhr.open('get', url);
+	      xhr.responseType = 'arraybuffer';
+	      xhr.withCredentials = element.crossOrigin === 'use-credentials';
+	      xhr.send();
+	    }
+	  }, {
+	    key: 'read',
+	    value: function read(arrayBuffer) {
+	      var self = this;
+	      var options = self.options;
+	      var orientation = getOrientation(arrayBuffer);
+	      var imageData = self.imageData;
+	      var rotate = 0;
+	      var scaleX = 1;
+	      var scaleY = 1;
+	
+	      if (orientation > 1) {
+	        self.url = arrayBufferToDataURL(arrayBuffer);
+	
+	        switch (orientation) {
+	
+	          // flip horizontal
+	          case 2:
+	            scaleX = -1;
+	            break;
+	
+	          // rotate left 180°
+	          case 3:
+	            rotate = -180;
+	            break;
+	
+	          // flip vertical
+	          case 4:
+	            scaleY = -1;
+	            break;
+	
+	          // flip vertical + rotate right 90°
+	          case 5:
+	            rotate = 90;
+	            scaleY = -1;
+	            break;
+	
+	          // rotate right 90°
+	          case 6:
+	            rotate = 90;
+	            break;
+	
+	          // flip horizontal + rotate right 90°
+	          case 7:
+	            rotate = 90;
+	            scaleX = -1;
+	            break;
+	
+	          // rotate left 90°
+	          case 8:
+	            rotate = -90;
+	            break;
+	        }
+	      }
+	
+	      if (options.rotatable) {
+	        imageData.rotate = rotate;
+	      }
+	
+	      if (options.scalable) {
+	        imageData.scaleX = scaleX;
+	        imageData.scaleY = scaleY;
+	      }
+	
+	      self.clone();
+	    }
+	  }, {
+	    key: 'clone',
+	    value: function clone() {
+	      var self = this;
+	      var element = self.element;
+	      var url = self.url;
+	      var crossOrigin = void 0;
+	      var crossOriginUrl = void 0;
+	      var start = void 0;
+	      var stop = void 0;
+	
+	      if (self.options.checkCrossOrigin && isCrossOriginURL(url)) {
+	        crossOrigin = element.crossOrigin;
+	
+	        if (crossOrigin) {
+	          crossOriginUrl = url;
+	        } else {
+	          crossOrigin = 'anonymous';
+	
+	          // Bust cache when there is not a "crossOrigin" property
+	          crossOriginUrl = addTimestamp(url);
+	        }
+	      }
+	
+	      self.crossOrigin = crossOrigin;
+	      self.crossOriginUrl = crossOriginUrl;
+	
+	      var image = createElement('img');
+	
+	      if (crossOrigin) {
+	        image.crossOrigin = crossOrigin;
+	      }
+	
+	      image.src = crossOriginUrl || url;
+	      self.image = image;
+	      self.onStart = start = proxy(self.start, self);
+	      self.onStop = stop = proxy(self.stop, self);
+	
+	      if (self.isImg) {
+	        if (element.complete) {
+	          self.start();
+	        } else {
+	          addListener(element, EVENT_LOAD, start);
+	        }
+	      } else {
+	        addListener(image, EVENT_LOAD, start);
+	        addListener(image, EVENT_ERROR, stop);
+	        addClass(image, 'cropper-hide');
+	        element.parentNode.insertBefore(image, element.nextSibling);
+	      }
+	    }
+	  }, {
+	    key: 'start',
+	    value: function start(event) {
+	      var self = this;
+	      var image = self.isImg ? self.element : self.image;
+	
+	      if (event) {
+	        removeListener(image, EVENT_LOAD, self.onStart);
+	        removeListener(image, EVENT_ERROR, self.onStop);
+	      }
+	
+	      getImageSize(image, function (naturalWidth, naturalHeight) {
+	        extend(self.imageData, {
+	          naturalWidth: naturalWidth,
+	          naturalHeight: naturalHeight,
+	          aspectRatio: naturalWidth / naturalHeight
+	        });
+	
+	        self.loaded = true;
+	        self.build();
+	      });
+	    }
+	  }, {
+	    key: 'stop',
+	    value: function stop() {
+	      var self = this;
+	      var image = self.image;
+	
+	      removeListener(image, EVENT_LOAD, self.onStart);
+	      removeListener(image, EVENT_ERROR, self.onStop);
+	
+	      removeChild(image);
+	      self.image = null;
+	    }
+	  }, {
+	    key: 'build',
+	    value: function build() {
+	      var self = this;
+	      var options = self.options;
+	      var element = self.element;
+	      var image = self.image;
+	      var container = void 0;
+	      var cropper = void 0;
+	      var canvas = void 0;
+	      var dragBox = void 0;
+	      var cropBox = void 0;
+	      var face = void 0;
+	
+	      if (!self.loaded) {
+	        return;
+	      }
+	
+	      // Unbuild first when replace
+	      if (self.ready) {
+	        self.unbuild();
+	      }
+	
+	      var template = createElement('div');
+	      template.innerHTML = TEMPLATE;
+	
+	      // Create cropper elements
+	      self.container = container = element.parentNode;
+	      self.cropper = cropper = getByClass(template, 'cropper-container')[0];
+	      self.canvas = canvas = getByClass(cropper, 'cropper-canvas')[0];
+	      self.dragBox = dragBox = getByClass(cropper, 'cropper-drag-box')[0];
+	      self.cropBox = cropBox = getByClass(cropper, 'cropper-crop-box')[0];
+	      self.viewBox = getByClass(cropper, 'cropper-view-box')[0];
+	      self.face = face = getByClass(cropBox, 'cropper-face')[0];
+	
+	      appendChild(canvas, image);
+	
+	      // Hide the original image
+	      addClass(element, CLASS_HIDDEN);
+	
+	      // Inserts the cropper after to the current image
+	      container.insertBefore(cropper, element.nextSibling);
+	
+	      // Show the image if is hidden
+	      if (!self.isImg) {
+	        removeClass(image, 'cropper-hide');
+	      }
+	
+	      self.initPreview();
+	      self.bind();
+	
+	      options.aspectRatio = Math.max(0, options.aspectRatio) || NaN;
+	      options.viewMode = Math.max(0, Math.min(3, Math.round(options.viewMode))) || 0;
+	
+	      self.cropped = options.autoCrop;
+	
+	      if (options.autoCrop) {
+	        if (options.modal) {
+	          addClass(dragBox, 'cropper-modal');
+	        }
+	      } else {
+	        addClass(cropBox, CLASS_HIDDEN);
+	      }
+	
+	      if (!options.guides) {
+	        addClass(getByClass(cropBox, 'cropper-dashed'), CLASS_HIDDEN);
+	      }
+	
+	      if (!options.center) {
+	        addClass(getByClass(cropBox, 'cropper-center'), CLASS_HIDDEN);
+	      }
+	
+	      if (options.background) {
+	        addClass(cropper, 'cropper-bg');
+	      }
+	
+	      if (!options.highlight) {
+	        addClass(face, 'cropper-invisible');
+	      }
+	
+	      if (options.cropBoxMovable) {
+	        addClass(face, 'cropper-move');
+	        setData$1(face, 'action', 'all');
+	      }
+	
+	      if (!options.cropBoxResizable) {
+	        addClass(getByClass(cropBox, 'cropper-line'), CLASS_HIDDEN);
+	        addClass(getByClass(cropBox, 'cropper-point'), CLASS_HIDDEN);
+	      }
+	
+	      self.setDragMode(options.dragMode);
+	      self.render();
+	      self.ready = true;
+	      self.setData(options.data);
+	
+	      // Call the "ready" option asynchronously to keep "image.cropper" is defined
+	      self.completing = setTimeout(function () {
+	        if (isFunction(options.ready)) {
+	          addListener(element, EVENT_READY, options.ready, true);
+	        }
+	
+	        dispatchEvent(element, EVENT_READY);
+	        dispatchEvent(element, EVENT_CROP, self.getData());
+	
+	        self.complete = true;
+	      }, 0);
+	    }
+	  }, {
+	    key: 'unbuild',
+	    value: function unbuild() {
+	      var self = this;
+	
+	      if (!self.ready) {
+	        return;
+	      }
+	
+	      if (!self.complete) {
+	        clearTimeout(self.completing);
+	      }
+	
+	      self.ready = false;
+	      self.complete = false;
+	      self.initialImageData = null;
+	
+	      // Clear `initialCanvasData` is necessary when replace
+	      self.initialCanvasData = null;
+	      self.initialCropBoxData = null;
+	      self.containerData = null;
+	      self.canvasData = null;
+	
+	      // Clear `cropBoxData` is necessary when replace
+	      self.cropBoxData = null;
+	      self.unbind();
+	
+	      self.resetPreview();
+	      self.previews = null;
+	
+	      self.viewBox = null;
+	      self.cropBox = null;
+	      self.dragBox = null;
+	      self.canvas = null;
+	      self.container = null;
+	
+	      removeChild(self.cropper);
+	      self.cropper = null;
+	    }
+	  }], [{
+	    key: 'noConflict',
+	    value: function noConflict() {
+	      window.Cropper = AnotherCropper;
+	      return Cropper;
+	    }
+	  }, {
+	    key: 'setDefaults',
+	    value: function setDefaults(options) {
+	      extend(DEFAULTS, isPlainObject(options) && options);
+	    }
+	  }]);
+	  return Cropper;
+	}();
+	
+	extend(Cropper.prototype, render$1);
+	extend(Cropper.prototype, preview$1);
+	extend(Cropper.prototype, events);
+	extend(Cropper.prototype, handlers);
+	extend(Cropper.prototype, change$1);
+	extend(Cropper.prototype, methods);
+	
+	if (typeof window !== 'undefined') {
+	  AnotherCropper = window.Cropper;
+	  window.Cropper = Cropper;
+	}
+	
+	return Cropper;
+	
+	})));
+
+
+/***/ }),
+/* 872 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(873);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(433)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!../../css-loader/index.js!./cropper.css", function() {
+				var newContent = require("!!../../css-loader/index.js!./cropper.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ }),
+/* 873 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(432)();
+	exports.push([module.id, "/*!\n * Cropper.js v1.0.0-rc.3\n * https://github.com/fengyuanchen/cropperjs\n *\n * Copyright (c) 2017 Fengyuan Chen\n * Released under the MIT license\n *\n * Date: 2017-07-07T12:56:42.462Z\n */\n\n.cropper-container {\n  font-size: 0;\n  line-height: 0;\n\n  position: relative;\n\n  -webkit-user-select: none;\n\n     -moz-user-select: none;\n\n      -ms-user-select: none;\n\n          user-select: none;\n\n  direction: ltr;\n  -ms-touch-action: none;\n      touch-action: none\n}\n\n.cropper-container img {\n  /* Avoid margin top issue (Occur only when margin-top <= -height) */\n  display: block;\n  min-width: 0 !important;\n  max-width: none !important;\n  min-height: 0 !important;\n  max-height: none !important;\n  width: 100%;\n  height: 100%;\n  image-orientation: 0deg\n}\n\n.cropper-wrap-box,\n.cropper-canvas,\n.cropper-drag-box,\n.cropper-crop-box,\n.cropper-modal {\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n}\n\n.cropper-wrap-box {\n  overflow: hidden;\n}\n\n.cropper-drag-box {\n  opacity: 0;\n  background-color: #fff;\n}\n\n.cropper-modal {\n  opacity: .5;\n  background-color: #000;\n}\n\n.cropper-view-box {\n  display: block;\n  overflow: hidden;\n\n  width: 100%;\n  height: 100%;\n\n  outline: 1px solid #39f;\n  outline-color: rgba(51, 153, 255, 0.75);\n}\n\n.cropper-dashed {\n  position: absolute;\n\n  display: block;\n\n  opacity: .5;\n  border: 0 dashed #eee\n}\n\n.cropper-dashed.dashed-h {\n  top: 33.33333%;\n  left: 0;\n  width: 100%;\n  height: 33.33333%;\n  border-top-width: 1px;\n  border-bottom-width: 1px\n}\n\n.cropper-dashed.dashed-v {\n  top: 0;\n  left: 33.33333%;\n  width: 33.33333%;\n  height: 100%;\n  border-right-width: 1px;\n  border-left-width: 1px\n}\n\n.cropper-center {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n\n  display: block;\n\n  width: 0;\n  height: 0;\n\n  opacity: .75\n}\n\n.cropper-center:before,\n  .cropper-center:after {\n  position: absolute;\n  display: block;\n  content: ' ';\n  background-color: #eee\n}\n\n.cropper-center:before {\n  top: 0;\n  left: -3px;\n  width: 7px;\n  height: 1px\n}\n\n.cropper-center:after {\n  top: -3px;\n  left: 0;\n  width: 1px;\n  height: 7px\n}\n\n.cropper-face,\n.cropper-line,\n.cropper-point {\n  position: absolute;\n\n  display: block;\n\n  width: 100%;\n  height: 100%;\n\n  opacity: .1;\n}\n\n.cropper-face {\n  top: 0;\n  left: 0;\n\n  background-color: #fff;\n}\n\n.cropper-line {\n  background-color: #39f\n}\n\n.cropper-line.line-e {\n  top: 0;\n  right: -3px;\n  width: 5px;\n  cursor: e-resize\n}\n\n.cropper-line.line-n {\n  top: -3px;\n  left: 0;\n  height: 5px;\n  cursor: n-resize\n}\n\n.cropper-line.line-w {\n  top: 0;\n  left: -3px;\n  width: 5px;\n  cursor: w-resize\n}\n\n.cropper-line.line-s {\n  bottom: -3px;\n  left: 0;\n  height: 5px;\n  cursor: s-resize\n}\n\n.cropper-point {\n  width: 5px;\n  height: 5px;\n\n  opacity: .75;\n  background-color: #39f\n}\n\n.cropper-point.point-e {\n  top: 50%;\n  right: -3px;\n  margin-top: -3px;\n  cursor: e-resize\n}\n\n.cropper-point.point-n {\n  top: -3px;\n  left: 50%;\n  margin-left: -3px;\n  cursor: n-resize\n}\n\n.cropper-point.point-w {\n  top: 50%;\n  left: -3px;\n  margin-top: -3px;\n  cursor: w-resize\n}\n\n.cropper-point.point-s {\n  bottom: -3px;\n  left: 50%;\n  margin-left: -3px;\n  cursor: s-resize\n}\n\n.cropper-point.point-ne {\n  top: -3px;\n  right: -3px;\n  cursor: ne-resize\n}\n\n.cropper-point.point-nw {\n  top: -3px;\n  left: -3px;\n  cursor: nw-resize\n}\n\n.cropper-point.point-sw {\n  bottom: -3px;\n  left: -3px;\n  cursor: sw-resize\n}\n\n.cropper-point.point-se {\n  right: -3px;\n  bottom: -3px;\n  width: 20px;\n  height: 20px;\n  cursor: se-resize;\n  opacity: 1\n}\n\n@media (min-width: 768px) {\n\n  .cropper-point.point-se {\n    width: 15px;\n    height: 15px\n  }\n}\n\n@media (min-width: 992px) {\n\n  .cropper-point.point-se {\n    width: 10px;\n    height: 10px\n  }\n}\n\n@media (min-width: 1200px) {\n\n  .cropper-point.point-se {\n    width: 5px;\n    height: 5px;\n    opacity: .75\n  }\n}\n\n.cropper-point.point-se:before {\n  position: absolute;\n  right: -50%;\n  bottom: -50%;\n  display: block;\n  width: 200%;\n  height: 200%;\n  content: ' ';\n  opacity: 0;\n  background-color: #39f\n}\n\n.cropper-invisible {\n  opacity: 0;\n}\n\n.cropper-bg {\n  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA3NCSVQICAjb4U/gAAAABlBMVEXMzMz////TjRV2AAAACXBIWXMAAArrAAAK6wGCiw1aAAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M26LyyjAAAABFJREFUCJlj+M/AgBVhF/0PAH6/D/HkDxOGAAAAAElFTkSuQmCC');\n}\n\n.cropper-hide {\n  position: absolute;\n\n  display: block;\n\n  width: 0;\n  height: 0;\n}\n\n.cropper-hidden {\n  display: none !important;\n}\n\n.cropper-move {\n  cursor: move;\n}\n\n.cropper-crop {\n  cursor: crosshair;\n}\n\n.cropper-disabled .cropper-drag-box,\n.cropper-disabled .cropper-face,\n.cropper-disabled .cropper-line,\n.cropper-disabled .cropper-point {\n  cursor: not-allowed;\n}\n\n", ""]);
 
 /***/ })
 /******/ ]);
