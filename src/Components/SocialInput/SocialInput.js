@@ -4,7 +4,7 @@
 import React, { Component } from "react";
 import Textarea from "react-textarea-autosize";
 import Badge from "material-ui/Badge";
-import { Thumb, RoundInput } from "../";
+import { Thumb } from "../";
 import categoryJson from "../../Json/category";
 import FileInputComponent from "react-file-input-previews-base64";
 import cx from "classnames";

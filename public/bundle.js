@@ -8940,7 +8940,7 @@
 	  { store: store },
 	  _react2.default.createElement(
 	    _reactRouterDom.BrowserRouter,
-	    { basename: "/enhance" },
+	    null,
 	    _react2.default.createElement(_App2.default, null)
 	  )
 	), document.getElementById("root"));
@@ -34482,10 +34482,9 @@
 	* Email: nayunhwan.dev@mgail.com
 	*/
 	
-	var ServerEndPoint = exports.ServerEndPoint = "http://localhost:3000/";
+	// export const ServerEndPoint = "http://localhost:3000/";
 	
-	// export const ServerEndPoint =
-	//   "http://ec2-13-125-78-181.ap-northeast-2.compute.amazonaws.com:3000/";
+	var ServerEndPoint = exports.ServerEndPoint = "http://ec2-13-125-78-181.ap-northeast-2.compute.amazonaws.com:3000/";
 
 /***/ }),
 /* 438 */
@@ -34822,7 +34821,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.signOut = exports.updateUsername = exports.postSignIn = exports.postSignUp = exports.getMe = exports.SUCCEED_TO_SIGNOUT = exports.FAILED_TO_SIGNUP = exports.SUCCEED_TO_SIGNUP = exports.FAILED_TO_SIGNIN = exports.SUCCEED_TO_SIGNIN = exports.FAILED_TO_UPDATE_USERNAME = exports.SUCCEED_TO_UPDATE_USERNAME = exports.FAILED_TO_GET_ME = exports.SUCCEED_TO_GET_ME = undefined;
+	exports.signOut = exports.updateEmail = exports.updateUsername = exports.postSignIn = exports.postSignUp = exports.getMe = exports.SUCCEED_TO_SIGNOUT = exports.FAILED_TO_SIGNUP = exports.SUCCEED_TO_SIGNUP = exports.FAILED_TO_SIGNIN = exports.SUCCEED_TO_SIGNIN = exports.FAILED_TO_UPDATE_USERNAME = exports.SUCCEED_TO_UPDATE_USERNAME = exports.FAILED_TO_UPDATE_EMAIL = exports.SUCCEED_TO_UPDATE_EMAIL = exports.FAILED_TO_GET_ME = exports.SUCCEED_TO_GET_ME = undefined;
 	
 	var _Server = __webpack_require__(437);
 	
@@ -34830,6 +34829,9 @@
 	
 	var SUCCEED_TO_GET_ME = exports.SUCCEED_TO_GET_ME = "SUCCEED_TO_GET_ME";
 	var FAILED_TO_GET_ME = exports.FAILED_TO_GET_ME = "FAILED_TO_GET_ME";
+	
+	var SUCCEED_TO_UPDATE_EMAIL = exports.SUCCEED_TO_UPDATE_EMAIL = "SUCCEED_TO_UPDATE_EMAIL";
+	var FAILED_TO_UPDATE_EMAIL = exports.FAILED_TO_UPDATE_EMAIL = "FAILED_TO_UPDATE_EMAIL";
 	
 	var SUCCEED_TO_UPDATE_USERNAME = exports.SUCCEED_TO_UPDATE_USERNAME = "SUCCEED_TO_UPDATE_USERNAME";
 	var FAILED_TO_UPDATE_USERNAME = exports.FAILED_TO_UPDATE_USERNAME = "FAILED_TO_UPDATE_USERNAME";
@@ -35110,28 +35112,90 @@
 	  }();
 	};
 	
-	var signOut = exports.signOut = function signOut() {
+	var updateEmail = exports.updateEmail = function updateEmail(params) {
 	  return function () {
 	    var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(dispatch) {
+	      var response, responseJson;
 	      return regeneratorRuntime.wrap(function _callee5$(_context5) {
 	        while (1) {
 	          switch (_context5.prev = _context5.next) {
 	            case 0:
-	              dispatch({
-	                type: SUCCEED_TO_SIGNOUT
+	              _context5.prev = 0;
+	              _context5.next = 3;
+	              return fetch(_Server.ServerEndPoint + "api/user/email", {
+	                method: "PATCH",
+	                headers: {
+	                  Accept: "application/json",
+	                  "Content-Type": "application/json",
+	                  "Access-Control-Allow-Origin": "*",
+	                  "x-access-token": params.token
+	                },
+	                body: JSON.stringify({
+	                  email: params.email
+	                })
 	              });
-	              return _context5.abrupt("return", "signOut");
 	
-	            case 2:
+	            case 3:
+	              response = _context5.sent;
+	              _context5.next = 6;
+	              return response.json();
+	
+	            case 6:
+	              responseJson = _context5.sent;
+	              _context5.next = 9;
+	              return dispatch({
+	                type: SUCCEED_TO_UPDATE_EMAIL,
+	                payload: params.EMAIL
+	              });
+	
+	            case 9:
+	              return _context5.abrupt("return", "succeed");
+	
+	            case 12:
+	              _context5.prev = 12;
+	              _context5.t0 = _context5["catch"](0);
+	
+	              dispatch({
+	                type: FAILED_TO_UPDATE_EMAIL,
+	                payload: { data: "NETWORK_ERROR" }
+	              });
+	
+	            case 15:
 	            case "end":
 	              return _context5.stop();
 	          }
 	        }
-	      }, _callee5, undefined);
+	      }, _callee5, undefined, [[0, 12]]);
 	    }));
 	
 	    return function (_x5) {
 	      return _ref5.apply(this, arguments);
+	    };
+	  }();
+	};
+	
+	var signOut = exports.signOut = function signOut() {
+	  return function () {
+	    var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(dispatch) {
+	      return regeneratorRuntime.wrap(function _callee6$(_context6) {
+	        while (1) {
+	          switch (_context6.prev = _context6.next) {
+	            case 0:
+	              dispatch({
+	                type: SUCCEED_TO_SIGNOUT
+	              });
+	              return _context6.abrupt("return", "signOut");
+	
+	            case 2:
+	            case "end":
+	              return _context6.stop();
+	          }
+	        }
+	      }, _callee6, undefined);
+	    }));
+	
+	    return function (_x6) {
+	      return _ref6.apply(this, arguments);
 	    };
 	  }();
 	};
@@ -87789,6 +87853,8 @@
 	          token: _this.props.token
 	        };
 	
+	        console.log(params);
+	
 	        _this.setState({ postLoading: true });
 	        _this.props.dispatch(SocialAction.editForum(params)).then(function (value) {
 	          var params = {
@@ -90001,11 +90067,11 @@
 	              _context22.next = 9;
 	              return dispatch({
 	                type: SUCCEED_TO_POST_FORUM_COMMENT,
-	                payload: responseJson.forum_id
+	                payload: responseJson.comment_id
 	              });
 	
 	            case 9:
-	              return _context22.abrupt("return", responseJson.forum_id);
+	              return _context22.abrupt("return", responseJson.comment_id);
 	
 	            case 12:
 	              _context22.prev = 12;
@@ -90130,22 +90196,22 @@
 	
 	      var date = new Date();
 	      var newComment = _this.state.newComment.slice();
-	      var frontParams = {
-	        username: me.username,
-	        profile_img: me.profile_img,
-	        point: me.point,
-	        content: _this.state.comment,
-	        date: date
-	      };
 	      var params = {
 	        token: _this.props.token,
 	        content: _this.state.comment,
 	        forum_id: _this.props.match.params.forum_id
 	      };
-	      newComment.splice(0, 0, frontParams);
-	      _this.setState({ newComment: newComment });
 	      _this.props.dispatch(SocialAction.postForumComment(params)).then(function (value) {
-	        _this.setState({ comment: "" });
+	        var frontParams = {
+	          username: me.username,
+	          profile_img: me.profile_img,
+	          point: me.point,
+	          content: _this.state.comment,
+	          date: date,
+	          id: value
+	        };
+	        newComment.splice(0, 0, frontParams);
+	        _this.setState({ newComment: newComment, comment: "" });
 	      });
 	    };
 	
@@ -90452,12 +90518,16 @@
 	              _this3.props.dispatch(SocialAction.getOneForumComment(params)).then(function (comments) {
 	                if (value.message === "You already liked this forum") {
 	                  _this3.setState({ isLiked: true, newLike: result.like_cnt });
+	                } else {
+	                  _this3.setState({ newLike: result.like_cnt });
 	                }
 	                if (hate.message !== "it's okay to dislike this forum") {
 	                  _this3.setState({
 	                    isHated: true,
 	                    newHate: result.dislike_cnt
 	                  });
+	                } else {
+	                  _this3.setState({ newHate: result.dislike_cnt });
 	                }
 	                var images = result.image.map(function (data, index) {
 	                  return { original: data.img_url };
@@ -90718,7 +90788,7 @@
 	                  !isLiked ? _react2.default.createElement(
 	                    _reactPrettyNumbers2.default,
 	                    { params: option },
-	                    r_forum.like_cnt
+	                    newLike
 	                  ) : _react2.default.createElement(
 	                    "span",
 	                    { className: "postPage__content__chart__intro__post__footer__count-liked" },
@@ -90749,7 +90819,7 @@
 	                  !isHated ? _react2.default.createElement(
 	                    _reactPrettyNumbers2.default,
 	                    { params: option },
-	                    r_forum.dislike_cnt
+	                    newHate
 	                  ) : _react2.default.createElement(
 	                    "span",
 	                    { className: "postPage__content__chart__intro__post__footer__count-hated" },
@@ -91189,6 +91259,9 @@
 	                  profileImg: data.profile_img,
 	                  userPoint: data.point,
 	                  createdAt: data.created_at,
+	                  onClick: function onClick() {
+	                    return _this4.handleUser(data.user_id);
+	                  },
 	                  checkName: _me.username,
 	                  onDelete: function onDelete() {
 	                    return _this4.handleDelete(data.id);
@@ -96231,6 +96304,10 @@
 	
 	var _reactImageCrop2 = _interopRequireDefault(_reactImageCrop);
 	
+	var _reactFileInputPreviewsBase = __webpack_require__(840);
+	
+	var _reactFileInputPreviewsBase2 = _interopRequireDefault(_reactFileInputPreviewsBase);
+	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -96289,7 +96366,13 @@
 	      _this.setState({ username: e.target.value });
 	    };
 	
-	    _this.handleEditEmail = function () {};
+	    _this.handleEditEmail = function () {
+	      var token = _this.props.token;
+	      var email = _this.state.email;
+	
+	      var params = { token: token, email: email };
+	      _this.props.dispatch(AuthAction.updateEmail(params)).then(function (result) {});
+	    };
 	
 	    _this.handleEditPassword = function () {};
 	
@@ -96394,16 +96477,36 @@
 	    }();
 	
 	    _this.handleCrop = function (crop) {
+	      console.log(crop);
 	      _this.setState({ crop: crop });
 	    };
 	
-	    _this.handleEditImage = function () {
-	      var me = _this.props.me;
-	
-	      (0, _function2.default)(me.profile_img, _this.state.crop, "sample").then(function (result) {
-	        return console.log(result);
-	      });
+	    _this.handleFile = function (e) {
+	      _this.setState({ targetImg: e[0].base64, targetImgFile: e[0].file });
 	    };
+	
+	    _this.handleEditImage = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+	      var result;
+	      return regeneratorRuntime.wrap(function _callee2$(_context2) {
+	        while (1) {
+	          switch (_context2.prev = _context2.next) {
+	            case 0:
+	              _context2.next = 2;
+	              return (0, _function2.default)(_this.state.targetImgFile, _this.state.crop, "sample");
+	
+	            case 2:
+	              result = _context2.sent;
+	
+	              console.log(result);
+	              _this.setState({ croppedImg: result });
+	
+	            case 5:
+	            case "end":
+	              return _context2.stop();
+	          }
+	        }
+	      }, _callee2, _this2);
+	    }));
 	
 	    _this.handleSignOut = function () {
 	      _this.props.dispatch(AuthAction.signOut()).then(function (value) {
@@ -96425,7 +96528,10 @@
 	      email: "",
 	      username: "",
 	      password: "",
-	      confirmPassword: ""
+	      confirmPassword: "",
+	      croppedImg: "",
+	      targetImg: "",
+	      targetImgFile: null
 	    };
 	    return _this;
 	  }
@@ -96566,10 +96672,19 @@
 	              _reactstrap.ModalBody,
 	              null,
 	              _react2.default.createElement(_reactImageCrop2.default, {
-	                src: me.profile_img,
+	                src: this.state.targetImg,
 	                crop: this.state.crop,
 	                onChange: this.handleCrop
 	              }),
+	              _react2.default.createElement(_reactFileInputPreviewsBase2.default, {
+	                labelText: "Select file",
+	                labelStyle: { fontSize: 14 },
+	                multiple: true,
+	                callbackFunction: this.handleFile,
+	                imagePreview: false,
+	                accept: "image/*"
+	              }),
+	              _react2.default.createElement("img", { src: this.state.croppedImg, width: 100, height: 100 }),
 	              _react2.default.createElement(_Components.Button, {
 	                text: "\uC218\uC815\uD558\uAE30",
 	                width: 90,
@@ -96778,28 +96893,19 @@
 	});
 	exports.default = getCroppedImg;
 	/**
-	 * @param {String} url - Image File Object
+	 * @param {File} image - Image File Object
 	 * @param {Object} pixelCrop - pixelCrop Object provided by react-image-crop
-	 * @param {String} fileName - Name of the returned file in Promise
 	 */
-	function getCroppedImg(url, pixelCrop, fileName) {
+	function getCroppedImg(image, pixelCrop) {
 	  var canvas = document.createElement("canvas");
 	  canvas.width = pixelCrop.width;
 	  canvas.height = pixelCrop.height;
 	  var ctx = canvas.getContext("2d");
-	
-	  ctx.drawImage(url, pixelCrop.x, pixelCrop.y, pixelCrop.width, pixelCrop.height, 0, 0, pixelCrop.width, pixelCrop.height);
-	
-	  // As Base64 string
-	  // const base64Image = canvas.toDataURL('image/jpeg');
-	
-	  // As a blob
-	  return new Promise(function (resolve, reject) {
-	    canvas.toBlob(function (file) {
-	      file.name = fileName;
-	      resolve(file);
-	    }, "image/jpeg");
-	  });
+	  var newImage = new Image();
+	  newImage.onload = function () {
+	    ctx.drawImage(image, pixelCrop.x, pixelCrop.y, pixelCrop.width, pixelCrop.height, 0, 0, pixelCrop.width, pixelCrop.height);
+	  };
+	  return canvas.toDataURL();
 	}
 
 /***/ }),

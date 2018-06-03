@@ -9,11 +9,12 @@ import * as PriceAction from "../../ActionCreators/PriceAction";
 import * as SocialAction from "../../ActionCreators/SocialAction";
 import * as AuthAction from "../../ActionCreators/AuthAction";
 import "react-activity/dist/react-activity.css";
-import getCroppedImg from "../../Assests/Functions/function";
 import { Modal, ModalBody } from "reactstrap";
 import cx from "classnames";
 import Loadable from "react-loading-overlay";
-import ReactCrop from "react-image-crop";
+import Cropper from "react-cropper";
+import "cropperjs/dist/cropper.css";
+import FileInputComponent from "react-file-input-previews-base64";
 
 const defaultProps = {};
 const propTypes = {};
@@ -37,18 +38,24 @@ class SettingsPage extends Component {
       showModal: false,
       sideFavorite: [],
       posts: [],
-      crop: { aspect: 1 },
+      crop: { aspect: 16 / 9 },
       comments: [],
       favorite: [],
+      showCrop: false,
       email: "",
       username: "",
+      c_password: "",
       password: "",
-      confirmPassword: ""
+      confirmPassword: "",
+      croppedImg: "",
+      targetImg: "",
+      targetImgFile: null
     };
   }
 
   componentWillMount() {
     const { me, token } = this.props;
+    this.setState({ email: me.email, username: me.username });
     const params = { user_id: me.id, token };
     this.props.dispatch(SocialAction.getForumByUser(params)).then(forums => {
       this.props
@@ -173,14 +180,22 @@ class SettingsPage extends Component {
     this.setState({ username: e.target.value });
   };
 
-  handleEditEmail = () => {};
+  handleCurrentPassword = e => {
+    this.setState({ c_password: e.target.value });
+  };
 
-  handleEditPassword = () => {};
+  handleEditPassword = () => {
+    const { token } = this.props;
+    const { password, confirmPassword, c_password } = this.state;
+    const params = { old_password: c_password, new_password: password, token };
+    this.props.dispatch(AuthAction.updatePassword(params));
+  };
 
   handleEditUsername = () => {
     const { token } = this.props;
-    const { username } = this.state;
-    const params = { token, username };
+    const { username, email } = this.state;
+    const params = { token, username, email };
+    console.log(params);
     this.props.dispatch(AuthAction.updateUsername(params)).then(result => {});
   };
 
@@ -251,15 +266,24 @@ class SettingsPage extends Component {
     }
   };
 
-  handleCrop = crop => {
-    this.setState({ crop });
+  _crop = () => {
+    // image in dataUrl
+    this.setState({
+      croppedImg: this.refs.cropper.getCroppedCanvas().toDataURL()
+    });
+  };
+
+  handleFile = e => {
+    this.setState({ targetImg: e[0].base64, showCrop: true });
   };
 
   handleEditImage = () => {
-    const { me } = this.props;
-    getCroppedImg(me.profile_img, this.state.crop, "sample").then(result =>
-      console.log(result)
-    );
+    const { token } = this.props;
+    const { croppedImg } = this.state;
+    const params = { token, base64: croppedImg };
+    this.props.dispatch(AuthAction.updateProfile(params)).then(result => {
+      this.toggleModal();
+    });
   };
 
   handleSignOut = () => {
@@ -271,7 +295,14 @@ class SettingsPage extends Component {
   };
 
   render() {
-    const { posts, comments, favorite, sideFavorite, postLoading } = this.state;
+    const {
+      posts,
+      comments,
+      favorite,
+      sideFavorite,
+      postLoading,
+      showCrop
+    } = this.state;
     const { me } = this.props;
 
     return (
@@ -291,18 +322,65 @@ class SettingsPage extends Component {
         >
           <Loadable active={postLoading} spinner text="포스팅 중입니다">
             <ModalBody>
-              <ReactCrop
-                src={me.profile_img}
-                crop={this.state.crop}
-                onChange={this.handleCrop}
-              />
-              <Button
-                text="수정하기"
-                width={90}
-                height={30}
-                marginTop={10}
-                onClick={this.handleEditImage}
-              />
+              <div className="settingsPage__modal">
+                <div className="settingsPage__modal__left">
+                  <FileInputComponent
+                    parentStyle={{ margin: 0, textAlign: "center" }}
+                    labelText="Select file"
+                    labelStyle={{ fontSize: 14 }}
+                    labelStyle={{ display: "none", margin: 0 }}
+                    multiple={true}
+                    callbackFunction={this.handleFile}
+                    imagePreview={false}
+                    buttonComponent={
+                      showCrop ? (
+                        <span className="socialInput__footer__camera__icon">
+                          <i className="xi-camera" />
+                        </span>
+                      ) : (
+                        <Thumb
+                          src={me && me.profile_img}
+                          fontSize={80}
+                          size={100}
+                        />
+                      )
+                    }
+                    accept="image/*"
+                  />
+                  {showCrop ? (
+                    <Cropper
+                      ref="cropper"
+                      src={this.state.targetImg}
+                      style={{ height: 200, width: "50%" }}
+                      // Cropper.js options
+                      aspectRatio={1}
+                      guides={false}
+                      crop={this._crop}
+                    />
+                  ) : null}
+                </div>
+                <div className="settingsPage__modal__right">
+                  <br />
+                  <img
+                    src={this.state.croppedImg}
+                    width={200}
+                    height={200}
+                    className="settingsPage__modal__cropImage"
+                    style={showCrop ? null : { display: "none" }}
+                  />
+                  {showCrop ? (
+                    <Button
+                      text="수정하기"
+                      width={90}
+                      height={30}
+                      marginTop={10}
+                      onClick={this.handleEditImage}
+                    />
+                  ) : (
+                    "프로필을 클릭해 이미지를 수정하세요"
+                  )}
+                </div>
+              </div>
             </ModalBody>
           </Loadable>
         </Modal>
@@ -323,13 +401,6 @@ class SettingsPage extends Component {
             <div className="settingsPage__content__news__lists">
               <div className="settingsPage__content__news__lists__content">
                 <RoundInput value={me.email} onChange={this.handleEmail} />
-                <Button
-                  text="수정하기"
-                  width={90}
-                  height={30}
-                  marginTop={10}
-                  onClick={this.handleEditEmail}
-                />
               </div>
               <br />
               <div className="settingsPage__content__news__lists__content">
@@ -348,6 +419,12 @@ class SettingsPage extends Component {
               <br />
               <br />
               <div className="settingsPage__content__news__lists__content">
+                <RoundInput
+                  placeholder="현재 비밀번호를 입력하세요"
+                  type="password"
+                  onChange={this.handleCurrentPassword}
+                />
+                <br />
                 <RoundInput
                   placeholder="새로운 비밀번호를 입력하세요"
                   type="password"

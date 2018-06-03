@@ -14,11 +14,25 @@
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
   &__modal {
-    height: 90vh;
-    padding-left: 50px;
-    padding-right: 50px;
+    height: 85vh;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &__cropImage {
+      border: 1px $border-color solid;
+    }
+
+    &__left {
+    }
+
+    &__right {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
 
     &__favorite {
       width: 100%;

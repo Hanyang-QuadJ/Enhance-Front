@@ -75,12 +75,16 @@ class PostPage extends Component {
                 .then(comments => {
                   if (value.message === "You already liked this forum") {
                     this.setState({ isLiked: true, newLike: result.like_cnt });
+                  } else {
+                    this.setState({ newLike: result.like_cnt });
                   }
                   if (hate.message !== "it's okay to dislike this forum") {
                     this.setState({
                       isHated: true,
                       newHate: result.dislike_cnt
                     });
+                  } else {
+                    this.setState({ newHate: result.dislike_cnt });
                   }
                   const images = result.image.map((data, index) => {
                     return { original: data.img_url };
@@ -508,9 +512,7 @@ class PostPage extends Component {
                 <div className="postPage__content__chart__intro__post__footer">
                   <span className="postPage__content__chart__intro__post__footer__count">
                     {!isLiked ? (
-                      <NumericLabel params={option}>
-                        {r_forum.like_cnt}
-                      </NumericLabel>
+                      <NumericLabel params={option}>{newLike}</NumericLabel>
                     ) : (
                       <span className="postPage__content__chart__intro__post__footer__count-liked">
                         <NumericLabel params={option}>{newLike}</NumericLabel>
@@ -535,9 +537,7 @@ class PostPage extends Component {
                   </span>
                   <span className="postPage__content__chart__intro__post__footer__count">
                     {!isHated ? (
-                      <NumericLabel params={option}>
-                        {r_forum.dislike_cnt}
-                      </NumericLabel>
+                      <NumericLabel params={option}>{newHate}</NumericLabel>
                     ) : (
                       <span className="postPage__content__chart__intro__post__footer__count-hated">
                         <NumericLabel params={option}>{newHate}</NumericLabel>
@@ -899,6 +899,7 @@ class PostPage extends Component {
                       profileImg={data.profile_img}
                       userPoint={data.point}
                       createdAt={data.created_at}
+                      onClick={() => this.handleUser(data.user_id)}
                       checkName={me.username}
                       onDelete={() => this.handleDelete(data.id)}
                       content={data.content}

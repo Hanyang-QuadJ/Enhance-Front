@@ -27,7 +27,7 @@ import App from "./App";
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter basename="/enhance">
+    <BrowserRouter>
       <App />
     </BrowserRouter>
   </Provider>,

@@ -3,8 +3,17 @@ import { ServerEndPoint } from "../Configs/Server";
 export const SUCCEED_TO_GET_ME = "SUCCEED_TO_GET_ME";
 export const FAILED_TO_GET_ME = "FAILED_TO_GET_ME";
 
+export const SUCCEED_TO_UPDATE_EMAIL = "SUCCEED_TO_UPDATE_EMAIL";
+export const FAILED_TO_UPDATE_EMAIL = "FAILED_TO_UPDATE_EMAIL";
+
 export const SUCCEED_TO_UPDATE_USERNAME = "SUCCEED_TO_UPDATE_USERNAME";
 export const FAILED_TO_UPDATE_USERNAME = "FAILED_TO_UPDATE_USERNAME";
+
+export const SUCCEED_TO_UPDATE_PROFILE = "SUCCEED_TO_UPDATE_PROFILE";
+export const FAILED_TO_UPDATE_PROFILE = "FAILED_TO_UPDATE_PROFILE";
+
+export const SUCCEED_TO_UPDATE_PASSWORD = "SUCCEED_TO_UPDATE_PASSWORD";
+export const FAILED_TO_UPDATE_PASSWORD = "FAILED_TO_UPDATE_PASSWORD";
 
 export const SUCCEED_TO_SIGNIN = "SUCCEED_TO_SIGNIN";
 export const FAILED_TO_SIGNIN = "FAILED_TO_SIGNIN";
@@ -58,11 +67,20 @@ export const postSignUp = params => {
         })
       });
       let responseJson = await response.json();
-      await dispatch({
-        type: SUCCEED_TO_SIGNUP,
-        payload: responseJson.token
-      });
-      return responseJson.token;
+
+      if (response.status === 406) {
+        await dispatch({
+          type: FAILED_TO_SIGNUP,
+          payload: responseJson
+        });
+        return responseJson.message;
+      } else {
+        await dispatch({
+          type: SUCCEED_TO_SIGNUP,
+          payload: responseJson.token
+        });
+        return responseJson.token;
+      }
     } catch (error) {
       dispatch({
         type: FAILED_TO_SIGNUP,
@@ -95,7 +113,6 @@ export const postSignIn = params => {
         return "failed";
       } else {
         let responseJson = await response.json();
-        console.log(responseJson);
         await dispatch({
           type: SUCCEED_TO_SIGNIN,
           payload: responseJson.token
@@ -123,6 +140,7 @@ export const updateUsername = params => {
           "x-access-token": params.token
         },
         body: JSON.stringify({
+          email: params.email,
           username: params.username
         })
       });
@@ -135,6 +153,97 @@ export const updateUsername = params => {
     } catch (error) {
       dispatch({
         type: FAILED_TO_UPDATE_USERNAME,
+        payload: { data: "NETWORK_ERROR" }
+      });
+    }
+  };
+};
+
+export const updatePassword = params => {
+  return async dispatch => {
+    try {
+      let response = await fetch(ServerEndPoint + "api/user/password", {
+        method: "PATCH",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "x-access-token": params.token
+        },
+        body: JSON.stringify({
+          old_password: params.old_password,
+          new_password: params.new_password
+        })
+      });
+      let responseJson = await response.json();
+      await dispatch({
+        type: SUCCEED_TO_UPDATE_PASSWORD,
+        payload: responseJson
+      });
+      return "succeed";
+    } catch (error) {
+      dispatch({
+        type: FAILED_TO_UPDATE_PASSWORD,
+        payload: { data: "NETWORK_ERROR" }
+      });
+    }
+  };
+};
+
+export const updateProfile = params => {
+  return async dispatch => {
+    try {
+      let response = await fetch(ServerEndPoint + "api/user/profile", {
+        method: "PATCH",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "x-access-token": params.token
+        },
+        body: JSON.stringify({
+          base64: params.base64
+        })
+      });
+      let responseJson = await response.json();
+      await dispatch({
+        type: SUCCEED_TO_UPDATE_PROFILE,
+        payload: params.base64
+      });
+      return "succeed";
+    } catch (error) {
+      dispatch({
+        type: FAILED_TO_UPDATE_PROFILE,
+        payload: { data: "NETWORK_ERROR" }
+      });
+    }
+  };
+};
+
+export const updateEmail = params => {
+  return async dispatch => {
+    try {
+      let response = await fetch(ServerEndPoint + "api/user/email", {
+        method: "PATCH",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "x-access-token": params.token
+        },
+        body: JSON.stringify({
+          email: params.email
+        })
+      });
+      let responseJson = await response.json();
+      await dispatch({
+        type: SUCCEED_TO_UPDATE_EMAIL,
+        payload: params.EMAIL
+      });
+      return "succeed";
+    } catch (error) {
+      dispatch({
+        type: FAILED_TO_UPDATE_EMAIL,
         payload: { data: "NETWORK_ERROR" }
       });
     }

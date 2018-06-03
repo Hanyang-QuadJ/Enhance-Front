@@ -18,6 +18,7 @@ import {
   SUCCEED_TO_GET_ME,
   SUCCEED_TO_SIGNOUT,
   SUCCEED_TO_UPDATE_USERNAME,
+  SUCCEED_TO_UPDATE_PROFILE,
   FAILED_TO_SIGNIN
 } from "../ActionCreators/AuthAction";
 
@@ -57,6 +58,10 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         me: { ...state.me, username: action.payload }
       });
+    case SUCCEED_TO_UPDATE_PROFILE:
+      return Object.assign({}, state, {
+        me: { ...state.me, profile_img: action.payload }
+      });
     case FAILED_TO_SIGNIN:
       return Object.assign({}, state, {
         token: "",
@@ -68,7 +73,7 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         isLogin: false,
         token: null,
-        user: []
+        me: null
       });
     case SUCCEED_TO_GET_NEWS:
       return Object.assign({}, state, {

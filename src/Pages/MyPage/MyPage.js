@@ -243,6 +243,7 @@ class MyPage extends Component {
       selectedAbbr,
       selectedPostType2,
       posts,
+      imagePreview,
       editIndex,
       editId
     } = this.state;
@@ -259,6 +260,7 @@ class MyPage extends Component {
         content: main,
         category: selectedPostType2,
         coins: selectedCoinType,
+        pic_list: imagePreview,
         token: this.props.token
       };
 
@@ -786,17 +788,17 @@ class MyPage extends Component {
                       <div className="myPage__content__chart__intro">
                         <div className="myPage__content__chart__intro__content">
                           <Thumb
-                            src={me.profile_img}
+                            src={me && me.profile_img}
                             fontSize={75}
                             size={90}
-                            point={me.point}
+                            point={me && me.point}
                           />
                           <p className="myPage__content__chart__intro__content__username">
-                            {me.username}
+                            {me && me.username}
                           </p>
                           <div className="myPage__content__chart__intro__content__area">
                             <p className="myPage__content__chart__intro__content__area__number-border">
-                              {me.point}
+                              {me && me.point}
                               <span className="myPage__content__chart__intro__content__area__text">
                                 포인트
                               </span>

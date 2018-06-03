@@ -40,6 +40,8 @@ class SignUpPage extends Component {
       email: "",
       password: "",
       username: "",
+      emailExist: false,
+      userExist: false,
       isSignedUp: false
     };
     this.toggle = this.toggle.bind(this);
@@ -102,17 +104,30 @@ class SignUpPage extends Component {
     };
     this.setState({ isSignedUp: true });
     this.props.dispatch(AuthAction.postSignUp(params)).then(value => {
-      this.props.dispatch(AuthAction.getMe(value)).then(value2 => {
-        this.setState({ isSignedUp: false });
-        this.props.history.replace({
-          pathname: "/"
+      if (value === "user email exists") {
+        this.setState({ emailExist: true, isSignedUp: false });
+      } else if (value === "username exists") {
+        this.setState({ userExist: true, isSignedUp: false });
+      } else {
+        this.props.dispatch(AuthAction.getMe(value)).then(value2 => {
+          this.setState({ isSignedUp: false });
+          this.props.history.replace({
+            pathname: "/"
+          });
         });
-      });
+      }
     });
   };
 
   render() {
-    const { coinType, coins, favorite, isSignedUp } = this.state;
+    const {
+      coinType,
+      coins,
+      favorite,
+      isSignedUp,
+      emailExist,
+      userExist
+    } = this.state;
     const { news } = this.props;
     return (
       <div className="signUpPage">
@@ -191,11 +206,13 @@ class SignUpPage extends Component {
                 <RoundInput
                   onChange={this.handleEmail}
                   placeholder="이메일"
+                  errorText={emailExist ? "이미 등록된 이메일입니다" : null}
                   type="email"
                 />
                 <br />
                 <RoundInput
                   onChange={this.handleName}
+                  errorText={userExist ? "이미 등록된 이름입니다" : null}
                   placeholder="닉네임"
                   type="text"
                 />
