@@ -39,6 +39,7 @@ class SettingsPage extends Component {
       sideFavorite: [],
       posts: [],
       crop: { aspect: 16 / 9 },
+      isUploading: false,
       comments: [],
       favorite: [],
       showCrop: false,
@@ -267,7 +268,6 @@ class SettingsPage extends Component {
   };
 
   _crop = () => {
-    // image in dataUrl
     this.setState({
       croppedImg: this.refs.cropper.getCroppedCanvas().toDataURL()
     });
@@ -281,7 +281,9 @@ class SettingsPage extends Component {
     const { token } = this.props;
     const { croppedImg } = this.state;
     const params = { token, base64: croppedImg };
+    this.setState({ isUploading: true });
     this.props.dispatch(AuthAction.updateProfile(params)).then(result => {
+      this.setState({ isUploading: false });
       this.toggleModal();
     });
   };
@@ -301,6 +303,7 @@ class SettingsPage extends Component {
       favorite,
       sideFavorite,
       postLoading,
+      isUploading,
       showCrop
     } = this.state;
     const { me } = this.props;
@@ -372,6 +375,7 @@ class SettingsPage extends Component {
                     <Button
                       text="수정하기"
                       width={90}
+                      isLoading={isUploading}
                       height={30}
                       marginTop={10}
                       onClick={this.handleEditImage}

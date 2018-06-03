@@ -683,21 +683,30 @@ class ForumPage extends Component {
   };
 
   handleScroll = e => {
-    const bottom =
-      e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
-    const { forumIndex } = this.state;
+    let scrollTop = e.target.scrollTop;
+    let docHeight = e.target.clientHeight;
+    let winHeight = e.target.scrollHeight;
+    let scrollPercent = scrollTop / (winHeight - docHeight);
+
+    const { filterCoins, selectedPostType, search, sort, forumIndex } = this.state;
     const params = {
-      forumIndex
+      index: forumIndex,
+      category: selectedPostType,
+      token: this.props.token,
+      order: sort,
+      coins: filterCoins,
+      keyword: search
     };
-    if (bottom) {
+
+    if (scrollPercent > 0.95) {
       if (this.state.endScroll === false) {
         this.setState({ footerLoading: true });
-        this.props.dispatch(SocialAction.getAllForums(params)).then(forums => {
-          if (forums.forums.length < 30) {
+        this.props.dispatch(SocialAction.filterForums(params)).then(forums => {
+          if (forums.result.length < 30) {
             this.setState({ endScroll: true, footerLoading: false });
           } else {
             this.setState(prevState => ({
-              posts: [...prevState.posts, ...forums.forums],
+              posts: [...prevState.posts, ...forums.result],
               forumIndex: forums.nextIndex,
               footerLoading: false
             }));
@@ -1053,6 +1062,11 @@ class ForumPage extends Component {
                 onScroll={this.handleScroll}
                 className="forumPage__content__news__lists"
               >
+                {posts.length === 0 ? (
+                  <div className="forumPage__content__news__lists-nothing">
+                    해당 하는 항목에 대한 글이 없습니다
+                  </div>
+                ) : null}
                 {posts.map((data, index) => {
                   return (
                     <List

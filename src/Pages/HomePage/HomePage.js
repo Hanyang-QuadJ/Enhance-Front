@@ -229,9 +229,6 @@ class HomePage extends Component {
     let winHeight = e.target.scrollHeight;
     let scrollPercent = scrollTop / (winHeight - docHeight);
 
-    // const bottom =
-    //   Math.floor(e.target.scrollHeight - e.target.scrollTop) ===
-    //   e.target.clientHeight;
     const { newsCount, coinId, sourceId, recent } = this.state;
     const newsParams = {
       coinId,

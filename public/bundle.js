@@ -96651,7 +96651,6 @@
 	    }();
 	
 	    _this._crop = function () {
-	      // image in dataUrl
 	      _this.setState({
 	        croppedImg: _this.refs.cropper.getCroppedCanvas().toDataURL()
 	      });
@@ -96666,7 +96665,9 @@
 	      var croppedImg = _this.state.croppedImg;
 	
 	      var params = { token: token, base64: croppedImg };
+	      _this.setState({ isUploading: true });
 	      _this.props.dispatch(AuthAction.updateProfile(params)).then(function (result) {
+	        _this.setState({ isUploading: false });
 	        _this.toggleModal();
 	      });
 	    };
@@ -96686,6 +96687,7 @@
 	      sideFavorite: [],
 	      posts: [],
 	      crop: { aspect: 16 / 9 },
+	      isUploading: false,
 	      comments: [],
 	      favorite: [],
 	      showCrop: false,
@@ -96812,6 +96814,7 @@
 	          favorite = _state.favorite,
 	          sideFavorite = _state.sideFavorite,
 	          postLoading = _state.postLoading,
+	          isUploading = _state.isUploading,
 	          showCrop = _state.showCrop;
 	      var me = this.props.me;
 	
@@ -96883,6 +96886,7 @@
 	                  showCrop ? _react2.default.createElement(_Components.Button, {
 	                    text: "\uC218\uC815\uD558\uAE30",
 	                    width: 90,
+	                    isLoading: isUploading,
 	                    height: 30,
 	                    marginTop: 10,
 	                    onClick: this.handleEditImage
