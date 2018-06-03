@@ -62,45 +62,53 @@ class PostPage extends Component {
   }
 
   componentWillMount() {
-    const { forum_id } = this.props.match.params;
-    const params = { token: this.props.token, forum_id };
-    this.props.dispatch(SocialAction.getLikeCheck(params)).then(value => {
-      this.props.dispatch(SocialAction.getHateCheck(params)).then(hate => {
-        this.props.dispatch(SocialAction.getOneForum(params)).then(result => {
-          this.props
-            .dispatch(SocialAction.getOneForumCoins(params))
-            .then(coins => {
-              this.props
-                .dispatch(SocialAction.getOneForumComment(params))
-                .then(comments => {
-                  if (value.message === "You already liked this forum") {
-                    this.setState({ isLiked: true, newLike: result.like_cnt });
-                  } else {
-                    this.setState({ newLike: result.like_cnt });
-                  }
-                  if (hate.message !== "it's okay to dislike this forum") {
-                    this.setState({
-                      isHated: true,
-                      newHate: result.dislike_cnt
+    const { isLogin } = this.props;
+    if (isLogin) {
+      const { forum_id } = this.props.match.params;
+      const params = { token: this.props.token, forum_id };
+      this.props.dispatch(SocialAction.getLikeCheck(params)).then(value => {
+        this.props.dispatch(SocialAction.getHateCheck(params)).then(hate => {
+          this.props.dispatch(SocialAction.getOneForum(params)).then(result => {
+            this.props
+              .dispatch(SocialAction.getOneForumCoins(params))
+              .then(coins => {
+                this.props
+                  .dispatch(SocialAction.getOneForumComment(params))
+                  .then(comments => {
+                    if (value.message === "You already liked this forum") {
+                      this.setState({
+                        isLiked: true,
+                        newLike: result.like_cnt
+                      });
+                    } else {
+                      this.setState({ newLike: result.like_cnt });
+                    }
+                    if (hate.message !== "it's okay to dislike this forum") {
+                      this.setState({
+                        isHated: true,
+                        newHate: result.dislike_cnt
+                      });
+                    } else {
+                      this.setState({ newHate: result.dislike_cnt });
+                    }
+                    const images = result.image.map((data, index) => {
+                      return { original: data.img_url };
                     });
-                  } else {
-                    this.setState({ newHate: result.dislike_cnt });
-                  }
-                  const images = result.image.map((data, index) => {
-                    return { original: data.img_url };
+                    this.setState({
+                      r_forum: result,
+                      r_coins: coins,
+                      r_images: images,
+                      isRefreshed: true,
+                      newComment: comments.reverse()
+                    });
                   });
-                  this.setState({
-                    r_forum: result,
-                    r_coins: coins,
-                    r_images: images,
-                    isRefreshed: true,
-                    newComment: comments.reverse()
-                  });
-                });
-            });
+              });
+          });
         });
       });
-    });
+    } else {
+      this.props.history.replace({ pathname: "/auth" });
+    }
   }
 
   handleComment = e => {
@@ -293,10 +301,10 @@ class PostPage extends Component {
     }
   };
 
-  handleUserDetail = () => {
+  handleUserDetail = type => {
     const { userId, username, userPoint, userImg, userCoins } = this.state;
     this.props.history.push({
-      pathname: "/@" + userId,
+      pathname: `/@${userId}/${type}`,
       state: { userId, username, userPoint, userImg, userCoins }
     });
   };
@@ -401,25 +409,31 @@ class PostPage extends Component {
                     fontSize={75}
                     size={90}
                     point={userPoint}
-                    onClick={this.handleUserDetail}
+                    onClick={() => this.handleUserDetail("post")}
                   />
                   <p className="postPage__modal__content__username">
                     {username}
                   </p>
                   <div className="postPage__modal__content__area">
-                    <p className="postPage__modal__content__area__number-border">
+                    <p className="postPage__modal__content__area__number-border-none">
                       {userPoint}
                       <span className="postPage__modal__content__area__text">
                         포인트
                       </span>
                     </p>
-                    <p className="postPage__modal__content__area__number-border">
+                    <p
+                      className="postPage__modal__content__area__number-border"
+                      onClick={() => this.handleUserDetail("post")}
+                    >
                       {forumLength}
                       <span className="postPage__modal__content__area__text">
                         게시물
                       </span>
                     </p>
-                    <p className="postPage__modal__content__area__number">
+                    <p
+                      className="postPage__modal__content__area__number"
+                      onClick={() => this.handleUserDetail("comment")}
+                    >
                       {commentLength}
                       <span className="postPage__modal__content__area__text">
                         댓글
@@ -563,7 +577,7 @@ class PostPage extends Component {
                   <span className="postPage__content__chart__intro__post__footer__count">
                     {r_forum.view_cnt}
                   </span>
-                  <span className="postPage__content__chart__intro__post__footer__icon">
+                  <span className="postPage__content__chart__intro__post__footer__view">
                     <i className="xi-eye" />
                   </span>
                 </div>
@@ -646,25 +660,31 @@ class PostPage extends Component {
                     fontSize={75}
                     size={90}
                     point={userPoint}
-                    onClick={this.handleUserDetail}
+                    onClick={() => this.handleUserDetail("post")}
                   />
                   <p className="postPage__modal__content__username">
                     {username}
                   </p>
                   <div className="postPage__modal__content__area">
-                    <p className="postPage__modal__content__area__number-border">
+                    <p className="postPage__modal__content__area__number-border-none">
                       {userPoint}
                       <span className="postPage__modal__content__area__text">
                         포인트
                       </span>
                     </p>
-                    <p className="postPage__modal__content__area__number-border">
+                    <p
+                      className="postPage__modal__content__area__number-border"
+                      onClick={() => this.handleUserDetail("post")}
+                    >
                       {forumLength}
                       <span className="postPage__modal__content__area__text">
                         게시물
                       </span>
                     </p>
-                    <p className="postPage__modal__content__area__number">
+                    <p
+                      className="postPage__modal__content__area__number"
+                      onClick={() => this.handleUserDetail("comment")}
+                    >
                       {commentLength}
                       <span className="postPage__modal__content__area__text">
                         댓글
@@ -874,7 +894,7 @@ class PostPage extends Component {
                   <span className="postPage__content__chart__intro__post__footer__count">
                     {forum.view_cnt}
                   </span>
-                  <span className="postPage__content__chart__intro__post__footer__icon">
+                  <span className="postPage__content__chart__intro__post__footer__view">
                     <i className="xi-eye" />
                   </span>
                 </div>

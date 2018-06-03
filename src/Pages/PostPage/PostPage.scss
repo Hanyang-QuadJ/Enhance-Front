@@ -37,6 +37,7 @@
           padding-right: 1.5rem;
           flex-direction: column;
           font-weight: 500;
+          cursor: pointer;
 
           &-border {
             display: flex;
@@ -44,9 +45,21 @@
             align-items: center;
             padding-left: 1.5rem;
             padding-right: 1.5rem;
+            cursor: pointer;
             flex-direction: column;
             font-weight: 500;
             border-right: 1px $border-color solid;
+
+            &-none {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              padding-left: 1.5rem;
+              padding-right: 1.5rem;
+              flex-direction: column;
+              font-weight: 500;
+              border-right: 1px $border-color solid;
+            }
           }
         }
 
@@ -213,7 +226,6 @@
             align-items: center;
             padding-top: 1rem;
             padding-bottom: 1rem;
-            cursor: pointer;
             color: $light-main;
 
             &__count {
@@ -229,10 +241,18 @@
               }
             }
 
+            &__view {
+              display: inline-flex;
+              font-size: 1.5rem;
+              margin-right: 1rem;
+              cursor: no;
+            }
+
             &__icon {
               display: inline-flex;
               font-size: 1.5rem;
               margin-right: 1rem;
+              cursor: pointer;
             }
           }
         }

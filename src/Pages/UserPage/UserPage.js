@@ -3,7 +3,7 @@
 
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { NavBar, List, Thumb } from "../../Components";
+import { NavBar, List, Thumb, Button } from "../../Components";
 import { PostPage } from "../";
 import { Route, Switch, withRouter } from "react-router-dom";
 import { Dots } from "react-activity";
@@ -42,6 +42,7 @@ class UserPage extends Component {
     super(props);
     this.state = {
       dropdownOpen: false,
+      user: [],
       posts: [],
       comments: [],
       favorite: [],
@@ -60,8 +61,6 @@ class UserPage extends Component {
       selectedCommentIndex: null,
       forum: [],
       forumIndex: 0,
-      main: "",
-      title: "",
       editIndex: 0,
       editId: 0
     };
@@ -71,107 +70,37 @@ class UserPage extends Component {
   componentWillMount() {
     const { token } = this.props;
     const user_id = this.props.match.params.user_id;
+    console.log(user_id);
+    const type = this.props.match.params.type;
     const params = { user_id: user_id, token };
     this.setState({ isPostsLoading: true });
-    this.props.dispatch(SocialAction.getForumByUser(params)).then(forums => {
-      this.props
-        .dispatch(SocialAction.getCommentsByUser(params))
-        .then(comments => {
-          let result = forums.reverse().map(function(el) {
-            let o = Object.assign({}, el);
-            o.loading = false;
-            return o;
-          });
-          let commentResult = comments.reverse().map(function(el) {
-            let o = Object.assign({}, el);
-            o.loading = false;
-            return o;
-          });
-          this.setState({
-            posts: result,
-            comments: commentResult,
-            isPostsLoading: false
-          });
-          this.props.dispatch(PriceAction.getCoins()).then(coins => {
-            this.props
-              .dispatch(PriceAction.getFavs(this.props.token))
-              .then(favs => {
-                if (favs.length === 0) {
-                  let result = coins.map(function(el) {
-                    let o = Object.assign({}, el);
-                    o.clicked = false;
-                    o.loading = false;
-                    return o;
-                  });
-                  this.setState({
-                    sideFavorite: result
-                  });
-                } else {
-                  //글 작성 코인 타입
-                  let result = favs.map(function(el) {
-                    let o = Object.assign({}, el);
-                    o.clicked = false;
-                    return o;
-                  });
-
-                  //사이드 바 즐겨찾기
-                  let resultSide = coins.map(function(el) {
-                    let o = Object.assign({}, el);
-                    o.clicked = false;
-                    o.selected = false;
-                    o.loading = true;
-                    return o;
-                  });
-                  for (let i = 0; i < resultSide.length; i++) {
-                    for (let j = 0; j < favs.length; j++) {
-                      if (resultSide[i].abbr === favs[j].abbr) {
-                        resultSide[i].clicked = true;
-                      }
-                    }
-                  }
-                  this.setState({ favorite: result, sideFavorite: resultSide });
-
-                  //Crypto Compare API
-                  const abbrArray = [];
-                  for (let i = 0; i < resultSide.length; i++) {
-                    if (resultSide[i].clicked === true) {
-                      abbrArray.push({
-                        id: resultSide[i].id,
-                        abbr: resultSide[i].abbr
-                      });
-                    }
-                  }
-                  let final = resultSide.map(function(el) {
-                    let o = Object.assign({}, el);
-                    o.price = 0;
-                    o.percent = "";
-                    return o;
-                  });
-                  this.props
-                    .dispatch(
-                      PriceAction.getPrice(
-                        abbrArray.map((a, index) => {
-                          return a.abbr;
-                        })
-                      )
-                    )
-                    .then(value => {
-                      for (let i = 0; i < final.length; i++) {
-                        for (let j = 0; j < abbrArray.length; j++) {
-                          if (final[i].abbr === abbrArray[j].abbr) {
-                            final[i].loading = false;
-                            final[i].price = value[abbrArray[j].abbr].KRW.PRICE;
-                            final[i].percent =
-                              value[abbrArray[j].abbr].KRW.CHANGEPCT24HOUR;
-                          }
-                        }
-                      }
-                      this.setState({ sideFavorite: final });
-                    });
-                }
+    this.props.dispatch(SocialAction.getUserById(params)).then(user => {
+      this.props.dispatch(SocialAction.getForumByUser(params)).then(forums => {
+        this.props.dispatch(SocialAction.getFavByUser(params)).then(favs => {
+          this.props
+            .dispatch(SocialAction.getCommentsByUser(params))
+            .then(comments => {
+              let result = forums.reverse().map(function(el) {
+                let o = Object.assign({}, el);
+                o.loading = false;
+                return o;
               });
-          });
+              let commentResult = comments.reverse().map(function(el) {
+                let o = Object.assign({}, el);
+                o.loading = false;
+                return o;
+              });
+              this.setState({
+                user,
+                posts: result,
+                comments: commentResult,
+                isPostsLoading: false,
+                favorite: favs,
+                selectedType: type === "post" ? "게시글" : "댓글"
+              });
+            });
         });
+      });
     });
   }
 
@@ -332,6 +261,10 @@ class UserPage extends Component {
     });
   };
 
+  handleBack = () => {
+    this.props.history.goBack();
+  };
+
   handleScroll = e => {
     const bottom =
       e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
@@ -370,9 +303,9 @@ class UserPage extends Component {
       selectedCommentIndex,
       favorite,
       footerLoading,
-      selectedType
+      selectedType,
+      user
     } = this.state;
-    const { userImg, userPoint, username } = this.props.location.state;
     const { me } = this.props;
 
     return (
@@ -381,19 +314,6 @@ class UserPage extends Component {
         <div className="userPage__content">
           <div className="userPage__content__news">
             <div className="userPage__content__news__search">
-              <div className="userPage__content__news__search__first">
-                <div className="userPage__content__news__search__first__iconArea">
-                  <span className="userPage__content__news__search__first__iconArea__icon">
-                    <i className="xi-search" />
-                  </span>
-                </div>
-                <div className="userPage__content__news__search__first__inputArea">
-                  <input
-                    className="userPage__content__news__search__first__inputArea__input"
-                    placeholder="무엇을 찾고싶으신가요?"
-                  />
-                </div>
-              </div>
               <div className="userPage__content__news__search__second">
                 <div className="userPage__content__news__search__second__content">
                   <ButtonDropdown
@@ -507,7 +427,9 @@ class UserPage extends Component {
           </div>
           <Switch>
             <Route
-              path={`/@${this.props.match.params.user_id}/:forum_id`}
+              path={`/@${this.props.match.params.user_id}/${
+                this.props.match.params.type
+              }/:forum_id`}
               component={PostPage}
             />
             <Route
@@ -520,17 +442,17 @@ class UserPage extends Component {
                       <div className="userPage__content__chart__intro">
                         <div className="userPage__content__chart__intro__content">
                           <Thumb
-                            src={userImg}
+                            src={user && user.profile_img}
                             fontSize={75}
                             size={90}
-                            point={userPoint}
+                            point={user && user.point}
                           />
                           <p className="userPage__content__chart__intro__content__username">
-                            {username}
+                            {user && user.username}
                           </p>
                           <div className="userPage__content__chart__intro__content__area">
                             <p className="userPage__content__chart__intro__content__area__number-border">
-                              {userPoint}
+                              {user && user.point}
                               <span className="userPage__content__chart__intro__content__area__text">
                                 포인트
                               </span>
@@ -561,6 +483,13 @@ class UserPage extends Component {
                               );
                             })}
                           </div>
+                          <Button
+                            text="이전으로"
+                            marginTop={20}
+                            width={100}
+                            height={40}
+                            onClick={this.handleBack}
+                          />
                         </div>
                       </div>
                     </div>

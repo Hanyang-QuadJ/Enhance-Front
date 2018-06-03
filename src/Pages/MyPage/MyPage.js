@@ -82,109 +82,117 @@ class MyPage extends Component {
   }
 
   componentWillMount() {
-    const { me, token } = this.props;
-    const params = { user_id: me.id, token };
-    this.setState({ isPostsLoading: true });
-    this.props.dispatch(SocialAction.getForumByUser(params)).then(forums => {
-      this.props
-        .dispatch(SocialAction.getCommentsByUser(params))
-        .then(comments => {
-          let result = forums.reverse().map(function(el) {
-            let o = Object.assign({}, el);
-            o.loading = false;
-            return o;
-          });
-          let commentResult = comments.reverse().map(function(el) {
-            let o = Object.assign({}, el);
-            o.loading = false;
-            return o;
-          });
-          this.setState({
-            posts: result,
-            comments: commentResult,
-            isPostsLoading: false
-          });
-          this.props.dispatch(PriceAction.getCoins()).then(coins => {
-            this.props
-              .dispatch(PriceAction.getFavs(this.props.token))
-              .then(favs => {
-                if (favs.length === 0) {
-                  let result = coins.map(function(el) {
-                    let o = Object.assign({}, el);
-                    o.clicked = false;
-                    o.loading = false;
-                    return o;
-                  });
-                  this.setState({
-                    sideFavorite: result
-                  });
-                } else {
-                  //글 작성 코인 타입
-                  let result = favs.map(function(el) {
-                    let o = Object.assign({}, el);
-                    o.clicked = false;
-                    return o;
-                  });
+    const { me, token, isLogin } = this.props;
+    if (isLogin) {
+      const params = { user_id: me.id, token };
+      this.setState({ isPostsLoading: true });
+      this.props.dispatch(SocialAction.getForumByUser(params)).then(forums => {
+        this.props
+          .dispatch(SocialAction.getCommentsByUser(params))
+          .then(comments => {
+            let result = forums.reverse().map(function(el) {
+              let o = Object.assign({}, el);
+              o.loading = false;
+              return o;
+            });
+            let commentResult = comments.reverse().map(function(el) {
+              let o = Object.assign({}, el);
+              o.loading = false;
+              return o;
+            });
+            this.setState({
+              posts: result,
+              comments: commentResult,
+              isPostsLoading: false
+            });
+            this.props.dispatch(PriceAction.getCoins()).then(coins => {
+              this.props
+                .dispatch(PriceAction.getFavs(this.props.token))
+                .then(favs => {
+                  if (favs.length === 0) {
+                    let result = coins.map(function(el) {
+                      let o = Object.assign({}, el);
+                      o.clicked = false;
+                      o.loading = false;
+                      return o;
+                    });
+                    this.setState({
+                      sideFavorite: result
+                    });
+                  } else {
+                    //글 작성 코인 타입
+                    let result = favs.map(function(el) {
+                      let o = Object.assign({}, el);
+                      o.clicked = false;
+                      return o;
+                    });
 
-                  //사이드 바 즐겨찾기
-                  let resultSide = coins.map(function(el) {
-                    let o = Object.assign({}, el);
-                    o.clicked = false;
-                    o.selected = false;
-                    o.loading = true;
-                    return o;
-                  });
-                  for (let i = 0; i < resultSide.length; i++) {
-                    for (let j = 0; j < favs.length; j++) {
-                      if (resultSide[i].abbr === favs[j].abbr) {
-                        resultSide[i].clicked = true;
-                      }
-                    }
-                  }
-                  this.setState({ favorite: result, sideFavorite: resultSide });
-
-                  //Crypto Compare API
-                  const abbrArray = [];
-                  for (let i = 0; i < resultSide.length; i++) {
-                    if (resultSide[i].clicked === true) {
-                      abbrArray.push({
-                        id: resultSide[i].id,
-                        abbr: resultSide[i].abbr
-                      });
-                    }
-                  }
-                  let final = resultSide.map(function(el) {
-                    let o = Object.assign({}, el);
-                    o.price = 0;
-                    o.percent = "";
-                    return o;
-                  });
-                  this.props
-                    .dispatch(
-                      PriceAction.getPrice(
-                        abbrArray.map((a, index) => {
-                          return a.abbr;
-                        })
-                      )
-                    )
-                    .then(value => {
-                      for (let i = 0; i < final.length; i++) {
-                        for (let j = 0; j < abbrArray.length; j++) {
-                          if (final[i].abbr === abbrArray[j].abbr) {
-                            final[i].loading = false;
-                            final[i].price = value[abbrArray[j].abbr].KRW.PRICE;
-                            final[i].percent =
-                              value[abbrArray[j].abbr].KRW.CHANGEPCT24HOUR;
-                          }
+                    //사이드 바 즐겨찾기
+                    let resultSide = coins.map(function(el) {
+                      let o = Object.assign({}, el);
+                      o.clicked = false;
+                      o.selected = false;
+                      o.loading = true;
+                      return o;
+                    });
+                    for (let i = 0; i < resultSide.length; i++) {
+                      for (let j = 0; j < favs.length; j++) {
+                        if (resultSide[i].abbr === favs[j].abbr) {
+                          resultSide[i].clicked = true;
                         }
                       }
-                      this.setState({ sideFavorite: final });
+                    }
+                    this.setState({
+                      favorite: result,
+                      sideFavorite: resultSide
                     });
-                }
-              });
+
+                    //Crypto Compare API
+                    const abbrArray = [];
+                    for (let i = 0; i < resultSide.length; i++) {
+                      if (resultSide[i].clicked === true) {
+                        abbrArray.push({
+                          id: resultSide[i].id,
+                          abbr: resultSide[i].abbr
+                        });
+                      }
+                    }
+                    let final = resultSide.map(function(el) {
+                      let o = Object.assign({}, el);
+                      o.price = 0;
+                      o.percent = "";
+                      return o;
+                    });
+                    this.props
+                      .dispatch(
+                        PriceAction.getPrice(
+                          abbrArray.map((a, index) => {
+                            return a.abbr;
+                          })
+                        )
+                      )
+                      .then(value => {
+                        for (let i = 0; i < final.length; i++) {
+                          for (let j = 0; j < abbrArray.length; j++) {
+                            if (final[i].abbr === abbrArray[j].abbr) {
+                              final[i].loading = false;
+                              final[i].price =
+                                value[abbrArray[j].abbr].KRW.PRICE;
+                              final[i].percent =
+                                value[abbrArray[j].abbr].KRW.CHANGEPCT24HOUR;
+                            }
+                          }
+                        }
+                        this.setState({ sideFavorite: final });
+                      });
+                  }
+                });
+            });
           });
-        });
-    });
+      });
+    } else {
+      this.props.history.replace({ pathname: "/auth" });
+    }
   }
 
   onFocus = () => {
@@ -649,19 +657,6 @@ class MyPage extends Component {
         <div className="myPage__content">
           <div className="myPage__content__news">
             <div className="myPage__content__news__search">
-              <div className="myPage__content__news__search__first">
-                <div className="myPage__content__news__search__first__iconArea">
-                  <span className="myPage__content__news__search__first__iconArea__icon">
-                    <i className="xi-search" />
-                  </span>
-                </div>
-                <div className="myPage__content__news__search__first__inputArea">
-                  <input
-                    className="myPage__content__news__search__first__inputArea__input"
-                    placeholder="무엇을 찾고싶으신가요?"
-                  />
-                </div>
-              </div>
               <div className="myPage__content__news__search__second">
                 <div className="myPage__content__news__search__second__content">
                   <ButtonDropdown

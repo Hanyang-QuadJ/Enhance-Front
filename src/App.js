@@ -81,7 +81,7 @@ class App extends Component {
             <Route path="/forum" component={ForumPage} />
             <Route path="/profile" component={MyPage} />
             <Route path="/settings" component={SettingsPage} />
-            <Route path="/@:user_id" component={UserPage} />
+            <Route path="/@:user_id/:type" component={UserPage} />
             <Route exact path="/auth" component={AuthPage} />
             <Route path="/auth/signup" component={SignUpPage} />
           </div>
