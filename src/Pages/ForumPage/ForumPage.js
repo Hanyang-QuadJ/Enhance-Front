@@ -629,6 +629,7 @@ class ForumPage extends Component {
         newPosts[i].coins = coinArray;
         newPosts[i].category = selectedPostType2;
         newPosts[i].images = frontImages;
+        newPosts[i].updated_at = date;
 
         this.props.dispatch(SocialAction.getOneForum(params)).then(forum => {
           this.props
@@ -777,10 +778,12 @@ class ForumPage extends Component {
           label: "Yes",
           onClick: () => {
             const { editId } = this.state;
+            const { me } = this.props;
 
             const params = {
               token: this.props.token,
-              forum_id: editId
+              forum_id: editId,
+              flag : me && me.flag
             };
 
             const newPosts = this.state.posts.slice();
@@ -1107,6 +1110,7 @@ class ForumPage extends Component {
                       likeCount={data.like_cnt}
                       disLikeCount={data.dislike_cnt}
                       createdAt={data.created_at}
+                      updatedAt={data.updated_at}
                       type={data.coins}
                       view={data.view_cnt}
                       onClick={() => this.handleDetail(index, data.id)}

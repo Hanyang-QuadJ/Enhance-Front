@@ -164,7 +164,8 @@ class Thumb extends Component {
             width: size,
             height: size,
             fontSize: fontSize && fontSize,
-            cursor: cursor && cursor
+            cursor: cursor && cursor,
+            border: border
           }}
         >
           <i className="xi-user-o" />

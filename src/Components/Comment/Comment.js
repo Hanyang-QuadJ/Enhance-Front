@@ -25,7 +25,8 @@ class Comment extends Component {
       profileImg,
       onClick,
       checkName,
-      onDelete
+      onDelete,
+      flag
     } = this.props;
     return (
       <div className="comment">
@@ -60,7 +61,7 @@ class Comment extends Component {
           </div>
           <div className="comment__content__date">
             {moment(createdAt).fromNow()}
-            {username === checkName ? (
+            {username === checkName || flag === 1 ? (
               <span className="comment__content__delete" onClick={onDelete}>
                 <i className="xi-close" />
               </span>

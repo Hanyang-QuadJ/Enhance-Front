@@ -314,17 +314,26 @@ class PostPage extends Component {
   };
 
   handleDelete = id => {
+    const { me } = this.props;
     if (this.props.location.state === undefined) {
       const deletedComment = this.state.newComment.slice();
       let result = deletedComment.filter(a => {
         return a.id !== id;
       });
       this.setState({ newComment: result });
-      const params = { comment_id: id, token: this.props.token };
+      const params = {
+        comment_id: id,
+        token: this.props.token,
+        flag: me && me.flag
+      };
       this.props.dispatch(SocialAction.deleteComment(params)).then(value => {});
     } else {
       const deletedComment = this.state.newComment.slice();
-      const params = { comment_id: id, token: this.props.token };
+      const params = {
+        comment_id: id,
+        token: this.props.token,
+        flag: me && me.flag
+      };
       this.setState({ isRefreshed: true });
       if (deletedComment.length !== 0) {
         let result = deletedComment.filter(a => {
@@ -337,7 +346,11 @@ class PostPage extends Component {
       } else {
         this.props.dispatch(SocialAction.deleteComment(params)).then(value => {
           const { forum_id } = this.props.match.params;
-          const params = { token: this.props.token, forum_id };
+          const params = {
+            token: this.props.token,
+            forum_id,
+            flag: me && me.flag
+          };
           this.props
             .dispatch(SocialAction.getOneForumComment(params))
             .then(comments => {
@@ -488,7 +501,9 @@ class PostPage extends Component {
                   <div className="postPage__content__chart__intro__post__header__detail">
                     <p>{r_forum.category}</p>
                     <span className="postPage__content__chart__intro__post__header__userInfo__date">
-                      {moment(r_forum.created_at).fromNow()}
+                      {r_forum.updated_at !== null
+                        ? moment(r_forum.updated_at).fromNow() + " 수정됨"
+                        : moment(r_forum.created_at).fromNow()}
                     </span>
                   </div>
                 </div>
@@ -500,6 +515,7 @@ class PostPage extends Component {
                     {r_images.length === 0 ? null : (
                       <ImageGallery
                         items={r_images}
+                        size={50}
                         showThumbnails={false}
                         showPlayButton={false}
                         showBullets={true}
@@ -739,7 +755,9 @@ class PostPage extends Component {
                   <div className="postPage__content__chart__intro__post__header__detail">
                     <p>{forum.category}</p>
                     <span className="postPage__content__chart__intro__post__header__userInfo__date">
-                      {moment(forum.created_at).fromNow()}
+                      {forum.updated_at !== null
+                        ? moment(forum.updated_at).fromNow() + " 수정됨"
+                        : moment(forum.created_at).fromNow()}
                     </span>
                   </div>
                 </div>
@@ -751,6 +769,7 @@ class PostPage extends Component {
                     {images.length === 0 ? null : (
                       <ImageGallery
                         items={images}
+                        size={50}
                         showThumbnails={false}
                         showPlayButton={false}
                         showBullets={true}
@@ -924,7 +943,8 @@ class PostPage extends Component {
                       userPoint={data.point}
                       createdAt={data.created_at}
                       onClick={() => this.handleUser(data.user_id)}
-                      checkName={me.username}
+                      checkName={me && me.username}
+                      flag={me && me.flag}
                       onDelete={() => this.handleDelete(data.id)}
                       content={data.content}
                     />
@@ -941,7 +961,8 @@ class PostPage extends Component {
                         onClick={() => this.handleUser(data.user_id)}
                         onDelete={() => this.handleDelete(data.id)}
                         createdAt={data.created_at}
-                        checkName={me.username}
+                        checkName={me && me.username}
+                        flag={me && me.flag}
                         content={data.content}
                       />
                     );

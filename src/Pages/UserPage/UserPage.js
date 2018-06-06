@@ -360,6 +360,11 @@ class UserPage extends Component {
                 onScroll={this.handleScroll}
                 className="userPage__content__news__lists"
               >
+                {posts.length === 0 ? (
+                  <div className="userPage__content__news__lists-none">
+                    아직 등록된 포스트가 없습니다
+                  </div>
+                ) : null}
                 {selectedType === "게시글"
                   ? posts &&
                     posts.map((data, index) => {
@@ -377,6 +382,7 @@ class UserPage extends Component {
                           title={data.title}
                           point={data.point}
                           createdAt={data.created_at}
+                          updatedAt={data.updated_at}
                           likeCount={data.like_cnt}
                           disLikeCount={data.dislike_cnt}
                           type={data.coins}

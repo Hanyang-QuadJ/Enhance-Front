@@ -260,6 +260,7 @@ class MyPage extends Component {
       alert("해당하는 종목을 1개 이상 선택해주세요!");
     } else {
       const coinArray = [];
+      let date = new Date();
       for (let i = 0; i < selectedAbbr.length; i++) {
         coinArray.push({ abbr: selectedAbbr[i], id: selectedCoinType[i] });
       }
@@ -296,6 +297,7 @@ class MyPage extends Component {
         newPosts[i].coins = coinArray;
         newPosts[i].category = selectedPostType2;
         newPosts[i].images = frontImages;
+        newPosts[i].updated_at = date;
 
         this.props.dispatch(SocialAction.getOneForum(params)).then(forum => {
           this.props
@@ -503,9 +505,9 @@ class MyPage extends Component {
     let type = [];
     let abbr = [];
 
-    // let preview = image.map((data, index) => {
-    //   return data.img_url;
-    // });
+    let preview = image.map((data, index) => {
+      return data.img_url;
+    });
 
     for (let i = 0; i < coins.length; i++) {
       for (let j = 0; j < newFav.length; j++) {
@@ -528,8 +530,8 @@ class MyPage extends Component {
       selectedCoinType: type,
       selectedPostType2: category,
       editId: id,
-      editIndex: index
-      // imagePreview: preview
+      editIndex: index,
+      imagePreview: preview
     });
     await this.toggleModal();
   };
@@ -737,6 +739,11 @@ class MyPage extends Component {
                 onScroll={this.handleScroll}
                 className="myPage__content__news__lists"
               >
+                {posts.length === 0 ? (
+                  <div className="myPage__content__news__lists-none">
+                  아직 등록된 포스트가 없습니다
+                  </div>
+                ) : null}
                 {selectedType === "게시글"
                   ? posts &&
                     posts.map((data, index) => {
@@ -754,6 +761,7 @@ class MyPage extends Component {
                           title={data.title}
                           point={data.point}
                           createdAt={data.created_at}
+                          updatedAt={data.updated_at}
                           likeCount={data.like_cnt}
                           disLikeCount={data.dislike_cnt}
                           type={data.coins}

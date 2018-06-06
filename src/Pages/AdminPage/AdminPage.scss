@@ -1,0 +1,262 @@
+/*
+* Author: @nayunhwan (github.com/nayunhwan)
+* Email: nayunhwan.dev@mgail.com
+*/
+@import "../../mixin.scss";
+.settingsPage {
+  background: #536976;
+  /* fallback for old browsers */
+
+  background: -webkit-linear-gradient(to right, #292e49, #536976);
+  /* Chrome 10-25, Safari 5.1-6 */
+
+  background: linear-gradient(to right, #292e49, #536976);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  &__modal {
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &__cropImage {
+      border: 1px $border-color solid;
+    }
+
+    &__left {
+    }
+
+    &__right {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    &__favorite {
+      width: 100%;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+
+      &__text {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        text-align: center;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+      }
+
+      &__icon {
+        color: white;
+        font-size: 1.5rem;
+        margin-right: 5px;
+        vertical-align: center;
+      }
+
+      &__item {
+        border: 1px $border-color solid;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        margin-right: 5px;
+        margin-bottom: 5px;
+        cursor: pointer;
+
+        &:hover {
+          @include transition(0.3s);
+          border: 1px white solid;
+        }
+
+        &-active {
+          border: 1px $active-color solid;
+          &:hover {
+            @include transition(0.3s);
+            border: 1px $active-color solid;
+          }
+        }
+      }
+    }
+  }
+
+  &__content {
+    margin-left: 100px;
+    height: 100vh;
+    overflow-y: hidden;
+
+    &__news {
+      box-sizing: border-box;
+      float: left;
+      height: 100vh;
+      width: calc(50vw - 100px);
+      border-right: 1px white solid;
+
+      &__search {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        width: calc(50vw - 100px);
+        border-bottom: 1px white solid;
+
+        &__first {
+          display: flex;
+          flex-direction: row;
+          padding: 10px;
+          border-bottom: 1px $border-color solid;
+
+          &__iconArea {
+            padding-left: 5px;
+            display: flex;
+            justify-content: center;
+            margin-right: 1rem;
+            align-items: center;
+            &__icon {
+              color: white;
+              font-size: 1.5rem;
+            }
+          }
+
+          &__inputArea {
+            display: flex;
+            color: white;
+            align-items: center;
+          }
+        }
+
+        &__second {
+          padding: 10px;
+
+          &__content {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+          }
+        }
+      }
+
+      &__lists {
+        height: calc(100vh - 70px);
+        margin-top: 70px;
+        overflow-y: scroll;
+        padding: 1rem;
+
+        &__content {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          color: white;
+        }
+
+        &__footer {
+          height: 12vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    }
+
+    &__chart {
+      color: white;
+      height: 100vh;
+      width: calc(50vw-100px);
+      margin-right: 100px;
+      overflow-y: scroll;
+
+      &__loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+
+      &__intro {
+        padding: 2rem 2rem 2rem 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100%;
+        justify-content: center;
+
+        &__content {
+          margin-left: 1rem;
+          margin-right: 1rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          &__area {
+            display: flex;
+            flex-direction: row;
+            &__number {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              padding-left: 1.5rem;
+              padding-right: 1.5rem;
+              flex-direction: column;
+              font-weight: 500;
+              &-border {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+                flex-direction: column;
+                font-weight: 500;
+                border-right: 1px $border-color solid;
+              }
+            }
+            &__text {
+              font-weight: 300 !important;
+            }
+          }
+          &__username {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+          }
+
+          &__coins {
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            width: 100%;
+            flex-wrap: wrap;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            font-size: 13px;
+            color: $coin-color;
+            &__coin {
+              border: 1px $coin-color solid;
+              padding-left: 5px;
+              padding-right: 5px;
+              margin-right: 5px;
+              margin-bottom: 5px;
+            }
+          }
+
+          &__point {
+          }
+        }
+
+        &__logo {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          &__text {
+            margin-left: 1rem;
+            font-size: 2rem;
+          }
+        }
+      }
+    }
+  }
+}

@@ -18,6 +18,9 @@ export const FAILED_TO_UPDATE_PASSWORD = "FAILED_TO_UPDATE_PASSWORD";
 export const SUCCEED_TO_GET_TEMP_PASSWORD = "SUCCEED_TO_GET_TEMP_PASSWORD";
 export const FAILED_TO_GET_TEMP_PASSWORD = "FAILED_TO_GET_TEMP_PASSWORD";
 
+export const SUCCEED_TO_POST_COIN = "SUCCEED_TO_POST_COIN";
+export const FAILED_TO_POST_COIN = "FAILED_TO_POST_COIN";
+
 export const SUCCEED_TO_SIGNIN = "SUCCEED_TO_SIGNIN";
 export const FAILED_TO_SIGNIN = "FAILED_TO_SIGNIN";
 
@@ -143,16 +146,23 @@ export const updateUsername = params => {
           "x-access-token": params.token
         },
         body: JSON.stringify({
-          email: params.email,
           username: params.username
         })
       });
       let responseJson = await response.json();
-      await dispatch({
-        type: SUCCEED_TO_UPDATE_USERNAME,
-        payload: params.username
-      });
-      return "succeed";
+      if (response.status === 406) {
+        await dispatch({
+          type: FAILED_TO_UPDATE_USERNAME,
+          payload: params.username
+        });
+        return "failed";
+      } else {
+        await dispatch({
+          type: SUCCEED_TO_UPDATE_USERNAME,
+          payload: params.username
+        });
+        return "succeed";
+      }
     } catch (error) {
       dispatch({
         type: FAILED_TO_UPDATE_USERNAME,
@@ -252,6 +262,47 @@ export const updateProfile = params => {
   };
 };
 
+export const postCoin = params => {
+  return async dispatch => {
+    try {
+      let response = await fetch(ServerEndPoint + "api/admin/coin", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "x-access-token": params.token
+        },
+        body: JSON.stringify({
+          kor: params.kor,
+          full: params.full,
+          abbr: params.abbr,
+          keyword: params.keyword
+        })
+      });
+      let responseJson = await response.json();
+      if (response.status === 404) {
+        await dispatch({
+          type: FAILED_TO_POST_COIN,
+          payload: "FAILED"
+        });
+        return "failed";
+      } else {
+        await dispatch({
+          type: SUCCEED_TO_POST_COIN,
+          payload: responseJson
+        });
+        return responseJson;
+      }
+    } catch (error) {
+      dispatch({
+        type: FAILED_TO_POST_COIN,
+        payload: { data: "NETWORK_ERROR" }
+      });
+    }
+  };
+};
+
 export const updateEmail = params => {
   return async dispatch => {
     try {
@@ -268,11 +319,19 @@ export const updateEmail = params => {
         })
       });
       let responseJson = await response.json();
-      await dispatch({
-        type: SUCCEED_TO_UPDATE_EMAIL,
-        payload: params.EMAIL
-      });
-      return "succeed";
+      if (response.status === 404) {
+        await dispatch({
+          type: FAILED_TO_UPDATE_EMAIL,
+          payload: "FAILED"
+        });
+        return "failed";
+      } else {
+        await dispatch({
+          type: SUCCEED_TO_UPDATE_EMAIL,
+          payload: params.email
+        });
+        return "succeed";
+      }
     } catch (error) {
       dispatch({
         type: FAILED_TO_UPDATE_EMAIL,

@@ -43,6 +43,12 @@ class NavBar extends Component {
     }
   };
 
+  handleAdmin = () => {
+    this.props.history.push({
+      pathname: "/auth/admin"
+    });
+  };
+
   toggleModal = () => {
     this.setState({
       showModal: !this.state.showModal
@@ -148,6 +154,19 @@ class NavBar extends Component {
                 <p>로그인</p>
               </div>
             )}
+            {me && me.flag === 1 ? (
+              <div
+                className={cx("navBar__content__items__item", {
+                  "navBar__content__items__item-active": type === "admin"
+                })}
+                onClick={this.handleAdmin}
+              >
+                <span className="navBar__content__items__item-icon">
+                  <i className="xi-log-in" />
+                </span>
+                <p>관리자</p>
+              </div>
+            ) : null}
           </div>
         </div>
       </div>

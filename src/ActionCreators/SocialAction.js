@@ -351,25 +351,47 @@ export const getOneForumComment = params => {
 export const deleteComment = params => {
   return async dispatch => {
     try {
-      let response = await fetch(
-        ServerEndPoint +
-          `api/forum/delete/comment?comment_id=${params.comment_id}`,
-        {
-          method: "DELETE",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-            "x-access-token": params.token
+      if (params.flag === 0) {
+        let response = await fetch(
+          ServerEndPoint +
+            `api/forum/delete/comment?comment_id=${params.comment_id}`,
+          {
+            method: "DELETE",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+              "x-access-token": params.token
+            }
           }
-        }
-      );
-      let responseJson = await response.json();
-      await dispatch({
-        type: SUCCEED_TO_DELETE_COMMENT,
-        payload: responseJson.result
-      });
-      return responseJson.result;
+        );
+        let responseJson = await response.json();
+        await dispatch({
+          type: SUCCEED_TO_DELETE_COMMENT,
+          payload: responseJson.result
+        });
+        return responseJson.result;
+      } else {
+        let response = await fetch(
+          ServerEndPoint +
+            `api/forum/delete/comment?comment_id=${params.comment_id}`,
+          {
+            method: "DELETE",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+              "x-access-token": params.token
+            }
+          }
+        );
+        let responseJson = await response.json();
+        await dispatch({
+          type: SUCCEED_TO_DELETE_COMMENT,
+          payload: responseJson.result
+        });
+        return responseJson.result;
+      }
     } catch (error) {
       dispatch({
         type: FAILED_TO_DELETE_COMMENT,
@@ -484,24 +506,45 @@ export const updateForum = params => {
 export const deleteForum = params => {
   return async dispatch => {
     try {
-      let response = await fetch(
-        ServerEndPoint + "api/forum/" + params.forum_id,
-        {
-          method: "DELETE",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-            "x-access-token": params.token
+      if (params.flag === 0) {
+        let response = await fetch(
+          ServerEndPoint + "api/admin/forum" + params.forum_id,
+          {
+            method: "DELETE",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+              "x-access-token": params.token
+            }
           }
-        }
-      );
-      let responseJson = await response.json();
-      await dispatch({
-        type: SUCCEED_TO_DELETE_FORUM,
-        payload: responseJson
-      });
-      return responseJson;
+        );
+        let responseJson = await response.json();
+        await dispatch({
+          type: SUCCEED_TO_DELETE_FORUM,
+          payload: responseJson
+        });
+        return responseJson;
+      } else {
+        let response = await fetch(
+          ServerEndPoint + "api/forum/" + params.forum_id,
+          {
+            method: "DELETE",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+              "x-access-token": params.token
+            }
+          }
+        );
+        let responseJson = await response.json();
+        await dispatch({
+          type: SUCCEED_TO_DELETE_FORUM,
+          payload: responseJson
+        });
+        return responseJson;
+      }
     } catch (error) {
       dispatch({
         type: FAILED_TO_DELETE_FORUM,

@@ -51,7 +51,9 @@ class SettingsPage extends Component {
       confirmPassword: "",
       croppedImg: "",
       targetImg: "",
-      targetImgFile: null
+      targetImgFile: null,
+      emailValid: true,
+      usernameValid: true
     };
   }
 
@@ -193,12 +195,26 @@ class SettingsPage extends Component {
     this.props.dispatch(AuthAction.updatePassword(params));
   };
 
+  handleEditEmail = () => {
+    const { token } = this.props;
+    const { email } = this.state;
+    const params = { token, email };
+    this.props.dispatch(AuthAction.updateEmail(params)).then(result => {
+      if (result === "failed") {
+        this.setState({ emailValid: false });
+      }
+    });
+  };
+
   handleEditUsername = () => {
     const { token } = this.props;
-    const { username, email } = this.state;
-    const params = { token, username, email };
-    console.log(params);
-    this.props.dispatch(AuthAction.updateUsername(params)).then(result => {});
+    const { username } = this.state;
+    const params = { token, username };
+    this.props.dispatch(AuthAction.updateUsername(params)).then(result => {
+      if (result === "failed") {
+        this.setState({ usernameValid: false });
+      }
+    });
   };
 
   handleFavorite = async(index, id, data) => {
@@ -320,7 +336,9 @@ class SettingsPage extends Component {
       sideFavorite,
       postLoading,
       isUploading,
-      showCrop
+      showCrop,
+      usernameValid,
+      emailValid
     } = this.state;
     const { me } = this.props;
 
@@ -423,6 +441,14 @@ class SettingsPage extends Component {
                 <RoundInput
                   value={me && me.email}
                   onChange={this.handleEmail}
+                  errorText={!emailValid ? "이미 등록된 이메일입니다" : null}
+                />
+                <Button
+                  text="수정하기"
+                  width={90}
+                  height={30}
+                  marginTop={10}
+                  onClick={this.handleEditEmail}
                 />
               </div>
               <br />
@@ -430,6 +456,7 @@ class SettingsPage extends Component {
                 <RoundInput
                   value={me && me.username}
                   onChange={this.handleUsername}
+                  errorText={!usernameValid ? "이미 등록된 이름입니다" : null}
                 />
                 <Button
                   text="수정하기"

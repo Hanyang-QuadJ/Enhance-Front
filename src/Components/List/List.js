@@ -31,6 +31,7 @@ class List extends Component {
       title,
       username,
       createdAt,
+      updatedAt,
       type,
       link,
       social,
@@ -62,7 +63,12 @@ class List extends Component {
                 <Dots color="#ffffff" size={15} />
               ) : (
                 <div>
-                  <p>{moment(createdAt).fromNow()}</p>
+                  <p>
+                    {updatedAt !== null
+                      ? moment(updatedAt).fromNow()
+                      : moment(createdAt).fromNow()}
+                  </p>
+                  <p>{updatedAt !== null ? "수정됨" : null}</p>
                 </div>
               )}
             </div>
@@ -76,7 +82,7 @@ class List extends Component {
                 <span className="list__content__textArea__username">
                   {username}
                 </span>
-                {me && me.username === username ? (
+                {(me && me.username === username) || (me && me.flag === 1) ? (
                   <span>
                     <span
                       className="list__content__textArea__edit"
