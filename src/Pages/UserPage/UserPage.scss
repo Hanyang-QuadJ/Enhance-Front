@@ -163,7 +163,7 @@
       height: 100vh;
       width: calc(50vw-100px);
       margin-right: 100px;
-      overflow-y: scroll;
+      overflow-y: auto;
 
       &__loading {
         display: flex;

@@ -39,6 +39,9 @@ class SignUpPage extends Component {
       coinType: "BTC",
       email: "",
       password: "",
+      confirmPassword: "",
+      passwordValid: true,
+      passwordSame: true,
       username: "",
       emailExist: false,
       userExist: false,
@@ -67,7 +70,6 @@ class SignUpPage extends Component {
     var node = event.target;
     const bottom = node.scrollHeight - node.scrollTop === node.clientHeight;
     if (bottom) {
-      console.log("BOTTOM REACHED:", bottom);
     }
   };
 
@@ -91,32 +93,50 @@ class SignUpPage extends Component {
     this.setState({ password: e.target.value });
   };
 
+  handleConfirmPassword = e => {
+    this.setState({ confirmPassword: e.target.value });
+  };
+
   handleName = e => {
     this.setState({ username: e.target.value });
   };
 
   handleSignUp = () => {
-    const { email, password, username } = this.state;
+    const { email, password, username, confirmPassword } = this.state;
     const params = {
       email,
       password,
       username
     };
     this.setState({ isSignedUp: true });
-    this.props.dispatch(AuthAction.postSignUp(params)).then(value => {
-      if (value === "user email exists") {
-        this.setState({ emailExist: true, isSignedUp: false });
-      } else if (value === "username exists") {
-        this.setState({ userExist: true, isSignedUp: false });
-      } else {
-        this.props.dispatch(AuthAction.getMe(value)).then(value2 => {
-          this.setState({ isSignedUp: false });
-          this.props.history.replace({
-            pathname: "/"
+    const passwordRegex = /^(?=.*\d)(?=.*[a-z])[0-9a-zA-Z!@#$%^&*?~{}`\[\]=\-\/+_\()\\><|,\.$;:'"]{6,}$/;
+    if (!passwordRegex.test(password)) {
+      this.setState({ passwordValid: false, isSignedUp: false });
+    } else if (
+      email.length === 0 ||
+      username.length === 0 ||
+      password.length === 0
+    ) {
+      alert("이메일과 유저네임을 꼭 입력해주세요");
+      this.setState({ isSignedUp: false });
+    } else if (password !== confirmPassword) {
+      this.setState({ passwordSame: false, isSignedUp: false });
+    } else {
+      this.props.dispatch(AuthAction.postSignUp(params)).then(value => {
+        if (value === "user email exists") {
+          this.setState({ emailExist: true, isSignedUp: false });
+        } else if (value === "username exists") {
+          this.setState({ userExist: true, isSignedUp: false });
+        } else {
+          this.props.dispatch(AuthAction.getMe(value)).then(value2 => {
+            this.setState({ isSignedUp: false });
+            this.props.history.replace({
+              pathname: "/"
+            });
           });
-        });
-      }
-    });
+        }
+      });
+    }
   };
 
   render() {
@@ -126,7 +146,10 @@ class SignUpPage extends Component {
       favorite,
       isSignedUp,
       emailExist,
-      userExist
+      userExist,
+      passwordValid,
+      passwordSame,
+      password
     } = this.state;
     const { news } = this.props;
     return (
@@ -140,38 +163,6 @@ class SignUpPage extends Component {
         />
         <div className="signUpPage__content">
           <div className="signUpPage__content__news">
-            <div className="signUpPage__content__news__search">
-              <div className="signUpPage__content__news__search__first">
-                <div className="signUpPage__content__news__search__first__iconArea">
-                  <span className="signUpPage__content__news__search__first__iconArea__icon">
-                    <i className="xi-search" />
-                  </span>
-                </div>
-                <div className="signUpPage__content__news__search__first__inputArea">
-                  <input
-                    className="signUpPage__content__news__search__first__inputArea__input"
-                    placeholder="무엇을 찾고싶으신가요?"
-                  />
-                </div>
-              </div>
-              <div className="signUpPage__content__news__search__second">
-                <hr />
-                <div className="signUpPage__content__news__search__second__content">
-                  <ButtonDropdown
-                    isOpen={this.state.dropdownOpen}
-                    style={{ marginRight: 10, backgroundColor: "transparent" }}
-                    toggle={this.toggle}
-                    size="sm"
-                    direction="down"
-                  >
-                    <DropdownToggle caret>최신 순</DropdownToggle>
-                    <DropdownMenu>
-                      <DropdownItem>인기 순</DropdownItem>
-                    </DropdownMenu>
-                  </ButtonDropdown>
-                </div>
-              </div>
-            </div>
             <div
               ref={this.paneDidMount}
               className="signUpPage__content__news__lists"
@@ -219,11 +210,25 @@ class SignUpPage extends Component {
                 <br />
                 <RoundInput
                   onChange={this.handlePassword}
+                  errorText={
+                    password.length < 6 && !passwordValid
+                      ? "비밀번호는 숫자 영문 혼합 6글자 이상이어야 합니다"
+                      : null
+                  }
                   placeholder="비밀번호"
                   type="password"
                 />
                 <br />
-                <RoundInput placeholder="비밀번호 확인" type="password" />
+                <RoundInput
+                  onChange={this.handleConfirmPassword}
+                  errorText={
+                    !passwordSame
+                      ? "위에 입력하신 비밀번호와 일치하지 않습니다"
+                      : null
+                  }
+                  placeholder="비밀번호 확인"
+                  type="password"
+                />
                 <br />
                 <br />
                 <Button

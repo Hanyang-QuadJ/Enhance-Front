@@ -25,7 +25,8 @@ import {
   MyPage,
   UserPage,
   ForumPage,
-  SettingsPage
+  SettingsPage,
+  FindPage
 } from "./Pages/";
 
 const muiTheme = getMuiTheme({
@@ -83,6 +84,7 @@ class App extends Component {
             <Route path="/settings" component={SettingsPage} />
             <Route path="/@:user_id/:type" component={UserPage} />
             <Route exact path="/auth" component={AuthPage} />
+            <Route path="/auth/verify" component={FindPage} />
             <Route path="/auth/signup" component={SignUpPage} />
           </div>
         </MuiThemeProvider>

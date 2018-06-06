@@ -116,7 +116,7 @@
       &__wrapper {
         height: calc(100vh - 50px);
         background: transparent;
-        overflow-y: scroll;
+        overflow-y: auto;
         padding-left: 1rem;
         padding-right: 1rem;
         margin-top: 50px;

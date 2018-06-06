@@ -15,6 +15,9 @@ export const FAILED_TO_UPDATE_PROFILE = "FAILED_TO_UPDATE_PROFILE";
 export const SUCCEED_TO_UPDATE_PASSWORD = "SUCCEED_TO_UPDATE_PASSWORD";
 export const FAILED_TO_UPDATE_PASSWORD = "FAILED_TO_UPDATE_PASSWORD";
 
+export const SUCCEED_TO_GET_TEMP_PASSWORD = "SUCCEED_TO_GET_TEMP_PASSWORD";
+export const FAILED_TO_GET_TEMP_PASSWORD = "FAILED_TO_GET_TEMP_PASSWORD";
+
 export const SUCCEED_TO_SIGNIN = "SUCCEED_TO_SIGNIN";
 export const FAILED_TO_SIGNIN = "FAILED_TO_SIGNIN";
 
@@ -184,6 +187,35 @@ export const updatePassword = params => {
     } catch (error) {
       dispatch({
         type: FAILED_TO_UPDATE_PASSWORD,
+        payload: { data: "NETWORK_ERROR" }
+      });
+    }
+  };
+};
+
+export const findPassword = params => {
+  return async dispatch => {
+    try {
+      let response = await fetch(
+        ServerEndPoint + `api/user/verify?email=${params.email}`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*"
+          }
+        }
+      );
+      let responseJson = await response.json();
+      await dispatch({
+        type: SUCCEED_TO_GET_TEMP_PASSWORD,
+        payload: responseJson
+      });
+      return "succeed";
+    } catch (error) {
+      dispatch({
+        type: FAILED_TO_GET_TEMP_PASSWORD,
         payload: { data: "NETWORK_ERROR" }
       });
     }

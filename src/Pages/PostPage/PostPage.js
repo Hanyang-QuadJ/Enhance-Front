@@ -124,18 +124,22 @@ class PostPage extends Component {
       content: this.state.comment,
       forum_id: this.props.match.params.forum_id
     };
-    this.props.dispatch(SocialAction.postForumComment(params)).then(value => {
-      const frontParams = {
-        username: me.username,
-        profile_img: me.profile_img,
-        point: me.point,
-        content: this.state.comment,
-        date,
-        id: value
-      };
-      newComment.splice(0, 0, frontParams);
-      this.setState({ newComment, comment: "" });
-    });
+    if (this.state.comment.length === 0) {
+      alert("댓글을 먼저 입력하세요!");
+    } else {
+      this.props.dispatch(SocialAction.postForumComment(params)).then(value => {
+        const frontParams = {
+          username: me.username,
+          profile_img: me.profile_img,
+          point: me.point,
+          content: this.state.comment,
+          date,
+          id: value
+        };
+        newComment.splice(0, 0, frontParams);
+        this.setState({ newComment, comment: "" });
+      });
+    }
   };
 
   handleUser = user_id => {

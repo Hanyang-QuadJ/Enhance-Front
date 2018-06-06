@@ -12,6 +12,7 @@ import * as SocialAction from "../../ActionCreators/SocialAction";
 import { Modal, ModalBody } from "reactstrap";
 import Loadable from "react-loading-overlay";
 import categoryJson from "../../Json/category";
+import { confirmAlert } from "react-confirm-alert";
 import "react-activity/dist/react-activity.css";
 import {
   ButtonDropdown,
@@ -620,6 +621,7 @@ class ForumPage extends Component {
         let frontImages = imagePreview.map((data, index) => {
           return { img_url: data };
         });
+
         const newPosts = posts.slice();
         const i = editIndex;
         newPosts[i].title = title;
@@ -688,7 +690,13 @@ class ForumPage extends Component {
     let winHeight = e.target.scrollHeight;
     let scrollPercent = scrollTop / (winHeight - docHeight);
 
-    const { filterCoins, selectedPostType, search, sort, forumIndex } = this.state;
+    const {
+      filterCoins,
+      selectedPostType,
+      search,
+      sort,
+      forumIndex
+    } = this.state;
     const params = {
       index: forumIndex,
       category: selectedPostType,
@@ -759,30 +767,47 @@ class ForumPage extends Component {
     await this.toggleModal();
   };
 
-  handleDelete = () => {
-    const { editId } = this.state;
+  handleDelete = async() => {
+    await this.toggleModal();
+    await confirmAlert({
+      title: "포럼 삭제 확인",
+      message: "정말 삭제 하시겠습니까?",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => {
+            const { editId } = this.state;
 
-    const params = {
-      token: this.props.token,
-      forum_id: editId
-    };
+            const params = {
+              token: this.props.token,
+              forum_id: editId
+            };
 
-    const newPosts = this.state.posts.slice();
+            const newPosts = this.state.posts.slice();
 
-    let forumIndex;
-    for (let i = 0; i < newPosts.length; i++) {
-      if (newPosts[i].id === editId) {
-        forumIndex = i;
-      }
-    }
-    this.setState({ postLoading: true });
-    this.props.dispatch(SocialAction.deleteForum(params)).then(result => {
-      newPosts.splice(forumIndex, 1);
-      this.setState({ posts: newPosts, postLoading: false });
-      this.toggleModal();
-      this.props.history.replace({
-        pathname: "/forum"
-      });
+            let forumIndex;
+            for (let i = 0; i < newPosts.length; i++) {
+              if (newPosts[i].id === editId) {
+                forumIndex = i;
+              }
+            }
+            this.setState({ postLoading: true });
+            this.props
+              .dispatch(SocialAction.deleteForum(params))
+              .then(result => {
+                newPosts.splice(forumIndex, 1);
+                this.setState({ posts: newPosts, postLoading: false });
+                this.props.history.replace({
+                  pathname: "/forum"
+                });
+              });
+          }
+        },
+        {
+          label: "No",
+          onClick: () => null
+        }
+      ]
     });
   };
 

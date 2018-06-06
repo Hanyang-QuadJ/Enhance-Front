@@ -205,8 +205,8 @@ class UserPage extends Component {
                         }
                         this.setState({ posts: newPosts });
                         this.props.history.push({
-                          pathname: `/@${
-                            this.props.match.params.user_id
+                          pathname: `/@${this.props.match.params.user_id}/${
+                            this.props.match.params.type
                           }/${id}`,
                           state: {
                             name,
@@ -247,7 +247,9 @@ class UserPage extends Component {
             newPosts[index].loading = false;
             this.setState({ comments: newPosts });
             this.props.history.push({
-              pathname: `/@${this.props.match.params.user_id}/${id}`,
+              pathname: `/@${this.props.match.params.user_id}/${
+                this.props.match.params.type
+              }/${id}`,
               state: {
                 name,
                 forum,

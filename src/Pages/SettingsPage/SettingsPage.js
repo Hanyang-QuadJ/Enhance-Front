@@ -12,6 +12,7 @@ import "react-activity/dist/react-activity.css";
 import { Modal, ModalBody } from "reactstrap";
 import cx from "classnames";
 import Loadable from "react-loading-overlay";
+import { confirmAlert } from "react-confirm-alert";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import FileInputComponent from "react-file-input-previews-base64";
@@ -289,10 +290,25 @@ class SettingsPage extends Component {
   };
 
   handleSignOut = () => {
-    this.props.dispatch(AuthAction.signOut()).then(value => {
-      this.props.history.replace({
-        pathname: "/auth"
-      });
+    confirmAlert({
+      title: "로그아웃 확인",
+      message: "정말 로그아웃 하시겠습니까?",
+      buttons: [
+        {
+          label: "확인",
+          onClick: () => {
+            this.props.dispatch(AuthAction.signOut()).then(value => {
+              this.props.history.replace({
+                pathname: "/auth"
+              });
+            });
+          }
+        },
+        {
+          label: "취소",
+          onClick: () => null
+        }
+      ]
     });
   };
 
@@ -404,12 +420,15 @@ class SettingsPage extends Component {
             </div>
             <div className="settingsPage__content__news__lists">
               <div className="settingsPage__content__news__lists__content">
-                <RoundInput value={me.email} onChange={this.handleEmail} />
+                <RoundInput
+                  value={me && me.email}
+                  onChange={this.handleEmail}
+                />
               </div>
               <br />
               <div className="settingsPage__content__news__lists__content">
                 <RoundInput
-                  value={me.username}
+                  value={me && me.username}
                   onChange={this.handleUsername}
                 />
                 <Button
@@ -455,17 +474,17 @@ class SettingsPage extends Component {
               <div className="settingsPage__content__chart__intro">
                 <div className="settingsPage__content__chart__intro__content">
                   <Thumb
-                    src={me.profile_img}
+                    src={me && me.profile_img}
                     fontSize={75}
                     size={90}
-                    point={me.point}
+                    point={me && me.point}
                   />
                   <p className="settingsPage__content__chart__intro__content__username">
-                    {me.username}
+                    {me && me.username}
                   </p>
                   <div className="settingsPage__content__chart__intro__content__area">
                     <p className="settingsPage__content__chart__intro__content__area__number-border">
-                      {me.point}
+                      {me && me.point}
                       <span className="settingsPage__content__chart__intro__content__area__text">
                         포인트
                       </span>

@@ -29,7 +29,7 @@ const mapStateToProps = state => {
   };
 };
 
-class AuthPage extends Component {
+class FindPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -38,11 +38,9 @@ class AuthPage extends Component {
       favorite: [],
       coinType: "BTC",
       email: "",
-      password: "",
       isLoginValid: true,
       isLoggedIn: false
     };
-    this.toggle = this.toggle.bind(this);
   }
 
   componentWillMount() {
@@ -55,101 +53,38 @@ class AuthPage extends Component {
     this.props.dispatch(NewsAction.getNews(newsParams));
   }
 
-  toggle() {
-    this.setState(prevState => ({
-      dropdownOpen: !prevState.dropdownOpen
-    }));
-  }
-
-  handleFavorite = async(index, data) => {
-    const coin = this.state.favorite.slice();
-    coin[index].clicked = true;
-    coin[index].loading = true;
-    this.setState({ favorite: coin });
-
-    //즐겨찾기 한 코인들에게, 가격, 증감표시 key 추가
-    let result = coin.map(function(el) {
-      let o = Object.assign({}, el);
-      o.price = 0;
-      o.percent = "";
-      return o;
-    });
-
-    //즐겨찾기한 코인, 이름만 모으기
-    let abbrArray = [];
-    for (let i = 0; i < result.length; i++) {
-      abbrArray[i] = result[i].abbr;
-    }
-    this.props.dispatch(PriceAction.getPrice(abbrArray)).then(value => {
-      for (let i = 0; i < abbrArray.length; i++) {
-        result[i].price = value[abbrArray[i]].KRW.PRICE;
-        result[i].percent = value[abbrArray[i]].KRW.CHANGEPCT24HOUR;
-      }
-      result[index].loading = false;
-      this.setState(state => ({ favorite: result }));
-    });
-  };
-
   handleEmail = e => {
     this.setState({ email: e.target.value });
   };
 
-  handlePassword = e => {
-    this.setState({ password: e.target.value });
-  };
-
-  handleFindPassword = () => {
-    this.props.history.push({ pathname: "/auth/verify" });
-  };
-
-  handleSignUp = () => {
-    this.props.history.push({
-      pathname: "/auth/signup"
+  handleSignIn = () => {
+    this.props.history.replace({
+      pathname: "/auth"
     });
   };
 
-  handleSignIn = () => {
-    const { email, password } = this.state;
+  handleFind = () => {
+    const { email } = this.state;
     const params = {
-      email,
-      password
+      email
     };
     this.setState({ isLoggedIn: true });
-    this.props.dispatch(AuthAction.postSignIn(params)).then(value => {
-      if (value === "failed") {
-        this.setState({ isLoginValid: false, isLoggedIn: false });
-      } else {
-        this.setState({ isLoggedIn: false });
-
-        this.props.dispatch(AuthAction.getMe(value)).then(value2 => {
-          this.props.history.replace({
-            pathname: "/"
-          });
-        });
-      }
+    this.props.dispatch(AuthAction.findPassword(params)).then(value => {
+      this.setState({ isLoggedIn: false });
+      this.props.history.push({ pathname: "/auth", state: "temp" });
     });
   };
 
   handleKeySignIn = event => {
     if (event.key === "Enter") {
-      const { email, password } = this.state;
+      const { email } = this.state;
       const params = {
-        email,
-        password
+        email
       };
       this.setState({ isLoggedIn: true });
-      this.props.dispatch(AuthAction.postSignIn(params)).then(value => {
-        if (value === "failed") {
-          this.setState({ isLoginValid: false, isLoggedIn: false });
-        } else {
-          this.setState({ isLoggedIn: false });
-
-          this.props.dispatch(AuthAction.getMe(value)).then(value2 => {
-            this.props.history.replace({
-              pathname: "/"
-            });
-          });
-        }
+      this.props.dispatch(AuthAction.findPassword(params)).then(value => {
+        this.setState({ isLoggedIn: false });
+        console.log(value);
       });
     }
   };
@@ -157,7 +92,6 @@ class AuthPage extends Component {
   render() {
     const { coinType, coins, favorite, isLoginValid, isLoggedIn } = this.state;
     const { news } = this.props;
-    const state = this.props.location.state;
     return (
       <div className="authPage">
         <NavBar type="auth" />
@@ -201,11 +135,7 @@ class AuthPage extends Component {
               </div>
               <div className="authPage__content__chart__intro__welcome">
                 <strong>환영합니다.</strong>
-                <p>
-                  인핸스는 가상화폐와 블록체인 기술에 대한 정보를 실시간으로
-                  모아서 한눈에 보기 쉽게 제공해 드리고 있습니다. 인핸스와 함께
-                  가상화폐의 역사를 함께 하세요.
-                </p>
+                <p>가입하실 때의 이메일을 입력해주세요.</p>
               </div>
               <div className="authPage__content__chart__intro__login">
                 <RoundInput
@@ -217,53 +147,25 @@ class AuthPage extends Component {
                   }
                 />
                 <br />
-                <RoundInput
-                  onChange={this.handlePassword}
-                  placeholder="비밀번호"
-                  type="password"
-                  onKeyPress={this.handleKeySignIn}
-                  errorText={
-                    isLoginValid ? null : "입력하신 정보를 다시 확인하세요"
-                  }
-                />
                 <br />
-                {state === "temp" ? (
-                  <div style={{ textAlign: "center", color: "#f26968" }}>
-                    이메일로 임시 비밀번호가 전송되었습니다 확인 후
-                    임시비밀번호로 로그인 해주세요
-                  </div>
-                ) : null}
                 <br />
                 <Button
-                  text="로그인"
+                  text="임시 비밀번호 받기"
                   width={290}
                   height={50}
                   isLoading={isLoggedIn}
-                  onClick={this.handleSignIn}
+                  onClick={this.handleFind}
                 />
               </div>
               <div className="authPage__content__chart__intro__signUp">
-                <p>아직 인핸스의 회원이 아니신가요?</p>
                 <p>
                   <strong
                     className="authPage__content__chart__intro__signUp__link"
-                    onClick={this.handleSignUp}
+                    onClick={this.handleSignIn}
                   >
-                    회원가입
+                    로그인 창으로
                   </strong>
-                  하시고 맞춤 정보를 받아가세요!
                 </p>
-              </div>
-              <div
-                onClick={this.handleFindPassword}
-                style={{
-                  textAlign: "center",
-                  marginTop: 20,
-                  cursor: "pointer",
-                  textDecoration: "underline"
-                }}
-              >
-                비밀번호를 잊으셨나요?
               </div>
             </div>
           </div>
@@ -273,7 +175,7 @@ class AuthPage extends Component {
   }
 }
 
-AuthPage.defaultProps = defaultProps;
-AuthPage.propTypes = propTypes;
+FindPage.defaultProps = defaultProps;
+FindPage.propTypes = propTypes;
 
-export default connect(mapStateToProps)(AuthPage);
+export default connect(mapStateToProps)(FindPage);

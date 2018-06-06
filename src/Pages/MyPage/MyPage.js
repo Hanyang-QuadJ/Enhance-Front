@@ -17,6 +17,7 @@ import { Dots } from "react-activity";
 import * as PriceAction from "../../ActionCreators/PriceAction";
 import * as SocialAction from "../../ActionCreators/SocialAction";
 import * as AuthAction from "../../ActionCreators/AuthAction";
+import { confirmAlert } from "react-confirm-alert";
 import "react-activity/dist/react-activity.css";
 import {
   ButtonDropdown,
@@ -278,6 +279,15 @@ class MyPage extends Component {
           token: this.props.token,
           forum_id: editId
         };
+
+        let newImages = imagePreview.map((data, index) => {
+          return { original: data };
+        });
+
+        let frontImages = imagePreview.map((data, index) => {
+          return { img_url: data };
+        });
+
         //프론트 수정
         const newPosts = posts.slice();
         const i = editIndex;
@@ -285,6 +295,7 @@ class MyPage extends Component {
         newPosts[i].main = main;
         newPosts[i].coins = coinArray;
         newPosts[i].category = selectedPostType2;
+        newPosts[i].images = frontImages;
 
         this.props.dispatch(SocialAction.getOneForum(params)).then(forum => {
           this.props
@@ -300,7 +311,7 @@ class MyPage extends Component {
               await this.toggleModal();
               await this.props.history.push({
                 pathname: "/profile/" + editId,
-                state: { forum, coins, comment: [] }
+                state: { forum, coins, comment: [], images: newImages }
               });
             });
         });
@@ -483,7 +494,7 @@ class MyPage extends Component {
     });
   };
 
-  handleEdit = async(title, main, coins, category, index, id, images) => {
+  handleEdit = async(title, main, coins, category, index, id, image) => {
     const { favorite } = this.state;
     let newFav = favorite.slice();
     newFav.map((data, index) => {
@@ -491,6 +502,11 @@ class MyPage extends Component {
     });
     let type = [];
     let abbr = [];
+
+    // let preview = image.map((data, index) => {
+    //   return data.img_url;
+    // });
+
     for (let i = 0; i < coins.length; i++) {
       for (let j = 0; j < newFav.length; j++) {
         if (coins[i].abbr === newFav[j].abbr) {
@@ -513,6 +529,7 @@ class MyPage extends Component {
       selectedPostType2: category,
       editId: id,
       editIndex: index
+      // imagePreview: preview
     });
     await this.toggleModal();
   };
@@ -545,10 +562,25 @@ class MyPage extends Component {
   };
 
   handleSignOut = () => {
-    this.props.dispatch(AuthAction.signOut()).then(value => {
-      this.props.history.replace({
-        pathname: "/auth"
-      });
+    confirmAlert({
+      title: "로그아웃 확인",
+      message: "정말 로그아웃 하시겠습니까?",
+      buttons: [
+        {
+          label: "확인",
+          onClick: () => {
+            this.props.dispatch(AuthAction.signOut()).then(value => {
+              this.props.history.replace({
+                pathname: "/auth"
+              });
+            });
+          }
+        },
+        {
+          label: "취소",
+          onClick: () => null
+        }
+      ]
     });
   };
 
@@ -574,6 +606,7 @@ class MyPage extends Component {
       postLoading,
       selectedType,
       selectedPostType2,
+      imagePreview,
       selectedCoinType,
       selectedAbbr
     } = this.state;
@@ -605,6 +638,9 @@ class MyPage extends Component {
                   showCamera
                   showType2
                   isLogin={isLogin}
+                  imagePreview={imagePreview}
+                  handleBase={this.handlePreview}
+                  handleDelete={this.handleBadge}
                   onChange={this.handleMain}
                   onChangeTitle={this.handleTitle}
                   placeholder="본문을 입력하세요"
@@ -732,7 +768,8 @@ class MyPage extends Component {
                               data.coins,
                               data.category,
                               index,
-                              data.id
+                              data.id,
+                              data.images
                             )
                           }
                         />
