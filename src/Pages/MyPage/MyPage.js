@@ -741,7 +741,7 @@ class MyPage extends Component {
               >
                 {posts.length === 0 ? (
                   <div className="myPage__content__news__lists-none">
-                  아직 등록된 포스트가 없습니다
+                    아직 등록된 포스트가 없습니다
                   </div>
                 ) : null}
                 {selectedType === "게시글"
@@ -760,8 +760,9 @@ class MyPage extends Component {
                           username={data.username}
                           title={data.title}
                           point={data.point}
+                          isNews={false}
                           createdAt={data.created_at}
-                          updatedAt={data.updated_at}
+                          updatedAt={null}
                           likeCount={data.like_cnt}
                           disLikeCount={data.dislike_cnt}
                           type={data.coins}
@@ -791,6 +792,7 @@ class MyPage extends Component {
                           isLoading={data.loading}
                           selectedIndex={selectedCommentIndex}
                           key={index}
+                          isNews={false}
                           title={data.content}
                           createdAt={data.created_at}
                           type="댓글"

@@ -18,6 +18,9 @@ export const FAILED_TO_UPDATE_PASSWORD = "FAILED_TO_UPDATE_PASSWORD";
 export const SUCCEED_TO_GET_TEMP_PASSWORD = "SUCCEED_TO_GET_TEMP_PASSWORD";
 export const FAILED_TO_GET_TEMP_PASSWORD = "FAILED_TO_GET_TEMP_PASSWORD";
 
+export const SUCCEED_TO_DELETE_USER = "SUCCEED_TO_DELETE_USER";
+export const FAILED_TO_DELETE_USER = "FAILED_TO_DELETE_USER";
+
 export const SUCCEED_TO_POST_COIN = "SUCCEED_TO_POST_COIN";
 export const FAILED_TO_POST_COIN = "FAILED_TO_POST_COIN";
 
@@ -189,11 +192,19 @@ export const updatePassword = params => {
         })
       });
       let responseJson = await response.json();
-      await dispatch({
-        type: SUCCEED_TO_UPDATE_PASSWORD,
-        payload: responseJson
-      });
-      return "succeed";
+      if (response.status === 406) {
+        await dispatch({
+          type: FAILED_TO_UPDATE_PASSWORD,
+          payload: responseJson
+        });
+        return "failed";
+      } else {
+        await dispatch({
+          type: SUCCEED_TO_UPDATE_PASSWORD,
+          payload: responseJson
+        });
+        return "succeed";
+      }
     } catch (error) {
       dispatch({
         type: FAILED_TO_UPDATE_PASSWORD,
@@ -335,6 +346,44 @@ export const updateEmail = params => {
     } catch (error) {
       dispatch({
         type: FAILED_TO_UPDATE_EMAIL,
+        payload: { data: "NETWORK_ERROR" }
+      });
+    }
+  };
+};
+
+export const deleteUser = params => {
+  return async dispatch => {
+    try {
+      let response = await fetch(ServerEndPoint + "api/admin/user", {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "x-access-token": params.token
+        },
+        body: JSON.stringify({
+          username: params.username
+        })
+      });
+      let responseJson = await response.json();
+      if (response.status === 404) {
+        await dispatch({
+          type: FAILED_TO_DELETE_USER,
+          payload: "FAILED"
+        });
+        return "failed";
+      } else {
+        await dispatch({
+          type: SUCCEED_TO_DELETE_USER,
+          payload: responseJson
+        });
+        return "succeed";
+      }
+    } catch (error) {
+      dispatch({
+        type: FAILED_TO_DELETE_USER,
         payload: { data: "NETWORK_ERROR" }
       });
     }

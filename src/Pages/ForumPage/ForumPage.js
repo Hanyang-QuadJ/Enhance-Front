@@ -78,14 +78,26 @@ class ForumPage extends Component {
 
   componentWillMount() {
     const { isLogin } = this.props;
-    const { forumIndex } = this.state;
-    const params = { forumIndex };
+    const {
+      forumIndex,
+      selectedPostType,
+      sort,
+      filterCoins,
+      search
+    } = this.state;
+    const params = {
+      index: forumIndex,
+      coins: filterCoins,
+      order: sort,
+      keyword: search,
+      category: selectedPostType
+    };
     this.setState({ isPostsLoading: true });
-    this.props.dispatch(SocialAction.getAllForums(params)).then(forums => {
-      if (forums.forums.length < 30) {
+    this.props.dispatch(SocialAction.filterForums(params)).then(forums => {
+      if (forums.result.length < 30) {
         this.setState({ endScroll: true });
       }
-      let result = forums.forums.reverse().map(function(el) {
+      let result = forums.result.map(function(el) {
         let o = Object.assign({}, el);
         o.loading = false;
         return o;
@@ -216,7 +228,12 @@ class ForumPage extends Component {
   };
 
   handleFilter = (index, id, coin) => {
-    const { selectedPostType, sort, search } = this.state;
+    const {
+      selectedPostType,
+      sort,
+      search,
+      filterCoins
+    } = this.state;
     const requestCoins = this.state.filterCoins.slice();
     const newCoin = this.state.sideFavorite.slice();
     let result = newCoin.filter(a => {
@@ -229,13 +246,19 @@ class ForumPage extends Component {
       requestCoins.splice(requestCoins.indexOf(id), 1);
       this.setState({ sideFavorite: result });
       if (requestCoins.length === 0) {
-        const params = { forumIndex: 0 };
-        this.props.dispatch(SocialAction.getAllForums(params)).then(forums => {
+        const params = {
+          index: 0,
+          coins: [],
+          order: sort,
+          keyword: search,
+          category: selectedPostType
+        };
+        this.props.dispatch(SocialAction.filterForums(params)).then(forums => {
           result[index].loading = false;
-          if (forums.forums.length < 30) {
+          if (forums.result.length < 30) {
             this.setState({ endScroll: true });
           }
-          let newForum = forums.forums.reverse().map(function(el) {
+          let newForum = forums.result.map(function(el) {
             let o = Object.assign({}, el);
             o.loading = false;
             return o;
@@ -783,7 +806,7 @@ class ForumPage extends Component {
             const params = {
               token: this.props.token,
               forum_id: editId,
-              flag : me && me.flag
+              flag: me && me.flag
             };
 
             const newPosts = this.state.posts.slice();
@@ -1104,6 +1127,7 @@ class ForumPage extends Component {
                       isLoading={data.loading}
                       selectedIndex={selectedIndex}
                       key={index}
+                      isNews={false}
                       username={data.username}
                       title={data.title}
                       point={data.point}

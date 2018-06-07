@@ -538,6 +538,7 @@ class HomePage extends Component {
                         createdAt={data.pubDate}
                         type={coinType}
                         link={data.link}
+                        isNews={true}
                       />
                     );
                   })

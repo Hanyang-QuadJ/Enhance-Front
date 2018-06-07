@@ -16,6 +16,7 @@ import { confirmAlert } from "react-confirm-alert";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import FileInputComponent from "react-file-input-previews-base64";
+import Notifications, { notify } from "react-notify-toast";
 
 const defaultProps = {};
 const propTypes = {};
@@ -52,6 +53,7 @@ class SettingsPage extends Component {
       croppedImg: "",
       targetImg: "",
       targetImgFile: null,
+      passwordUpdateValid: true,
       emailValid: true,
       usernameValid: true
     };
@@ -192,7 +194,14 @@ class SettingsPage extends Component {
     const { token } = this.props;
     const { password, confirmPassword, c_password } = this.state;
     const params = { old_password: c_password, new_password: password, token };
-    this.props.dispatch(AuthAction.updatePassword(params));
+    this.props.dispatch(AuthAction.updatePassword(params)).then(value => {
+      if (value === "failed") {
+        this.setState({ passwordUpdateValid: false });
+      } else {
+        this.setState({ passwordUpdateValid: true });
+        notify.show("변경되었습니다");
+      }
+    });
   };
 
   handleEditEmail = () => {
@@ -202,6 +211,9 @@ class SettingsPage extends Component {
     this.props.dispatch(AuthAction.updateEmail(params)).then(result => {
       if (result === "failed") {
         this.setState({ emailValid: false });
+      } else {
+        notify.show("변경되었습니다");
+        this.setState({ emailValid: true });
       }
     });
   };
@@ -213,6 +225,9 @@ class SettingsPage extends Component {
     this.props.dispatch(AuthAction.updateUsername(params)).then(result => {
       if (result === "failed") {
         this.setState({ usernameValid: false });
+      } else {
+        notify.show("변경되었습니다");
+        this.setState({ usernameValid: true });
       }
     });
   };
@@ -338,12 +353,14 @@ class SettingsPage extends Component {
       isUploading,
       showCrop,
       usernameValid,
-      emailValid
+      emailValid,
+      passwordUpdateValid
     } = this.state;
     const { me } = this.props;
 
     return (
       <div className="settingsPage">
+        <Notifications />
         <NavBar type="auth" />
         <SideBar
           favorite={sideFavorite && sideFavorite}
@@ -473,6 +490,11 @@ class SettingsPage extends Component {
                   placeholder="현재 비밀번호를 입력하세요"
                   type="password"
                   onChange={this.handleCurrentPassword}
+                  errorText={
+                    !passwordUpdateValid
+                      ? "현재 암호가 올바르지 않습니다"
+                      : null
+                  }
                 />
                 <br />
                 <RoundInput

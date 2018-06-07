@@ -22,6 +22,11 @@ import {
   FAILED_TO_SIGNIN
 } from "../ActionCreators/AuthAction";
 
+import {
+  SUCCEED_TO_POST_FORUM,
+  SUCCEED_TO_POST_FORUM_COMMENT
+} from "../ActionCreators/SocialAction";
+
 const initialState = {
   data: null,
   news: [],
@@ -67,7 +72,6 @@ const reducer = (state = initialState, action) => {
         token: "",
         isLogin: false
       });
-
     case SUCCEED_TO_SIGNOUT:
       localStorage.removeItem("token");
       return Object.assign({}, state, {
@@ -90,6 +94,14 @@ const reducer = (state = initialState, action) => {
     case SUCCEED_TO_GET_PRICE:
       return Object.assign({}, state, {
         prices: action.payload
+      });
+    case SUCCEED_TO_POST_FORUM:
+      return Object.assign({}, state, {
+        me: { ...state.me, point: (state.me.point += 3) }
+      });
+    case SUCCEED_TO_POST_FORUM_COMMENT:
+      return Object.assign({}, state, {
+        me: { ...state.me, point: (state.me.point += 1) }
       });
     case SUCCEED_TO_GET_COINS:
       return Object.assign({}, state, {

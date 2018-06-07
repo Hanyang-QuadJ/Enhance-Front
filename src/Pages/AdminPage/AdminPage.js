@@ -16,6 +16,7 @@ import { confirmAlert } from "react-confirm-alert";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import FileInputComponent from "react-file-input-previews-base64";
+import Notifications, { notify } from "react-notify-toast";
 
 const defaultProps = {};
 const propTypes = {};
@@ -58,108 +59,124 @@ class AdminPage extends Component {
   }
 
   componentWillMount() {
-    const { me, token } = this.props;
-    this.setState({ email: me.email, username: me.username });
-    const params = { user_id: me.id, token };
-    this.props.dispatch(SocialAction.getForumByUser(params)).then(forums => {
-      this.props
-        .dispatch(SocialAction.getCommentsByUser(params))
-        .then(comments => {
-          let result = forums.reverse().map(function(el) {
-            let o = Object.assign({}, el);
-            o.loading = false;
-            return o;
-          });
-          let commentResult = comments.reverse().map(function(el) {
-            let o = Object.assign({}, el);
-            o.loading = false;
-            return o;
-          });
-          this.setState({
-            posts: result,
-            comments: commentResult
-          });
-          this.props.dispatch(PriceAction.getCoins()).then(coins => {
+    const { me, token, isLogin } = this.props;
+    if (isLogin) {
+      if (me.flag !== 1) {
+        this.props.history.replace({ pathname: "/" });
+      } else {
+        this.setState({ email: me.email, username: me.username });
+        const params = { user_id: me.id, token };
+        this.props
+          .dispatch(SocialAction.getForumByUser(params))
+          .then(forums => {
             this.props
-              .dispatch(PriceAction.getFavs(this.props.token))
-              .then(favs => {
-                if (favs.length === 0) {
-                  let result = coins.map(function(el) {
-                    let o = Object.assign({}, el);
-                    o.clicked = false;
-                    o.loading = false;
-                    return o;
-                  });
-                  this.setState({
-                    sideFavorite: result
-                  });
-                } else {
-                  //글 작성 코인 타입
-                  let result = favs.map(function(el) {
-                    let o = Object.assign({}, el);
-                    o.clicked = false;
-                    return o;
-                  });
-
-                  //사이드 바 즐겨찾기
-                  let resultSide = coins.map(function(el) {
-                    let o = Object.assign({}, el);
-                    o.clicked = false;
-                    o.selected = false;
-                    o.loading = true;
-                    return o;
-                  });
-                  for (let i = 0; i < resultSide.length; i++) {
-                    for (let j = 0; j < favs.length; j++) {
-                      if (resultSide[i].abbr === favs[j].abbr) {
-                        resultSide[i].clicked = true;
-                      }
-                    }
-                  }
-                  this.setState({ favorite: result, sideFavorite: resultSide });
-
-                  //Crypto Compare API
-                  const abbrArray = [];
-                  for (let i = 0; i < resultSide.length; i++) {
-                    if (resultSide[i].clicked === true) {
-                      abbrArray.push({
-                        id: resultSide[i].id,
-                        abbr: resultSide[i].abbr
-                      });
-                    }
-                  }
-                  let final = resultSide.map(function(el) {
-                    let o = Object.assign({}, el);
-                    o.price = 0;
-                    o.percent = "";
-                    return o;
-                  });
+              .dispatch(SocialAction.getCommentsByUser(params))
+              .then(comments => {
+                let result = forums.reverse().map(function(el) {
+                  let o = Object.assign({}, el);
+                  o.loading = false;
+                  return o;
+                });
+                let commentResult = comments.reverse().map(function(el) {
+                  let o = Object.assign({}, el);
+                  o.loading = false;
+                  return o;
+                });
+                this.setState({
+                  posts: result,
+                  comments: commentResult
+                });
+                this.props.dispatch(PriceAction.getCoins()).then(coins => {
                   this.props
-                    .dispatch(
-                      PriceAction.getPrice(
-                        abbrArray.map((a, index) => {
-                          return a.abbr;
-                        })
-                      )
-                    )
-                    .then(value => {
-                      for (let i = 0; i < final.length; i++) {
-                        for (let j = 0; j < abbrArray.length; j++) {
-                          if (final[i].abbr === abbrArray[j].abbr) {
-                            final[i].loading = false;
-                            final[i].price = value[abbrArray[j].abbr].KRW.PRICE;
-                            final[i].percent =
-                              value[abbrArray[j].abbr].KRW.CHANGEPCT24HOUR;
+                    .dispatch(PriceAction.getFavs(this.props.token))
+                    .then(favs => {
+                      if (favs.length === 0) {
+                        let result = coins.map(function(el) {
+                          let o = Object.assign({}, el);
+                          o.clicked = false;
+                          o.loading = false;
+                          return o;
+                        });
+                        this.setState({
+                          sideFavorite: result
+                        });
+                      } else {
+                        //글 작성 코인 타입
+                        let result = favs.map(function(el) {
+                          let o = Object.assign({}, el);
+                          o.clicked = false;
+                          return o;
+                        });
+
+                        //사이드 바 즐겨찾기
+                        let resultSide = coins.map(function(el) {
+                          let o = Object.assign({}, el);
+                          o.clicked = false;
+                          o.selected = false;
+                          o.loading = true;
+                          return o;
+                        });
+                        for (let i = 0; i < resultSide.length; i++) {
+                          for (let j = 0; j < favs.length; j++) {
+                            if (resultSide[i].abbr === favs[j].abbr) {
+                              resultSide[i].clicked = true;
+                            }
                           }
                         }
+                        this.setState({
+                          favorite: result,
+                          sideFavorite: resultSide
+                        });
+
+                        //Crypto Compare API
+                        const abbrArray = [];
+                        for (let i = 0; i < resultSide.length; i++) {
+                          if (resultSide[i].clicked === true) {
+                            abbrArray.push({
+                              id: resultSide[i].id,
+                              abbr: resultSide[i].abbr
+                            });
+                          }
+                        }
+                        let final = resultSide.map(function(el) {
+                          let o = Object.assign({}, el);
+                          o.price = 0;
+                          o.percent = "";
+                          return o;
+                        });
+                        this.props
+                          .dispatch(
+                            PriceAction.getPrice(
+                              abbrArray.map((a, index) => {
+                                return a.abbr;
+                              })
+                            )
+                          )
+                          .then(value => {
+                            for (let i = 0; i < final.length; i++) {
+                              for (let j = 0; j < abbrArray.length; j++) {
+                                if (final[i].abbr === abbrArray[j].abbr) {
+                                  final[i].loading = false;
+                                  final[i].price =
+                                    value[abbrArray[j].abbr].KRW.PRICE;
+                                  final[i].percent =
+                                    value[
+                                      abbrArray[j].abbr
+                                    ].KRW.CHANGEPCT24HOUR;
+                                }
+                              }
+                            }
+                            this.setState({ sideFavorite: final });
+                          });
                       }
-                      this.setState({ sideFavorite: final });
                     });
-                }
+                });
               });
           });
-        });
-    });
+      }
+    } else {
+      this.props.history.replace({ pathname: "/auth" });
+    }
   }
 
   toggleModal = () => {
@@ -192,14 +209,21 @@ class AdminPage extends Component {
     this.setState({ c_password: e.target.value });
   };
 
-  handleDeleteUser = () => {};
+  handleDeleteUser = () => {
+    const { token } = this.props;
+    const { username } = this.state;
+    const params = { token, username };
+    this.props.dispatch(AuthAction.deleteUser(params)).then(value => {
+      notify.show("유저가 삭제되었습니다");
+    });
+  };
 
   handlePostCoin = () => {
     const { token } = this.props;
     const { kor, abbr, full, keyword } = this.state;
     const params = { kor, full, abbr, keyword, token };
     this.props.dispatch(AuthAction.postCoin(params)).then(value => {
-      console.log(value);
+      notify.show("코인이 등록되었습니다");
     });
   };
 
@@ -331,6 +355,7 @@ class AdminPage extends Component {
     return (
       <div className="settingsPage">
         <NavBar type="admin" />
+        <Notifications />
         <SideBar
           favorite={sideFavorite && sideFavorite}
           handleFavorite={this.handleFavorite}

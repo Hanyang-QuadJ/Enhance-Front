@@ -42,6 +42,7 @@ class List extends Component {
       index,
       isLoading,
       point,
+      isNews,
       selectedIndex,
       likeCount,
       disLikeCount,
@@ -64,11 +65,11 @@ class List extends Component {
               ) : (
                 <div>
                   <p>
-                    {updatedAt !== null
+                    {updatedAt !== null && !isNews
                       ? moment(updatedAt).fromNow()
                       : moment(createdAt).fromNow()}
                   </p>
-                  <p>{updatedAt !== null ? "수정됨" : null}</p>
+                  <p>{updatedAt !== null && !isNews ? "수정됨" : null}</p>
                 </div>
               )}
             </div>

@@ -104,6 +104,50 @@ class UserPage extends Component {
     });
   }
 
+  componentDidUpdate(previousProps, previousState) {
+    if (
+      previousProps.match.params.user_id !== this.props.match.params.user_id
+    ) {
+      const { token } = this.props;
+      const user_id = this.props.match.params.user_id;
+      const type = this.props.match.params.type;
+      const params = { user_id: user_id, token };
+      this.setState({ isPostsLoading: true });
+      this.props.dispatch(SocialAction.getUserById(params)).then(user => {
+        this.props
+          .dispatch(SocialAction.getForumByUser(params))
+          .then(forums => {
+            this.props
+              .dispatch(SocialAction.getFavByUser(params))
+              .then(favs => {
+                this.props
+                  .dispatch(SocialAction.getCommentsByUser(params))
+                  .then(comments => {
+                    let result = forums.reverse().map(function(el) {
+                      let o = Object.assign({}, el);
+                      o.loading = false;
+                      return o;
+                    });
+                    let commentResult = comments.reverse().map(function(el) {
+                      let o = Object.assign({}, el);
+                      o.loading = false;
+                      return o;
+                    });
+                    this.setState({
+                      user,
+                      posts: result,
+                      comments: commentResult,
+                      isPostsLoading: false,
+                      favorite: favs,
+                      selectedType: type === "post" ? "게시글" : "댓글"
+                    });
+                  });
+              });
+          });
+      });
+    }
+  }
+
   onFocus = () => {
     this.setState(prevState => ({
       isFocus: !prevState.isFocus
@@ -360,71 +404,78 @@ class UserPage extends Component {
                 onScroll={this.handleScroll}
                 className="userPage__content__news__lists"
               >
-                {posts.length === 0 ? (
+                {posts.length === 0 && selectedType === "게시글" ? (
                   <div className="userPage__content__news__lists-none">
                     아직 등록된 포스트가 없습니다
                   </div>
                 ) : null}
-                {selectedType === "게시글"
-                  ? posts &&
-                    posts.map((data, index) => {
-                      return (
-                        <List
-                          social
-                          index={index}
-                          me={me[0]}
-                          isLoading={data.loading}
-                          selectedIndex={selectedIndex}
-                          key={index}
-                          value={main}
-                          titleValue={title}
-                          username={data.username}
-                          title={data.title}
-                          point={data.point}
-                          createdAt={data.created_at}
-                          updatedAt={data.updated_at}
-                          likeCount={data.like_cnt}
-                          disLikeCount={data.dislike_cnt}
-                          type={data.coins}
-                          view={data.view_cnt}
-                          onClick={() =>
-                            this.handleDetail(index, data.id, data.username)
-                          }
-                          onEditClick={() =>
-                            this.handleEdit(
-                              data.title,
-                              data.content,
-                              data.coins,
-                              data.category,
-                              index,
-                              data.id
-                            )
-                          }
-                        />
-                      );
-                    })
-                  : removeDuplicates(comments, "forum_id").map(
-                    (data, index) => {
-                      return (
-                        <List
-                          index={index}
-                          isLoading={data.loading}
-                          selectedIndex={selectedCommentIndex}
-                          key={index}
-                          title={data.content}
-                          createdAt={data.created_at}
-                          type="댓글"
-                          onClick={() =>
-                            this.handleCommentDetail(
-                              index,
-                              data.forum_id,
-                              data.username
-                            )
-                          }
-                        />
-                      );
-                    }
-                  )}
+                {selectedType === "게시글" ? (
+                  posts &&
+                  posts.map((data, index) => {
+                    return (
+                      <List
+                        social
+                        index={index}
+                        me={me[0]}
+                        isLoading={data.loading}
+                        selectedIndex={selectedIndex}
+                        key={index}
+                        value={main}
+                        titleValue={title}
+                        username={data.username}
+                        title={data.title}
+                        point={data.point}
+                        isNews={false}
+                        createdAt={data.created_at}
+                        updatedAt={null}
+                        likeCount={data.like_cnt}
+                        disLikeCount={data.dislike_cnt}
+                        type={data.coins}
+                        view={data.view_cnt}
+                        onClick={() =>
+                          this.handleDetail(index, data.id, data.username)
+                        }
+                        onEditClick={() =>
+                          this.handleEdit(
+                            data.title,
+                            data.content,
+                            data.coins,
+                            data.category,
+                            index,
+                            data.id
+                          )
+                        }
+                      />
+                    );
+                  })
+                ) : comments.length === 0 ? (
+                  <div className="userPage__content__news__lists-none">
+                    아직 등록된 댓글이 없습니다
+                  </div>
+                ) : (
+                  removeDuplicates(comments, "forum_id").map((data, index) => {
+                    return (
+                      <List
+                        index={index}
+                        isLoading={data.loading}
+                        selectedIndex={selectedCommentIndex}
+                        key={index}
+                        isNews={false}
+                        title={data.content}
+                        createdAt={data.created_at}
+                        updatedAt={null}
+                        type="댓글"
+                        onClick={() =>
+                          this.handleCommentDetail(
+                            index,
+                            data.forum_id,
+                            data.username
+                          )
+                        }
+                      />
+                    );
+                  })
+                )}
                 {footerLoading === true ? (
                   <div className="userPage__content__news__lists__footer">
                     <Dots color="#ffffff" size={20} />

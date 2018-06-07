@@ -162,7 +162,7 @@ class NavBar extends Component {
                 onClick={this.handleAdmin}
               >
                 <span className="navBar__content__items__item-icon">
-                  <i className="xi-log-in" />
+                  <i className="xi-wrench" />
                 </span>
                 <p>관리자</p>
               </div>
