@@ -49,6 +49,7 @@ class AdminPage extends Component {
       keyword: "",
       kor: "",
       full: "",
+      coin: "",
       abbr: "",
       croppedImg: "",
       targetImg: "",
@@ -185,6 +186,10 @@ class AdminPage extends Component {
     });
   };
 
+  handleCoin = e => {
+    this.setState({ coin: e.target.value });
+  };
+
   handleKor = e => {
     this.setState({ kor: e.target.value });
   };
@@ -227,73 +232,6 @@ class AdminPage extends Component {
     });
   };
 
-  handleFavorite = async(index, id, data) => {
-    const coin = this.state.sideFavorite.slice();
-    const favorite = this.state.favorite.slice();
-    const { token } = this.props;
-    const params = {
-      token: token,
-      coin_id: coin[index].id
-    };
-    //삭제
-    if (coin[index].clicked === true) {
-      coin[index].clicked = false;
-
-      for (let i = 0; i < favorite.length; i++) {
-        if (favorite[i].abbr === data) {
-          favorite.splice(i, 1);
-        }
-      }
-
-      let leftOver = [];
-      for (let i = 0; i < coin.length; i++) {
-        if (coin[i].clicked === true) {
-          leftOver.push(coin[i].abbr);
-        }
-      }
-      //한개 남았을 때
-      if (leftOver.length === 0) {
-        this.setState({ sideFavorite: coin, favorite });
-        this.props.dispatch(PriceAction.removeFav(params));
-      } else {
-        this.setState({ sideFavorite: coin, favorite });
-        this.props.dispatch(PriceAction.removeFav(params));
-      }
-    }
-    //추가
-    else {
-      coin[index].clicked = true;
-      coin[index].loading = true;
-      favorite.push({ coin_id: id, clicked: false, abbr: data });
-
-      this.setState({ sideFavorite: coin, favorite });
-
-      //즐겨찾기 한 코인들에게, 가격, 증감표시 key 추가
-      let result = coin.map(function(el) {
-        let o = Object.assign({}, el);
-        o.price = 0;
-        o.percent = "";
-        return o;
-      });
-
-      //즐겨찾기한 코인, 이름만 모으기
-      let abbrArray = [];
-      for (let i = 0; i < result.length; i++) {
-        abbrArray[i] = result[i].abbr;
-      }
-      this.props.dispatch(PriceAction.addFav(params)).then(x => {
-        this.props.dispatch(PriceAction.getPrice(abbrArray)).then(value => {
-          for (let i = 0; i < abbrArray.length; i++) {
-            result[i].price = value[abbrArray[i]].KRW.PRICE;
-            result[i].percent = value[abbrArray[i]].KRW.CHANGEPCT24HOUR;
-          }
-          result[index].loading = false;
-          this.setState(state => ({ sideFavorite: result }));
-        });
-      });
-    }
-  };
-
   _crop = () => {
     this.setState({
       croppedImg: this.refs.cropper.getCroppedCanvas().toDataURL()
@@ -302,6 +240,15 @@ class AdminPage extends Component {
 
   handleFile = e => {
     this.setState({ targetImg: e[0].base64, showCrop: true });
+  };
+
+  handleDeleteCoin = () => {
+    const { token } = this.props;
+    const { coin } = this.state;
+    const params = { token, abbr: coin };
+    this.props.dispatch(AuthAction.deleteCoin(params)).then(result => {
+      notify.show("코인이 삭제되었습니다");
+    });
   };
 
   handleEditImage = () => {
@@ -356,10 +303,6 @@ class AdminPage extends Component {
       <div className="settingsPage">
         <NavBar type="admin" />
         <Notifications />
-        <SideBar
-          favorite={sideFavorite && sideFavorite}
-          handleFavorite={this.handleFavorite}
-        />
         <Modal
           isOpen={this.state.showModal}
           toggle={this.toggleModal}
@@ -449,6 +392,7 @@ class AdminPage extends Component {
             </div>
             <div className="settingsPage__content__news__lists">
               <div className="settingsPage__content__news__lists__content">
+                <br />
                 <RoundInput
                   placeholder="삭제하고자하는 유저 네임을 입력하세요"
                   onChange={this.handleUsername}
@@ -459,6 +403,20 @@ class AdminPage extends Component {
                   height={30}
                   marginTop={10}
                   onClick={this.handleDeleteUser}
+                />
+              </div>
+              <div className="settingsPage__content__news__lists__content">
+                <br />
+                <RoundInput
+                  placeholder="삭제하고자하는 코인 약자를 입력하세요"
+                  onChange={this.handleCoin}
+                />
+                <Button
+                  text="삭제하기"
+                  width={90}
+                  height={30}
+                  marginTop={10}
+                  onClick={this.handleDeleteCoin}
                 />
               </div>
               <br />

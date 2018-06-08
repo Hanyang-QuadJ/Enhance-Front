@@ -24,6 +24,9 @@ export const FAILED_TO_DELETE_USER = "FAILED_TO_DELETE_USER";
 export const SUCCEED_TO_POST_COIN = "SUCCEED_TO_POST_COIN";
 export const FAILED_TO_POST_COIN = "FAILED_TO_POST_COIN";
 
+export const SUCCEED_TO_DELETE_COIN = "SUCCEED_TO_DELETE_COIN";
+export const FAILED_TO_DELETE_COIN = "FAILED_TO_DELETE_COIN";
+
 export const SUCCEED_TO_SIGNIN = "SUCCEED_TO_SIGNIN";
 export const FAILED_TO_SIGNIN = "FAILED_TO_SIGNIN";
 
@@ -384,6 +387,44 @@ export const deleteUser = params => {
     } catch (error) {
       dispatch({
         type: FAILED_TO_DELETE_USER,
+        payload: { data: "NETWORK_ERROR" }
+      });
+    }
+  };
+};
+
+export const deleteCoin = params => {
+  return async dispatch => {
+    try {
+      let response = await fetch(ServerEndPoint + "api/admin/coin", {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "x-access-token": params.token
+        },
+        body: JSON.stringify({
+          abbr: params.abbr
+        })
+      });
+      let responseJson = await response.json();
+      if (response.status === 404) {
+        await dispatch({
+          type: FAILED_TO_DELETE_COIN,
+          payload: "FAILED"
+        });
+        return "failed";
+      } else {
+        await dispatch({
+          type: SUCCEED_TO_DELETE_COIN,
+          payload: responseJson
+        });
+        return "succeed";
+      }
+    } catch (error) {
+      dispatch({
+        type: FAILED_TO_DELETE_COIN,
         payload: { data: "NETWORK_ERROR" }
       });
     }

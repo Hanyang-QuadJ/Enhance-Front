@@ -77,7 +77,8 @@ class MyPage extends Component {
       title: "",
       editIndex: 0,
       editId: 0,
-      imagePreview: []
+      imagePreview: [],
+      loadGraph: false
     };
     this.toggle = this.toggle.bind(this);
   }
@@ -359,31 +360,38 @@ class MyPage extends Component {
       coin[index].clicked = true;
       coin[index].loading = true;
       favorite.push({ coin_id: id, clicked: false, abbr: data });
-
-      this.setState({ sideFavorite: coin, favorite });
-
-      //즐겨찾기 한 코인들에게, 가격, 증감표시 key 추가
-      let result = coin.map(function(el) {
-        let o = Object.assign({}, el);
-        o.price = 0;
-        o.percent = "";
-        return o;
-      });
+      this.setState({ sideFavorite: coin, favorite, loadGraph: true });
 
       //즐겨찾기한 코인, 이름만 모으기
       let abbrArray = [];
-      for (let i = 0; i < result.length; i++) {
-        abbrArray[i] = result[i].abbr;
+      for (let i = 0; i < coin.length; i++) {
+        if (coin[i].clicked === true) {
+          abbrArray.push({ id: coin[i].id, abbr: coin[i].abbr });
+        }
       }
+
       this.props.dispatch(PriceAction.addFav(params)).then(x => {
-        this.props.dispatch(PriceAction.getPrice(abbrArray)).then(value => {
-          for (let i = 0; i < abbrArray.length; i++) {
-            result[i].price = value[abbrArray[i]].KRW.PRICE;
-            result[i].percent = value[abbrArray[i]].KRW.CHANGEPCT24HOUR;
-          }
-          result[index].loading = false;
-          this.setState(state => ({ sideFavorite: result }));
-        });
+        this.props
+          .dispatch(
+            PriceAction.getPrice(
+              abbrArray.map((a, index) => {
+                return a.abbr;
+              })
+            )
+          )
+          .then(value => {
+            for (let i = 0; i < coin.length; i++) {
+              for (let j = 0; j < abbrArray.length; j++) {
+                if (coin[i].abbr === abbrArray[j].abbr) {
+                  coin[i].price = value[abbrArray[j].abbr].KRW.PRICE;
+                  coin[i].percent =
+                    value[abbrArray[j].abbr].KRW.CHANGEPCT24HOUR;
+                }
+              }
+            }
+            coin[index].loading = false;
+            this.setState(state => ({ sideFavorite: coin, loadGraph: false }));
+          });
       });
     }
   };
@@ -610,7 +618,8 @@ class MyPage extends Component {
       selectedPostType2,
       imagePreview,
       selectedCoinType,
-      selectedAbbr
+      selectedAbbr,
+      loadGraph
     } = this.state;
     const { me, isLogin } = this.props;
 
@@ -620,6 +629,7 @@ class MyPage extends Component {
         <SideBar
           favorite={sideFavorite && sideFavorite}
           handleFavorite={this.handleFavorite}
+          loadGraph={loadGraph}
         />
         <Modal
           isOpen={this.state.showModal}

@@ -109,6 +109,7 @@ class HomePage extends Component {
                 o.loading = false;
                 return o;
               });
+
               for (let i = 0; i < result.length; i++) {
                 for (let j = 0; j < favs.length; j++) {
                   if (result[i].abbr === favs[j].abbr) {
@@ -237,12 +238,16 @@ class HomePage extends Component {
       recent
     };
 
-    if (scrollPercent > 0.95) {
+    if (scrollPercent > 0.99) {
       if (this.state.endScroll === false) {
         this.setState({ footerLoading: true });
         this.props.dispatch(NewsAction.getNews(newsParams)).then(news => {
           if (news.result.length < 30) {
-            this.setState({ endScroll: true, footerLoading: false });
+            this.setState(prevState => ({
+              endScroll: true,
+              news: [...prevState.news, ...news.result],
+              footerLoading: false
+            }));
           } else {
             this.setState(prevState => ({
               news: [...prevState.news, ...news.result],
@@ -402,28 +407,35 @@ class HomePage extends Component {
       this.handleChart(0, id, data);
       this.setState({ favorite: coin });
 
-      //즐겨찾기 한 코인들에게, 가격, 증감표시 key 추가
-      let result = coin.map(function(el) {
-        let o = Object.assign({}, el);
-        o.price = 0;
-        o.percent = "";
-        return o;
-      });
-
       //즐겨찾기한 코인, 이름만 모으기
       let abbrArray = [];
-      for (let i = 0; i < result.length; i++) {
-        abbrArray[i] = result[i].abbr;
+      for (let i = 0; i < coin.length; i++) {
+        if (coin[i].clicked === true) {
+          abbrArray.push({ id: coin[i].id, abbr: coin[i].abbr });
+        }
       }
       this.props.dispatch(PriceAction.addFav(params)).then(x => {
-        this.props.dispatch(PriceAction.getPrice(abbrArray)).then(value => {
-          for (let i = 0; i < abbrArray.length; i++) {
-            result[i].price = value[abbrArray[i]].KRW.PRICE;
-            result[i].percent = value[abbrArray[i]].KRW.CHANGEPCT24HOUR;
-          }
-          result[index].loading = false;
-          this.setState(state => ({ favorite: result }));
-        });
+        this.props
+          .dispatch(
+            PriceAction.getPrice(
+              abbrArray.map((a, index) => {
+                return a.abbr;
+              })
+            )
+          )
+          .then(value => {
+            for (let i = 0; i < coin.length; i++) {
+              for (let j = 0; j < abbrArray.length; j++) {
+                if (coin[i].abbr === abbrArray[j].abbr) {
+                  coin[i].price = value[abbrArray[j].abbr].KRW.PRICE;
+                  coin[i].percent =
+                    value[abbrArray[j].abbr].KRW.CHANGEPCT24HOUR;
+                }
+              }
+            }
+            coin[index].loading = false;
+            this.setState(state => ({ favorite: coin }));
+          });
       });
     }
   };

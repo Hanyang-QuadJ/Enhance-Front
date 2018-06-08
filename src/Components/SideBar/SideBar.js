@@ -149,17 +149,10 @@ class SideBar extends Component {
                       <div
                         className={
                           multiple
-                            ? cx(
-                              "sideBar__content__items__item",
-                              {
-                                "sideBar__content__items__item-active":
-                                    data.selected === true
-                              },
-                              {
-                                "sideBar__content__items__item-disable":
-                                    loadGraph === true
-                              }
-                            )
+                            ? cx("sideBar__content__items__item", {
+                              "sideBar__content__items__item-active":
+                                  data.selected === true
+                            })
                             : cx(
                               "sideBar__content__items__item",
                               {

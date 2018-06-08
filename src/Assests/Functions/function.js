@@ -1,26 +1,21 @@
-/**
- * @param {File} image - Image File Object
- * @param {Object} pixelCrop - pixelCrop Object provided by react-image-crop
- */
-export default function getCroppedImg(image, pixelCrop) {
-  const canvas = document.createElement("canvas");
-  canvas.width = pixelCrop.width;
-  canvas.height = pixelCrop.height;
-  const ctx = canvas.getContext("2d");
-  var newImage = new Image();
-  newImage.onload = function() {
-    ctx.drawImage(
-      image,
-      pixelCrop.x,
-      pixelCrop.y,
-      pixelCrop.width,
-      pixelCrop.height,
-      0,
-      0,
-      pixelCrop.width,
-      pixelCrop.height
-    );
+export function getBase64Image(imgUrl, callback) {
+  var img = new Image();
+
+  // onload fires when the image is fully loadded, and has width and height
+
+  img.onload = function() {
+    var canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+    var dataURL = canvas.toDataURL("image/png"),
+      dataURL = dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+
+    callback(dataURL); // the base64 string
   };
-  console.log(newImage.src);
-  return newImage.src;
+
+  // set attributes and src
+  img.setAttribute("crossOrigin", "anonymous"); //
+  img.src = imgUrl;
 }

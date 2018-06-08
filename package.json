@@ -44,9 +44,11 @@
   "dependencies": {
     "axios": "^0.17.1",
     "babel-polyfill": "^6.26.0",
+    "base64-img": "^1.0.4",
     "bootstrap": "^4.0.0",
     "classnames": "^2.2.5",
     "es6-promise": "^3.3.1",
+    "file-system": "^2.2.2",
     "gm": "^1.23.1",
     "img-loader": "^3.0.0",
     "immutable": "^3.8.1",

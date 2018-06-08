@@ -13,6 +13,7 @@ import ImageGallery from "react-image-gallery";
 import Linkify from "react-linkify";
 import moment from "moment";
 import * as base64 from "../../Assests/Icons/base64";
+import Notifications, { notify } from "react-notify-toast";
 
 const defaultProps = {};
 const propTypes = {};
@@ -182,7 +183,10 @@ class PostPage extends Component {
         forum_id: Number(this.props.match.params.forum_id)
       };
       this.setState({ isLiked: true, newLike: r_forum.like_cnt + 1 });
-      this.props.dispatch(SocialAction.postForumLike(params)).then(value => {});
+      this.props.dispatch(SocialAction.postForumLike(params)).then(value => {
+        let myColor = { background: "#5cb85c", text: "#ffffff" };
+        notify.show("상승 예측!", "custom", 3000, myColor);
+      });
     } else {
       const { forum, liked } = this.props.location.state;
       const params = {
@@ -191,17 +195,19 @@ class PostPage extends Component {
       };
       if (liked) {
         this.setState({ isLiked: false, newLike: forum.like_cnt });
-        this.props
-          .dispatch(SocialAction.postForumLike(params))
-          .then(value => {});
+        this.props.dispatch(SocialAction.postForumLike(params)).then(value => {
+          let myColor = { background: "#5cb85c", text: "#ffffff" };
+          notify.show("상승 예측!", "custom", 3000, myColor);
+        });
       } else {
         this.setState(prevState => ({
           isLiked: true,
           newLike: forum.like_cnt + 1
         }));
-        this.props
-          .dispatch(SocialAction.postForumLike(params))
-          .then(value => {});
+        this.props.dispatch(SocialAction.postForumLike(params)).then(value => {
+          let myColor = { background: "#5cb85c", text: "#ffffff" };
+          notify.show("상승 예측!", "custom", 3000, myColor);
+        });
       }
     }
   };
@@ -214,7 +220,10 @@ class PostPage extends Component {
         forum_id: Number(this.props.match.params.forum_id)
       };
       this.setState({ isHated: true, newHate: r_forum.dislike_cnt + 1 });
-      this.props.dispatch(SocialAction.postHate(params)).then(value => {});
+      this.props.dispatch(SocialAction.postHate(params)).then(value => {
+        let myColor = { background: "#f26968", text: "#ffffff" };
+        notify.show("하락 예측!", "custom", 3000, myColor);
+      });
     } else {
       const { forum, hated } = this.props.location.state;
       const params = {
@@ -226,13 +235,19 @@ class PostPage extends Component {
           isHated: false,
           newHate: forum.dislike_cnt
         }));
-        this.props.dispatch(SocialAction.postHate(params)).then(value => {});
+        this.props.dispatch(SocialAction.postHate(params)).then(value => {
+          let myColor = { background: "#f26968", text: "#ffffff" };
+          notify.show("하락 예측!", "custom", 3000, myColor);
+        });
       } else {
         this.setState(prevState => ({
           isHated: true,
           newHate: forum.dislike_cnt + 1
         }));
-        this.props.dispatch(SocialAction.postHate(params)).then(value => {});
+        this.props.dispatch(SocialAction.postHate(params)).then(value => {
+          let myColor = { background: "#f26968", text: "#ffffff" };
+          notify.show("하락 예측!", "custom", 3000, myColor);
+        });
       }
     }
   };
@@ -409,6 +424,7 @@ class PostPage extends Component {
     if (this.props.location.state === undefined) {
       return (
         <div className="postPage__content__chart">
+          <Notifications />
           <Modal
             isOpen={this.state.showModal}
             toggle={this.toggleModal}
@@ -663,6 +679,7 @@ class PostPage extends Component {
       } = this.props.location.state;
       return (
         <div className="postPage__content__chart">
+          <Notifications />
           <Modal
             isOpen={this.state.showModal}
             toggle={this.toggleModal}

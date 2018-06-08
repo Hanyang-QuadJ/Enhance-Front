@@ -22,6 +22,7 @@ import {
   Button
 } from "reactstrap";
 import cx from "classnames";
+import { getBase64Image } from "../../Assests/Functions/function";
 
 const defaultProps = {};
 const propTypes = {};
@@ -71,7 +72,8 @@ class ForumPage extends Component {
       editIndex: 0,
       editId: 0,
       imagePreview: [],
-      search: ""
+      search: "",
+      loadGraph: false
     };
     this.toggle = this.toggle.bind(this);
   }
@@ -228,12 +230,7 @@ class ForumPage extends Component {
   };
 
   handleFilter = (index, id, coin) => {
-    const {
-      selectedPostType,
-      sort,
-      search,
-      filterCoins
-    } = this.state;
+    const { selectedPostType, sort, search, filterCoins } = this.state;
     const requestCoins = this.state.filterCoins.slice();
     const newCoin = this.state.sideFavorite.slice();
     let result = newCoin.filter(a => {
@@ -371,7 +368,7 @@ class ForumPage extends Component {
     this.setState({ imagePreview });
   };
 
-  handleFavorite = async(index, id, data) => {
+  handleFavorite = (index, id, data) => {
     const coin = this.state.sideFavorite.slice();
     const favorite = this.state.favorite.slice();
     const { token } = this.props;
@@ -405,35 +402,42 @@ class ForumPage extends Component {
       }
     }
     //추가
-    else {
+    else {      
       coin[index].clicked = true;
       coin[index].loading = true;
       favorite.push({ coin_id: id, clicked: false, abbr: data });
-
-      this.setState({ sideFavorite: coin, favorite });
-
-      //즐겨찾기 한 코인들에게, 가격, 증감표시 key 추가
-      let result = coin.map(function(el) {
-        let o = Object.assign({}, el);
-        o.price = 0;
-        o.percent = "";
-        return o;
-      });
+      this.setState({ sideFavorite: coin, favorite, loadGraph: true });
 
       //즐겨찾기한 코인, 이름만 모으기
       let abbrArray = [];
-      for (let i = 0; i < result.length; i++) {
-        abbrArray[i] = result[i].abbr;
+      for (let i = 0; i < coin.length; i++) {
+        if (coin[i].clicked === true) {
+          abbrArray.push({ id: coin[i].id, abbr: coin[i].abbr });
+        }
       }
+
       this.props.dispatch(PriceAction.addFav(params)).then(x => {
-        this.props.dispatch(PriceAction.getPrice(abbrArray)).then(value => {
-          for (let i = 0; i < abbrArray.length; i++) {
-            result[i].price = value[abbrArray[i]].KRW.PRICE;
-            result[i].percent = value[abbrArray[i]].KRW.CHANGEPCT24HOUR;
-          }
-          result[index].loading = false;
-          this.setState(state => ({ sideFavorite: result }));
-        });
+        this.props
+          .dispatch(
+            PriceAction.getPrice(
+              abbrArray.map((a, index) => {
+                return a.abbr;
+              })
+            )
+          )
+          .then(value => {
+            for (let i = 0; i < coin.length; i++) {
+              for (let j = 0; j < abbrArray.length; j++) {
+                if (coin[i].abbr === abbrArray[j].abbr) {
+                  coin[i].price = value[abbrArray[j].abbr].KRW.PRICE;
+                  coin[i].percent =
+                    value[abbrArray[j].abbr].KRW.CHANGEPCT24HOUR;
+                }
+              }
+            }
+            coin[index].loading = false;            
+            this.setState(state => ({ sideFavorite: coin, loadGraph: false }));
+          });
       });
     }
   };
@@ -629,7 +633,6 @@ class ForumPage extends Component {
         created_at: date,
         token: this.props.token
       };
-
       this.setState({ postLoading: true });
       this.props.dispatch(SocialAction.editForum(params)).then(value => {
         const params = {
@@ -730,12 +733,16 @@ class ForumPage extends Component {
       keyword: search
     };
 
-    if (scrollPercent > 0.95) {
+    if (scrollPercent > 0.99) {
       if (this.state.endScroll === false) {
         this.setState({ footerLoading: true });
         this.props.dispatch(SocialAction.filterForums(params)).then(forums => {
           if (forums.result.length < 30) {
-            this.setState({ endScroll: true, footerLoading: false });
+            this.setState(prevState => ({
+              endScroll: true,
+              posts: [...prevState.posts, ...forums.result],
+              footerLoading: false
+            }));
           } else {
             this.setState(prevState => ({
               posts: [...prevState.posts, ...forums.result],
@@ -763,6 +770,13 @@ class ForumPage extends Component {
     let preview = image.map((data, index) => {
       return data.img_url;
     });
+
+    let resultImgArray = [];
+
+    for (let i = 0; i < preview.length; i++) {
+      resultImgArray.push(getBase64Image(preview[i]));
+    }
+    console.log(resultImgArray);
 
     for (let i = 0; i < coins.length; i++) {
       for (let j = 0; j < newFav.length; j++) {
@@ -917,7 +931,8 @@ class ForumPage extends Component {
       postButton,
       main,
       title,
-      typeDropDown
+      typeDropDown,
+      loadGraph
     } = this.state;
     const { me, isLogin } = this.props;
     const categoryType = categoryJson.all;
@@ -927,9 +942,10 @@ class ForumPage extends Component {
         {isLogin ? (
           <SideBar
             multiple
-            favorite={sideFavorite && sideFavorite}
+            favorite={sideFavorite}
             onClick={this.handleFilter}
             handleFavorite={this.handleFavorite}
+            loadGraph={loadGraph}
           />
         ) : null}
 
@@ -1005,6 +1021,11 @@ class ForumPage extends Component {
                         );
                       })}
                 </div>
+                {imagePreview.map((data, index) => {
+                  return (
+                    <img ref={"base"} style={{ display: "none" }} src={data} />
+                  );
+                })}
               </div>
             </ModalBody>
           </Loadable>
