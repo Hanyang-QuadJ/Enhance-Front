@@ -5,12 +5,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { Modal, ModalBody, ModalHeader, ModalFooter } from "reactstrap";
+import Logo from "../../Assests/Imgs/enhance_logo.png";
 import { Button, Thumb } from "../";
 
 import cx from "classnames";
-
-import * as DefaultActionCreator from "../../ActionCreators/_DefaultActionCreator";
-import * as AuthAction from "../../ActionCreators/AuthAction";
 
 const defaultProps = {};
 const propTypes = {};
@@ -69,7 +67,7 @@ class NavBar extends Component {
 
   render() {
     const { navStatus } = this.state;
-    const { type, isLogin, me, onClickMe } = this.props;
+    const { type, isLogin, me } = this.props;
     return (
       <div className="navBar">
         <Modal
@@ -97,11 +95,9 @@ class NavBar extends Component {
         </Modal>
         <div className="navBar__content">
           <div className="navBar__content__brand" onClick={this.handleNews}>
-            <img
-              className="navBar__content__brand__logo"
-              src="https://github.com/Hanyang-QuadJ/enhance/blob/master/public/icons/enhance_logo.png?raw=true"
-            />
-            <p className="navBar__content__brand__logo__text">ENHANCE</p>
+            <img className="navBar__content__brand__logo" src={Logo} />
+            <h4 className="navBar__content__brand__logo__text">CoinHub</h4>
+            <p className="navBar__content__brand__logo__beta">Beta</p>
           </div>
           <div className="navBar__content__items">
             <div

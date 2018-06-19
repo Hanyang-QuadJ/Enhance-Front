@@ -3,13 +3,21 @@
 
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { NavBar, List, SideBar, RoundInput, Button } from "../../Components";
+import {
+  NavBar,
+  List,
+  SideBar,
+  RoundInput,
+  Button,
+  Footer
+} from "../../Components";
 import { Dots } from "react-activity";
 import * as NewsAction from "../../ActionCreators/NewsAction";
 import * as PriceAction from "../../ActionCreators/PriceAction";
 import * as AuthAction from "../../ActionCreators/AuthAction";
 import coinJson from "../../Json/coin";
 import "react-activity/dist/react-activity.css";
+import Logo from "../../Assests/Imgs/enhance_logo.png";
 import {
   ButtonDropdown,
   DropdownToggle,
@@ -25,7 +33,8 @@ const mapStateToProps = state => {
     news: state.reducer.news,
     newsCount: state.reducer.newsCount,
     sourceId: state.reducer.sourceId,
-    coinId: state.reducer.coinId
+    coinId: state.reducer.coinId,
+    isLogin: state.reducer.isLogin
   };
 };
 
@@ -151,11 +160,12 @@ class SignUpPage extends Component {
       passwordSame,
       password
     } = this.state;
-    const { news } = this.props;
+    const { news, isLogin } = this.props;
     return (
       <div className="signUpPage">
         <NavBar type="auth" />
         <SideBar
+          isLogin={isLogin}
           type={coinType}
           coins={coins}
           favorite={favorite}
@@ -171,6 +181,7 @@ class SignUpPage extends Component {
                 news.map((data, index) => {
                   return (
                     <List
+                      isNews
                       key={index}
                       title={data.title}
                       createdAt={data.pubDate}
@@ -184,13 +195,9 @@ class SignUpPage extends Component {
           <div className="signUpPage__content__chart">
             <div className="signUpPage__content__chart__intro">
               <div className="signUpPage__content__chart__intro__logo">
-                <img
-                  width={45}
-                  height={45}
-                  src={require("../../Assests/Imgs/enhance_logo.png")}
-                />
+                <img width={45} height={45} src={Logo} />
                 <p className="signUpPage__content__chart__intro__logo__text">
-                  ENHANCE
+                  CoinHub
                 </p>
               </div>
               <div className="signUpPage__content__chart__intro__login">
@@ -249,6 +256,7 @@ class SignUpPage extends Component {
             </div>
           </div>
         </div>
+        <Footer />
       </div>
     );
   }

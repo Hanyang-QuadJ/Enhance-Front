@@ -4,11 +4,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { NavBar, List, SideBar } from "../../Components";
+import { NavBar, List, SideBar, Footer } from "../../Components";
 import { Dots } from "react-activity";
 import * as NewsAction from "../../ActionCreators/NewsAction";
 import * as PriceAction from "../../ActionCreators/PriceAction";
 import "react-activity/dist/react-activity.css";
+import Logo from "../../Assests/Imgs/enhance_logo.png";
 import cx from "classnames";
 import {
   ButtonDropdown,
@@ -48,7 +49,7 @@ class HomePage extends Component {
       newsCount: 0,
       sourceId: 0,
       sourceName: "최신순",
-      footerLoading: false,
+      footerLoading: true,
       newsLoading: true,
       recent: 0
     };
@@ -60,6 +61,7 @@ class HomePage extends Component {
   }
 
   componentDidMount() {
+    // (window.adsbygoogle = window.adsbygoogle || []).push({});
     const { isLogin } = this.props;
     if (isLogin) {
       // 모든 코인
@@ -226,7 +228,7 @@ class HomePage extends Component {
 
   handleScroll = e => {
     let scrollTop = e.target.scrollTop;
-    let docHeight = e.target.clientHeight;
+    let docHeight = e.target.offsetHeight;
     let winHeight = e.target.scrollHeight;
     let scrollPercent = scrollTop / (winHeight - docHeight);
 
@@ -238,7 +240,7 @@ class HomePage extends Component {
       recent
     };
 
-    if (scrollPercent > 0.99) {
+    if (docHeight + scrollTop >= winHeight) {
       if (this.state.endScroll === false) {
         this.setState({ footerLoading: true });
         this.props.dispatch(NewsAction.getNews(newsParams)).then(news => {
@@ -305,6 +307,8 @@ class HomePage extends Component {
     });
   };
 
+  renderAdd = () => {};
+
   renderChart = type => {
     const baseUrl = "https://widgets.cryptocompare.com/";
     let appName = encodeURIComponent(window.location.hostname);
@@ -320,7 +324,7 @@ class HomePage extends Component {
     s.onload = () => {
       this.setState({ loadGraph: false });
     };
-    s.onerror = () => {
+    s.onError = () => {
       console.log("!!!!");
     };
   };
@@ -457,6 +461,7 @@ class HomePage extends Component {
       <div className="homePage">
         <NavBar type="news" />
         <SideBar
+          isLogin={isLogin}
           onClick={this.handleChart}
           type={coinType}
           favorite={favorite}
@@ -565,19 +570,27 @@ class HomePage extends Component {
             )}
           </div>
           <div className="homePage__content__chart">
+            {/* <div className="homePage__content__chart__add">
+              <ins
+                className="adsbygoogle"
+                style={{
+                  display: "inline-block",
+                  width: "600px",
+                  height: "90px"
+                }}
+                data-ad-client="ca-pub-7997819944602732"
+                data-ad-slot="2912130265"
+              />
+            </div> */}
             {isLogin && !isFavEmpty && coinType != "" ? (
               <div className="homePage__content__chart__coin">{coinType}</div>
             ) : null}
             {isFavEmpty === true ? (
               <div className="homePage__content__chart__intro">
                 <div className="homePage__content__chart__intro__logo">
-                  <img
-                    width={45}
-                    height={45}
-                    src="https://github.com/Hanyang-QuadJ/enhance/blob/master/public/icons/enhance_logo.png?raw=true"
-                  />
+                  <img width={45} height={45} src={Logo} />
                   <p className="homePage__content__chart__intro__logo__text">
-                    ENHANCE
+                    CoinHub
                   </p>
                 </div>
                 <div className="homePage__content__chart__intro__welcome">
@@ -586,13 +599,13 @@ class HomePage extends Component {
                     {me && me.username + " 님"}
                   </p>
                   <p>
-                    인핸스는 가상화폐와 블록체인 기술에 대한 정보를 실시간으로
-                    모아서 한눈에 보기 쉽게 제공해 드리고 있습니다. 인핸스와
+                    코인허브는 가상화폐와 블록체인 기술에 대한 정보를 실시간으로
+                    모아서 한눈에 보기 쉽게 제공해 드리고 있습니다. 코인허브와
                     함께 가상화폐의 역사를 함께 하세요.
                   </p>
                 </div>
                 <div className="homePage__content__chart__intro__desc">
-                  <strong>인핸스 뉴스</strong>
+                  <strong>코인허브 뉴스</strong>
                   <p>
                     로그인 후 + 버튼을 누르거나 좌측 상단 돋보기 아이콘을 눌러
                     원하는 가상화폐 종목을 검색하실 수 있습니다.
@@ -619,12 +632,14 @@ class HomePage extends Component {
                 데이터 생성중입니다. 조금만 기다려주세요
               </div>
             ) : null}
+
             <div
               className="homePage__content__chart__wrapper"
               ref={el => (this.instance = el)}
             />
           </div>
         </div>
+        <Footer />
       </div>
     );
   }

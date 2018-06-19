@@ -27,7 +27,8 @@ import {
   ForumPage,
   SettingsPage,
   FindPage,
-  AdminPage
+  AdminPage,
+  AboutPage
 } from "./Pages/";
 
 const muiTheme = getMuiTheme({
@@ -88,6 +89,7 @@ class App extends Component {
             <Route path="/auth/verify" component={FindPage} />
             <Route path="/auth/admin" component={AdminPage} />
             <Route path="/auth/signup" component={SignUpPage} />
+            <Route path="/about" component={AboutPage} />
           </div>
         </MuiThemeProvider>
       );

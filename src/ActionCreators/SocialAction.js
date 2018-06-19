@@ -16,6 +16,12 @@ export const FAILED_TO_FILTER_FORUM_BY_TYPE = "FAILED_TO_FILTER_FORUM_BY_TYPE";
 export const SUCCEED_TO_POST_FORUM = "SUCCEED_TO_POST_FORUM";
 export const FAILED_TO_POST_FORUM = "FAILED_TO_POST_FORUM";
 
+export const SUCCEED_TO_POST_FORUM_IMAGE = "SUCCEED_TO_POST_FORUM_IMAGE";
+export const FAILED_TO_POST_FORUM_IMAGE = "FAILED_TO_POST_FORUM_IMAGE";
+
+export const SUCCEED_TO_DELETE_FORUM_IMAGE = "SUCCEED_TO_DELETE_FORUM_IMAGE";
+export const FAILED_TO_DELETE_FORUM_IMAGE = "FAILED_TO_DELETE_FORUM_IMAGE";
+
 export const SUCCEED_TO_DELETE_FORUM = "SUCCEED_TO_DELETE_FORUM";
 export const FAILED_TO_DELETE_FORUM = "FAILED_TO_DELETE_FORUM";
 
@@ -449,7 +455,7 @@ export const editForum = params => {
         body: JSON.stringify({
           id: params.id,
           coin_list: params.coins,
-          pic_list: params.pic_list,
+          pic_list: null,
           category: params.category,
           title: params.title,
           content: params.content
@@ -470,10 +476,11 @@ export const editForum = params => {
   };
 };
 
-export const updateForum = params => {
+export const uploadImage = params => {
+  console.log(params);
   return async dispatch => {
     try {
-      let response = await fetch(ServerEndPoint + "api/forum/update", {
+      let response = await fetch(ServerEndPoint + "api/forum/image/upload", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -482,21 +489,49 @@ export const updateForum = params => {
           "x-access-token": params.token
         },
         body: JSON.stringify({
-          coin_list: params.coins,
-          category: params.category,
-          title: params.title,
-          content: params.content
+          forum_id: params.forum_id,
+          base64: params.base64
         })
       });
       let responseJson = await response.json();
       await dispatch({
-        type: SUCCEED_TO_POST_FORUM,
-        payload: responseJson.forum_id
+        type: SUCCEED_TO_POST_FORUM_IMAGE,
+        payload: responseJson
       });
-      return responseJson.forum_id;
+      return responseJson;
     } catch (error) {
       dispatch({
-        type: FAILED_TO_POST_FORUM,
+        type: FAILED_TO_POST_FORUM_IMAGE,
+        payload: { data: "NETWORK_ERROR" }
+      });
+    }
+  };
+};
+
+export const deleteImage = params => {
+  return async dispatch => {
+    try {
+      let response = await fetch(ServerEndPoint + "api/forum/image/delete", {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "x-access-token": params.token
+        },
+        body: JSON.stringify({
+          key: params.key
+        })
+      });
+      let responseJson = await response.json();
+      await dispatch({
+        type: SUCCEED_TO_DELETE_FORUM_IMAGE,
+        payload: responseJson
+      });
+      return responseJson;
+    } catch (error) {
+      dispatch({
+        type: FAILED_TO_DELETE_FORUM_IMAGE,
         payload: { data: "NETWORK_ERROR" }
       });
     }

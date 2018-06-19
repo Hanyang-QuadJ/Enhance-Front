@@ -142,7 +142,7 @@
       &__lists {
         height: calc(100vh - 110px);
         margin-top: 110px;
-        overflow-y: scroll;
+        overflow-y: auto;
 
         &-loading {
           display: flex;
@@ -167,8 +167,9 @@
         &__footer {
           height: 12vh;
           display: flex;
-          align-items: center;
+          padding-top: 10px;
           justify-content: center;
+          align-items: center;
         }
       }
     }
@@ -197,8 +198,10 @@
           flex-direction: row;
           align-items: center;
           &__text {
+            font-family: "Biryani", sans-serif;
             margin-left: 1rem;
-            font-size: 2rem;
+            margin-top: 10px;
+            font-size: 1.8rem;
           }
         }
 

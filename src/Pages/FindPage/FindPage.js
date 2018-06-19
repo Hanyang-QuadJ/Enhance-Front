@@ -10,6 +10,7 @@ import * as PriceAction from "../../ActionCreators/PriceAction";
 import * as AuthAction from "../../ActionCreators/AuthAction";
 import coinJson from "../../Json/coin";
 import "react-activity/dist/react-activity.css";
+import Logo from "../../Assests/Imgs/enhance_logo.png";
 import {
   ButtonDropdown,
   DropdownToggle,
@@ -124,13 +125,9 @@ class FindPage extends Component {
           <div className="authPage__content__chart">
             <div className="authPage__content__chart__intro">
               <div className="authPage__content__chart__intro__logo">
-                <img
-                  width={45}
-                  height={45}
-                  src="https://github.com/Hanyang-QuadJ/enhance/blob/master/public/icons/enhance_logo.png?raw=true"
-                />
+                <img width={45} height={45} src={Logo} />
                 <p className="authPage__content__chart__intro__logo__text">
-                  ENHANCE
+                  CoinHub
                 </p>
               </div>
               <div className="authPage__content__chart__intro__welcome">

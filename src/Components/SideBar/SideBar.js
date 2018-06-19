@@ -56,7 +56,9 @@ class SideBar extends Component {
       handleFavorite,
       favorite,
       loadGraph,
-      multiple
+      multiple,
+      isLogin,
+      isEmpty
     } = this.props;
     return (
       <div className="sideBar">
@@ -77,37 +79,39 @@ class SideBar extends Component {
               <div className="sideBar__modal">
                 <div className="sideBar__modal__content">
                   <div className="sideBar__modal__content__items">
-                    {favorite.map((data, index) => {
-                      return (
-                        <div
-                          key={index}
-                          className="sideBar__modal__content__items__wrapper"
-                        >
+                    {!isLogin || isEmpty
+                      ? null
+                      : favorite.map((data, index) => {
+                        return (
                           <div
-                            className={cx(
-                              "sideBar__modal__content__items__wrapper__item",
-                              {
-                                "sideBar__modal__content__items__wrapper__item-active":
-                                  data.clicked === true
-                              }
-                            )}
-                            onClick={() =>
-                              handleFavorite(index, data.id, data.abbr)
-                            }
+                            key={index}
+                            className="sideBar__modal__content__items__wrapper"
                           >
-                            <div className="sideBar__modal__content__items__wrapper__item__abbr">
-                              {data.abbr}
-                            </div>
-                            <div className="sideBar__modal__content__items__wrapper__item__full">
-                              {data.full}
-                            </div>
-                            <div className="sideBar__modal__content__items__wrapper__item__kor">
-                              <p>{data.kor}</p>
+                            <div
+                              className={cx(
+                                "sideBar__modal__content__items__wrapper__item",
+                                {
+                                  "sideBar__modal__content__items__wrapper__item-active":
+                                      data.clicked === true
+                                }
+                              )}
+                              onClick={() =>
+                                handleFavorite(index, data.id, data.abbr)
+                              }
+                            >
+                              <div className="sideBar__modal__content__items__wrapper__item__abbr">
+                                {data.abbr}
+                              </div>
+                              <div className="sideBar__modal__content__items__wrapper__item__full">
+                                {data.full}
+                              </div>
+                              <div className="sideBar__modal__content__items__wrapper__item__kor">
+                                <p>{data.kor}</p>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
                   </div>
                 </div>
               </div>
@@ -121,87 +125,89 @@ class SideBar extends Component {
           </ModalFooter>
         </Modal>
         <div className="sideBar__content">
-          <div className="sideBar__content__items">
-            {favorite &&
-              favorite
-                .sort((a, b) => {
-                  if (a.abbr < b.abbr) return -1;
-                  if (a.abbr > b.abbr) return 1;
-                  return 0;
-                })
-                .filter(a => {
-                  return a.clicked === true;
-                })
-                .map((data, index) => {
-                  if (data.loading === true) {
-                    return (
-                      <div
-                        key={index}
-                        className="sideBar__content__items__item"
-                      >
-                        <div style={{ marginTop: 10, marginBottom: 10 }}>
-                          <Sentry color="#ffffff" />
+          {!isLogin || isEmpty ? null : (
+            <div className="sideBar__content__items">
+              {favorite &&
+                favorite
+                  .sort((a, b) => {
+                    if (a.abbr < b.abbr) return -1;
+                    if (a.abbr > b.abbr) return 1;
+                    return 0;
+                  })
+                  .filter(a => {
+                    return a.clicked === true;
+                  })
+                  .map((data, index) => {
+                    if (data.loading === true) {
+                      return (
+                        <div
+                          key={index}
+                          className="sideBar__content__items__item"
+                        >
+                          <div style={{ marginTop: 10, marginBottom: 10 }}>
+                            <Sentry color="#ffffff" />
+                          </div>
                         </div>
-                      </div>
-                    );
-                  } else {
-                    return (
-                      <div
-                        className={
-                          multiple
-                            ? cx("sideBar__content__items__item", {
-                              "sideBar__content__items__item-active":
-                                  data.selected === true
-                            })
-                            : cx(
-                              "sideBar__content__items__item",
-                              {
+                      );
+                    } else {
+                      return (
+                        <div
+                          className={
+                            multiple
+                              ? cx("sideBar__content__items__item", {
                                 "sideBar__content__items__item-active":
-                                    type === data.abbr
-                              },
-                              {
-                                "sideBar__content__items__item-disable":
-                                    loadGraph === true
-                              }
-                            )
-                        }
-                        key={index}
-                        onClick={() => onClick(index, data.id, data.abbr)}
-                      >
-                        <div className="sideBar__content__items__item__title">
-                          {data.abbr}
-                        </div>
-                        <div className="sideBar__content__items__item__price">
-                          {data.price}
-                        </div>
-                        {Number(data.percent) < 0 ? (
-                          <div className="sideBar__content__items__item__percent-down">
-                            <span className="sideBar__content__items__item__percent-down__icon">
-                              <i className="xi-arrow-down" />
-                            </span>
-                            {data.percent}%
+                                    data.selected === true
+                              })
+                              : cx(
+                                "sideBar__content__items__item",
+                                {
+                                  "sideBar__content__items__item-active":
+                                      type === data.abbr
+                                },
+                                {
+                                  "sideBar__content__items__item-disable":
+                                      loadGraph === true
+                                }
+                              )
+                          }
+                          key={index}
+                          onClick={() => onClick(index, data.id, data.abbr)}
+                        >
+                          <div className="sideBar__content__items__item__title">
+                            {data.abbr}
                           </div>
-                        ) : (
-                          <div className="sideBar__content__items__item__percent">
-                            <span className="sideBar__content__items__item__percent__icon">
-                              <i className="xi-arrow-up" />
-                            </span>
-                            {data.percent}%
+                          <div className="sideBar__content__items__item__price">
+                            {data.price}
                           </div>
-                        )}
-                      </div>
-                    );
-                  }
-                })}
-            <div
-              className="sideBar__content__items__item"
-              onClick={this.toggleModal}
-            >
-              <span className="sideBar__content__items__item-plus">
-                <i className="xi-plus" />
-              </span>
+                          {Number(data.percent) < 0 ? (
+                            <div className="sideBar__content__items__item__percent-down">
+                              <span className="sideBar__content__items__item__percent-down__icon">
+                                <i className="xi-arrow-down" />
+                              </span>
+                              {data.percent}%
+                            </div>
+                          ) : (
+                            <div className="sideBar__content__items__item__percent">
+                              <span className="sideBar__content__items__item__percent__icon">
+                                <i className="xi-arrow-up" />
+                              </span>
+                              {data.percent}%
+                            </div>
+                          )}
+                        </div>
+                      );
+                    }
+                  })}
+              <div
+                className="sideBar__content__items__item"
+                onClick={this.toggleModal}
+              >
+                <span className="sideBar__content__items__item-plus">
+                  <i className="xi-plus" />
+                </span>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     );

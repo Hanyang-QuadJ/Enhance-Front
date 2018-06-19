@@ -9,7 +9,8 @@ import {
   SideBar,
   Thumb,
   Button,
-  SocialInput
+  SocialInput,
+  Footer
 } from "../../Components";
 import { PostPage } from "../";
 import { Route, Switch, withRouter } from "react-router-dom";
@@ -29,6 +30,7 @@ import {
 } from "reactstrap";
 import cx from "classnames";
 import Loadable from "react-loading-overlay";
+import { getBase64Image } from "../../Assests/Functions/function";
 
 const defaultProps = {};
 const propTypes = {};
@@ -232,17 +234,29 @@ class MyPage extends Component {
   };
 
   handlePreview = file_arr => {
-    let imagePreview = this.state.imagePreview.slice();
-    for (let i = 0; i < file_arr.length; i++) {
-      imagePreview.push(file_arr[i].base64);
-    }
-    this.setState({ imagePreview });
+    const { token } = this.props;
+    const { editId } = this.state;
+    const params = { token, base64: file_arr[0].base64, forum_id: editId };
+    this.setState({ postLoading: true });
+    this.props.dispatch(SocialAction.uploadImage(params)).then(result => {
+      let imagePreview = this.state.imagePreview.slice();
+      for (let i = 0; i < file_arr.length; i++) {
+        imagePreview.push(file_arr[i].base64);
+      }
+      this.setState({ imagePreview, postLoading: false });
+    });
   };
 
   handleBadge = value => {
-    let imagePreview = this.state.imagePreview.slice();
-    imagePreview.splice(imagePreview.indexOf(value), 1);
-    this.setState({ imagePreview });
+    const { token } = this.props;
+    let result = value.split("/");
+    const params = { token, key: result[4] };
+    this.setState({ postLoading: true });
+    this.props.dispatch(SocialAction.deleteImage(params)).then(result => {
+      let imagePreview = this.state.imagePreview.slice();
+      imagePreview.splice(imagePreview.indexOf(value), 1);
+      this.setState({ imagePreview, postLoading: false });
+    });
   };
 
   handleEditPost = () => {
@@ -517,6 +531,15 @@ class MyPage extends Component {
       return data.img_url;
     });
 
+    let resultImgArray = [];
+
+    for (let i = 0; i < preview.length; i++) {
+      resultImgArray.push(getBase64Image(preview[i]), function(base64image) {
+        return base64image;
+      });
+    }
+    console.log(resultImgArray);
+
     for (let i = 0; i < coins.length; i++) {
       for (let j = 0; j < newFav.length; j++) {
         if (coins[i].abbr === newFav[j].abbr) {
@@ -627,6 +650,7 @@ class MyPage extends Component {
       <div className="myPage">
         <NavBar type="auth" />
         <SideBar
+          isLogin={isLogin}
           favorite={sideFavorite && sideFavorite}
           handleFavorite={this.handleFavorite}
           loadGraph={loadGraph}
@@ -772,7 +796,7 @@ class MyPage extends Component {
                           point={data.point}
                           isNews={false}
                           createdAt={data.created_at}
-                          updatedAt={null}
+                          updatedAt={data.updated_at}
                           likeCount={data.like_cnt}
                           disLikeCount={data.dislike_cnt}
                           type={data.coins}
@@ -802,7 +826,7 @@ class MyPage extends Component {
                           isLoading={data.loading}
                           selectedIndex={selectedCommentIndex}
                           key={index}
-                          isNews={false}
+                          isNews
                           title={data.content}
                           createdAt={data.created_at}
                           type="댓글"
@@ -903,6 +927,7 @@ class MyPage extends Component {
             />
           </Switch>
         </div>
+        <Footer />
       </div>
     );
   }

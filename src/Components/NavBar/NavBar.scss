@@ -47,6 +47,14 @@
         &__text {
           margin-top: 5px;
           font-size: 12px;
+          margin-bottom: 0;
+        }
+
+        &__beta {
+          margin-top: 0;
+          font-style: italic;
+          font-size: 10px;
+          font-weight: 100;
         }
       }
     }

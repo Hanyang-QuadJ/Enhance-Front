@@ -13,3 +13,4 @@ export Thumb from "./Thumb/Thumb";
 export SocialInput from "./SocialInput/SocialInput";
 export Comment from "./Comment/Comment";
 export Medal from "./Medal/Medal";
+export Footer from "./Footer/Footer";

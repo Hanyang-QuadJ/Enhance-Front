@@ -3,11 +3,10 @@
 
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { NavBar, List, Thumb, Button } from "../../Components";
+import { NavBar, List, Thumb, Button, Footer, SideBar } from "../../Components";
 import { PostPage } from "../";
 import { Route, Switch, withRouter } from "react-router-dom";
 import { Dots } from "react-activity";
-import * as PriceAction from "../../ActionCreators/PriceAction";
 import * as SocialAction from "../../ActionCreators/SocialAction";
 import "react-activity/dist/react-activity.css";
 import {
@@ -352,10 +351,11 @@ class UserPage extends Component {
       selectedType,
       user
     } = this.state;
-    const { me } = this.props;
+    const { me, isLogin } = this.props;
 
     return (
       <div className="userPage">
+        <SideBar isLogin={isLogin} isEmpty />
         <NavBar type="forum" />
         <div className="userPage__content">
           <div className="userPage__content__news">
@@ -427,7 +427,7 @@ class UserPage extends Component {
                         point={data.point}
                         isNews={false}
                         createdAt={data.created_at}
-                        updatedAt={null}
+                        updatedAt={data.updated_at}
                         likeCount={data.like_cnt}
                         disLikeCount={data.dislike_cnt}
                         type={data.coins}
@@ -460,7 +460,7 @@ class UserPage extends Component {
                         isLoading={data.loading}
                         selectedIndex={selectedCommentIndex}
                         key={index}
-                        isNews={false}
+                        isNews={true}
                         title={data.content}
                         createdAt={data.created_at}
                         updatedAt={null}
@@ -558,6 +558,7 @@ class UserPage extends Component {
             />
           </Switch>
         </div>
+        <Footer />
       </div>
     );
   }

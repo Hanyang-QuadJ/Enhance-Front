@@ -112,6 +112,10 @@ class PostPage extends Component {
     }
   }
 
+  componentDidMount() {
+    (window.adsbygoogle = window.adsbygoogle || []).push({});
+  }
+
   handleComment = e => {
     this.setState({ comment: e.target.value });
   };
@@ -328,6 +332,10 @@ class PostPage extends Component {
     });
   };
 
+  handleBack = () => {
+    this.props.history.goBack();
+  };
+
   handleDelete = id => {
     const { me } = this.props;
     if (this.props.location.state === undefined) {
@@ -496,6 +504,14 @@ class PostPage extends Component {
           ) : (
             <div className="postPage__content__chart__intro">
               <div className="postPage__content__chart__intro__post">
+                <div className="postPage__content__chart__intro__post__close">
+                  <span
+                    className="postPage__content__chart__intro__post__close__icon"
+                    onClick={this.handleBack}
+                  >
+                    <i className="xi-close" />
+                  </span>
+                </div>
                 <div className="postPage__content__chart__intro__post__header">
                   <div className="postPage__content__chart__intro__post__header__userInfo">
                     <div className="postPage__content__chart__intro__post__header__userInfo__thumb">
@@ -618,6 +634,19 @@ class PostPage extends Component {
                   </span>
                 </div>
               </div>
+              <div className="postPage__content__chart__intro__post__add">
+                <ins
+                  className="adsbygoogle"
+                  style={{
+                    display: "inline-block",
+                    width: "600px",
+                    height: "90px"
+                  }}
+                  data-ad-client="ca-pub-7997819944602732"
+                  data-ad-slot="2912130265"
+                />
+              </div>
+
               <SocialInput
                 user={me && me}
                 isLogin={isLogin}
@@ -751,6 +780,14 @@ class PostPage extends Component {
           ) : (
             <div className="postPage__content__chart__intro">
               <div className="postPage__content__chart__intro__post">
+                <div className="postPage__content__chart__intro__post__close">
+                  <span
+                    className="postPage__content__chart__intro__post__close__icon"
+                    onClick={this.handleBack}
+                  >
+                    <i className="xi-close" />
+                  </span>
+                </div>
                 <div className="postPage__content__chart__intro__post__header">
                   <div className="postPage__content__chart__intro__post__header__userInfo">
                     <div className="postPage__content__chart__intro__post__header__userInfo__thumb">
@@ -938,6 +975,18 @@ class PostPage extends Component {
                     <i className="xi-eye" />
                   </span>
                 </div>
+              </div>
+              <div className="postPage__content__chart__intro__post__add">
+                <ins
+                  className="adsbygoogle"
+                  style={{
+                    display: "inline-block",
+                    width: "600px",
+                    height: "90px"
+                  }}
+                  data-ad-client="ca-pub-7997819944602732"
+                  data-ad-slot="2912130265"
+                />
               </div>
               <SocialInput
                 user={me && me}

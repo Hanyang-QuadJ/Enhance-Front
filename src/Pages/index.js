@@ -17,3 +17,4 @@ export MyPage from "./MyPage/MyPage";
 export SettingsPage from "./SettingsPage/SettingsPage";
 export FindPage from "./FindPage/FindPage";
 export AdminPage from "./AdminPage/AdminPage";
+export AboutPage from "./AboutPage/AboutPage";

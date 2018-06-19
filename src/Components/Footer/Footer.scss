@@ -1,0 +1,57 @@
+/*
+* Author: @nayunhwan (github.com/nayunhwan)
+* Email: nayunhwan.dev@mgail.com
+*/
+@import "../../mixin.scss";
+
+.footer {
+  left: 100px;
+  right: 100px;
+  background: #536976;
+  border-top: 1px $border-color solid;
+  font-family: "Biryani", sans-serif;
+
+  /* fallback for old browsers */
+
+  background: -webkit-linear-gradient(to right, #292e49, #536976);
+  /* Chrome 10-25, Safari 5.1-6 */
+
+  background: linear-gradient(to right, #292e49, #536976);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  width: calc(100vh-200px);
+  height: 6vh;
+  position: fixed;
+  bottom: 0;
+  color: white;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  &__items {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    &__item {
+      @include transition(0.3s);
+      margin-right: 15px;
+      color: #b9b9b9;
+      font-size: 12px;
+      cursor: pointer;
+
+      &__icon {
+        font-size: 15px;
+      }
+
+      &:hover {
+        color: white;
+      }
+
+      &-active {
+        color: $active-color;
+      }
+    }
+  }
+}

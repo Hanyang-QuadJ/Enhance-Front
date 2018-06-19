@@ -110,6 +110,7 @@
       width: calc(50vw-100px);
       margin-right: 100px;
       overflow-y: scroll;
+      padding-bottom: 2rem;
 
       &__loading {
         display: flex;
@@ -135,6 +136,22 @@
 
         &__post {
           // border: 1px red solid;
+
+          &__add {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+          }
+
+          &__close {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 10px;
+
+            &__icon {
+              cursor: pointer;
+            }
+          }
 
           &__header {
             border-bottom: 1px $border-color solid;

@@ -3,13 +3,21 @@
 
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { NavBar, List, SideBar, RoundInput, Button } from "../../Components";
+import {
+  NavBar,
+  List,
+  SideBar,
+  RoundInput,
+  Button,
+  Footer
+} from "../../Components";
 import { Dots } from "react-activity";
 import * as NewsAction from "../../ActionCreators/NewsAction";
 import * as PriceAction from "../../ActionCreators/PriceAction";
 import * as AuthAction from "../../ActionCreators/AuthAction";
 import coinJson from "../../Json/coin";
 import "react-activity/dist/react-activity.css";
+import Logo from "../../Assests/Imgs/enhance_logo.png";
 import {
   ButtonDropdown,
   DropdownToggle,
@@ -25,7 +33,8 @@ const mapStateToProps = state => {
     news: state.reducer.news,
     newsCount: state.reducer.newsCount,
     sourceId: state.reducer.sourceId,
-    coinId: state.reducer.coinId
+    coinId: state.reducer.coinId,
+    isLogin: state.reducer.isLogin
   };
 };
 
@@ -156,12 +165,13 @@ class AuthPage extends Component {
 
   render() {
     const { coinType, coins, favorite, isLoginValid, isLoggedIn } = this.state;
-    const { news } = this.props;
+    const { news, isLogin } = this.props;
     const state = this.props.location.state;
     return (
       <div className="authPage">
         <NavBar type="auth" />
         <SideBar
+          isLogin={isLogin}
           type={coinType}
           coins={coins}
           favorite={favorite}
@@ -177,6 +187,7 @@ class AuthPage extends Component {
                 news.map((data, index) => {
                   return (
                     <List
+                      isNews
                       key={index}
                       title={data.title}
                       createdAt={data.pubDate}
@@ -190,21 +201,17 @@ class AuthPage extends Component {
           <div className="authPage__content__chart">
             <div className="authPage__content__chart__intro">
               <div className="authPage__content__chart__intro__logo">
-                <img
-                  width={45}
-                  height={45}
-                  src="https://github.com/Hanyang-QuadJ/enhance/blob/master/public/icons/enhance_logo.png?raw=true"
-                />
+                <img width={45} height={45} src={Logo} />
                 <p className="authPage__content__chart__intro__logo__text">
-                  ENHANCE
+                  CoinHub
                 </p>
               </div>
               <div className="authPage__content__chart__intro__welcome">
                 <strong>환영합니다.</strong>
                 <p>
-                  인핸스는 가상화폐와 블록체인 기술에 대한 정보를 실시간으로
-                  모아서 한눈에 보기 쉽게 제공해 드리고 있습니다. 인핸스와 함께
-                  가상화폐의 역사를 함께 하세요.
+                  코인허브는 가상화폐와 블록체인 기술에 대한 정보를 실시간으로
+                  모아서 한눈에 보기 쉽게 제공해 드리고 있습니다. 코인허브와
+                  함께 가상화폐의 역사를 함께 하세요.
                 </p>
               </div>
               <div className="authPage__content__chart__intro__login">
@@ -243,7 +250,7 @@ class AuthPage extends Component {
                 />
               </div>
               <div className="authPage__content__chart__intro__signUp">
-                <p>아직 인핸스의 회원이 아니신가요?</p>
+                <p>아직 코인허브의 회원이 아니신가요?</p>
                 <p>
                   <strong
                     className="authPage__content__chart__intro__signUp__link"
@@ -268,6 +275,7 @@ class AuthPage extends Component {
             </div>
           </div>
         </div>
+        <Footer />
       </div>
     );
   }

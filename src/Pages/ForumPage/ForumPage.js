@@ -3,7 +3,7 @@
 
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { NavBar, List, SideBar, SocialInput } from "../../Components";
+import { NavBar, List, SideBar, SocialInput, Footer } from "../../Components";
 import { PostPage } from "../";
 import { Route, Switch, withRouter } from "react-router-dom";
 import { Dots } from "react-activity";
@@ -14,6 +14,7 @@ import Loadable from "react-loading-overlay";
 import categoryJson from "../../Json/category";
 import { confirmAlert } from "react-confirm-alert";
 import "react-activity/dist/react-activity.css";
+import Logo from "../../Assests/Imgs/enhance_logo.png";
 import {
   ButtonDropdown,
   DropdownToggle,
@@ -54,7 +55,7 @@ class ForumPage extends Component {
       isPostsLoading: false,
       forumLoading: false,
       filterCoins: [],
-      footerLoading: false,
+      footerLoading: true,
       title: "",
       main: "",
       endScroll: false,
@@ -193,6 +194,9 @@ class ForumPage extends Component {
         }
       });
     });
+  }
+
+  componentDidMount() {
   }
 
   toggle() {
@@ -355,17 +359,29 @@ class ForumPage extends Component {
   };
 
   handlePreview = file_arr => {
-    let imagePreview = this.state.imagePreview.slice();
-    for (let i = 0; i < file_arr.length; i++) {
-      imagePreview.push(file_arr[i].base64);
-    }
-    this.setState({ imagePreview });
+    const { token } = this.props;
+    const { editId } = this.state;
+    const params = { token, base64: file_arr[0].base64, forum_id: editId };
+    this.setState({ postLoading : true });
+    this.props.dispatch(SocialAction.uploadImage(params)).then(result => {
+      let imagePreview = this.state.imagePreview.slice();
+      for (let i = 0; i < file_arr.length; i++) {
+        imagePreview.push(file_arr[i].base64);
+      }
+      this.setState({ imagePreview, postLoading: false });
+    });
   };
 
   handleBadge = value => {
-    let imagePreview = this.state.imagePreview.slice();
-    imagePreview.splice(imagePreview.indexOf(value), 1);
-    this.setState({ imagePreview });
+    const { token } = this.props;
+    let result = value.split("/");
+    const params = { token, key: result[4] };
+    this.setState({ postLoading : true });
+    this.props.dispatch(SocialAction.deleteImage(params)).then(result => {
+      let imagePreview = this.state.imagePreview.slice();
+      imagePreview.splice(imagePreview.indexOf(value), 1);
+      this.setState({ imagePreview, postLoading: false });
+    });
   };
 
   handleFavorite = (index, id, data) => {
@@ -402,7 +418,7 @@ class ForumPage extends Component {
       }
     }
     //추가
-    else {      
+    else {
       coin[index].clicked = true;
       coin[index].loading = true;
       favorite.push({ coin_id: id, clicked: false, abbr: data });
@@ -435,7 +451,7 @@ class ForumPage extends Component {
                 }
               }
             }
-            coin[index].loading = false;            
+            coin[index].loading = false;
             this.setState(state => ({ sideFavorite: coin, loadGraph: false }));
           });
       });
@@ -569,6 +585,7 @@ class ForumPage extends Component {
           category: selectedPostType2,
           coins: coinArray,
           created_at: date,
+          updated_at: null,
           view_cnt: 0,
           like_cnt: 0,
           dislike_cnt: 0,
@@ -713,9 +730,8 @@ class ForumPage extends Component {
 
   handleScroll = e => {
     let scrollTop = e.target.scrollTop;
-    let docHeight = e.target.clientHeight;
+    let docHeight = e.target.offsetHeight;
     let winHeight = e.target.scrollHeight;
-    let scrollPercent = scrollTop / (winHeight - docHeight);
 
     const {
       filterCoins,
@@ -724,6 +740,7 @@ class ForumPage extends Component {
       sort,
       forumIndex
     } = this.state;
+
     const params = {
       index: forumIndex,
       category: selectedPostType,
@@ -733,7 +750,7 @@ class ForumPage extends Component {
       keyword: search
     };
 
-    if (scrollPercent > 0.99) {
+    if (docHeight + scrollTop >= winHeight) {
       if (this.state.endScroll === false) {
         this.setState({ footerLoading: true });
         this.props.dispatch(SocialAction.filterForums(params)).then(forums => {
@@ -939,15 +956,15 @@ class ForumPage extends Component {
     return (
       <div className="forumPage">
         <NavBar type="forum" />
-        {isLogin ? (
-          <SideBar
-            multiple
-            favorite={sideFavorite}
-            onClick={this.handleFilter}
-            handleFavorite={this.handleFavorite}
-            loadGraph={loadGraph}
-          />
-        ) : null}
+        <SideBar
+          isLogin={isLogin}
+          multiple
+          favorite={sideFavorite}
+          onClick={this.handleFilter}
+          handleFavorite={this.handleFavorite}
+          loadGraph={loadGraph}
+        />
+
 
         <Modal
           isOpen={this.state.showModal}
@@ -1174,7 +1191,7 @@ class ForumPage extends Component {
                     />
                   );
                 })}
-                {footerLoading === true ? (
+                {footerLoading ? (
                   <div className="forumPage__content__news__lists__footer">
                     <Dots color="#ffffff" size={20} />
                   </div>
@@ -1195,13 +1212,9 @@ class ForumPage extends Component {
                   <div className="forumPage__content__chart">
                     <div className="forumPage__content__chart__intro">
                       <div className="forumPage__content__chart__intro__logo">
-                        <img
-                          width={45}
-                          height={45}
-                          src="https://github.com/Hanyang-QuadJ/enhance/blob/master/public/icons/enhance_logo.png?raw=true"
-                        />
+                        <img width={45} height={45} src={Logo} />
                         <p className="forumPage__content__chart__intro__logo__text">
-                          ENHANCE
+                          CoinHub
                         </p>
                       </div>
                       <div className="forumPage__content__chart__intro__welcome">
@@ -1210,13 +1223,13 @@ class ForumPage extends Component {
                           {me && me.username + " 님"}
                         </p>
                         <p>
-                          인핸스는 가상화폐와 블록체인 기술에 대한 정보를
+                          코인허브는 가상화폐와 블록체인 기술에 대한 정보를
                           실시간으로 모아서 한눈에 보기 쉽게 제공해 드리고
-                          있습니다. 인핸스와 함께 가상화폐의 역사를 함께 하세요.
+                          있습니다. 코인허브와 함께 가상화폐의 역사를 함께 하세요.
                         </p>
                       </div>
                       <div className="forumPage__content__chart__intro__desc">
-                        <strong>인핸스 포럼</strong>
+                        <strong>코인허브 포럼</strong>
                         <p>
                           로그인 후 + 버튼을 누르거나 좌측 상단 돋보기 아이콘을
                           눌러 원하는 가상화폐 종목을 검색하실 수 있습니다.
@@ -1237,6 +1250,7 @@ class ForumPage extends Component {
             />
           </Switch>
         </div>
+        <Footer/>
       </div>
     );
   }
