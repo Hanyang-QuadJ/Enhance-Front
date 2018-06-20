@@ -80,7 +80,6 @@ export const getFavs = params => {
         }
       });
       let responseJson = await response.json();
-      console.log(responseJson);
       await dispatch({
         type: SUCCEED_TO_GET_FAVS,
         payload: responseJson.myFavorites

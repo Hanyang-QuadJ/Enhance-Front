@@ -142,6 +142,7 @@
       &__lists {
         height: calc(100vh - 110px);
         margin-top: 110px;
+        padding-bottom: 6vh;
         overflow-y: auto;
 
         &-loading {
@@ -165,11 +166,10 @@
         }
 
         &__footer {
-          height: 12vh;
+          height: 6vh;
           display: flex;
-          padding-top: 10px;
           justify-content: center;
-          align-items: center;
+          margin-top: 20px;
         }
       }
     }

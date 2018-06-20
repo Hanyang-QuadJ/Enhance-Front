@@ -50,15 +50,21 @@ class AboutPage extends Component {
             코인허브의 최고 수준의 정보로 당신의 투자에 대한 믿음을 높이십시오.
           </p>
           <p>
-            CoinHub can enhance your belief in your investment with our
-            top-notch information.
+            Enhance your belief in your investment with our top-notch
+            information.
           </p>
           <br />
-          코인허브의 정보는 편파되어 있지 않습니다. 그리고 앞으로도 계속, 다양한
-          시선의 독자들을 위하여 최대한 객관적인 정보매체로 남기 위해 노력할 것
-          입니다. 코인허브는 독자에게 빠르고 정확한 정보를 전달하는 것이
-          목표입니다. 최고 수준의 정보로 가상화폐를 바라보는 개개인의 시선에
-          대하여 신뢰를 쌓아가도록 도움을 드리겠습니다.
+          <p>
+            코인허브의 정보는 편파되어 있지 않습니다. 그리고 앞으로도 계속,
+            다양한 시선의 독자들을 위하여 최대한 객관적인 정보매체로 남기 위해
+            노력할 것 입니다. 코인허브는 독자에게 빠르고 정확한 정보를 전달하는
+            것이 목표입니다. 최고 수준의 정보로 가상화폐를 바라보는 개개인의
+            시선에 대하여 신뢰를 쌓아가도록 도움을 드리겠습니다.
+          </p>
+          <br />
+          <h5>Contact</h5>
+          <p>문의 메일 : coinhub@email.com</p>
+          <p>광고 문의 : coinhubads@email.com</p>
         </div>
         <Footer type="about" />
       </div>

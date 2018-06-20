@@ -28,7 +28,8 @@ import {
   SettingsPage,
   FindPage,
   AdminPage,
-  AboutPage
+  AboutPage,
+  TermsPage
 } from "./Pages/";
 
 const muiTheme = getMuiTheme({
@@ -90,6 +91,7 @@ class App extends Component {
             <Route path="/auth/admin" component={AdminPage} />
             <Route path="/auth/signup" component={SignUpPage} />
             <Route path="/about" component={AboutPage} />
+            <Route path="/terms" component={TermsPage} />
           </div>
         </MuiThemeProvider>
       );

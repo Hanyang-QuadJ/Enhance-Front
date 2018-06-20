@@ -18,3 +18,4 @@ export SettingsPage from "./SettingsPage/SettingsPage";
 export FindPage from "./FindPage/FindPage";
 export AdminPage from "./AdminPage/AdminPage";
 export AboutPage from "./AboutPage/AboutPage";
+export TermsPage from "./TermsPage/TermsPage";

@@ -19,19 +19,31 @@ class Footer extends Component {
       <div className="footer">
         <div className="footer__items">
           <div className="footer__items__item">
-            <span className="footer__items__item__icon">
+            <a
+              href="https://www.facebook.com/CoinHub-229985534263086"
+              className="footer__items__item__icon"
+              target="blank"
+            >
               <i className="xi-facebook" />
-            </span>
+            </a>
           </div>
           <div className="footer__items__item">
-            <span className="footer__items__item__icon">
+            <a
+              href="https://twitter.com/Coinhub_Korea"
+              className="footer__items__item__icon-twitter"
+              target="blank"
+            >
               <i className="xi-twitter" />
-            </span>
+            </a>
           </div>
           <div className="footer__items__item">
-            <span className="footer__items__item__icon">
+            <a
+              href="https://open.kakao.com/o/gIpdVlP"
+              className="footer__items__item__icon-kakao"
+              target="blank"
+            >
               <i className="xi-kakaotalk" />
-            </span>
+            </a>
           </div>
           <Link to="/about">
             <div
@@ -42,8 +54,19 @@ class Footer extends Component {
               About
             </div>
           </Link>
-          <div className="footer__items__item">Terms</div>
-          <div className="footer__items__item">2018 © CoinHub</div>
+          <Link to="/terms">
+            <div
+              className={cx("footer__items__item", {
+                "footer__items__item-active": type === "terms"
+              })}
+            >
+              Terms
+            </div>
+          </Link>
+
+          <Link to="/about">
+            <div className="footer__items__item">2018 © CoinHub.kr</div>
+          </Link>
         </div>
       </div>
     );

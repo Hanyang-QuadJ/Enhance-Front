@@ -477,7 +477,6 @@ export const editForum = params => {
 };
 
 export const uploadImage = params => {
-  console.log(params);
   return async dispatch => {
     try {
       let response = await fetch(ServerEndPoint + "api/forum/image/upload", {

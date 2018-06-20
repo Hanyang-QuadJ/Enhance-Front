@@ -244,6 +244,7 @@ class HomePage extends Component {
       if (this.state.endScroll === false) {
         this.setState({ footerLoading: true });
         this.props.dispatch(NewsAction.getNews(newsParams)).then(news => {
+          console.log(news);
           if (news.result.length < 30) {
             this.setState(prevState => ({
               endScroll: true,
@@ -561,7 +562,7 @@ class HomePage extends Component {
                   })
                 )}
 
-                {footerLoading === true ? (
+                {footerLoading === true && news.length >= 30 ? (
                   <div className="homePage__content__news__lists__footer">
                     <Dots color="#ffffff" size={20} />
                   </div>

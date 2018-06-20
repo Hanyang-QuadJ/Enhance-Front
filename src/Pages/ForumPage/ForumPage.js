@@ -240,7 +240,7 @@ class ForumPage extends Component {
     let result = newCoin.filter(a => {
       return a.clicked === true;
     });
-    this.setState({ isPostsLoading: true });
+    this.setState({ isPostsLoading: true, loadGraph : true });
     if (result[index].selected) {
       result[index].selected = false;
       result[index].loading = true;
@@ -269,7 +269,8 @@ class ForumPage extends Component {
             forumIndex: forums.nextIndex,
             sideFavorite: newCoin,
             filterCoins: requestCoins,
-            isPostsLoading: false
+            isPostsLoading: false,
+            loadGraph : false
           });
         });
       } else {
@@ -288,7 +289,8 @@ class ForumPage extends Component {
             posts: forums.result,
             sideFavorite: newCoin,
             filterCoins: requestCoins,
-            isPostsLoading: false
+            isPostsLoading: false,
+            loadGraph : false
           });
         });
       }
@@ -312,7 +314,8 @@ class ForumPage extends Component {
           posts: forums.result,
           sideFavorite: newCoin,
           filterCoins: requestCoins,
-          isPostsLoading: false
+          isPostsLoading: false,
+          loadGraph : false
         });
       });
     }
@@ -951,6 +954,8 @@ class ForumPage extends Component {
       typeDropDown,
       loadGraph
     } = this.state;
+    console.log(loadGraph);
+
     const { me, isLogin } = this.props;
     const categoryType = categoryJson.all;
     return (
@@ -1191,7 +1196,7 @@ class ForumPage extends Component {
                     />
                   );
                 })}
-                {footerLoading ? (
+                {footerLoading && posts.length >= 30 ? (
                   <div className="forumPage__content__news__lists__footer">
                     <Dots color="#ffffff" size={20} />
                   </div>

@@ -57,7 +57,6 @@ export const postFeed = params => {
         })
       });
       let responseJson = await response.json();
-      console.log(responseJson);
       await dispatch({
         type: SUCCEED_TO_POST_FEED,
         payload: responseJson.items

@@ -42,11 +42,32 @@
       cursor: pointer;
 
       &__icon {
+        color: #b9b9b9;
         font-size: 15px;
+
+        &:hover {
+          color: white !important;
+        }
+      }
+
+      &__icon-twitter {
+        color: #b9b9b9;
+        font-size: 15px;
+        &:hover {
+          color: #1dcaff !important;
+        }
+      }
+
+      &__icon-kakao {
+        color: #b9b9b9;
+        font-size: 15px;
+        &:hover {
+          color: #fef01b !important;
+        }
       }
 
       &:hover {
-        color: white;
+        color: white !important;
       }
 
       &-active {
