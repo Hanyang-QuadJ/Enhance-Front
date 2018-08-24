@@ -555,6 +555,9 @@ class ForumPage extends Component {
     } = this.state;
     if (selectedCoinType.length === 0) {
       alert("해당하는 종목을 1개 이상 선택해주세요!");
+    }
+    else if (title === "" || main === "") {
+      alert("제목 또는 본문을 입력하세요!");
     } else {
       let date = new Date();
       const coinArray = [];
@@ -796,7 +799,6 @@ class ForumPage extends Component {
     for (let i = 0; i < preview.length; i++) {
       resultImgArray.push(getBase64Image(preview[i]));
     }
-    console.log(resultImgArray);
 
     for (let i = 0; i < coins.length; i++) {
       for (let j = 0; j < newFav.length; j++) {
@@ -954,7 +956,6 @@ class ForumPage extends Component {
       typeDropDown,
       loadGraph
     } = this.state;
-    console.log(loadGraph);
 
     const { me, isLogin } = this.props;
     const categoryType = categoryJson.all;

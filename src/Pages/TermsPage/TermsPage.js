@@ -64,7 +64,7 @@ class TermsPage extends Component {
           </div>
           <br />
           {type === "kor" ? (
-            <div>
+            <div style={{ paddingBottom: "3rem" }}>
               <h5>개인정보처리방침</h5>
               <p>
                 1. 개인정보의 처리 목적 &lt;인핸스 코리아 (Enhance

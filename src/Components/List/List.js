@@ -136,9 +136,9 @@ class List extends Component {
               </div>
             ) : (
               <div className="list__content__type-array">
-                {type.length > 3
+                {type && type.length > 3
                   ? type.slice(0, 3).map((data, index) => {
-                    if (index !== 2) {
+                    if (index !== 2 && type) {
                       return (
                         <div
                           key={index}
